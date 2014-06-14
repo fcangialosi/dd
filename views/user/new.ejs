@@ -27,21 +27,21 @@
         <div class="two fields">
           <div class="field">
             <label>First Name</label>
-            <input placeholder="First Name" name="first-name" type="text">
+            <input placeholder="First Name" name="firstName" type="text">
           </div>
           <div class="field">
             <label>Last Name</label>
-            <input placeholder="Last Name" name="last-name" type="text">
+            <input placeholder="Last Name" name="lastName" type="text">
           </div>
         </div>
         <div class="two fields">
         <div class="field">
             <label>Company Name</label>
-            <input placeholder="Company Name" name="company-name" type="text">
+            <input placeholder="Company Name" name="companyName" type="text">
           </div>
           <div class="field">
             <label>Phone Number</label>
-            <input placeholder="(xxx) - xxx - xxxx" name="phone" type="text">
+            <input placeholder="(xxx)-xxx-xxxx" name="phone" type="text">
           </div>
         </div>
         <div class="field">
@@ -58,8 +58,8 @@
             <input type="password" name="confirm">
           </div>
         </div>
-
         <input type="submit" class="ui blue submit button" value="Create Account">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
         <div class="ui error message"></div>
       </div>
     </div>

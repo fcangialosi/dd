@@ -1,7 +1,7 @@
 $('.ui.form')
   .form({
     firstName: {
-      identifier  : 'first-name',
+      identifier  : 'firstName',
       rules: [
         {
           type   : 'empty',
@@ -10,7 +10,7 @@ $('.ui.form')
       ]
     },
     lastName: {
-      identifier  : 'last-name',
+      identifier  : 'lastname',
       rules: [
         {
           type   : 'empty',
@@ -32,7 +32,7 @@ $('.ui.form')
       ]
     },
     companyName : {
-      identifier : 'company-name',
+      identifier : 'companyName',
       rules : [
         {
           type : 'empty',

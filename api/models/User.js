@@ -10,10 +10,20 @@ module.exports = {
 
   attributes: {
   	
-  	name : {
+  	firstName : {
   		type : 'string',
   		required : true
   	},
+
+    lastName : {
+      type : 'string',
+      required : true
+    },
+
+    companyName : {
+      type : 'string',
+      required : true
+    },
 
   	email : {
   		type : 'string',
@@ -22,7 +32,12 @@ module.exports = {
   		unique : true
   	},
 
-  	encryptedPassword: {
+    phone : {
+      type : 'string',
+      required : true
+    },
+
+  	password: {
   		type : 'string',
   		required : true
   	}
