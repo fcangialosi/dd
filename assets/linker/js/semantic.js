@@ -2017,6 +2017,10 @@ $.fn.form.settings = {
       ;
       return emailRegExp.test(value);
     },
+    phone : function(value) {
+      var phoneRegExp = new RegExp("[0-9]{9,10}");
+      return phoneRegExp.test(value);
+    },
     length: function(value, requiredLength) {
       return (value !== undefined)
         ? (value.length >= requiredLength)

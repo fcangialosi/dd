@@ -1,29 +1,68 @@
-<div class="ui form segment">
-  <p>Let's go ahead and get you signed up.</p>
-  <div class="two fields">
-    <div class="field">
-      <label>First Name</label>
-      <input placeholder="First Name" name="first-name" type="text">
-    </div>
-    <div class="field">
-      <label>Last Name</label>
-      <input placeholder="Last Name" name="last-name" type="text">
-    </div>
-  </div>
-  <div class="field">
-    <label>Username</label>
-    <input placeholder="Username" name="username" type="text">
-  </div>
-  <div class="field">
-    <label>Password</label>
-    <input type="password" name="password">
-  </div>
-  <div class="inline field">
-    <div class="ui checkbox">
-      <input type="checkbox" name="terms">
-      <label>I agree to the Terms and Conditions</label>
+<div class="ui one column relaxed grid">
+  <div class="row">
+    <div class="column">
+      <div class="ui steps">
+        <div class="ui active step">
+          Create Account
+        </div>
+        <div class="ui disabled step">
+          Choose Items
+        </div>
+        <div class="ui disabled step">
+          Add Delivery Info
+        </div>
+        <div class="ui disabled step">
+          Add Payment Info
+        </div>
+        <div class="ui disabled step">
+          Review &amp; Confirm
+        </div>
+      </div>
     </div>
   </div>
-  <div class="ui blue submit button">Submit</div>
-  <div class="ui error message"></div>
+  <div class="row">
+    <div class="column">
+      <form action="/user/create" method="POST" class="ui fluid form segment">
+        <p>Let's go ahead and get you signed up! </p>
+        <div class="two fields">
+          <div class="field">
+            <label>First Name</label>
+            <input placeholder="First Name" name="first-name" type="text">
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input placeholder="Last Name" name="last-name" type="text">
+          </div>
+        </div>
+        <div class="two fields">
+        <div class="field">
+            <label>Company Name</label>
+            <input placeholder="Company Name" name="company-name" type="text">
+          </div>
+          <div class="field">
+            <label>Phone Number</label>
+            <input placeholder="(xxx) - xxx - xxxx" name="phone" type="text">
+          </div>
+        </div>
+        <div class="field">
+          <label>Email Address</label>
+          <input placeholder="Email Address" name="email" type="text">
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Password</label>
+            <input type="password" name="password">
+          </div>
+          <div class="field">
+            <label>Confirm Password</label>
+            <input type="password" name="confirm">
+          </div>
+        </div>
+
+        <input type="submit" class="ui blue submit button" value="Create Account">
+        <div class="ui error message"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row"></div>
 </div>
