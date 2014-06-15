@@ -40,8 +40,8 @@ module.exports = {
     },
 
   	encryptedPassword: {
-  		type : 'string',
-      required : true
+  		type : 'string'
+      //required : true
   	},
 
     toJSON : function(){

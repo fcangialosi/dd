@@ -10,7 +10,7 @@ $('.ui.form')
       ]
     },
     lastName: {
-      identifier  : 'lastname',
+      identifier  : 'lastName',
       rules: [
         {
           type   : 'empty',

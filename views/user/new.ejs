@@ -24,14 +24,21 @@
     <div class="column">
       <% if(flash && flash.err) { %>
         <div class="ui warning message">
-          <% Object.keys(flash.err).forEach(function(type) { %>
-            <div class="header"><%- type %></div>
+          <% if (('err' in flash.err) && (flash.err['err'].indexOf("duplicate key error") > -1)) { %>
+            <div class="header">Account Creation Error</div>
               <ul class="list">
-                <% Object.keys(flash.err[type]).forEach(function(error) { %>
-                  <li><b><%- error %></b> failed to fulfill rules: <% Object.keys(flash.err[type][error]).forEach(function(index) {%><%- flash.err[type][error][index]['rule'] %><% if(flash.err[type][error].length > 1 && index < flash.err[type][error].length-1) {%>,<%}%><% }) %></li>
-                </ul>
-              <% }) %>
-          <% }) %>
+                <% if (flash.err['err'].indexOf("email") > -1) { %>
+                  <li>An account with that e-mail address already exists!</li>
+                <% } else { %>
+                  <li><%- flash.err['err'] %></li>
+                <% } %>
+              </ul>
+          <% } else { %>
+            <div class="header">Unknown Error</div>
+              <ul class="list">
+                <li><%- flash.err[0] %></li>
+              </ul>
+          <% }%>
         </div>
       <% } %>
       <form action="/user/create" method="POST" class="ui large fluid form segment">

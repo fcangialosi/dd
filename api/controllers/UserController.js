@@ -31,7 +31,7 @@ module.exports = {
 
     			return res.redirect('/user/new');
     		}
-    		res.redirect('/user/show'+user.id);
+    		res.redirect('/user/show/'+user.id);
     	});	
     },
 
