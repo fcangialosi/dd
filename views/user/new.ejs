@@ -22,7 +22,20 @@
   </div>
   <div class="row">
     <div class="column">
-      <form action="/user/create" method="POST" class="ui fluid form segment">
+      <% if(flash && flash.err) { %>
+        <div class="ui warning message">
+          <% Object.keys(flash.err).forEach(function(type) { %>
+            <div class="header"><%- type %></div>
+              <ul class="list">
+                <% Object.keys(flash.err[type]).forEach(function(error) { %>
+                  <li><b><%- error %></b> failed to fulfill rules: <% Object.keys(flash.err[type][error]).forEach(function(index) {%><%- flash.err[type][error][index]['rule'] %><% if(flash.err[type][error].length > 1 && index < flash.err[type][error].length-1) {%>,<%}%><% }) %></li>
+                </ul>
+              <% }) %>
+          <% }) %>
+        </div>
+      <% } %>
+      <form action="/user/create" method="POST" class="ui large fluid form segment">
+
         <p>Let's go ahead and get you signed up! </p>
         <div class="two fields">
           <div class="field">
@@ -64,5 +77,5 @@
       </div>
     </div>
   </div>
-  <div class="row"></div>
+  <div class="row"><br></div>
 </div>

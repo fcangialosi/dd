@@ -8,6 +8,8 @@
 
 module.exports = {
 
+  schema: true,
+
   attributes: {
   	
   	firstName : {
@@ -37,10 +39,17 @@ module.exports = {
       required : true
     },
 
-  	password: {
+  	encryptedPassword: {
   		type : 'string',
-  		required : true
-  	}
+      required : true
+  	},
+
+    toJSON : function(){
+      var obj = this.toObject();
+      delete obj.encryptedPassword;
+      delete obj._csrf;
+      return obj
+    }
     
   }
 
