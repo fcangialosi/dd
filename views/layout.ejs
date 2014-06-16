@@ -56,6 +56,14 @@
             <li class="roomy-button"><a href="/express">Express Caf&eacute;</a></li>
             <li class="roomy-button"><a href="/about">About D&amp;D</a></li>
           </ul>
+          <div class="navbar-right">
+            <% if (session.authenticated) { %>
+              <a href="/user/show/<%= session.User.id %>"><%= session.User.firstName %> </a>
+              <a class="btn btn-default navbar-btn navbar-right" href="/session/destroy">Log Out</a>
+            <% } else { %>
+              <a class ="btn btn-success navbar-btn navbar-right" href="/session/new">Log In</a>
+            <% } %>
+          </div>
           
         </div><!--/.nav-collapse -->
       </div>

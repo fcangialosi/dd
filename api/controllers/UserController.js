@@ -31,6 +31,11 @@ module.exports = {
 
     			return res.redirect('/user/new');
     		}
+
+        // automatically log them in now
+        req.session.authenticated = true;
+        req.session.User = user;
+
     		res.redirect('/user/show/'+user.id);
     	});	
     },
