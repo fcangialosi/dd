@@ -43,6 +43,11 @@ module.exports = {
   		type : 'string'
   	},
 
+    admin : {
+      type : 'boolean',
+      defaultTo: false
+    },
+
     toJSON : function() {
       var obj = this.toObject();
       delete obj.encryptedPassword;
