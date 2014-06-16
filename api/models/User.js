@@ -39,18 +39,30 @@ module.exports = {
       required : true
     },
 
-  	encryptedPassword: {
+  	encryptedPassword : {
   		type : 'string'
-      //required : true
   	},
 
-    toJSON : function(){
+    toJSON : function() {
       var obj = this.toObject();
       delete obj.encryptedPassword;
       delete obj._csrf;
       return obj
+    }    
+  },
+
+  beforeCreate : function (formParams, next) {
+    // This is already checked by semantic-ui validator, can probably remove later
+    if (!formParams.password || formParams.password != formParams.confirm) {
+      return next({err: ["Password doesn't match password confirmation."]});
     }
-    
+
+    require('bcrypt').hash(formParams.password, 5, function encryptionFinishsed(err, encryptedPassword) {
+      if (err) return next(err);
+
+      formParams.encryptedPassword = encryptedPassword;
+      next();
+    });
   }
 
 };

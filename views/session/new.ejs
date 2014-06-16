@@ -1,0 +1,41 @@
+<% if(flash && flash.err) { %>
+ <div class="ui warning message">
+    <ul class="alert alert-success">
+  <% Object.keys(flash.err).forEach(function(error) { %>
+    <li><%- JSON.stringify(flash.err[error]) %></li>
+  <% }) %>
+  </ul>
+</div>
+<% } %>
+<div class="ui one column relaxed grid">
+  <div class="column">
+    <form action="/session/create" method="POST" class="ui form segment">
+      <div class="field">
+        <label>Email</label>
+        <div class="ui left labeled icon input">
+          <input type="text" name="email" placeholder="Email Address">
+          <i class="user icon"></i>
+          <div class="ui corner label">
+            <i class="icon asterisk"></i>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <div class="ui left labeled icon input">
+          <input type="password" name="password">
+          <i class="lock icon"></i>
+          <div class="ui corner label">
+            <i class="icon asterisk"></i>
+          </div>
+        </div>
+      </div>
+      <div class="ui error message">
+        <div class="header">We noticed some issues</div>
+      </div>
+      <input type="submit" class="ui blue submit button" value="Login">
+       <input type="hidden" name="_csrf" value="<%= _csrf %>">
+    </div>
+  </div>
+  <br>
+</div>

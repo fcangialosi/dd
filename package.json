@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "description": "a Sails application",
   "dependencies": {
+    "bcrypt": "^0.7.8",
     "ejs": "0.8.4",
     "grunt": "0.4.1",
     "optimist": "0.3.4",
