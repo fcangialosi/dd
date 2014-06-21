@@ -36,6 +36,10 @@ module.exports.routes = {
     view: 'home/index'
   },
 
+  '/news' : {
+    view :'home/news'
+  },
+
   '/main' : {
     view : 'main/index'
   },
