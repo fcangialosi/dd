@@ -1,0 +1,12 @@
+<h1 class="title"> Catering Menu </h1>
+
+<% _.each(menu, function(section) { %>
+<h2> <%= section.name %> </h2>
+<p> <%= section.notes %> </p>
+  <% _.each(section.items, function(item) {%>
+    <h3> <%= item.name %></h3>
+    <h4> $<%= item.price %>&nbsp;<%= item.priceSuffix%></h4>
+    <h5> <%= item.minimum %> </h5>
+    <p> <%= item.description %></p>
+  <% })%>
+<% }) %>

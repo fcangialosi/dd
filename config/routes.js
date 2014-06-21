@@ -58,7 +58,13 @@ module.exports.routes = {
 
   '/catering/start' : {
     view : 'catering/start'
-  }
+  },
+
+  '/main/menu' : 'MenuController.displayMainMenu',
+
+  '/catering/menu' : 'MenuController.displayCateringMenu',
+
+  '/express/menu' : 'MenuController.displayExpressMenu'
 
   /*
   // But what if you want your home page to display
