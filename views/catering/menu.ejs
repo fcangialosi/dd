@@ -1,12 +1,48 @@
+<div class="ui five medium steps">
+  <div class="ui disabled step">
+    Create Account
+  </div>
+  <div class="ui active step">
+    Choose Items
+  </div>
+  <div class="ui disabled step">
+    Add Delivery Info
+  </div>
+  <div class="ui disabled step">
+    Add Payment Info
+  </div>
+  <div class="ui disabled step">
+    Review &amp; Confirm
+  </div>
+</div>
+
 <h1 class="title"> Catering Menu </h1>
 
-<% _.each(menu, function(section) { %>
-<h2> <%= section.name %> </h2>
-<p> <%= section.notes %> </p>
-  <% _.each(section.items, function(item) {%>
-    <h3> <%= item.name %></h3>
-    <h4> $<%= item.price %>&nbsp;<%= item.priceSuffix%></h4>
-    <h5> <%= item.minimum %> </h5>
-    <p> <%= item.description %></p>
-  <% })%>
-<% }) %>
+<div class="ui grid">
+  <div class="four wide column">
+    <div class="ui vertical pointing secondary menu">
+      <% _.each(menu, function(section) {%>
+      <a class="item"><%= section.name %></a>
+      <% }) %>
+    </div>
+  </div>
+  <div class="twelve wide column">
+    <% _.each(menu, function(section) { %>
+    <h2 class="ui dividing header"><%= section.name %></h2>
+    <p> <%= section.subhead %> </p>
+      <% _.each(section.items, function(item) {%>
+        <div class="ui segment">
+
+          <b><%= item.name %></b>
+          <div class="mini ui labeled icon button floated right"><i class="add icon"></i>
+            <%= item.price %>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%>
+          </div>
+     
+          <h5><% if(item.minimum) { %><%=  item.minimum%><%} else if(item.serves) {%><%=item.serves%><%} else {%><%}%> </h5>
+          <p> <%= item.description %></p>
+        </div>    
+      <% })%>
+    <% }) %>
+  </div>
+</div>
+
