@@ -60,6 +60,8 @@ module.exports = function (grunt) {
 
     'linker/js/semantic.js',
 
+    'linker/js/simpleCart.js',
+
     // *->    put other dependencies here   <-*
 
     // All of the rest of your app scripts imported here
