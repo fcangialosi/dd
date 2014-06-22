@@ -64,7 +64,12 @@ module.exports.routes = {
 
   '/catering/menu' : 'MenuController.displayCateringMenu',
 
-  '/express/menu' : 'MenuController.displayExpressMenu'
+  '/express/menu' : 'MenuController.displayExpressMenu',
+
+  // TODO 
+  // using a GET for now to avoid trouble with the CSRF token, 
+  // but should handle that and  fix to a POST later
+  'get /catering/menu/order': 'MenuController.printOrder'
 
   /*
   // But what if you want your home page to display

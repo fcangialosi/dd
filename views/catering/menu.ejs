@@ -25,20 +25,31 @@
       <a class="item"><%= section.name %></a>
       <% }) %>
     </div>
+    <div class="ui large label"><i class="big cart icon"></i>
+  <b><span class="simpleCart_total"></span></b>
+</div>
+
+<a href="javascript:;" class="simpleCart_checkout">Checkout</a>
+<br>
+<a href="javascript:;" class="simpleCart_empty">Empty</a>
+<br>
+
   </div>
   <div class="twelve wide column">
     <% _.each(menu, function(section) { %>
     <h2 class="ui dividing header"><%= section.name %></h2>
     <p> <%= section.subhead %> </p>
       <% _.each(section.items, function(item) {%>
-        <div class="ui segment">
+        <div class="simpleCart_shelfItem ui segment">
 
-          <b><%= item.name %></b>
-          <div class="mini ui labeled icon button floated right"><i class="add icon"></i>
-            <%= item.price %>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%>
+          <b class="item_name"><%= item.name %></b>
+          <input type="hidden" value="1" class="item_Quantity">
+          <div class="item_add mini ui labeled icon button floated right"><i class="add icon"></i>
+             <span class="item_price"><%= item.price %></span>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%>
           </div>
      
           <h5><% if(item.minimum) { %><%=  item.minimum%><%} else if(item.serves) {%><%=item.serves%><%} else {%><%}%> </h5>
+          
           <p> <%= item.description %></p>
         </div>    
       <% })%>
@@ -46,3 +57,4 @@
   </div>
 </div>
 
+<div class="simpleCart_items"></div>
