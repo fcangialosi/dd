@@ -20,20 +20,31 @@
 
 <div class="ui grid">
   <div class="four wide column">
-    <div class="ui vertical pointing secondary menu">
-      <% _.each(menu, function(section) {%>
-      <a class="item"><%= section.name %></a>
+ 
+    <div class="ui vertical menu">
+      <div class="header item">
+        <i class="coffee icon"></i>
+        Breakfast
+      </div>
+      <% _.each(menu, function(section) { %>
+        <% if(section.breakfast) { %><a class="item"><%= section.name %></a><% } %>
       <% }) %>
+      <div class="header item">
+        <i class="food icon"></i>
+        Lunch
+      </div>
+      <% _.each(menu, function(section) {%>
+        <% if(!section.breakfast) { %><a class="item"><%= section.name %></a><%}%>
+      <% }) %>
+      <div class="header item">
+        <i class="cart icon"></i>
+        Your Order
+      </div>
+      <a class="item">Total: <span class="simpleCart_total"></span> (<span class="simpleCart_quantity"></span>&nbsp;items)</a>
+      <a class="item">View Order</a>
+      <a href="javascript:;" class="simpleCart_empty item">Start Over</a>
+      <a href="javascript:;" class="simpleCart_checkout item">Checkout</a>
     </div>
-    <div class="ui large label"><i class="big cart icon"></i>
-  <b><span class="simpleCart_total"></span></b>
-</div>
-
-<a href="javascript:;" class="simpleCart_checkout">Checkout</a>
-<br>
-<a href="javascript:;" class="simpleCart_empty">Empty</a>
-<br>
-
   </div>
   <div class="twelve wide column">
     <% _.each(menu, function(section) { %>
