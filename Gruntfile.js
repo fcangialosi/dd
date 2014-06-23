@@ -66,6 +66,8 @@ module.exports = function (grunt) {
 
     'linker/js/waypoints-sticky.js',
 
+    'linker/js/moment.min.js',
+
     // *->    put other dependencies here   <-*
 
     // All of the rest of your app scripts imported here

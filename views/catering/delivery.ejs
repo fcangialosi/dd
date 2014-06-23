@@ -1,0 +1,73 @@
+<div class="ui five medium steps">
+  <div class="ui disabled step">
+    Log-In
+  </div>
+  <div class="ui disabled step">
+    Choose Items
+  </div>
+  <div class="ui active step">
+    Add Delivery Info
+  </div>
+  <div class="ui disabled step">
+    Add Payment Info
+  </div>
+  <div class="ui disabled step">
+    Review &amp; Confirm
+  </div>
+</div>
+
+<% if(flash && flash.err) { %>
+ <div class="ui warning message">
+    <ul class="alert alert-success">
+  <% Object.keys(flash.err).forEach(function(error) { %>
+    <li><%- JSON.stringify(flash.err[error]) %></li>
+  <% }) %>
+  </ul>
+</div>
+<% } %>
+
+<div class="ui one column relaxed grid">
+  <div class="column">
+    <form action="/order/addDelivery" method="POST" class="ui large fluid form segment">
+        <p>Once you fill out this form, we'll save it to your account so that you can use it for future orders! </p>
+        <div class="two fields">
+        <div class="field">
+            <label>Delivery Contact Name</label>
+            <input placeholder="Leave blank if you are the delivery contact" name="name" type="text">
+          </div>
+          <div class="field">
+            <label>Delivery Contact Phone Number</label>
+            <input placeholder="Leave blank if you are the delivery contact" name="phone" type="text">
+          </div>
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Delivery Address</label>
+            <input placeholder="314 N. Charles St." name="address" type="text">
+          </div>
+          <div class="field">
+            <label>City</label>
+            <input placeholder="Baltimore" name="city" type="text">
+          </div>
+        </div>
+        <div class="field">
+          <label>Special Instructions</label>
+          <textarea placeholder="Anything else that will help us deliver your order smoothly and in a timely fashion!" name="instructions"></textarea>
+        </div>
+        <div class="two fields form-group">
+          <div class="field">
+            <label>Delivery Date</label>
+            <input type='text' id='delivery-datepicker' name='date'/>
+          </div>
+          <div class="field">
+            <label>Delivery Time</label>
+            <input type='text' id='delivery-timepicker' name='time'/>
+          </div>
+        </div>
+        <input type="submit" class="ui blue submit button" value="Save Location">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <div class="ui error message"></div>
+      </form>
+  </div>
+  <br>
+</div>

@@ -60,24 +60,17 @@ module.exports.routes = {
     view : 'catering/start'
   },
 
-  '/catering/cart' : {
-    view : 'catering/cart'
-  },
+  '/catering/delivery' : 'OrderController.delivery',
 
-  '/catering/order/delivery' : {
-    view : 'catering/delivery'
-  },
+  '/catering/payment' : 'OrderController.payment',
+
+  '/catering/confirm' : 'OrderController.review',
 
   '/main/menu' : 'MenuController.displayMainMenu',
 
   '/catering/menu' : 'MenuController.displayCateringMenu',
 
-  '/express/menu' : 'MenuController.displayExpressMenu',
-
-  // TODO 
-  // using a GET for now to avoid trouble with the CSRF token, 
-  // but should handle that and  fix to a POST later
-  'get /catering/menu/order': 'MenuController.printOrder'
+  '/express/menu' : 'MenuController.displayExpressMenu'
 
   /*
   // But what if you want your home page to display

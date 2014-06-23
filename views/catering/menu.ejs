@@ -13,7 +13,7 @@
       </div>
       <div class="modal-footer">
         <a class="ui button" data-dismiss="modal">Close</a>
-        <a class="ui green button" href="/catering/order/delivery">Checkout</a>
+        <a class="ui green button" href="/catering/delivery">Checkout</a>
       </div>
     </div>
   </div>
@@ -47,23 +47,23 @@
         Breakfast
       </div>
       <% _.each(menu, function(section) { %>
-        <% if(section.breakfast) { %><a class="item"><%= section.name %></a><% } %>
+        <% if(section.breakfast) { %><a class="orange item"><%= section.name %></a><% } %>
       <% }) %>
       <div class="header item">
         <i class="food icon"></i>
         Lunch
       </div>
       <% _.each(menu, function(section) {%>
-        <% if(!section.breakfast) { %><a class="item"><%= section.name %></a><%}%>
+        <% if(!section.breakfast) { %><a class="orange item"><%= section.name %></a><%}%>
       <% }) %>
       <div class="header item">
         <i class="cart icon"></i>
         Your Order
       </div>
-      <a class="item">Total: <span class="simpleCart_total"></span> (<span class="simpleCart_quantity"></span>&nbsp;items)</a>
-      <a class="item" data-toggle="modal" data-target="#myModal">View Order</a>
-      <a href="javascript:;" class="simpleCart_empty item">Start Over</a>
-      <a href="/catering/order/delivery" class="item">Checkout</a>
+      <a class="orange item">Total: <span class="simpleCart_total"></span> (<span class="simpleCart_quantity"></span>&nbsp;items)</a>
+      <a class="orange item" data-toggle="modal" data-target="#myModal">View Order</a>
+      <a href="javascript:;" class="simpleCart_empty orange item">Start Over</a>
+      <a href="/catering/delivery" class="orange item">Checkout</a>
     </div>
   </div>
   <div class="twelve wide column">
