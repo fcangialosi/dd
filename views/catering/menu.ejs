@@ -1,3 +1,23 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Your Order</h4>
+      </div>
+      <div class="modal-body">
+        <center><div class="simpleCart_items"></div></center>
+        <div class="ui divider"></div>
+        <center><b>Grand Total: </b>&nbsp;<span class="simpleCart_total"></span></center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" href="/catering/order/delivery">Checkout</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="ui five medium steps">
   <div class="ui disabled step">
     Create Account
@@ -41,9 +61,9 @@
         Your Order
       </div>
       <a class="item">Total: <span class="simpleCart_total"></span> (<span class="simpleCart_quantity"></span>&nbsp;items)</a>
-      <a class="item">View Order</a>
+      <a class="item" data-toggle="modal" data-target="#myModal">View Order</a>
       <a href="javascript:;" class="simpleCart_empty item">Start Over</a>
-      <a href="javascript:;" class="simpleCart_checkout item">Checkout</a>
+      <a href="/catering/order/delivery" class="item">Checkout</a>
     </div>
   </div>
   <div class="twelve wide column">
@@ -67,5 +87,3 @@
     <% }) %>
   </div>
 </div>
-
-<div class="simpleCart_items"></div>

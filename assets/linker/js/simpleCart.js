@@ -592,7 +592,7 @@
 				},
 
 				remove: function (item, column) {
-					return "<a href='javascript:;' class='" + namespace + "_remove'>" + (column.text || "X") + "</a>";
+					return "<div class='" + namespace + "_remove small ui red icon button'> <i class='medium trash icon'></i></div>";
 				}
 			};
 

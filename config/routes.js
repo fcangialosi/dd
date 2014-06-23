@@ -60,6 +60,14 @@ module.exports.routes = {
     view : 'catering/start'
   },
 
+  '/catering/cart' : {
+    view : 'catering/cart'
+  },
+
+  '/catering/order/delivery' : {
+    view : 'catering/delivery'
+  },
+
   '/main/menu' : 'MenuController.displayMainMenu',
 
   '/catering/menu' : 'MenuController.displayCateringMenu',
