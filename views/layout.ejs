@@ -36,10 +36,17 @@
             <li class="roomy-button"><a href="/express">Express Caf&eacute;</a></li>
             <li class="roomy-button"><a href="/about">About D&amp;D</a></li>
           </ul>
-          <div class="navbar-right">
+          <div class="nav navbar-right">
             <% if (session.authenticated) { %>
-              <a href="/user/show/<%= session.User.id %>"><%= session.User.firstName %> </a>
-              <a class="btn btn-default navbar-btn navbar-right" href="/session/destroy">Log Out</a>
+              <li class="roomy-button dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= session.User.firstName %> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/user/show/<%= session.User.id %>">My Account</a></li>
+                  <li><a href="/catering/menu">Place an Order</a></li>
+                  <li class="divider"></li>
+                  <li><a href="/session/destroy">Logout</a></li>
+                </ul>
+              </li>
             <% } else { %>
               <a class ="btn btn-success navbar-btn navbar-right" href="/session/new">Log In</a>
             <% } %>
