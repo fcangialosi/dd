@@ -64,7 +64,11 @@ module.exports.routes = {
 
   '/catering/payment' : 'OrderController.payment',
 
-  '/catering/confirm' : 'OrderController.review',
+  '/catering/review' : 'OrderController.review',
+
+  '/catering/success' : {
+    view : 'catering/success'
+  },
 
   '/main/menu' : 'MenuController.displayMainMenu',
 

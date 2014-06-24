@@ -22,7 +22,8 @@ module.exports = {
   },
 
   'addDelivery' : function(req,res) {
-    
+    console.log(req.body);
+    res.redirect('/catering/payment');
   },
 
   'payment' : function(req,res) {
@@ -30,7 +31,8 @@ module.exports = {
   },
 
   'addPayment' : function(req,res) {
-   
+    console.log(req.body);
+    res.redirect('/catering/review');
   },
 
   'review' : function(req,res) {
@@ -38,7 +40,8 @@ module.exports = {
   },
 
   'submit' : function(req,res) {
-    
+    console.log(req.body);
+    res.redirect('catering/success');
   }
   
 };

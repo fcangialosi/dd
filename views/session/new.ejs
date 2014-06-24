@@ -16,18 +16,21 @@
   </div>
 </div>
 
-<% if(flash && flash.err) { %>
- <div class="ui warning message">
-    <ul class="alert alert-success">
-  <% Object.keys(flash.err).forEach(function(error) { %>
-    <li><%- JSON.stringify(flash.err[error]) %></li>
-  <% }) %>
-  </ul>
-</div>
-<% } %>
-<div class="ui one column relaxed grid">
-  <div class="column">
-    <form action="/session/create" method="POST" class="ui form segment">
+
+<div class="ui relaxed grid">
+  <div class="three wide column"></div>
+  <div class="ten wide column">
+    <form action="/session/create" method="POST" class="ui warning form segment">
+      <% if(flash && flash.err) { %>
+      <div class="ui warning message">
+      <% Object.keys(flash.err).forEach(function(error) { %>
+        <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+        <ul class="list">
+          <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+        </ul>
+      <% }) %>
+      </div>
+      <% } %>
       <div class="field">
         <label>Email</label>
         <div class="ui left labeled icon input">
@@ -55,5 +58,5 @@
        <input type="hidden" name="_csrf" value="<%= _csrf %>">
     </div>
   </div>
-  <br>
+  <div class="three wide column"></div>
 </div>

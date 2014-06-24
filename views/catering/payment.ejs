@@ -1,6 +1,6 @@
 <div class="ui five medium steps">
   <div class="ui disabled step">
-    Log-In
+    Create Account
   </div>
   <div class="ui disabled step">
     Choose Items
@@ -15,3 +15,52 @@
     Review &amp; Confirm
   </div>
 </div>
+
+<h1 class="title">Credit Card Payment</h1>
+
+<div class="ui two column relaxed grid">
+  <div class="middle aligned row">
+    <div class="column">
+      <form action="/order/addPayment" method="POST" class="ui warning fluid form segment" id="card-form">
+        
+        <% if(flash && flash.err) { %>
+        <div class="ui warning message">
+        <% Object.keys(flash.err).forEach(function(error) { %>
+          <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+          <ul class="list">
+            <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+          </ul>
+        <% }) %>
+        </div>
+        <% } %>
+
+        <p>Click "Save" at the bottom if you'd like us to save your credit card information for future orders, or "Just Once" if you would prefer that we don't store any of your information.</p>
+        <div class="field">
+          <label>Card Number</label>
+          <input placeholder="1234 5678 1234 5678" name="number" type="text">
+        </div>
+        <div class="field">
+          <label>Name On Card</label>
+          <input placeholder="David Cangialosi" name="name" type="text">
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Expiration Date</label>
+            <input placeholder="06/2016" name="expiry" type="text">
+          </div>
+          <div class="field">
+            <label>CVC Code</label>
+            <input placeholder="123" name="cvc" type="text">
+          </div>
+        </div>
+        <input type="submit" class="ui blue submit button" value="Continue">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <div class="ui error message"></div>
+      </form>
+    </div>
+    <div class="card-wrapper column">
+    <!-- card.js fills this in with credit card animation -->
+    </div>
+  </div>
+</div>
+    

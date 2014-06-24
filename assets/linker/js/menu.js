@@ -49,6 +49,9 @@ ready = function() {
       down: "fa fa-arrow-down"
     });
   });
+  $('#card-form').card({
+    container: '.card-wrapper'
+  });
 
 };
 

@@ -1,0 +1,29 @@
+<div class="ui five medium steps">
+  <div class="ui disabled step">
+    Log-In
+  </div>
+  <div class="ui disabled step">
+    Choose Items
+  </div>
+  <div class="ui disabled step">
+    Add Delivery Info
+  </div>
+  <div class="ui disabled step">
+    Add Payment Info
+  </div>
+  <div class="ui active step">
+    Review &amp; Confirm
+  </div>
+</div>
+
+<h1 class="title">Please Confirm Your Order!</h1>
+
+<center><div class="simpleCart_items"></div></center>
+<div class="ui divider"></div>
+<center><b>Grand Total: </b>&nbsp;<span class="simpleCart_total"></span></center>
+
+<form action="/order/submit" method="POST" class="ui warning fluid form segment">
+  <input type="submit" class="fluid ui green submit button" value="SUBMIT">
+  <input type="hidden" name="_csrf" value="<%= _csrf %>">
+  <div class="ui error message"></div>
+</form>
