@@ -20,7 +20,7 @@
 <div class="ui relaxed grid">
   <div class="three wide column"></div>
   <div class="ten wide column">
-    <form action="/session/create" method="POST" class="ui warning form segment">
+    <form action="/session/create" method="POST" class="ui warning form segment" id="signin-form">
       <% if(flash && flash.err) { %>
       <div class="ui warning message">
       <% Object.keys(flash.err).forEach(function(error) { %>
