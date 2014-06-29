@@ -127,7 +127,7 @@ module.exports = {
   removeDelivery : function(req, res, next) {
 
     req.session.User.savedDelivery.splice(req.param('id'));
-    console.log(req.session.User);
+
     User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
       if (err) {
         return res.redirect('/catering/delivery/select');
@@ -138,10 +138,30 @@ module.exports = {
 
   addPayment : function(req, res, next) {
 
+    req.session.User.savedPayment.push({
+      number : req.body.number,
+      name : req.body.name,
+      expiry : req.body.expiry,
+      cvc : req.body.cvc
+    });
+
+    User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
+      if (err) {
+        return res.redirect('/catering/payment/new');
+      }
+      res.redirect('/catering/payment/select');
+    });
   },
 
   removeDelivery : function(req, res, next) {
-    
+    req.session.User.savedPayment.splice(req.param('id'));
+
+    User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
+      if (err) {
+        return res.redirect('/catering/payment/select');
+      }
+      res.redirect('/catering/payment/select');
+    });
   }
 
 };
