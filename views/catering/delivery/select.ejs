@@ -1,0 +1,78 @@
+<div class="ui five medium steps">
+  <div class="ui disabled step">
+    Create Account
+  </div>
+  <div class="ui disabled step">
+    Choose Items
+  </div>
+  <div class="ui active step">
+    Add Delivery Info
+  </div>
+  <div class="ui disabled step">
+    Add Payment Info
+  </div>
+  <div class="ui disabled step">
+    Review &amp; Confirm
+  </div>
+</div>
+
+<h1 class="title">Delivery</h1>
+
+
+    <p> Please choose from one of your saved delivery options below, or add a new one! </p>
+	<div class="ui medium divided list">
+	  <% _.each(session.User.savedDelivery, function(option){ %>
+	    <div class="item">
+	    	<form action="/user/removeDelivery/<%= session.User.savedDelivery.indexOf(option) %>" method="POST">
+			<input type="hidden" name="_method" value="delete"/>
+			<input type="submit" class="right floated medium ui red button" value="Delete"/>
+			<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+			</form>
+	      <div class="right floated medium ui change button">Select</div>
+	      <div class="content">
+	        <div class="header"> <%= option.address %>,&nbsp;<%= option.city %> </div>
+	        <div class="description" style="margin-left:20px">
+	        Contact: <%= option.contactName %> | <%= option.contactPhone %> 
+	        <% if(option.special) {%>
+	        <br> Instructions: <%= option.special %>
+	        <% } %>
+	        </div>
+	      </div>
+	    </div>
+	  <% }) %>
+	  <div class="item">
+	  <a class="right floated medium ui button" href="/catering/delivery/new">Create</a>
+	    <div class="content">
+	      <div class="header">
+	      Add New Location
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+<div class="ui one column relaxed grid">
+  <div class="column">
+    <form action="/session/delivery/submit" method="POST" class="ui large fluid form segment" id="delivery-form">
+		<div class="two fields form-group">
+		  <div class="field">
+		    <label>Delivery Date</label>
+		    <div class="ui left icon input">
+		      <input type='text' id='delivery-datepicker' name='date'/>
+		      <i class="calendar icon"></i>
+		    </div>
+		  </div>
+		  <div class="field">
+		    <label>Delivery Time</label>
+		    <div class="ui left icon input">
+		      <input type='text' id='delivery-timepicker' name='time'/>
+		      <i class="time icon"></i>
+		    </div>
+		  </div>
+		</div>
+		<input type="submit" class="fluid ui green submit button" value="Continue">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <div class="ui error message"></div>
+	</form>
+  </div>
+</div>

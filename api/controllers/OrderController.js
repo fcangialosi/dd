@@ -17,13 +17,15 @@
 
 module.exports = {
     
-  'delivery' : function(req,res) {
-    res.view('catering/delivery');
+  // list a user's saved delivery options
+  // and prompt for date/time for current order
+  'selectDelivery' : function(req,res) {
+    // TODO what if User.savedDelivery doesnt exist?
+    res.view('catering/delivery/select');
   },
 
-  'addDelivery' : function(req,res) {
-    console.log(req.body);
-    res.redirect('/catering/payment');
+  'newDelivery' : function(req,res) {
+    res.view('catering/delivery/add');
   },
 
   'payment' : function(req,res) {

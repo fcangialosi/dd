@@ -60,7 +60,9 @@ module.exports.routes = {
     view : 'catering/start'
   },
 
-  '/catering/delivery' : 'OrderController.delivery',
+  '/catering/delivery/select' : 'OrderController.selectDelivery',
+
+  '/catering/delivery/new' : 'OrderController.newDelivery',
 
   '/catering/payment' : 'OrderController.payment',
 
@@ -74,7 +76,9 @@ module.exports.routes = {
 
   '/catering/menu' : 'MenuController.displayCateringMenu',
 
-  '/express/menu' : 'MenuController.displayExpressMenu'
+  '/express/menu' : 'MenuController.displayExpressMenu',
+
+  '/session/delivery/submit' : 'SessionController.addDelivery'
 
   /*
   // But what if you want your home page to display

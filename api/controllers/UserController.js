@@ -64,6 +64,7 @@ module.exports = {
 
   // render the edit view (e.g. /views/edit.ejs)
   edit: function (req, res, next) {
+    // TODO handle case where there is no id (someone goes to /user/edit/)
 
     // Find the user from the id passed in via params
     User.findOne(req.param('id'), function foundUser (err, user) {
@@ -78,6 +79,7 @@ module.exports = {
 
   // process the info from edit view
   update: function (req, res, next) {
+
     User.update(req.param('id'), req.params.all(), function userUpdated (err) {
       if (err) {
         return res.redirect('/user/edit/' + req.param('id'));
@@ -101,6 +103,36 @@ module.exports = {
 
       res.redirect('/user');  
       
+    });
+  },
+
+  addDelivery : function(req, res, next) {
+
+    req.session.User.savedDelivery.push({
+        contactName : req.body.name,
+        contactPhone : req.body.phone,
+        address : req.body.address,
+        city : req.body.city,
+        special : req.body.instructions
+    });
+
+    User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
+      if (err) {
+        return res.redirect('/catering/delivery/new');
+      }
+      res.redirect('/catering/delivery/select');
+    });
+  },
+
+  removeDelivery : function(req, res, next) {
+
+    req.session.User.savedDelivery.splice(req.param('id'));
+    console.log(req.session.User);
+    User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
+      if (err) {
+        return res.redirect('/catering/delivery/select');
+      }
+      res.redirect('/catering/delivery/select');
     });
   }
 

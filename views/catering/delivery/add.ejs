@@ -28,7 +28,7 @@
 
 <div class="ui one column relaxed grid">
   <div class="column">
-    <form action="/order/addDelivery" method="POST" class="ui large fluid form segment" id="delivery-form">
+    <form action="/user/addDelivery" method="POST" class="ui large fluid form segment" id="delivery-form">
         <p>Once you fill out this form, we'll save it to your account so that you can use it for future orders! </p>
         <div class="two fields">
         <div class="field">
@@ -53,16 +53,6 @@
         <div class="field">
           <label>Special Instructions</label>
           <textarea placeholder="Anything else that will help us deliver your order smoothly and in a timely fashion!" name="instructions"></textarea>
-        </div>
-        <div class="two fields form-group">
-          <div class="field">
-            <label>Delivery Date</label>
-            <input type='text' id='delivery-datepicker' name='date'/>
-          </div>
-          <div class="field">
-            <label>Delivery Time</label>
-            <input type='text' id='delivery-timepicker' name='time'/>
-          </div>
         </div>
         <input type="submit" class="ui blue submit button" value="Save Location">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">

@@ -93,6 +93,10 @@ module.exports = {
 			// Redirect the browser to the sign-in screen
 			res.redirect('/session/new');
 
+	},
+
+	'addDelivery' : function(req,res,next){
+		res.redirect('/catering/payment/select');
 	}
 
   

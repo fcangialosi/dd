@@ -8,8 +8,6 @@
 
 module.exports = {
 
-  schema: true,
-
   attributes: {
   	
   	firstName : {
@@ -44,8 +42,7 @@ module.exports = {
   	},
 
     admin : {
-      type : 'boolean',
-      defaultTo: false
+      type : 'boolean'
     },
 
     toJSON : function() {
