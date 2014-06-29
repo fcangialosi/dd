@@ -111,7 +111,7 @@ $('#signin-form')
     }
   })
 ;
-$('#delivery-form')
+$('#new-delivery-form')
   .form({
     contactName: {
       identifier  : 'name',
@@ -150,6 +150,37 @@ $('#delivery-form')
         {
           type : 'empty',
           prompt : 'Please enter the city name'
+        }
+      ]
+    }
+  })
+;
+$('#select-delivery-form')
+  .form({
+    time : {
+      identifier : 'time',
+      rules : [
+        {
+          type : 'empty',
+          prompt : 'Please choose a time for your delivery!'
+        }
+      ]
+    },
+    date : {
+      identifier : 'date',
+      rules : [
+        {
+          type : 'empty',
+          prompt : 'Please choose a date for your delivery!'
+        }
+      ]
+    },
+    deliveryIndex : {
+      identifier : 'deliveryIndex',
+      rules : [
+        {
+          type : 'not[-1]',
+          prompt : 'Please choose a location or add a new one!'
         }
       ]
     }

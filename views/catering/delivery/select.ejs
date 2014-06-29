@@ -53,7 +53,7 @@
 
 <div class="ui one column relaxed grid">
   <div class="column">
-    <form action="/catering/delivery/save" method="POST" class="ui large fluid form segment" id="delivery-select-form">
+    <form action="/catering/delivery/save" method="POST" class="ui large fluid form segment" id="select-delivery-form">
 		<div class="two fields form-group">
 		  <div class="field">
 		    <label>Delivery Date</label>
@@ -72,7 +72,7 @@
 		</div>
 		<input type="submit" class="fluid ui green submit button" value="Continue">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">
-        <input type="hidden" name="deliveryIndex" value="-1" id="delivery-option-index">
+        <input type="hidden" name="deliveryIndex" value="-1" id="option-index">
         <div class="ui error message"></div>
 	</form>
   </div>
