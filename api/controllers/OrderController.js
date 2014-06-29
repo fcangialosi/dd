@@ -37,11 +37,11 @@ module.exports = {
   },
 
   'review' : function(req,res) {
-    res.view('catering/review');
+    res.view('catering/confirm/review');
   },
 
   'submit' : function(req,res) {
-    res.redirect('catering/success');
+    res.redirect('catering/confirm/success');
   }
   
 };

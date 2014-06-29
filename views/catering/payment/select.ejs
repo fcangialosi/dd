@@ -28,7 +28,7 @@
 		<input type="submit" class="right floated medium ui red button" value="Delete"/>
 		<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 		</form>
-      <div class="right floated medium ui payment button" index="<%= session.User.savedPayment.indexOf(card) %>">Select</div>
+      <div class="right floated medium ui change button" index="<%= session.User.savedPayment.indexOf(card) %>">Select</div>
       <div class="content">
         <div class="header">Card ending in <%= card.number.substring(card.number.length-4) %>
         </div>
@@ -52,7 +52,7 @@
     <form action="/catering/payment/save" method="POST" class="ui large fluid form segment" id="payment-select-form">
 		<input type="submit" class="fluid ui green submit button" value="Continue">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">
-        <input type="hidden" name="paymentIndex" value="-1" id="payment-option-index">
+        <input type="hidden" name="paymentIndex" value="-1" id="option-index">
         <div class="ui error message"></div>
 	</form>
   </div>

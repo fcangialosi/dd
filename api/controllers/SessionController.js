@@ -95,7 +95,7 @@ module.exports = {
 
 	},
 
-	'saveDelivery' : function(req,res,next){
+	'saveDelivery' : function(req,res,next) {
 		// TODO handle any errors that form validation might not catch
 
 		option = req.session.User.savedDelivery[parseInt(req.body.deliveryIndex)];
@@ -114,6 +114,18 @@ module.exports = {
 	},
 
 	'savePayment' : function(req,res,next) {
+
+		option = req.session.User.savedPayment[parseInt(req.body.paymentIndex)];
+
+		req.session.payment = {
+			cardNumber : option.number,
+			cardName : option.name,
+			cardExpiry : option.expiry,
+			cardCvc : option.cvc
+		}
+
+		console.log(req.session);
+
 		res.redirect('/catering/order/review');
 	}
 
