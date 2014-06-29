@@ -134,6 +134,14 @@ module.exports = {
       }
       res.redirect('/catering/delivery/select');
     });
+  },
+
+  addPayment : function(req, res, next) {
+
+  },
+
+  removeDelivery : function(req, res, next) {
+    
   }
 
 };

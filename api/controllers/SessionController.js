@@ -95,7 +95,7 @@ module.exports = {
 
 	},
 
-	'addDelivery' : function(req,res,next){
+	'saveDelivery' : function(req,res,next){
 		// TODO handle any errors that form validation might not catch
 
 		option = req.session.User.savedDelivery[parseInt(req.body.deliveryIndex)];
@@ -111,7 +111,10 @@ module.exports = {
 		}
 
 		res.redirect('/catering/payment/select');
+	},
+
+	'savePayment' : function(req,res,next) {
+		res.redirect('/catering/order/review');
 	}
 
-  
 };

@@ -44,13 +44,19 @@ module.exports.routes = {
     view : 'main/index'
   },
 
+  '/main/menu' : 'MenuController.displayMainMenu',
+
   '/catering' : {
     view: 'catering/index'
   },
 
+  '/catering/menu' : 'MenuController.displayCateringMenu',
+
   '/express' : {
     view : 'express/index'
   },
+
+  '/express/menu' : 'MenuController.displayExpressMenu',
 
   '/about' : {
     view :'home/about'
@@ -62,23 +68,19 @@ module.exports.routes = {
 
   '/catering/delivery/select' : 'OrderController.selectDelivery',
 
-  '/catering/delivery/new' : 'OrderController.newDelivery',
+  'get /catering/delivery/new' : 'OrderController.newDelivery',
 
-  '/catering/payment' : 'OrderController.payment',
+  'post /catering/delivery/save' : 'SessionController.saveDelivery'
 
-  '/catering/review' : 'OrderController.review',
+  '/catering/payment/select' : 'OrderController.selectPayment',
 
-  '/catering/success' : {
-    view : 'catering/success'
-  },
+  'get /catering/payment/new' : 'OrderController.newPayment',
 
-  '/main/menu' : 'MenuController.displayMainMenu',
+  'post /catering/payment/save' : 'SessionController.savePayment',
 
-  '/catering/menu' : 'MenuController.displayCateringMenu',
+  '/catering/order/review' : 'OrderController.review',
 
-  '/express/menu' : 'MenuController.displayExpressMenu',
-
-  '/session/delivery/submit' : 'SessionController.addDelivery'
+  'post /catering/order/submit' : 'OrderController.submit'
 
   /*
   // But what if you want your home page to display

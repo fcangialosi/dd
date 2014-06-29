@@ -28,13 +28,12 @@ module.exports = {
     res.view('catering/delivery/add');
   },
 
-  'payment' : function(req,res) {
-    res.view('catering/payment');
+  'selectPayment' : function(req,res) {
+    res.view('catering/payment/select');
   },
 
-  'addPayment' : function(req,res) {
-    console.log(req.body);
-    res.redirect('/catering/review');
+  'newPayment' : function(req,res) {
+    res.redirect('/catering/payment/add');
   },
 
   'review' : function(req,res) {
@@ -42,7 +41,6 @@ module.exports = {
   },
 
   'submit' : function(req,res) {
-    console.log(req.body);
     res.redirect('catering/success');
   }
   
