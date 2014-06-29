@@ -33,7 +33,7 @@ module.exports = {
   },
 
   'newPayment' : function(req,res) {
-    res.redirect('/catering/payment/add');
+    res.view('catering/payment/add');
   },
 
   'review' : function(req,res) {

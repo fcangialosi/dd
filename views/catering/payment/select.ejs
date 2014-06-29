@@ -1,0 +1,59 @@
+<div class="ui five medium steps">
+  <div class="ui disabled step">
+    Create Account
+  </div>
+  <div class="ui disabled step">
+    Choose Items
+  </div>
+  <div class="ui disabled step">
+    Add Delivery Info
+  </div>
+  <div class="ui active step">
+    Add Payment Info
+  </div>
+  <div class="ui disabled step">
+    Review &amp; Confirm
+  </div>
+</div>
+
+<h1 class="title">Payment</h1>
+
+
+<p> Please choose from one of your saved payment options below, or add a new one! </p>
+<div class="ui medium divided list">
+  <% _.each(session.User.savedPayment, function(card){ %>
+    <div class="item">
+    	<form action="/user/removePayment/<%= session.User.savedPayment.indexOf(card) %>" method="POST">
+		<input type="hidden" name="_method" value="delete"/>
+		<input type="submit" class="right floated medium ui red button" value="Delete"/>
+		<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+		</form>
+      <div class="right floated medium ui payment button" index="<%= session.User.savedPayment.indexOf(card) %>">Select</div>
+      <div class="content">
+        <div class="header">Card ending in <%= card.number.substring(card.number.length-4) %>
+        </div>
+        <div class="description"><%= card.name %></div>
+      </div>
+    </div>
+  <% }) %>
+  <div class="item">
+  <a class="right floated medium ui button" href="/catering/payment/new">Create</a>
+    <div class="content">
+      <div class="header">
+      Add New Credit Card
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="ui one column relaxed grid">
+  <div class="column">
+    <form action="/catering/payment/save" method="POST" class="ui large fluid form segment" id="payment-select-form">
+		<input type="submit" class="fluid ui green submit button" value="Continue">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <input type="hidden" name="paymentIndex" value="-1" id="payment-option-index">
+        <div class="ui error message"></div>
+	</form>
+  </div>
+</div>

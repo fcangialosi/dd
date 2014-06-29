@@ -188,7 +188,7 @@ $('#select-delivery-form')
 ;
 $('#card-form')
   .form({
-    cardNumber: {
+    number: {
       identifier  : 'number',
       rules: [
         {
@@ -205,7 +205,7 @@ $('#card-form')
         }
       ]
     },
-    cardName: {
+    name: {
       identifier  : 'name',
       rules: [
         {
@@ -214,7 +214,7 @@ $('#card-form')
         }
       ]
     },
-    cardExpiry: {
+    expiry: {
       identifier : 'expiry',
       rules: [
         {
@@ -231,7 +231,7 @@ $('#card-form')
         }
       ]
     },
-    cardCvc : {
+    cvc : {
       identifier : 'cvc',
       rules : [
         {

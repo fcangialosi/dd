@@ -70,7 +70,7 @@ module.exports.routes = {
 
   'get /catering/delivery/new' : 'OrderController.newDelivery',
 
-  'post /catering/delivery/save' : 'SessionController.saveDelivery'
+  'post /catering/delivery/save' : 'SessionController.saveDelivery',
 
   '/catering/payment/select' : 'OrderController.selectPayment',
 
