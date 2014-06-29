@@ -6,6 +6,7 @@ $(document).ready(function() {
       $change.text("Select");
       $(this).addClass('active');
       $(this).text("Selected");
+      $('#delivery-option-index').attr('value', $(this).attr('index'));
     }
   };
   $change.on('click', handler.activate);

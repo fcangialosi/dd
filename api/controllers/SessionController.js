@@ -87,15 +87,29 @@ module.exports = {
 
 	destroy: function(req, res, next) {
 
-			// Wipe out the session (log out)
-			req.session.destroy();
+		// Wipe out the session (log out)
+		req.session.destroy();
 
-			// Redirect the browser to the sign-in screen
-			res.redirect('/session/new');
+		// Redirect the browser to the sign-in screen
+		res.redirect('/session/new');
 
 	},
 
 	'addDelivery' : function(req,res,next){
+		// TODO handle any errors that form validation might not catch
+
+		option = req.session.User.savedDelivery[parseInt(req.body.deliveryIndex)];
+
+		req.session.delivery = {
+			time : req.body.time,
+			date : req.body.date,
+			contactName : option.contactName,
+			contactPhone : option.contactPhone,
+			address : option.address,
+			city : option.city,
+			special : option.special
+		}
+
 		res.redirect('/catering/payment/select');
 	}
 
