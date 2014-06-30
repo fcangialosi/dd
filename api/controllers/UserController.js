@@ -153,7 +153,7 @@ module.exports = {
     });
   },
 
-  removeDelivery : function(req, res, next) {
+  removePayment : function(req, res, next) {
     req.session.User.savedPayment.splice(req.param('id'));
 
     User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
