@@ -62,9 +62,11 @@ module.exports.routes = {
     view :'home/about'
   },
 
-  '/catering/start' : {
-    view : 'catering/start'
+  '/catering/order/start' : {
+    view : 'catering/order/start'
   },
+
+  '/catering/order/menu' : 'MenuController.displayOrderingMenu',
 
   '/catering/delivery/select' : 'OrderController.selectDelivery',
 

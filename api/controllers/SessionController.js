@@ -80,7 +80,7 @@ module.exports = {
 					return;
 				}
 				//Redirect to their profile page (e.g. /views/user/show.ejs)
-				res.redirect('/catering/menu');				
+				res.redirect('/catering/order/menu');				
 			});
 		});
 	},

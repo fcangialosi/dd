@@ -54,6 +54,7 @@ module.exports = {
   },
 
   beforeCreate : function (formParams, next) {
+    formParams.admin = false;
     // This is already checked by semantic-ui validator, can probably remove later
     if (!formParams.password || formParams.password != formParams.confirm) {
       return next({err: ["Password doesn't match password confirmation."]});

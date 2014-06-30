@@ -5,12 +5,18 @@
   <div class="two wide column">
   </div>
   <div class="six wide center aligned column">
-     <div class="ui huge header">Order Online</div>
-     <a class="ui green labeled icon button" href="/session/new">
-       <i class="sign in icon"></i> Sign In
-     </a>
-     <br><br>
-     <p> Don't have an account? <a href="/user/new">Create</a> one now!</p>
+    <div class="ui huge header">Order Online</div>
+      <% if (session.authenticated) { %>
+        <a class="ui green labeled icon button" href="/session/new">
+          <i class="cart icon"></i> Start New Order
+        </a>
+      <% } else { %>
+        <a class="ui green labeled icon button" href="/session/new">
+          <i class="sign in icon"></i> Sign In
+        </a>
+      <% } %>
+    <br><br>
+    <p> Don't have an account? <a href="/user/new">Create</a> one now!</p>
   </div>
   <div class="ui vertical divider">
     Or

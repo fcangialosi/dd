@@ -22,7 +22,7 @@ module.exports = {
       // Get an array of all  in the User collection(e.g. table)
       Menu.find({"menu":"main"}, function foundUsers (err, menu) {
         if (err) return next(err);
-        res.view('main/menu',
+        res.view('menu',
         {
           menu: menu
         });
@@ -34,7 +34,7 @@ module.exports = {
       // Get an array of all  in the User collection(e.g. table)
       Menu.find({"menu":"catering"}, function foundUsers (err, menu) {
         if (err) return next(err);
-        res.view('catering/menu',
+        res.view('menu',
         {
           menu: menu
         });
@@ -46,14 +46,26 @@ module.exports = {
       // Get an array of all  in the User collection(e.g. table)
       Menu.find({"menu":"express"}, function foundUsers (err, menu) {
         if (err) return next(err);
-        res.view('express/menu',
+        res.view('menu',
         {
           menu: menu
         });
       });
     },
 
-    printOrder: function(req, res, next) {
+    displayOrderingMenu: function (req, res, next) {
+      // Get an array of all  in the User collection(e.g. table)
+      Menu.find({"menu":"catering"}, function foundUsers (err, menu) {
+        if (err) return next(err);
+        res.view('catering/order/menu',
+        {
+          menu: menu
+        });
+      });
+    },
+
+
+    printOrder: function (req, res, next) {
       console.log(req.query);
       res.redirect('/');
     }
