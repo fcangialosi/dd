@@ -1,9 +1,31 @@
-<form action="/user/update/<%= user.id %>" method="POST" class="form-signin">
-<h2> Hey, you're editing a user... </h2>
+<h2> Edit Account </h2>
 
-<input value="<%= user.firstName %>" name="firstName" type="text" class="form-control"/>
-<input value="<%= user.companyName %>" name="companyName" type="text" class="form-control"/>
-<input value="<%= user.email %>" name="email" type="text" class="form-control"/>
-<input type="submit" value="Proceed" class="btn btn-lg btn-primary btn-block"/>
-<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+<form action="/user/update/<%= user.id %>" method="POST" class="ui large fluid form segment" id="edit-form">
+	<p>Edit only the fields you would like to change, everything else will remain the same.</p>
+	<div class="two fields">
+	  <div class="field">
+	    <label>First Name</label>
+	    <input value="<%= user.firstName %>" name="firstName" type="text" class="form-control">
+	  </div>
+	  <div class="field">
+	    <label>Last Name</label>
+	    <input value="<%= user.lastName %>" name="lastName" type="text" class="form-control">
+	  </div>
+	</div>
+	<div class="two fields">
+	<div class="field">
+	    <label>Company Name</label>
+	    <input value="<%= user.companyName %>" name="companyName" type="text" class="form-control">
+	  </div>
+	  <div class="field">
+	    <label>Phone Number</label>
+	    <input value="<%= user.phone %>" name="phone" type="text" class="form-control">
+	  </div>
+	</div>
+	<div class="field">
+	  <label>Email Address</label>
+	  <input value="<%= user.email %>" name="email" type="text" class="form-control">
+	</div>
+	<input type="submit" value="SAVE" class="btn btn-lg btn-primary btn-block"/>
+	<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 </form>

@@ -43,7 +43,8 @@
               <li class="roomy-button dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= session.User.firstName %> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="/user/show/<%= session.User.id %>">My Account</a></li>
+                  <li><a href="/user/show/<%= session.User.id %>">View Account</a></li>
+                  <li><a href="/user/edit/<%= session.User.id %>">Edit Account</a> 
                   <li><a href="/catering/menu">Place an Order</a></li>
                   <li class="divider"></li>
                   <li><a href="/session/destroy">Logout</a></li>
