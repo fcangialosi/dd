@@ -41,7 +41,8 @@ module.exports = {
   },
 
   'submit' : function(req,res) {
-    res.redirect('catering/confirm/success');
+    console.log(req.session);
+    res.view('catering/confirm/success');
   }
   
 };

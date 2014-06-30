@@ -16,14 +16,49 @@
   </div>
 </div>
 
-<h1 class="title">Please Confirm Your Order!</h1>
+<h1 class="title">Order Summary</h1>
 
-<center><div class="simpleCart_items"></div></center>
-<div class="ui divider"></div>
-<center><b>Grand Total: </b>&nbsp;<span class="simpleCart_total"></span></center>
+<p style="margin-left: 60px; margin-right: 60px; margin-top: 10px; margin-bottom: 30px;" align="center"> Please review your order, delivery information, and payment information below, then click confirm to submit your order.<br><b> We will confirm all orders via E-Mail or telephone. Please do not consider your order final until we have confirmed it!</b></p>
 
-<form action="/order/submit" method="POST" class="ui warning fluid form segment">
-  <input type="submit" class="fluid ui green submit button" value="SUBMIT">
+<div class="ui celled grid">
+  <div class="six wide column">
+    <div class="ui vertically divided grid">
+      <div class="row">
+        <div class="column">
+        <b>Name</b>:&nbsp;<%= session.User.firstName %>&nbsp;<%= session.User.lastName %><br>
+        <b>Company</b>:&nbsp;<%= session.User.companyName %><br>
+        <b>Phone</b>:&nbsp;<%= session.User.phone %><br>
+        <b>E-Mail</b>:&nbsp;<%= session.User.email %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+        <b>Address</b>:&nbsp;<%= session.delivery.address %>,&nbsp;<%= session.delivery.city %><br>
+        <b>Instructions</b>:&nbsp;<%= session.delivery.special %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+        <b>Name</b>:&nbsp;<%= session.payment.cardName %><br>
+        <b>Number</b>:&nbsp;Card ending in <%= session.payment.cardNumber.substring(session.payment.cardNumber.length-4) %><br>
+        <b>Expiration</b>:&nbsp;<%= session.payment.cardExpiry%><br>
+        <b>CVC</b>:&nbsp;<%= session.payment.cardCvc%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ten wide column">
+  <center><div class="simpleCart_items"></div></center>
+  <div class="ui divider"></div>
+  <center><b>Grand Total: </b>&nbsp;<span class="simpleCart_total"></span></center>
+
+  </div>
+</div>
+
+<form action="/catering/order/submit" method="POST" class="ui warning fluid form segment">
+  <input type="submit" class="fluid ui green submit button" value="CONFIRM">
   <input type="hidden" name="_csrf" value="<%= _csrf %>">
   <div class="ui error message"></div>
 </form>
