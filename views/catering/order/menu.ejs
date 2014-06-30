@@ -47,14 +47,14 @@
         Breakfast
       </div>
       <% _.each(menu, function(section) { %>
-        <% if(section.breakfast) { %><a class="orange item"><%= section.name %></a><% } %>
+        <% if(section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><% } %>
       <% }) %>
       <div class="header item">
         <i class="food icon"></i>
         Lunch
       </div>
       <% _.each(menu, function(section) {%>
-        <% if(!section.breakfast) { %><a class="orange item"><%= section.name %></a><%}%>
+        <% if(!section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><%}%>
       <% }) %>
       <div class="header item">
         <i class="cart icon"></i>
@@ -68,7 +68,7 @@
   </div>
   <div class="twelve wide column">
     <% _.each(menu, function(section) { %>
-    <h2 class="ui dividing header"><%= section.name %></h2>
+    <h2 class="ui dividing header" id="<%=section.name%>"><%= section.name %></h2>
     <p> <%= section.subhead %> </p>
       <% _.each(section.items, function(item) {%>
         <div class="simpleCart_shelfItem ui segment">

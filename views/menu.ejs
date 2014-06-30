@@ -1,0 +1,45 @@
+<h1 class="title"> Menu </h1>
+
+<div class="ui grid">
+  <div class="four wide column">
+ 
+    <div class="ui vertical menu sticky-sidebar">
+      <div class="header item">
+        <i class="coffee icon"></i>
+        Breakfast
+      </div>
+        <% _.each(menu, function(section) { %>
+          <% if(section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><% } %>
+        <% }) %>
+        <a class="orange item" href="#Breakfast%20Specials">Today's Breakfast Specials</a>
+      <div class="header item">
+        <i class="food icon"></i>
+        Lunch
+      </div>
+        <% _.each(menu, function(section) {%>
+          <% if(!section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><%}%>
+        <% }) %>
+        <a class="orange item" href="#Lunch%20Specials">Today's Lunch Specials</a>
+    </div>
+  </div>
+  <div class="twelve wide column">
+    <% _.each(menu, function(section) { %>
+    <h2 class="ui dividing header" id="<%=section.name%>"><%= section.name %></h2>
+    <p> <%= section.subhead %> </p>
+      <% _.each(section.items, function(item) {%>
+        <div class="simpleCart_shelfItem ui segment">
+
+          <b class="item_name"><%= item.name %></b>
+          
+          <div class="mini ui button floated right">
+             <span class="item_price"><%= item.price %></span>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%>
+          </div>
+     
+          <h5><% if(item.minimum) { %><%=  item.minimum%><%} else if(item.serves) {%><%=item.serves%><%} else {%><%}%> </h5>
+          
+          <p> <%= item.description %></p>
+        </div>    
+      <% })%>
+    <% }) %>
+  </div>
+</div>
