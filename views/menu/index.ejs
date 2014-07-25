@@ -1,0 +1,51 @@
+<h1 class="title"> Manage Menu </h1>
+
+<% _.each(menus, function(menu) { %>
+<h3> <%= menu.name %> 
+	(<% if(menu.breakfast) { %> 
+	breakfast
+	<% } else { %> 
+	lunch
+	<% } %>,
+	<%= menu.menu %>)
+</h3>
+<p> <%= menu.subhead %> </p>
+
+	<table class='table'>
+		<tr>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Rate</th>
+			<th>Min/Serves</th>
+			<th>Description</th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		<% _.each(menu.items, function(item) { %>
+			<tr data-id="<%= item.id %>" data-model="item">
+				<td><%= item.name %></td>
+				<td><%= item.price %></td>
+				<td><%= item.priceSuffix %></td>
+				<td>
+					<% if (item.minimum) { %>
+						<%= item.minimum %>
+					<% } else if (item.serves) { %>
+						<%= item.serves %>
+					<% } else { %>
+						empty
+					<% } %>
+				</td>
+				<td><%= item.description %></td>
+				<td><a href="/menu/edit/<%= menu.id %>" class="btn btn-sm btn-warning">Edit</a></td>
+				<td><form action="/menu/destroy/<%= menu.id %>" method="POST">
+					<input type="hidden" name="_method" value="delete"/>
+					<input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+					<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+				</form></td>
+			</tr> 
+		<% }) %>
+	</table>
+
+<% }) %>
