@@ -19,8 +19,8 @@ module.exports = {
    
     displayMainMenu: function (req, res, next) {
 
-      // Get an array of all  in the User collection(e.g. table)
-      Menu.find({"menu":"main"}, function foundUsers (err, menu) {
+      // Get an array of all  in the Menu collection(e.g. table)
+      Menu.find({"menu":"main"}, function foundMenus (err, menu) {
         if (err) return next(err);
         res.view('menu',
         {
@@ -31,8 +31,8 @@ module.exports = {
 
     displayCateringMenu: function (req, res, next) {
 
-      // Get an array of all  in the User collection(e.g. table)
-      Menu.find({"menu":"catering"}, function foundUsers (err, menu) {
+      // Get an array of all  in the Menu collection(e.g. table)
+      Menu.find({"menu":"catering"}, function foundMenus (err, menu) {
         if (err) return next(err);
         res.view('menu',
         {
@@ -43,8 +43,8 @@ module.exports = {
 
 	displayExpressMenu: function (req, res, next) {
 
-      // Get an array of all  in the User collection(e.g. table)
-      Menu.find({"menu":"express"}, function foundUsers (err, menu) {
+      // Get an array of all  in the Menu collection(e.g. table)
+      Menu.find({"menu":"express"}, function foundMenus (err, menu) {
         if (err) return next(err);
         res.view('menu',
         {
@@ -54,8 +54,8 @@ module.exports = {
     },
 
     displayOrderingMenu: function (req, res, next) {
-      // Get an array of all  in the User collection(e.g. table)
-      Menu.find({"menu":"catering"}, function foundUsers (err, menu) {
+      // Get an array of all  in the Menu collection(e.g. table)
+      Menu.find({"menu":"catering"}, function foundMenus (err, menu) {
         if (err) return next(err);
         res.view('catering/order/menu',
         {
@@ -68,6 +68,41 @@ module.exports = {
     printOrder: function (req, res, next) {
       console.log(req.query);
       res.redirect('/');
+    },
+
+    index: function (req, res, next) {
+
+      // Get an array of all Menus in the Menu collection(e.g. table)
+      Menu.find(function foundMenus (err, menus) {
+        if (err) return next(err);
+        // pass the array down to the /views/index.ejs page
+        res.view({
+          menus: menus
+        });
+      });
+    },
+
+    edit: function (req, res, next) {
+
+      Menu.findOne(req.param('id'), function foundItem (err, menu) {
+        if (err) return next(err);
+        if (!menu) return next('Item doesn\'t exist.');
+
+        res.view({
+          item : item
+        });
+      });
+    },
+
+    update: function(req, res, next) {
+
+      Menu.update(req.param('id'), req.params.all(), function itemUpdated(err) {
+        if (err) {
+          return res.redirect('/menu')
+        }
+
+        res.redirect('/menu')
+      });
     }
   
 };
