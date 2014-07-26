@@ -74,12 +74,13 @@
         <div class="simpleCart_shelfItem ui segment">
 
           <b class="item_name"><%= item.name %></b>
-          <input type="hidden" value="1" class="item_Quantity">
-          <div class="item_add mini ui labeled icon button floated right"><i class="add icon"></i>
-             <span class="item_price"><%= item.price %></span>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%>
+
+          <div id="quantity-box" class="mini ui icon input">
+            <input type="text" placeholder="Quantity" class="item_Quantity">
+            <i class="item_add inverted add icon"></i>
           </div>
      
-          <h5><% if(item.minimum) { %><%=  item.minimum%><%} else if(item.serves) {%><%=item.serves%><%} else {%><%}%> </h5>
+          <h5><% if(item.minimum) { %><%=  item.minimum%><%} else if(item.serves) {%><%=item.serves%><%} else {%><%}%> | <span class="item_price"><%= item.price %></span>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%> </h5>
           
           <p> <%= item.description %></p>
         </div>    

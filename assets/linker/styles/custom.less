@@ -9,16 +9,27 @@
     font-style: normal;
 }
 
+@font-face {
+  font-family: 'mel';
+  src: url('../../fonts/melbourne/melbourne.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html, body {
 	font-size: 15px;
 	height: 100%;
+  margin: none;
+  padding: none;
+  width: 100%;
+  overflow-x:hidden;
 }
 
 body {
   font-family: 'museo', serif;
   background: #FFFFFF;
   margin: 0px;
-  color: #555555;
+  color: #39342e;
   text-rendering: optimizeLegibility;
   min-width: 320px;
 }
@@ -60,10 +71,6 @@ body {
   margin-bottom: 30px;
 }
 
-#footer {
-  margin-top: 30px;
-}
-
 td, th {
   padding-top: 5px;
   padding-bottom: 5px;
@@ -83,4 +90,77 @@ td, th {
 
 .item_name {
   color: #F05940;
+}
+
+#quantity-box {
+  width: 100px;
+  float: right;
+}
+
+#home-section1 {
+  width: 100%;
+  height: 600px;
+  background: url("../../images/pastries-light.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.dark-brown {
+  background-color: #39342e !important;
+  color: #FFFFFF !important;
+}
+
+.home-button {
+  background-color: #413c35;
+  color: #f8f5ec;
+  text-decoration: none;
+  font-size: 2em;
+  border-radius: 25px;
+  padding: 15px;
+}
+
+.down-divider {
+  background: url("../../images/divider-down.png") repeat;
+  width: 100%;
+  left: 0;
+  height: 11px;
+  bottom: -11px;
+  position: absolute;
+}
+
+.up-divider {
+  background: url("../../images/divider-up.png") repeat;
+  width: 100%;
+  left: 0;
+  height: 11px;
+  top: -11px;
+  position: absolute;
+}
+
+.navbar-item {
+  font-family: 'mel';
+  font-size: 1.75em;
+  color: #39342e;
+}
+
+.mel {
+  font-family: 'mel';
+}
+
+#section-2 {
+  width: 100%;
+  height: 400px;
+  background: url("../../images/cream-tile.png") repeat;
+}
+
+#header-section {
+  width:100%;
+  height: 55px;
+  background: url("../../images/cream-tile.png") repeat;
+}
+
+#section-3 {
+  width: 100%;
+  height: 400px;
+  background: url("../../images/food.png") repeat;
 }
