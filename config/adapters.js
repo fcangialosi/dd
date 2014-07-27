@@ -36,4 +36,12 @@ module.exports.adapters = {
   //   password: 'YOUR_MYSQL_PASSWORD', 
   //   database: 'YOUR_MYSQL_DB'
   // }
+
+  'default' : 'mongo',
+
+    mongo : {
+      module : 'sails-mongo',
+      url : process.env.DB_URL,
+      schema : true
+    }
 };

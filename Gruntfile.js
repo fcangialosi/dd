@@ -52,11 +52,11 @@ module.exports = function (grunt) {
     // then beef it up with some convenience logic for talking to Sails.js
     'linker/js/sails.io.js',
 
+    'linker/js/jquery.js',
+
     // A simpler boilerplate library for getting you up and running w/ an
     // automatic listener for incoming messages from Socket.io.
     'linker/js/app.js',
-
-    'linker/js/jquery.js',
 
     'linker/js/semantic.js',
 
