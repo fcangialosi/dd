@@ -18,17 +18,32 @@ module.exports.policies = {
   // (`true` allows public access) 
   '*': ['flash','isAuthenticated'],
   
-  session : {
+  SessionController : {
   	'new' : 'flash',
   	create : 'flash',
-  	'*' : 'isAuthenticated'
+  	'*': ['flash','isAuthenticated']
   },
 
-  user : {
+  UserController : {
   	'new' : 'flash',
   	create : 'flash',
   	index : 'admin',
-  	'*' : 'isAuthenticated'
+  	destroy : 'admin',
+  	update : 'admin',
+  	'*': ['flash','isAuthenticated']
+  },
+
+  MenuController : {
+  	index : 'admin',
+  	create : 'admin',
+  	destroy : 'admin',
+  	update : 'admin',
+  	'*' : ['flash', 'isAuthenticated']
+  },
+
+  OrderController : {
+  	'start' : 'flash',
+  	'*' : ['flash', 'isAuthenticated']
   }
 
   /*

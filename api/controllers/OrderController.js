@@ -19,6 +19,14 @@ var mandrill = require('mandrill-api/mandrill');
 var mandrill_client = new mandrill.Mandrill('A0FFxkmu5O8btl-vw4zlfA');
 
 module.exports = {
+
+  'start' : function(req, res) {
+    if(req.session.authenticated) {
+      res.redirect('/catering/order/menu');
+    } else {
+      res.redirect('/session/new');
+    }
+  },
     
   // list a user's saved delivery options
   // and prompt for date/time for current order
