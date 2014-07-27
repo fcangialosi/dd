@@ -116,7 +116,15 @@ module.exports = {
 	'savePayment' : function(req,res,next) {
 
 		option = req.session.User.savedPayment[parseInt(req.body.paymentIndex)];
-
+		
+		if(!option) {
+			var missingPaymentError = [{name: "Missing Payment Option", message: "Please select a current payment method, or create a new one."}]
+			req.session.flash = {
+				err: missingPaymentError
+			}
+			return res.redirect('/catering/payment/select');
+		}
+		
 		req.session.payment = {
 			cardNumber : option.number,
 			cardName : option.name,
