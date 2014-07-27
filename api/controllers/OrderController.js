@@ -55,7 +55,7 @@ module.exports = {
     var parsed = JSON.stringify(req.session) + JSON.stringify(req.params.all());
     var message_to_dd = {
       "text" : parsed,
-      "subject": "ORDER REQUEST FROM " + req.session.user.companyName,
+      "subject": "ORDER REQUEST FROM " + req.session.User.companyName,
       "from_email": "orders@davidanddads.com",
       "from_name": "Order Manager",
       "to": [{
