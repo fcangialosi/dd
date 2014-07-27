@@ -241,8 +241,8 @@ module.exports = {
 
       Menu.findOne(req.param('id'), function foundMenu (err, menu) {
         var index = Number(req.param('index'));
-        var name = menu['items'][index].name;
         if(index) { // delete individual item
+          var name = menu['items'][index].name;
           var edited_menu = JSON.parse(JSON.stringify(menu));
           edited_menu['items'].splice(index, 1);
           Menu.update(req.param('id'), edited_menu, function itemUpdated(err) {
