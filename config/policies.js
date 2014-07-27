@@ -38,6 +38,9 @@ module.exports.policies = {
   	create : 'admin',
   	destroy : 'admin',
   	update : 'admin',
+  	'displayMainMenu' : true,
+  	'displayCateringMenu' : true,
+  	'displayExpressMenu' : true,
   	'*' : ['flash', 'isAuthenticated']
   },
 
