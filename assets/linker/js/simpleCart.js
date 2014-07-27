@@ -913,9 +913,18 @@
 							simpleCart.$create("input").attr("type","hidden").attr("name",name).val(val)
 						);
 					});
-					simpleCart.$("body").append(form);
-					form.el.submit();
-					form.remove();
+					$.get("/csrfToken", function(data) {
+						if(data) {
+							form.append(
+								simpleCart.$create("input").attr("type","hidden").attr("name","_csrf").val(data._csrf)
+							);
+						}
+						console.log(data);
+						simpleCart.$("body").append(form);
+						form.el.submit();
+						form.remove();
+					});
+					
 				}
 			});
 
