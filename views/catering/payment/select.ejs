@@ -56,14 +56,13 @@
   </div>
 </div>
 
-
 <div class="ui one column relaxed grid">
   <div class="column">
-    <form action="/catering/payment/save" method="POST" class="ui large fluid form segment" id="payment-select-form">
+    <form action="/catering/payment/save" method="POST" class="ui large fluid form segment" id="select-payment-form">
+    <div class="ui error message"></div>
 		<input type="submit" class="fluid ui green submit button" value="Continue">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">
         <input type="hidden" name="paymentIndex" value="-1" id="option-index">
-        <div class="ui error message"></div>
 	</form>
   </div>
 </div>

@@ -186,6 +186,19 @@ $('#select-delivery-form')
     }
   })
 ;
+$('#select-payment-form')
+  .form({
+    paymentIndex : {
+      identifier : 'paymentIndex',
+      rules : [
+        {
+          type : 'not[-1]',
+          prompt : 'Please choose a payment method or add a new one!'
+        }
+      ]
+    }
+  })
+;
 $('#card-form')
   .form({
     number: {
