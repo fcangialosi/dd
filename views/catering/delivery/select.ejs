@@ -18,6 +18,16 @@
 
 <h1 class="title">Delivery</h1>
 
+<% if(flash && flash.err) { %>
+  <div class="ui warning message">
+  <% Object.keys(flash.err).forEach(function(error) { %>
+    <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+    <ul class="list">
+      <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+    </ul>
+  <% }) %>
+  </div>
+<% } %>
 
 <p> Please choose from one of your saved delivery options below, or add a new one! </p>
 <div class="ui medium divided list">
@@ -54,6 +64,7 @@
 <div class="ui one column relaxed grid">
   <div class="column">
     <form action="/catering/delivery/save" method="POST" class="ui large fluid form segment" id="select-delivery-form">
+    <div class="ui error message"></div>
 		<div class="two fields form-group">
 		  <div class="field">
 		    <label>Delivery Date</label>
@@ -73,7 +84,7 @@
 		<input type="submit" class="fluid ui green submit button" value="Continue">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">
         <input type="hidden" name="deliveryIndex" value="-1" id="option-index">
-        <div class="ui error message"></div>
+        
 	</form>
   </div>
 </div>

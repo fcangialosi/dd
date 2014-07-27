@@ -100,6 +100,14 @@ module.exports = {
 
 		option = req.session.User.savedDelivery[parseInt(req.body.deliveryIndex)];
 
+		if(!option) {
+			var missingDeliveryError = [{name: "Missing Delivery Option", message: "Please select a current delivery method, or create a new one."}]
+			req.session.flash = {
+				err: missingDeliveryError
+			}
+			return res.redirect('/catering/delivery/select');
+		}
+
 		req.session.delivery = {
 			time : req.body.time,
 			date : req.body.date,
