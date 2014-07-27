@@ -1,0 +1,57 @@
+<div class="container">
+<h1 class="title"> Manage Menu </h1>
+
+	<br>
+
+	<% if (this.warning_message) { %>
+		<div class="ui red message">
+			<%= warning_message.text %>
+		</div>
+	<% } %>
+	<% if (this.success_message) { %>
+		<div class="ui green message">
+			<%= success_message.text %>
+		</div>
+	<% } %>
+
+	<br>
+
+	<% _.each(menus, function(menu_type) { %>
+	  <h3 class="ui header"><%= menu_type.name %></h3>
+
+	  <table class='table'>
+
+			<tr>
+				<th>Name</th>
+				<th>Meal</th>
+				<th>Subheading</th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+
+			<% _.each(menu_type['menus'], function(menu) { %>
+				<tr data-id="<%= menu.id %>" data-model="menu">
+					<td><%= menu.name %></td>
+					<td><% if (menu.breakfast) { %> Breakfast <% } else { %> Lunch <% } %></td>
+					<td><%= menu.subhead %></td>
+					<td><a href="/menu/edit/<%= menu.id %>" class="btn btn-sm btn-warning">Edit</a></td>
+					<td><form action="/menu/destroy/<%= menu.id %>" method="POST">
+						<input type="hidden" name="_method" value="delete"/>
+						<input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+					</form></td>
+				</tr> 
+	  	<% }) %>
+
+		</table>
+
+		<center>
+		  <a href="/menu/new" class="btn btn-md btn-success">Add New <%= menu_type.name %></a>
+		</center>
+	  
+	<% }) %>
+</div>
+
+<br>
+<br>

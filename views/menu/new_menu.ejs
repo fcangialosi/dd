@@ -1,0 +1,48 @@
+<div class="container">
+      <br>
+      <h1> Create New Menu </h1>
+      <br>
+      <% if (flash && flash.err) { %>
+        <div class="ui red message">
+          <%= flash.err %>
+        </div>
+      <% } %>
+      <% if (flash && flash.success) { %>
+        <div class="ui green message">
+          <%= flash.success %>
+        </div>
+      <% } %>
+
+      <form action="/menu/create" method="POST" class="ui large fluid form segment" id="create-menu-form">
+
+        <p>This will create a new empty menu section. Once you create the section, you can add items to it from the main page. </p>
+        
+        <div class="field">
+          <label>Section Name</label>
+          <input placeholder="Section Name" name="name" type="text">
+        </div>
+        
+        <div class="two fields">
+          <div class="field">
+            <label>Meal (all lowercase)</label>
+            <input placeholder="Breakfast or Lunch" name="breakfast" type="text">
+          </div>
+          <div class="field">
+            <label>Menu (all lowercase)</label>
+            <input placeholder="Main, Catering, or Express" name="menu" type="text">
+          </div>
+        </div>
+        
+        <div class="field">
+          <label>Subheading</label>
+          <textarea name="subhead" placeholder="This blurb will appear underneath the section's heading in the menu"style="height: 150px"></textarea>
+        </div>
+
+        <input type="submit" class="ui blue submit button" value="Create Section">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <div class="ui error message"></div>
+      </form>
+    </div>
+  </div>
+  
+</div>

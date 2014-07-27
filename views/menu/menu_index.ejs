@@ -1,0 +1,86 @@
+<div class="container">
+  <h1 class="title"> Edit <%= menu.name %> Menu </h1>
+  <center>
+	  <h3>
+	    Menu Tags:
+	    <span class="huge ui red label"> <% if(menu.breakfast) { %>breakfast<% } else { %>lunch<% } %> </span>
+	    <span class="huge ui teal label"> <%= menu.menu %> </span>
+	  </h3>
+  </center>
+
+  <br>
+	
+	<% if (flash && flash.err) { %>
+		<div class="ui red message">
+			<%= flash.err %>
+		</div>
+	<% } %>
+	<% if (flash && flash.success) { %>
+		<div class="ui green message">
+			<%= flash.success %>
+		</div>
+	<% } %>
+
+  <br>
+  
+  <form action="/menu/update/<%= menu.id %>?index=details" method="POST" class="ui large fluid form segment" id="edit-form">
+	<div class="field">
+      <label>Edit Menu Subheading</label>
+      <textarea name="subhead" style="height: 100px"><%= menu.subhead %></textarea>
+    </div>
+	<input type="submit" value="SAVE" class="btn btn-md btn-primary btn-block"/>
+	<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+  </form>
+
+  <br>
+  <br>
+
+  <div>
+    <h3> Edit Individual Items </h3>
+  </div>
+
+  <br>
+  <center>
+  <a href="/menu/new_item/<%= menu.id %>" class="btn btn-md btn-success">Add New Item</a>
+  </center>
+  <br>
+  
+  <div>
+	  <table class='table'>
+		  <tr>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Units</th>
+				<th>Min/Serves</th>
+				<th>Description</th>
+				<th></th>
+				<th></th>
+				<th></th>
+		  </tr>
+
+			<% _.each(menu.items, function(item) { %>
+				<tr data-id="<%= item.id %>" data-model="item">
+					<td><%= item.name %></td>
+					<td><%= item.price %></td>
+					<td><% if (item.priceSuffix) { %><%= item.priceSuffix %><% } else { %>each<% } %></td>
+					<td>
+						<% if (item.minimum) { %>
+							<%= item.minimum %>
+						<% } else if (item.serves) { %>
+							<%= item.serves %>
+						<% } else { %>
+							empty
+						<% } %>
+					</td>
+					<td><%= item.description %></td>
+					<td><a href="/menu/edit/<%= menu.id %>?index=<%= menu['items'].indexOf(item)%>" class="btn btn-sm btn-warning">Edit</a></td>
+					<td><form action="/menu/destroy/<%= menu.id %>?index=<%= menu['items'].indexOf(item)%>" method="POST">
+						<input type="hidden" name="_method" value="delete"/>
+						<input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+					</form></td>
+				</tr> 
+			<% }) %>
+		</table>
+	</div>
+</div>

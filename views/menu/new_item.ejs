@@ -1,0 +1,54 @@
+<div class="container">
+
+      <br>
+      <h1> Create New Item </h1>
+      <br>
+
+      <% if (flash && flash.err) { %>
+        <div class="ui red message">
+          <%= flash.err %>
+        </div>
+      <% } %>
+      <% if (flash && flash.success) { %>
+        <div class="ui green message">
+          <%= flash.success %>
+        </div>
+      <% } %>
+
+      <form action="/menu/create_item/<%= menu_id %>" method="POST" class="ui large fluid form segment" id="create-item-form">
+        <p>The placeholders are simply examples to make it clear what is expected in each input!</p>
+        <div class="three fields">
+          <div class="field">
+            <label>Item Name</label>
+            <input placeholder="Cold Cut Sub" name="name" type="text" class="form-control">
+          </div>
+          <div class="field">
+            <label>Minimum (can leave blank) </label>
+            <input placeholder="Minimum 8 people" name="minimum" type="text" class="form-control">
+          </div>
+          <div class="field">
+            <label>Serves (can leave blank) </label>
+            <input placeholder="10 to 15 people" name="serves" type="text" class="form-control">
+          </div>
+        </div>
+        <div class="two fields">
+        <div class="field">
+            <label>Price</label>
+            <input placeholder="$10.99" name="price" type="text" class="form-control">
+          </div>
+          <div class="field">
+            <label>Pricing Unit</label>
+            <input placeholder="e.g. per person, each"name="priceSuffix" type="text" class="form-control">
+          </div>
+        </div>
+        <div class="field">
+            <label>Item Description</label>
+            <textarea placeholder="Served on a wheat sub roll, with turkey, ham, lettuce, tomato, and swiss." name="description"></textarea>
+          </div>
+        <input type="submit" value="CREATE" class="btn btn-lg btn-primary btn-block"/>
+        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+      </form>
+    </div>
+  </div>
+  
+</div>

@@ -1,0 +1,38 @@
+<div class="container">
+<h2> Edit <%= item.name %> </h2>
+
+<form action="/menu/update/<%= menu_id %>?index=<%= item_index %>" method="POST" class="ui large fluid form segment" id="edit-form">
+	<p>Edit only the fields you would like to change, everything else will remain the same.</p>
+	<div class="three fields">
+	  <div class="field">
+	    <label>Item Name</label>
+	    <input value="<%= item.name %>" name="name" type="text" class="form-control">
+	  </div>
+	  <div class="field">
+	    <label>Minimum (can leave blank) </label>
+	    <input value="<%= item.minimum %>" name="minimum" type="text" class="form-control">
+	  </div>
+	  <div class="field">
+	    <label>Serves (can leave blank) </label>
+	    <input value="<%= item.serves %>" name="serves" type="text" class="form-control">
+	  </div>
+	</div>
+	<div class="two fields">
+	<div class="field">
+	    <label>Price</label>
+	    <input value="<%= item.price %>" name="price" type="text" class="form-control">
+	  </div>
+	  <div class="field">
+	    <label>Pricing Unit</label>
+	    <input value="<% if (item.priceSuffix) { %><%= item.priceSuffix %><% } else { %>each<% } %>" name="priceSuffix" type="text" class="form-control">
+	  </div>
+	</div>
+	<div class="field">
+      <label>Item Description</label>
+      <textarea name="description"><%= item.description %></textarea>
+    </div>
+	<input type="submit" value="SAVE" class="btn btn-lg btn-primary btn-block"/>
+	<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+</form>
+
+</div>
