@@ -1,100 +1,147 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%- title %></title>
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+  <title><%- title %></title>
 
-    <!-- Viewport mobile tag for sensible mobile support -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <!--STYLES-->
-    <link rel="stylesheet" href="/linker/styles/bootstrap.css">
-    <link rel="stylesheet" href="/linker/styles/card.css">
-    <link rel="stylesheet" href="/linker/styles/custom.css">
-    <link rel="stylesheet" href="/linker/styles/datetimepicker.min.css">
-    <link rel="stylesheet" href="/linker/styles/fa.min.css">
-    <link rel="stylesheet" href="/linker/styles/semantic.css">
-    <!--STYLES END-->
-  </head>
+  <!--STYLES-->
+  <link rel="stylesheet" href="/linker/styles/bootstrap.css">
+  <link rel="stylesheet" href="/linker/styles/card.css">
+  <link rel="stylesheet" href="/linker/styles/custom.css">
+  <link rel="stylesheet" href="/linker/styles/datetimepicker.min.css">
+  <link rel="stylesheet" href="/linker/styles/fa.min.css">
+  <link rel="stylesheet" href="/linker/styles/semantic.css">
+  <!--STYLES END-->
+</head>
 
-  <body>
-    
-    <div id="header-section" style="position:relative;">
-  <header id="header">
-    <div class="ui center aligned top aligned four column grid">
-      <div class="column" style="border-right: 1px dashed #39342e;">
-        <a href="/" class="navbar-item">Home</a>
-      </div>
-      <div class="column" style="border-right: 1px dashed #39342e;">
-        <a href="/main" class="navbar-item">Main Caf&eacute;</a href="">
-      </div>
-      <div class="column" style="border-right: 1px dashed #39342e;">
-        <a href="/catering" class="navbar-item">Catering</a href="">
-      </div>
-      <div class="column">
-        <a href="/express" class="navbar-item">Express Caf&eacute;s</a href="">
-      </div>
-    </div>
-  </header>
-  <div class="down-divider"></div>
-</div>
+<body>
 
-    <%- body %>
-    
-    <footer class="ui inverted dark-brown page grid segment" id="footer">
-      <div class="ten wide column">
-        <div class="ui three column stackable grid">
-          <div class="column">
-            <div class="ui header">Courses</div>
-            <div class="ui inverted link list">
-              <a class="item">Registration</a>
-              <a class="item">Course Calendar</a>
-              <a class="item">Professors</a>
+  <div id="header-section" style="position:relative">
+    <header id="header">
+      <div class="ui center aligned top aligned four column grid">
+        <div class="column" style="border-right: 1px dashed #39342e;">
+          <a href="/" class="navbar-item">Home</a>
+        </div>
+        <div class="column" style="border-right: 1px dashed #39342e;">
+          <a href="/main" class="navbar-item">Main Caf&eacute;</a>
+        </div>
+        <div class="column" style="border-right: 1px dashed #39342e;">
+          <a href="/catering" class="navbar-item">Catering</a>
+        </div>
+        <div class="column">
+          <a href="/express" class="navbar-item">Express Caf&eacute;s</a>
+        </div>
+      </div>
+    </header>
+    <div class="down-divider"></div>
+  </div>
+
+  <%- body %>
+
+  <div id="city">
+  </div>
+  <div class="ui inverted dark-brown page grid" id="footer">
+    <div class="ui stackable grid">
+      <div class="row">
+        <div class="twelve wide column">
+          <h1 class="ui dividing header"> Our Locations </h1>
+        </div>
+        <div class="four wide column">
+          <h1 class="ui dividing header"> Our Company </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="three wide column">
+          <h3 class="ui header">Main Cafe</h3>
+          <div class="ui inverted list">
+            <div class="item">334 N. Charles St.</div>
+            <div class="item">Baltimore, MD 21201</div>
+            <div class="item">(410)-547-0550</div>
+            <div class="item">6am - 3pm M - S
+              <div class="red-dot"></div>
             </div>
           </div>
-          <div class="column">
-            <div class="ui header">Library</div>
-            <div class="ui inverted link list">
-              <a class="item">A-Z</a>
-              <a class="item">Most Popular</a>
-              <a class="item">Recently Changed</a>
+        </div>
+        <div class="three wide column">
+          <h3 class="ui header">Pratt Library</h3>
+          <div class="ui inverted list">
+            <div class="item">334 N. Charles St.</div>
+            <div class="item">Baltimore, MD 21201</div>
+            <div class="item">(410)-547-0550</div>
+            <div class="item">6am - 3pm M - S
+              <div class="red-dot"></div>
             </div>
           </div>
-          <div class="column">
-            <div class="ui header">Community</div>
-            <div class="ui inverted link list">
-              <a class="item">BBS</a>
-              <a class="item">Careers</a>
-              <a class="item">Privacy Policy</a>
+        </div>
+        <div class="three wide column">
+          <h3 class="ui header">T. Rowe Price</h3>
+          <div class="ui inverted list">
+            <div class="item">334 N. Charles St.</div>
+            <div class="item">Baltimore, MD 21201</div>
+            <div class="item">(410)-547-0550</div>
+            <div class="item">6am - 3pm M - S
+              <div class="red-dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="three wide column">
+          <h3 class="ui header">Johns Hopkins</h3>
+          <div class="ui inverted list">
+            <div class="item">334 N. Charles St.</div>
+            <div class="item">Baltimore, MD 21201</div>
+            <div class="item">(410)-547-0550</div>
+            <div class="item">6am - 3pm M - S
+              <div class="red-dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="four wide column">
+          <div class="ui inverted list">
+            <div class="item">About David and Dad's</div>
+            <div class="item">Contact Us</div>
+            <div class="item">Jobs</div>
+            <div class="item">Press</div>
+            <div class="item">Privacy Policy</div>
+            <div class="item">
+              <img style="margin-right: 15px" src="/icons/facebook.png" height="30px" width="30px">
+              <img style="margin-right: 15px" src="/icons/youtube.png" height="30px" width="30px">
+              <img style="margin-right: 15px" src="/icons/mail.png" height="30px" width="30px">
+              <img style="margin-right: 15px" src="/icons/linked-in.png" height="30px" width="30px">
+              <img style="margin-right: 15px" src="/icons/twitter.png" height="30px" width="30px">
             </div>
           </div>
         </div>
       </div>
-      <div class="six wide right floated aligned column">
-        <h3 class="ui header">Contact Us</h3>
-        <addr>
-          334 N. Charles St. <br>
-          Baltimore, MD 21201 <br>
-        </addr>
-        <p>(410) 547-0550</p>
+      <div class="row">
+        <div class="column">
+          <center>
+            <span>&copy; 2014 David and Dad's, Inc.</span>
+          </center>
+        </div>
       </div>
-    </footer>
+    </div>
+  </div>
 
-    <!--SCRIPTS-->
-    <script src="/linker/js/socket.io.js"></script>
-    <script src="/linker/js/sails.io.js"></script>
-    <script src="/linker/js/jquery.js"></script>
-    <script src="/linker/js/app.js"></script>
-    <script src="/linker/js/semantic.js"></script>
-    <script src="/linker/js/simpleCart.js"></script>
-    <script src="/linker/js/waypoints.js"></script>
-    <script src="/linker/js/waypoints-sticky.js"></script>
-    <script src="/linker/js/moment.min.js"></script>
-    <script src="/linker/js/bootstrap.js"></script>
-    <script src="/linker/js/button.js"></script>
-    <script src="/linker/js/card.js"></script>
-    <script src="/linker/js/datetimepicker.js"></script>
-    <script src="/linker/js/form.js"></script>
-    <script src="/linker/js/menu.js"></script>
-    <!--SCRIPTS END-->
-  </body>
+  <!--SCRIPTS-->
+  <script src="/linker/js/socket.io.js"></script>
+  <script src="/linker/js/sails.io.js"></script>
+  <script src="/linker/js/jquery.js"></script>
+  <script src="/linker/js/app.js"></script>
+  <script src="/linker/js/semantic.js"></script>
+  <script src="/linker/js/simpleCart.js"></script>
+  <script src="/linker/js/waypoints.js"></script>
+  <script src="/linker/js/waypoints-sticky.js"></script>
+  <script src="/linker/js/moment.min.js"></script>
+  <script src="/linker/js/bootstrap.js"></script>
+  <script src="/linker/js/button.js"></script>
+  <script src="/linker/js/card.js"></script>
+  <script src="/linker/js/datetimepicker.js"></script>
+  <script src="/linker/js/form.js"></script>
+  <script src="/linker/js/menu.js"></script>
+  <!--SCRIPTS END-->
+  
+</body>
 </html>

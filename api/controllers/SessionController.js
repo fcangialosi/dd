@@ -20,7 +20,11 @@ var bcrypt = require('bcrypt');
 module.exports = {
     
 	'new' : function(req,res) {
-		res.view('session/new');
+		if(req.session.authenticated) {
+	      res.redirect('/catering/order/menu');
+	    } else {
+	      res.view('session/new');
+	    }
 	},
 
  	create : function(req, res, next){

@@ -1,63 +1,63 @@
-<div class="ui five medium steps">
-  <div class="ui active step">
-    Log-In
-  </div>
-  <div class="ui disabled step">
-    Choose Items
-  </div>
-  <div class="ui disabled step">
-    Add Delivery Info
-  </div>
-  <div class="ui disabled step">
-    Add Payment Info
-  </div>
-  <div class="ui disabled step">
-    Review &amp; Confirm
-  </div>
-</div>
-
-
-<div class="ui relaxed grid">
-  <div class="three wide column"></div>
-  <div class="ten wide column">
-    <form action="/session/create" method="POST" class="ui warning form segment" id="signin-form">
-      <% if(flash && flash.err) { %>
-      <div class="ui warning message">
-      <% Object.keys(flash.err).forEach(function(error) { %>
-        <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
-        <ul class="list">
-          <li><%- JSON.stringify(flash.err[error]['message']) %></li>
-        </ul>
-      <% }) %>
+<div id="step-section">
+  <div class="container">
+    <div class="ui five medium steps" style="margin: 50px;">
+      <div class="ui active step">
+        Log-In
       </div>
-      <% } %>
-       <p> Don't have an account? <a href="/user/new">Create</a> one now!
-      <div class="field">
-        <label>Email</label>
-        <div class="ui left labeled icon input">
-          <input type="text" name="email" placeholder="Email Address">
-          <i class="user icon"></i>
-          <div class="ui corner label">
-            <i class="icon asterisk"></i>
+      <div class="ui disabled step">
+        Choose Items
+      </div>
+      <div class="ui disabled step">
+        Add Delivery Info
+      </div>
+      <div class="ui disabled step">
+        Add Payment Info
+      </div>
+      <div class="ui disabled step">
+        Review &amp; Confirm
+      </div>
+    </div>
+    <div class="ui relaxed grid" id="wood">
+      <div class="three wide column"></div>
+      <div class="ten wide column">
+        <form action="/session/create" method="POST" class="ui warning form segment" id="signin-form">
+          <% if(flash && flash.err) { %>
+          <div class="ui warning message">
+            <% Object.keys(flash.err).forEach(function(error) { %>
+            <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+            <ul class="list">
+              <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+            </ul>
+            <% }) %>
           </div>
-        </div>
-      </div>
-      <div class="field">
-        <label>Password</label>
-        <div class="ui left labeled icon input">
-          <input type="password" name="password">
-          <i class="lock icon"></i>
-          <div class="ui corner label">
-            <i class="icon asterisk"></i>
+          <% } %>
+          <div class="ui error message"></div>
+          <p> Don't have an account? <a href="/user/new">Create</a> one now! </p>
+          <div class="field">
+            <label>Email</label>
+            <div class="ui left labeled icon input">
+              <input type="text" name="email" placeholder="Email Address">
+              <i class="user icon"></i>
+              <div class="ui corner label">
+                <i class="icon asterisk"></i>
+              </div>
+            </div>
           </div>
-        </div>
+          <div class="field">
+            <label>Password</label>
+            <div class="ui left labeled icon input">
+              <input type="password" name="password">
+              <i class="lock icon"></i>
+              <div class="ui corner label">
+                <i class="icon asterisk"></i>
+              </div>
+            </div>
+          </div>
+          <input type="submit" class="ui blue submit button" value="Login">
+          <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        </form>
       </div>
-      <div class="ui error message">
-        <div class="header">We noticed some issues</div>
-      </div>
-      <input type="submit" class="ui blue submit button" value="Login">
-       <input type="hidden" name="_csrf" value="<%= _csrf %>">
+      <div class="three wide column"></div>
     </div>
   </div>
-  <div class="three wide column"></div>
 </div>

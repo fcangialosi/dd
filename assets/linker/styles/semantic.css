@@ -4400,9 +4400,7 @@ i.massive.basic.icon {
   margin: 0em;
   padding: 0.8em 1.5em;
   font-size: 1rem;
-  text-transform: uppercase;
   line-height: 1;
-  font-weight: bold;
   font-style: normal;
   text-align: center;
   text-decoration: none;
@@ -14266,22 +14264,22 @@ body.pushed.scrolling.ui.dimmable {
   color: rgba(0, 0, 0, 0.5);
 }
 .ui.items .item:nth-of-type(6n+1):hover {
-  border-bottom-color: #6ECFF5 !important;
+  border-bottom-color: #5C6166 !important;
 }
 .ui.items .item:nth-of-type(6n+2):hover {
   border-bottom-color: #5C6166 !important;
 }
 .ui.items .item:nth-of-type(6n+3):hover {
-  border-bottom-color: #A1CF64 !important;
+  border-bottom-color: #5C6166 !important;
 }
 .ui.items .item:nth-of-type(6n+4):hover {
-  border-bottom-color: #D95C5C !important;
+  border-bottom-color: #5C6166 !important;
 }
 .ui.items .item:nth-of-type(6n+5):hover {
-  border-bottom-color: #00B5AD !important;
+  border-bottom-color: #5C6166 !important;
 }
 .ui.items .item:nth-of-type(6n+6):hover {
-  border-bottom-color: #564F8A !important;
+  border-bottom-color: #5C6166 !important;
 }
 /*******************************
            Variations
