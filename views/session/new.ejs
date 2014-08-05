@@ -2,26 +2,27 @@
   <div class="container">
     <div class="ui five medium steps" style="margin: 50px;">
       <div class="ui active step">
-        Log-In
+        Start My Order
+      </div>
+      <div class="ui disabled step">
+        Delivery Info
       </div>
       <div class="ui disabled step">
         Choose Items
       </div>
       <div class="ui disabled step">
-        Add Delivery Info
-      </div>
-      <div class="ui disabled step">
-        Add Payment Info
+        Payment Info
       </div>
       <div class="ui disabled step">
         Review &amp; Confirm
       </div>
     </div>
-    <div class="ui relaxed grid" id="wood">
-      <div class="three wide column"></div>
-      <div class="ten wide column">
-        <form action="/session/create" method="POST" class="ui warning form segment" id="signin-form">
-          <% if(flash && flash.err) { %>
+    <div class="ui top aligned grid" id="wood">
+      <div class="two wide column"></div>
+      <div class="six wide column">
+        <form action="/user/create" method="POST" class="ui warning form segment" id="signup-form">
+          <h4><b>New Customer?</b></h4>
+          <% if(flash && flash.err && flash.err[0].type == 'signup') { %>
           <div class="ui warning message">
             <% Object.keys(flash.err).forEach(function(error) { %>
             <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
@@ -32,11 +33,10 @@
           </div>
           <% } %>
           <div class="ui error message"></div>
-          <p> Don't have an account? <a href="/user/new">Create</a> one now! </p>
           <div class="field">
-            <label>Email</label>
+            <label> Name</label>
             <div class="ui left labeled icon input">
-              <input type="text" name="email" placeholder="Email Address">
+              <input type="text" name="name" placeholder="Name">
               <i class="user icon"></i>
               <div class="ui corner label">
                 <i class="icon asterisk"></i>
@@ -44,20 +44,57 @@
             </div>
           </div>
           <div class="field">
-            <label>Password</label>
+            <label>Company Name</label>
             <div class="ui left labeled icon input">
-              <input type="password" name="password">
-              <i class="lock icon"></i>
+              <input type="text" name="companyName" placeholder="Company Name">
+              <i class="briefcase icon"></i>
               <div class="ui corner label">
                 <i class="icon asterisk"></i>
               </div>
             </div>
           </div>
-          <input type="submit" class="ui blue submit button" value="Login">
+          <div class="field">
+            <label>E-Mail</label>
+            <div class="ui left labeled icon input">
+              <input type="text" name="email" placeholder="Email Address">
+              <i class="mail icon"></i>
+              <div class="ui corner label">
+                <i class="icon asterisk"></i>
+              </div>
+            </div>
+          </div>
+          <input type="submit" class="ui green submit button" value="I'm Ready to Order!">
           <input type="hidden" name="_csrf" value="<%= _csrf %>">
         </form>
       </div>
-      <div class="three wide column"></div>
+      <div class="six wide column">
+        <form action="/session/create" method="POST" class="ui warning form segment" id="signin-form">
+          <h4><b>Returning Customer?</b></h4>
+          <% if(flash && flash.err && flash.err[0].type == 'signin') { %>
+          <div class="ui warning message">
+            <% Object.keys(flash.err).forEach(function(error) { %>
+            <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+            <ul class="list">
+              <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+            </ul>
+            <% }) %>
+          </div>
+          <% } %>
+          <div class="ui error message"></div>
+          <div class="field">
+            <div class="ui left labeled icon input">
+            <input type="text" name="email" placeholder="Email Address">
+              <i class="user icon"></i>
+              <div class="ui corner label">
+                <i class="icon asterisk"></i>
+              </div>
+            </div>
+          </div>
+          <input type="submit" class="ui blue submit button" value="I'm Ready to Order!">
+          <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        </form>
+      </div>
+      <div class="two wide column"></div>
     </div>
   </div>
 </div>

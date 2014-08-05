@@ -1,20 +1,11 @@
 $('#signup-form')
   .form({
-    firstName: {
-      identifier  : 'firstName',
+    name: {
+      identifier  : 'name',
       rules: [
         {
           type   : 'empty',
-          prompt : 'Please enter your first name'
-        }
-      ]
-    },
-    lastName: {
-      identifier  : 'lastName',
-      rules: [
-        {
-          type   : 'empty',
-          prompt : 'Please enter your last name'
+          prompt : 'Please enter your name'
         }
       ]
     },
@@ -39,78 +30,24 @@ $('#signup-form')
           prompt : 'Please enter the name of the company you are ordering for'
         }
       ]
-    },
-    phoneNumber : {
-      identifier : 'phone',
-      rules : [
-        {
-          type : 'empty',
-          prompt : 'Please enter a phone number'
-        },
-        {
-          type : 'phone',
-          prompt : 'Please enter a valid phone number'
-        }
-      ]
-    },
-    password: {
-      identifier : 'password',
-      rules: [
-        {
-          type   : 'empty',
-          prompt : 'Please enter a password'
-        },
-        {
-          type   : 'length[6]',
-          prompt : 'Your password must be at least 6 characters'
-        }
-      ]
-    },
-    confirm: {
-      identifier : 'confirm',
-      rules: [
-      {
-        type : 'empty',
-        prompt : 'Please confirm your password'
-      },
-      {
-        type : 'match[password]',
-        prompt : "Woops, you must have made a small typo! The two passwords don't match"
-      }
-      ]
     }
   })
 ;
-$('#signin-form')
-  .form({
-    email: {
-      identifier : 'email',
-      rules: [
-        {
-          type   : 'empty',
-          prompt : "Please enter an email address"
-        },
-        {
-          type : 'email',
-          prompt : 'Please enter a valid email address'
-        }
-      ]
+$('#signin-form').form({
+  email : {
+    identifier : 'email',
+    rules : [
+    {
+      type : 'empty',
+      prompt : 'Please enter an email address'
     },
-    password: {
-      identifier : 'password',
-      rules: [
-        {
-          type   : 'empty',
-          prompt : 'Please enter a password'
-        },
-        {
-          type   : 'length[6]',
-          prompt : 'Your password must be at least 6 characters'
-        }
-      ]
+    {
+      type : 'email',
+      prompt : 'Please enter a valid email address'
     }
-  })
-;
+    ]
+  }
+});
 $('#new-delivery-form')
   .form({
     contactName: {
@@ -257,7 +194,7 @@ $('#card-form')
         },
         {
           type   : 'maxLength[3]',
-          prompt : 'Your CVC code should be exactly 3 numbers'  
+          prompt : 'Your CVC code should be exactly 3 numbers'
         }
       ]
     }
