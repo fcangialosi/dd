@@ -16,7 +16,7 @@
  */
 
 module.exports = {
-    
+
     'new' : function(req, res){
     	res.view();
     },
@@ -29,15 +29,15 @@ module.exports = {
     				err: err
     			}
 
-    			return res.redirect('/user/new');
+    			return res.redirect('/session/new');
     		}
 
-        // automatically log them in now
-        req.session.authenticated = true;
-        req.session.User = user;
+          // automatically log them in now
+          req.session.authenticated = true;
+          req.session.User = user;
+    	    res.redirect('/catering/order/menu');
 
-    		res.redirect('/catering/menu');
-    	});	
+    	});
     },
 
     show: function(req, res, next) {
@@ -70,7 +70,7 @@ module.exports = {
     User.findOne(req.param('id'), function foundUser (err, user) {
       if (err) return next(err);
       if (!user) return next('User doesn\'t exist.');
-      
+
       res.view({
         user: user
       });
@@ -101,8 +101,8 @@ module.exports = {
 
       });
 
-      res.redirect('/user');  
-      
+      res.redirect('/user');
+
     });
   },
 
