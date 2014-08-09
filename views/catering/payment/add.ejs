@@ -1,15 +1,15 @@
 <div class="ui five medium steps">
   <div class="ui disabled step">
-    Log In
+    Start My Order
   </div>
   <div class="ui disabled step">
-    Choose Items
+    When &amp; Where
   </div>
   <div class="ui disabled step">
-    Add Delivery Info
+    Food
   </div>
   <div class="ui active step">
-    Add Payment Info
+    Payment
   </div>
   <div class="ui disabled step">
     Review &amp; Confirm
@@ -22,7 +22,7 @@
   <div class="middle aligned row">
     <div class="column">
       <form action="/user/addPayment" method="POST" class="ui warning fluid form segment" id="card-form">
-        
+
         <% if(flash && flash.err) { %>
         <div class="ui warning message">
         <% Object.keys(flash.err).forEach(function(error) { %>

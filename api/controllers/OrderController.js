@@ -22,12 +22,12 @@ module.exports = {
 
   'start' : function(req, res) {
     if(req.session.authenticated) {
-      res.redirect('/catering/order/menu');
+      res.redirect('/catering/order/delivery');
     } else {
-      res.redirect('/session/new');
+      res.view('session/new');
     }
   },
-    
+
   // list a user's saved delivery options
   // and prompt for date/time for current order
   'selectDelivery' : function(req,res) {
@@ -86,5 +86,5 @@ module.exports = {
     });
     res.view('catering/confirm/success');
   }
-  
+
 };

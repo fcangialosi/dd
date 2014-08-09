@@ -1,16 +1,16 @@
 <div class="container" style="margin-top:30px">
 <div class="ui five medium steps">
   <div class="ui disabled step">
-    Log In
-  </div>
-  <div class="ui disabled step">
-    Choose Items
+    Start My Order
   </div>
   <div class="ui active step">
-    Add Delivery Info
+    When &amp; Where
   </div>
   <div class="ui disabled step">
-    Add Payment Info
+    Food
+  </div>
+  <div class="ui disabled step">
+    Payment
   </div>
   <div class="ui disabled step">
     Review &amp; Confirm
@@ -43,7 +43,7 @@
       <div class="content">
         <div class="header"> <%= option.address %>,&nbsp;<%= option.city %> </div>
         <div class="description" style="margin-left:20px">
-        Contact: <%= option.contactName %> | <%= option.contactPhone %> 
+        Contact: <%= option.contactName %> | <%= option.contactPhone %>
         <% if(option.special) {%>
         <br> Instructions: <%= option.special %>
         <% } %>
@@ -52,7 +52,7 @@
     </div>
   <% }) %>
   <div class="item">
-  <a class="right floated medium ui button" href="/catering/delivery/new">Create</a>
+  <a class="right floated medium ui button" href="/catering/order/delivery/new">Create</a>
     <div class="content">
       <div class="header">
       Add New Location
@@ -64,7 +64,7 @@
 
 <div class="ui one column relaxed grid">
   <div class="column">
-    <form action="/catering/delivery/save" method="POST" class="ui large fluid form segment" id="select-delivery-form">
+    <form action="/catering/order/delivery/save" method="POST" class="ui large fluid form segment" id="select-delivery-form">
     <div class="ui error message"></div>
 		<div class="two fields form-group">
 		  <div class="field">
@@ -82,10 +82,10 @@
 		    </div>
 		  </div>
 		</div>
-		<input type="submit" class="fluid ui green submit button" value="Continue">
+		<input type="submit" class="fluid ui green submit button" value="Click here to choose your food items!">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">
         <input type="hidden" name="deliveryIndex" value="-1" id="option-index">
-        
+
 	</form>
   </div>
 </div>

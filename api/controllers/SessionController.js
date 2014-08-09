@@ -19,14 +19,6 @@ var bcrypt = require('bcrypt');
 
 module.exports = {
 
-	'new' : function(req,res) {
-		if(req.session.authenticated) {
-	      res.redirect('/catering/order/menu');
-	    } else {
-	      res.view('session/new');
-	    }
-	},
-
  	create : function(req, res, next){
 	  	// Check for email and password in params sent via the form, if none
 		// redirect the browser back to the sign-in form.
@@ -41,7 +33,7 @@ module.exports = {
 					err: usernameRequiredError
 			}
 
-			res.redirect('/session/new');
+			res.redirect('/catering/order/start');
 			return;
 		}
 
@@ -57,7 +49,7 @@ module.exports = {
 				req.session.flash = {
 					err: noAccountError
 				}
-				res.redirect('/session/new');
+				res.redirect('/catering/order/start');
 				return;
 			}
 			// Log user in
@@ -65,11 +57,11 @@ module.exports = {
 			req.session.User = user;
 
 			if (req.session.User.admin){
-				res.redirect('/user');
+				res.redirect('/admin');
 				return;
 			}
-			//Redirect to their profile page (e.g. /views/user/show.ejs)
-			res.redirect('/catering/order/menu');
+
+			res.redirect('/catering/order/delivery');
 		});
 	},
 
@@ -79,7 +71,7 @@ module.exports = {
 		req.session.destroy();
 
 		// Redirect the browser to the sign-in screen
-		res.redirect('/session/new');
+		res.redirect('/catering/order/start');
 
 	},
 
@@ -106,7 +98,7 @@ module.exports = {
 			special : option.special
 		}
 
-		res.redirect('/catering/payment/select');
+		res.redirect('/catering/order/menu');
 	},
 
 	'savePayment' : function(req,res,next) {

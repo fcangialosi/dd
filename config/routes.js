@@ -64,19 +64,19 @@ module.exports.routes = {
 
   '/catering/order/start' : 'OrderController.start',
 
+  '/catering/order/delivery' : 'OrderController.selectDelivery',
+
+  'get /catering/order/delivery/new' : 'OrderController.newDelivery',
+
+  'post /catering/order/delivery/save' : 'SessionController.saveDelivery',
+
   '/catering/order/menu' : 'MenuController.displayOrderingMenu',
 
-  '/catering/delivery/select' : 'OrderController.selectDelivery',
+  '/catering/order/payment' : 'OrderController.selectPayment',
 
-  'get /catering/delivery/new' : 'OrderController.newDelivery',
+  'get /catering/order/payment/new' : 'OrderController.newPayment',
 
-  'post /catering/delivery/save' : 'SessionController.saveDelivery',
-
-  '/catering/payment/select' : 'OrderController.selectPayment',
-
-  'get /catering/payment/new' : 'OrderController.newPayment',
-
-  'post /catering/payment/save' : 'SessionController.savePayment',
+  'post /catering/order/payment/save' : 'SessionController.savePayment',
 
   '/catering/order/review' : 'OrderController.review',
 

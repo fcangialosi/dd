@@ -1,15 +1,15 @@
 <div class="ui five medium steps">
   <div class="ui disabled step">
-    Log In
-  </div>
-  <div class="ui disabled step">
-    Choose Items
+    Start My Order
   </div>
   <div class="ui active step">
-    Add Delivery Info
+    When &amp; Where
   </div>
   <div class="ui disabled step">
-    Add Payment Info
+    Food
+  </div>
+  <div class="ui disabled step">
+    Payment
   </div>
   <div class="ui disabled step">
     Review &amp; Confirm
@@ -54,7 +54,7 @@
           <label>Special Instructions</label>
           <textarea placeholder="Anything else that will help us deliver your order smoothly and in a timely fashion!" name="instructions"></textarea>
         </div>
-        <input type="submit" class="ui blue submit button" value="Save Location">
+        <input type="submit" class="ui blue submit button" value="Save This Location">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">
         <div class="ui error message"></div>
       </form>

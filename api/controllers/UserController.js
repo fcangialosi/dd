@@ -35,7 +35,7 @@ module.exports = {
           // automatically log them in now
           req.session.authenticated = true;
           req.session.User = user;
-    	    res.redirect('/catering/order/menu');
+    	    res.redirect('/catering/order/delivery');
 
     	});
     },
@@ -118,9 +118,9 @@ module.exports = {
 
     User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
       if (err) {
-        return res.redirect('/catering/delivery/new');
+        return res.redirect('/catering/order/delivery/new');
       }
-      res.redirect('/catering/delivery/select');
+      res.redirect('/catering/order/delivery');
     });
   },
 
@@ -130,9 +130,9 @@ module.exports = {
 
     User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
       if (err) {
-        return res.redirect('/catering/delivery/select');
+        return res.redirect('/catering/order/delivery');
       }
-      res.redirect('/catering/delivery/select');
+      res.redirect('/catering/order/delivery');
     });
   },
 
@@ -147,9 +147,9 @@ module.exports = {
 
     User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
       if (err) {
-        return res.redirect('/catering/payment/new');
+        return res.redirect('/catering/order/payment/new');
       }
-      res.redirect('/catering/payment/select');
+      res.redirect('/catering/order/payment');
     });
   },
 
@@ -158,9 +158,9 @@ module.exports = {
 
     User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
       if (err) {
-        return res.redirect('/catering/payment/select');
+        return res.redirect('/catering/order/payment');
       }
-      res.redirect('/catering/payment/select');
+      res.redirect('/catering/order/payment');
     });
   }
 

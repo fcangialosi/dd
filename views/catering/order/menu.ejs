@@ -13,7 +13,7 @@
       </div>
       <div class="modal-footer">
         <a class="ui button" data-dismiss="modal">Close</a>
-        <a class="ui green button" href="/catering/delivery/select">Checkout</a>
+        <a class="ui green button" href="/catering/order/payment">Checkout</a>
       </div>
     </div>
   </div>
@@ -22,16 +22,16 @@
 <div class="container" style="margin-top:30px">
 <div class="ui five medium steps">
   <div class="ui disabled step">
-    Log In
+    Start My Order
+  </div>
+  <div class="ui disabled step">
+    When &amp; Where
   </div>
   <div class="ui active step">
-    Choose Items
+    Food
   </div>
   <div class="ui disabled step">
-    Add Delivery Info
-  </div>
-  <div class="ui disabled step">
-    Add Payment Info
+    Payment
   </div>
   <div class="ui disabled step">
     Review &amp; Confirm
@@ -42,7 +42,7 @@
 
 <div class="ui grid">
   <div class="four wide column">
- 
+
     <div class="ui vertical menu sticky-sidebar">
       <div class="header item">
         <i class="coffee icon"></i>
@@ -65,7 +65,7 @@
       <a class="orange item">Total: <span class="simpleCart_total"></span> (<span class="simpleCart_quantity"></span>&nbsp;items)</a>
       <a class="orange item" data-toggle="modal" data-target="#myModal">View Order</a>
       <a href="javascript:;" class="simpleCart_empty orange item">Start Over</a>
-      <a href="/catering/delivery/select" class="orange item">Checkout</a>
+      <a href="/catering/order/payment" class="orange item">Checkout</a>
     </div>
   </div>
   <div class="twelve wide column">
@@ -81,11 +81,11 @@
             <input type="text" placeholder="Quantity" class="item_Quantity">
             <i class="item_add inverted add icon"></i>
           </div>
-     
+
           <h5><% if(item.minimum) { %><%=  item.minimum%><%} else if(item.serves) {%><%=item.serves%><%} else {%><%}%> | <span class="item_price"><%= item.price %></span>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%> </h5>
-          
+
           <p> <%= item.description %></p>
-        </div>    
+        </div>
       <% })%>
     <% }) %>
   </div>

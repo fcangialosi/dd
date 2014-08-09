@@ -1,16 +1,16 @@
 <div class="container" style="margin-top:30px">
 <div class="ui five medium steps">
   <div class="ui disabled step">
-    Log In
+    Start My Order
   </div>
   <div class="ui disabled step">
-    Choose Items
+    When &amp; Where
   </div>
   <div class="ui disabled step">
-    Add Delivery Info
+    Food
   </div>
   <div class="ui active step">
-    Add Payment Info
+    Payment
   </div>
   <div class="ui disabled step">
     Review &amp; Confirm
@@ -48,7 +48,7 @@
     </div>
   <% }) %>
   <div class="item">
-  <a class="right floated medium ui button" href="/catering/payment/new">Create</a>
+  <a class="right floated medium ui button" href="/catering/order/payment/new">Create</a>
     <div class="content">
       <div class="header">
       Add New Credit Card
@@ -59,7 +59,7 @@
 
 <div class="ui one column relaxed grid">
   <div class="column">
-    <form action="/catering/payment/save" method="POST" class="ui large fluid form segment" id="select-payment-form">
+    <form action="/catering/order/payment/save" method="POST" class="ui large fluid form segment" id="select-payment-form">
     <div class="ui error message"></div>
 		<input type="submit" class="fluid ui green submit button" value="Continue">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">
