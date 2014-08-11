@@ -14097,7 +14097,7 @@ body.pushed.scrolling.ui.dimmable {
   position: relative;
   top: 0px;
   width: 316px;
-  min-height: 375px;
+  min-height: 150px;
   margin: 0em 0.5em 2.5em;
   padding: 0em;
   background-color: #FFFFFF;

@@ -1,92 +1,93 @@
 <div class="container" style="margin-top:30px">
-<div class="ui five medium steps">
-  <div class="ui disabled step">
-    Start My Order
+  <div class="ui five medium steps">
+    <div class="ui disabled step">
+      Start My Order
+    </div>
+    <div class="ui active step">
+      When &amp; Where
+    </div>
+    <div class="ui disabled step">
+      Food
+    </div>
+    <div class="ui disabled step">
+      Payment
+    </div>
+    <div class="ui disabled step">
+      Review &amp; Confirm
+    </div>
   </div>
-  <div class="ui active step">
-    When &amp; Where
-  </div>
-  <div class="ui disabled step">
-    Food
-  </div>
-  <div class="ui disabled step">
-    Payment
-  </div>
-  <div class="ui disabled step">
-    Review &amp; Confirm
-  </div>
-</div>
 
-<h1 class="title">Delivery</h1>
 
-<% if(flash && flash.err) { %>
+  <h1 class="title">Delivery</h1>
+
+  <% if(flash && flash.err) { %>
   <div class="ui warning message">
-  <% Object.keys(flash.err).forEach(function(error) { %>
+    <% Object.keys(flash.err).forEach(function(error) { %>
     <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
     <ul class="list">
       <li><%- JSON.stringify(flash.err[error]['message']) %></li>
     </ul>
-  <% }) %>
+    <% }) %>
   </div>
-<% } %>
+  <% } %>
 
-<p> Please choose from one of your saved delivery options below, or add a new one! </p>
-<div class="ui medium divided list">
-  <% _.each(session.User.savedDelivery, function(option){ %>
+  <p> Please choose from one of your saved delivery options below, or add a new one! </p>
+  <div class="ui medium divided list">
+    <% _.each(session.User.savedDelivery, function(option){ %>
     <div class="item">
-    	<form action="/user/removeDelivery/<%= session.User.savedDelivery.indexOf(option) %>" method="POST">
-		<input type="hidden" name="_method" value="delete"/>
-		<input type="submit" class="right floated medium ui red button" value="Delete"/>
-		<input type="hidden" name="_csrf" value="<%= _csrf %>" />
-		</form>
+      <form action="/user/removeDelivery/<%= session.User.savedDelivery.indexOf(option) %>" method="POST">
+        <input type="hidden" name="_method" value="delete"/>
+        <input type="submit" class="right floated medium ui red button" value="Delete"/>
+        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+      </form>
       <div class="right floated medium ui change button" index="<%= session.User.savedDelivery.indexOf(option) %>">Select</div>
       <div class="content">
         <div class="header"> <%= option.address %>,&nbsp;<%= option.city %> </div>
         <div class="description" style="margin-left:20px">
-        Contact: <%= option.contactName %> | <%= option.contactPhone %>
-        <% if(option.special) {%>
-        <br> Instructions: <%= option.special %>
-        <% } %>
+          Contact: <%= option.contactName %> | <%= option.contactPhone %>
+          <% if(option.special) {%>
+          <br> Instructions: <%= option.special %>
+          <% } %>
         </div>
       </div>
     </div>
-  <% }) %>
-  <div class="item">
-  <a class="right floated medium ui button" href="/catering/order/delivery/new">Create</a>
-    <div class="content">
-      <div class="header">
-      Add New Location
+    <% }) %>
+    <div class="item">
+      <a class="right floated medium ui button" href="/catering/order/delivery/new">Create</a>
+      <div class="content">
+        <div class="header">
+          Add New Location
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <div class="ui one column relaxed grid">
+    <div class="column">
+      <form action="/catering/order/delivery/save" method="POST" class="ui large fluid form segment" id="select-delivery-form">
+        <div class="ui error message"></div>
 
-<div class="ui one column relaxed grid">
-  <div class="column">
-    <form action="/catering/order/delivery/save" method="POST" class="ui large fluid form segment" id="select-delivery-form">
-    <div class="ui error message"></div>
-		<div class="two fields form-group">
-		  <div class="field">
-		    <label>Delivery Date</label>
-		    <div class="ui left icon input">
-		      <input type='text' id='delivery-datepicker' name='date'/>
-		      <i class="calendar icon"></i>
-		    </div>
-		  </div>
-		  <div class="field">
-		    <label>Delivery Time</label>
-		    <div class="ui left icon input">
-		      <input type='text' id='delivery-timepicker' name='time'/>
-		      <i class="time icon"></i>
-		    </div>
-		  </div>
-		</div>
-		<input type="submit" class="fluid ui green submit button" value="Click here to choose your food items!">
+        <div class="two fields form-group">
+          <div class="field">
+            <label>Delivery Date</label>
+            <div class="ui left icon input">
+              <input type='text' id='delivery-datepicker' name='date'/>
+              <i class="calendar icon"></i>
+            </div>
+          </div>
+          <div class="field">
+            <label>Delivery Time</label>
+            <div class="ui left icon input">
+              <input type='text' id='delivery-timepicker' name='time'/>
+              <i class="time icon"></i>
+            </div>
+          </div>
+        </div>
+        <input type="submit" class="fluid ui green submit button" value="Click here to choose your food items!">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">
         <input type="hidden" name="deliveryIndex" value="-1" id="option-index">
 
-	</form>
+      </form>
+    </div>
   </div>
-</div>
 </div>

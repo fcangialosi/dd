@@ -64,22 +64,7 @@ module.exports = {
               "type": "to"
           }]
     };
-    var message_to_customer = {
-      "text" : "Just letting you know that we have successfully recieved your order! Our team will review your order as soon as possible, and send you a final e-mail once your order has been verified. Please remember that your order is not final until you recieve that e-mail! If you havev any questions, comments, or concerns about your order, please send an email to catering@davidanddads.com.",
-      "subject" : "David and Dad's Order Recieved",
-      "from_email" : "catering@davidanddads.com",
-      "to" : [{
-        "email" : req.session.User.email,
-        "name" : req.session.User.firstName + " " + req.session.User.lastName,
-        "type" : "to"
-      }]
-    };
     mandrill_client.messages.send({"message": message_to_dd, "async": false}, function(result) {
-      console.log(result);
-    }, function(e) {
-      console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
-    });
-    mandrill_client.messages.send({"message": message_to_customer, "async": false}, function(result) {
       console.log(result);
     }, function(e) {
       console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
