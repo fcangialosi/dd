@@ -1,3 +1,8 @@
+$("#submit-button").click(function() {
+  alert("omg");
+  simpleCart.empty();
+});
+
 $('#signup-form')
   .form({
     name: {
