@@ -1,31 +1,37 @@
-<div class="container" style="margin-top:30px">
-<div class="ui five medium steps">
-  <div class="ui disabled step">
-    Start My Order
+<div id="step-section">
+  <div class="container">
+   <div class="ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
+      <div class="ui disabled step">
+        Start My Order
+      </div>
+      <div class="ui disabled step">
+        When &amp; Where
+      </div>
+      <div class="ui disabled step">
+        Food
+      </div>
+      <div class="ui disabled step">
+        Payment
+      </div>
+      <div class="ui active step">
+        Review &amp; Confirm
+      </div>
+    </div>
   </div>
-  <div class="ui disabled step">
-    When &amp; Where
-  </div>
-  <div class="ui disabled step">
-    Food
-  </div>
-  <div class="ui disabled step">
-    Payment
-  </div>
-  <div class="ui active step">
-    Review &amp; Confirm
-  </div>
+  <div class="up-divider"></div>
 </div>
+<div class="container" style="margin-top:30px">
 
-<h1 class="title">Order Summary</h1>
 
-<p style="margin-left: 60px; margin-right: 60px; margin-top: 10px; margin-bottom: 30px;" align="center"> Please review your order, delivery information, and payment information below, then click "submit my order."<br><b> We will confirm all orders via E-Mail or telephone. Please do not consider your order final until we have confirmed it!</b></p>
+<center> Please review your order information below, then click "submit my order". <br><b>We will confirm all orders via E-Mail or telephone. Please do not consider your order final until we have confirmed it!</b></center>
 
-<div class="ui celled grid">
+<div class="ui fluid form segment">
+  <div class="ui celled grid">
   <div class="six wide column">
     <div class="ui vertically divided grid">
       <div class="row">
         <div class="column">
+        <h3> Order Contact </h3>
         <b>Name</b>:&nbsp;<%= session.User.firstName %>&nbsp;<%= session.User.lastName %><br>
         <b>Company</b>:&nbsp;<%= session.User.companyName %><br>
         <b>Phone</b>:&nbsp;<%= session.User.phone %><br>
@@ -35,6 +41,17 @@
 
       <div class="row">
         <div class="column">
+        <h3> Delivery Contact </h3>
+        <b>Name</b>:&nbsp;<%= session.delivery.contactName %><br>
+        <b>Phone</b>:&nbsp;<%= session.delivery.contactPhone %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+        <h3> Delivery Information </h3>
+        <b>Date</b>:&nbsp;<%= session.delivery.date %><br>
+        <b>Time</b>:&nbsp;<%= session.delivery.time %><br>
         <b>Address</b>:&nbsp;<%= session.delivery.address %>,&nbsp;<%= session.delivery.city %><br>
         <b>Instructions</b>:&nbsp;<%= session.delivery.special %>
         </div>
@@ -42,19 +59,33 @@
 
       <div class="row">
         <div class="column">
-        <b>Name</b>:&nbsp;<%= session.payment.cardName %><br>
-        <b>Number</b>:&nbsp;Card ending in <%= session.payment.cardNumber.substring(session.payment.cardNumber.length-4) %><br>
-        <b>Expiration</b>:&nbsp;<%= session.payment.cardExpiry%><br>
-        <b>CVC</b>:&nbsp;<%= session.payment.cardCvc%>
+        <h3> Payment Method </h3>
+          <% if(session.paymentMethod == 'cash') { %>
+            <b>Method</b>:&nbsp; Pay at Delivery
+            <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">You may pay by credit card, cash, or check at the time of delivery.</p>
+          <% } else if(session.paymentMethod == 'invoice') { %>
+            <b>Method</b>:&nbsp; Pay Later
+            <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">We will give you an invoice when we deliver your order. We ask that all customers do their best to pay within 30 days of the order, thank you!</p>
+          <% } else { %>
+            <b>Method</b>:&nbsp; Pay Now (Credit Card) <br>
+            <b>Card Number</b>:&nbsp;  XXXXXXXXXXXX<%= session.card.cardNumber.substring(session.card.cardNumber.length-4) %><br>
+            <b>Card Holder</b>:&nbsp; <%= session.card.cardName %>
+            <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">Remember, clicking "submit" below will <b>not </b> charge your credit card. We will only charge your card once we have peresonally confirmed the order with you.</p>
+          <% } %>
+
+        <br>
         </div>
       </div>
     </div>
   </div>
   <div class="ten wide column">
+  <h3> Summary </h3>
+  <p class="warning-border" style="font-size: 0.8em"> If you would like to make any last minute changes to your order, you can use the <i class="minus sign icon"></i> and <i class="add sign icon"></i> buttons to change an items quantity, or the <i class="medium trash icon"></i> button to delete an item. Your grand total will update respectively. Once everything looks good, submit! </p>
   <center><div class="simpleCart_items"></div></center>
   <div class="ui divider"></div>
-  <center><b>Grand Total: </b>&nbsp;<span class="simpleCart_total"></span></center>
+  <center style="font-size: 2em;"><b>Grand Total: </b>&nbsp;<span class="simpleCart_total"></span></center>
 
+  </div>
   </div>
 </div>
 

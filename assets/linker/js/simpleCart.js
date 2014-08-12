@@ -54,7 +54,7 @@
 				localStorage			= window.localStorage,
 				console					= window.console || { msgs: [], log: function (msg) { console.msgs.push(msg); } },
 
-				// used in views 
+				// used in views
 				_VALUE_		= 'value',
 				_TEXT_		= 'text',
 				_HTML_		= 'html',
@@ -110,7 +110,7 @@
 					shippingCustom		: null,
 
 					taxRate				: 0,
-					
+
 					taxShipping			: false,
 
 					data				: {}
@@ -180,12 +180,12 @@
 					// trigger before add event
 					if (!quiet) {
 					  	addItem = simpleCart.trigger('beforeAdd', [newItem]);
-					
+
 						if (addItem === false) {
 							return false;
 						}
 					}
-					
+
 					// if the new item already exists, increment the value
 					oldItem = simpleCart.has(newItem);
 					if (oldItem) {
@@ -342,7 +342,7 @@
 						// send a param of true to make sure it doesn't
 						// update after every removal
 						// keep the item if the function returns false,
-						// because we know it has been prevented 
+						// because we know it has been prevented
 						// from being removed
 						if (item.remove(true) === false) {
 							newItems[item.id()] = item
@@ -455,8 +455,8 @@
 					if (!items) {
 						return;
 					}
-					
-					// we wrap this in a try statement so we can catch 
+
+					// we wrap this in a try statement so we can catch
 					// any json parsing errors. no more stick and we
 					// have a playing card pluckin the spokes now...
 					// soundin like a harley.
@@ -516,7 +516,7 @@
 				tax: function () {
 					var totalToTax = settings.taxShipping ? simpleCart.total() + simpleCart.shipping() : simpleCart.total(),
 						cost = simpleCart.taxRate() * totalToTax;
-					
+
 					simpleCart.each(function (item) {
 						if (item.get('tax')) {
 							cost += item.get('tax');
@@ -526,7 +526,7 @@
 					});
 					return parseFloat(cost);
 				},
-				
+
 				taxRate: function () {
 					return settings.taxRate || 0;
 				},
@@ -636,6 +636,7 @@
 						x,
 						xlen;
 
+					cart_container.attr("class","spaced-table")
 					container.html(' ').append(cart_container);
 
 					cart_container.append(thead_container);
@@ -827,7 +828,7 @@
 						return false;
 					}
 					delete sc_items[this.id()];
-					if (!skipUpdate) { 
+					if (!skipUpdate) {
 						simpleCart.update();
 					}
 					return null;
@@ -887,7 +888,7 @@
 						settings.checkout.fn.call(simpleCart,settings.checkout);
 					} else if (isFunction(simpleCart.checkout[settings.checkout.type])) {
 						var checkoutData = simpleCart.checkout[settings.checkout.type].call(simpleCart,settings.checkout);
-						
+
 						// if the checkout method returns data, try to send the form
 						if( checkoutData.data && checkoutData.action && checkoutData.method ){
 							// if no one has any objections, send the checkout form
@@ -895,7 +896,7 @@
 								simpleCart.generateAndSendForm( checkoutData );
 							}
 						}
-						
+
 					} else {
 						simpleCart.error("No Valid Checkout Method Specified");
 					}
@@ -924,7 +925,7 @@
 						form.el.submit();
 						form.remove();
 					});
-					
+
 				}
 			});
 
@@ -968,7 +969,7 @@
 							item_options = item.options(),
 							optionCount = 0,
 							send;
-	
+
 						// basic item data
 						data["item_name_" + counter] = item.get("name");
 						data["quantity_" + counter] = item.quantity();
@@ -980,7 +981,7 @@
 						simpleCart.each(item_options, function (val,k,attr) {
 							// paypal limits us to 10 options
 							if (k < 10) {
-		
+
 								// check to see if we need to exclude this from checkout
 								send = true;
 								simpleCart.each(settings.excludeFromCheckout, function (field_name) {
@@ -991,7 +992,7 @@
 										data["on" + k + "_" + counter] = attr;
 										data["os" + k + "_" + counter] = val;
 								}
-	
+
 							}
 						});
 
@@ -1221,10 +1222,10 @@
 					if (!this._events) {
 						this._events = {};
 					}
-					
+
 					// split by spaces to allow for multiple event bindings at once
 					var eventNameList = name.split(/ +/);
-					
+
 					// iterate through and bind each event
 					simpleCart.each( eventNameList , function( eventName ){
 						if (this._events[eventName] === true) {
@@ -1236,10 +1237,10 @@
 						}
 					});
 
-					
+
 					return this;
 				},
-				
+
 				// trigger event
 				trigger: function (name, options) {
 					var returnval = true,
@@ -1281,7 +1282,7 @@
 				, beforeCheckout		: null
 				, beforeRemove			: null
 			};
-			
+
 			// extend with base events
 			simpleCart(baseEvents);
 
@@ -1312,14 +1313,14 @@
 						numParts = num.toFixed(_opts.accuracy).split("."),
 						dec = numParts[1],
 						ints = numParts[0];
-			
+
 					ints = simpleCart.chunk(ints.reverse(), 3).join(_opts.delimiter.reverse()).reverse();
 
 					return	(!_opts.after ? _opts.symbol : "") +
 							ints +
 							(dec ? _opts.decimal + dec : "") +
 							(_opts.after ? _opts.symbol : "");
-	
+
 				},
 
 
@@ -1364,7 +1365,7 @@
 				// bind outlets to function
 				bindOutlets: function (outlets) {
 					simpleCart.each(outlets, function (callback, x, selector) {
-						
+
 						simpleCart.bind('update', function () {
 							simpleCart.setOutlet("." + namespace + "_" + selector, callback);
 						});
@@ -1388,11 +1389,11 @@
 					});
 				},
 
-				// attach events to inputs	
+				// attach events to inputs
 				setInput: function (selector, event, func) {
 					simpleCart.$(selector).live(event, func);
 				}
-			});		
+			});
 
 
 			// class for wrapping DOM selector shit
@@ -1418,7 +1419,7 @@
 						if (isUndefined(val)) {
 							return this.el[0] && this.el[0].get(attr);
 						}
-						
+
 						this.el.set(attr, val);
 						return this;
 					},
@@ -1619,7 +1620,7 @@
 						if (isUndefined(val)) {
 							return this.el[action]();
 						}
-						
+
 						this.el[action](val);
 						return this;
 					},
@@ -1805,7 +1806,7 @@
 													type = $item.attr("type");
 													if (!type || ((type.toLowerCase() === "checkbox" || type.toLowerCase() === "radio") && $item.attr("checked")) || type.toLowerCase() === "text" || type.toLowerCase() === "number") {
 														val = $item.val();
-													}				
+													}
 													break;
 												case "img":
 													val = $item.attr('src');
@@ -1871,7 +1872,7 @@
 				// and execute any waiting functions
 				simpleCart.init();
 			}
-			
+
 			// bind ready event used from jquery
 			function sc_BindReady () {
 

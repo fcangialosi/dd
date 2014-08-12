@@ -149,7 +149,7 @@ module.exports = {
       if (err) {
         return res.redirect('/catering/order/payment/new');
       }
-      res.redirect('/catering/order/payment');
+      res.redirect('/catering/order/payment/continue?method=card');
     });
   },
 
@@ -160,7 +160,7 @@ module.exports = {
       if (err) {
         return res.redirect('/catering/order/payment');
       }
-      res.redirect('/catering/order/payment');
+      res.redirect('/catering/order/payment/continue?method=card');
     });
   }
 

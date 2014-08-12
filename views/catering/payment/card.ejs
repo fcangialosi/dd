@@ -1,0 +1,81 @@
+
+<div id="step-section">
+  <div class="container">
+   <div class="ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
+    <div class="ui disabled step">
+      Start My Order
+    </div>
+    <div class="ui disabled step">
+      When &amp; Where
+    </div>
+    <div class="ui disabled step">
+      Food
+    </div>
+    <div class="ui active step">
+      Payment
+    </div>
+    <div class="ui disabled step">
+      Review &amp; Confirm
+    </div>
+  </div>
+</div>
+<div class="up-divider"></div>
+</div>
+
+<div class="container" style="margin-top:15px">
+  <center><h1>Pay Now</h1></center>
+
+  <% if(flash && flash.err) { %>
+  <div class="ui warning message">
+    <% Object.keys(flash.err).forEach(function(error) { %>
+    <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+    <ul class="list">
+      <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+    </ul>
+    <% }) %>
+  </div>
+  <% } %>
+
+
+
+  <div class="ui one column relaxed grid">
+    <div class="column">
+      <div class="ui large fluid form segment" >
+        <p class="warning-border"> For your security, we process all payments in-store, rather than online. When you submit an order, your credit card <b style="color: #E75859">will not</b> be charged until we have personally <b style="color: #E75859">confirmed</b> your order.</b></p>
+        <div class="ui medium divided list">
+          <% _.each(session.User.savedPayment, function(card){ %>
+          <div class="item">
+            <form action="/user/removePayment/<%= session.User.savedPayment.indexOf(card) %>" method="POST">
+              <input type="hidden" name="_method" value="delete"/>
+              <input type="submit" class="right floated medium ui red button" value="Delete"/>
+              <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+            </form>
+            <div class="right floated medium ui change button" index="<%= session.User.savedPayment.indexOf(card) %>">Select</div>
+            <div class="content">
+              <div class="header">Card ending in <%= card.number.substring(card.number.length-4) %>
+              </div>
+              <div class="description"><%= card.name %></div>
+            </div>
+          </div>
+          <% }) %>
+          <div class="item">
+            <a class="right floated medium ui button" href="/catering/order/payment/new">Create</a>
+            <div class="content">
+              <div class="header">
+                Add New Credit Card
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <form action="/catering/order/payment/save" method="POST" class="ui large fluid form segment" id="select-payment-form">
+          <div class="ui error message"></div>
+          <input type="submit" class="fluid ui teal submit button" value="Review My Order">
+          <input type="hidden" name="_csrf" value="<%= _csrf %>">
+          <input type="hidden" name="paymentIndex" value="-1" id="option-index">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

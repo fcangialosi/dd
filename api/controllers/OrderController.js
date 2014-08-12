@@ -39,15 +39,26 @@ module.exports = {
     res.view('catering/delivery/add');
   },
 
-  'selectPayment' : function(req,res) {
+  'selectPayment' : function(req, res) {
     res.view('catering/payment/select');
   },
 
-  'newPayment' : function(req,res) {
+  'continue' : function(req, res) {
+    req.session.paymentMethod = req.param('method');
+    console.log(req.session.User);
+    if(req.param('method') == 'card') {
+      res.view('catering/payment/card');
+    } else {
+      res.redirect('catering/order/review');
+    }
+  },
+
+  'newCard' : function(req,res) {
     res.view('catering/payment/add');
   },
 
   'review' : function(req,res) {
+    console.log(req.session);
     res.view('catering/confirm/review');
   },
 

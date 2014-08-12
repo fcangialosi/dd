@@ -74,9 +74,11 @@ module.exports.routes = {
 
   '/catering/order/payment' : 'OrderController.selectPayment',
 
-  'get /catering/order/payment/new' : 'OrderController.newPayment',
+  'get /catering/order/payment/continue' : 'OrderController.continue',
 
-  'post /catering/order/payment/save' : 'SessionController.savePayment',
+  'get /catering/order/payment/new' : 'OrderController.newCard',
+
+  'post /catering/order/payment/save' : 'SessionController.saveCard',
 
   '/catering/order/review' : 'OrderController.review',
 

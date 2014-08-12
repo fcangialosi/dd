@@ -1,40 +1,46 @@
-<div class="ui five medium steps">
-  <div class="ui disabled step">
-    Start My Order
-  </div>
-  <div class="ui disabled step">
-    When &amp; Where
-  </div>
-  <div class="ui disabled step">
-    Food
-  </div>
-  <div class="ui active step">
-    Payment
-  </div>
-  <div class="ui disabled step">
-    Review &amp; Confirm
+<div id="step-section">
+  <div class="container">
+   <div class="ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
+    <div class="ui disabled step">
+      Start My Order
+    </div>
+    <div class="ui disabled step">
+      When &amp; Where
+    </div>
+    <div class="ui disabled step">
+      Food
+    </div>
+    <div class="ui active step">
+      Payment
+    </div>
+    <div class="ui disabled step">
+      Review &amp; Confirm
+    </div>
   </div>
 </div>
+<div class="up-divider"></div>
+</div>
 
-<h1 class="title">Credit Card Payment</h1>
+<h1 class="title">Add New Credit Card</h1>
 
-<div class="ui two column relaxed grid">
+<div class="ui two column relaxed page grid">
   <div class="middle aligned row">
     <div class="column">
       <form action="/user/addPayment" method="POST" class="ui warning fluid form segment" id="card-form">
 
         <% if(flash && flash.err) { %>
         <div class="ui warning message">
-        <% Object.keys(flash.err).forEach(function(error) { %>
+          <% Object.keys(flash.err).forEach(function(error) { %>
           <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
           <ul class="list">
             <li><%- JSON.stringify(flash.err[error]['message']) %></li>
           </ul>
-        <% }) %>
+          <% }) %>
         </div>
         <% } %>
 
-        <p>Click "Save" at the bottom if you'd like us to save your credit card information for future orders, or "Just Once" if you would prefer that we don't store any of your information.</p>
+        <p class="warning-border">By default, we store your credit card information locally to make the order process as quick and easy as possible. However, if you would prefer that we don't store any of your information, just check box below!</p>
+
         <div class="field">
           <label>Card Number</label>
           <input placeholder="1234 5678 1234 5678" name="number" type="text">
@@ -53,13 +59,19 @@
             <input placeholder="123" name="cvc" type="text">
           </div>
         </div>
-        <input type="submit" class="ui blue submit button" value="Continue">
+        <div class="field">
+          <div class="ui checkbox">
+            <input type="checkbox" name="save">
+            <label>Please don't store any of my credit card information!</label>
+          </div>
+        </div>
+        <input type="submit" class="ui teal submit button" value="Continue">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">
         <div class="ui error message"></div>
       </form>
     </div>
     <div class="card-wrapper column">
-    <!-- card.js fills this in with credit card animation -->
+      <!-- card.js fills this in with credit card animation -->
     </div>
   </div>
 </div>

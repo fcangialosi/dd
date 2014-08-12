@@ -1,5 +1,4 @@
 $("#submit-button").click(function() {
-  alert("omg");
   simpleCart.empty();
 });
 

@@ -101,7 +101,7 @@ module.exports = {
 		res.redirect('/catering/order/menu');
 	},
 
-	'savePayment' : function(req,res,next) {
+	'saveCard' : function(req,res,next) {
 
 		option = req.session.User.savedPayment[parseInt(req.body.paymentIndex)];
 
@@ -110,17 +110,15 @@ module.exports = {
 			req.session.flash = {
 				err: missingPaymentError
 			}
-			return res.redirect('/catering/payment/select');
+			return res.redirect('/catering/order/payment/select');
 		}
 
-		req.session.payment = {
+		req.session.card = {
 			cardNumber : option.number,
 			cardName : option.name,
 			cardExpiry : option.expiry,
 			cardCvc : option.cvc
 		}
-
-		console.log(req.session);
 
 		res.redirect('/catering/order/review');
 	}

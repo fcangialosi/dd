@@ -27,13 +27,14 @@ ready = function() {
       };
   $menuItem.on('click', handler.activate);
   $('.sticky-leftbar').waypoint('sticky',{
-  	offset: 30,
+  	offset: 55,
       stuckClass: 'stuck-leftbar',
   });
   $('.sticky-topbar').waypoint('sticky',{
     offset: 0,
     stuckClass: 'stuck-topbar',
   });
+  $('.ui.checkbox').checkbox();
 
   // delivery page
   $(function () {

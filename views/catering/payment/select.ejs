@@ -1,70 +1,58 @@
-<div class="container" style="margin-top:30px">
-<div class="ui five medium steps">
-  <div class="ui disabled step">
-    Start My Order
-  </div>
-  <div class="ui disabled step">
-    When &amp; Where
-  </div>
-  <div class="ui disabled step">
-    Food
-  </div>
-  <div class="ui active step">
-    Payment
-  </div>
-  <div class="ui disabled step">
-    Review &amp; Confirm
-  </div>
-</div>
 
-<h1 class="title">Payment</h1>
-
-<% if(flash && flash.err) { %>
-  <div class="ui warning message">
-  <% Object.keys(flash.err).forEach(function(error) { %>
-    <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
-    <ul class="list">
-      <li><%- JSON.stringify(flash.err[error]['message']) %></li>
-    </ul>
-  <% }) %>
-  </div>
-<% } %>
-
-<p> Please choose from one of your saved payment options below, or add a new one! </p>
-<div class="ui medium divided list">
-  <% _.each(session.User.savedPayment, function(card){ %>
-    <div class="item">
-    	<form action="/user/removePayment/<%= session.User.savedPayment.indexOf(card) %>" method="POST">
-		<input type="hidden" name="_method" value="delete"/>
-		<input type="submit" class="right floated medium ui red button" value="Delete"/>
-		<input type="hidden" name="_csrf" value="<%= _csrf %>" />
-		</form>
-      <div class="right floated medium ui change button" index="<%= session.User.savedPayment.indexOf(card) %>">Select</div>
-      <div class="content">
-        <div class="header">Card ending in <%= card.number.substring(card.number.length-4) %>
-        </div>
-        <div class="description"><%= card.name %></div>
-      </div>
+<div id="step-section">
+  <div class="container">
+   <div class="ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
+    <div class="ui disabled step">
+      Start My Order
     </div>
-  <% }) %>
-  <div class="item">
-  <a class="right floated medium ui button" href="/catering/order/payment/new">Create</a>
-    <div class="content">
-      <div class="header">
-      Add New Credit Card
-      </div>
+    <div class="ui disabled step">
+      When &amp; Where
+    </div>
+    <div class="ui disabled step">
+      Food
+    </div>
+    <div class="ui active step">
+      Payment
+    </div>
+    <div class="ui disabled step">
+      Review &amp; Confirm
     </div>
   </div>
 </div>
-
-<div class="ui one column relaxed grid">
-  <div class="column">
-    <form action="/catering/order/payment/save" method="POST" class="ui large fluid form segment" id="select-payment-form">
-    <div class="ui error message"></div>
-		<input type="submit" class="fluid ui green submit button" value="Continue">
-        <input type="hidden" name="_csrf" value="<%= _csrf %>">
-        <input type="hidden" name="paymentIndex" value="-1" id="option-index">
-	</form>
-  </div>
+<div class="up-divider"></div>
 </div>
+
+<div style="height: 30px"></div>
+<center><span>Please select one of the following three payment options that is most convenient for you!</span></center>
+<div style="height: 30px"></div>
+<div class="ui three column relaxed stackable page grid">
+  <div class="equal height row">
+    <div class="column" style="position: relative;">
+      <table width="100%"><tr>
+        <td><span style="font-size: 2.5em">1</span></td>
+        <td><h2 class="ui dividing header">Pay Now</h2></td>
+      </tr></table>
+      <p> Pay now with a credit card. If you'd like, we'll save your credit card for future orders.</p>
+      <div class="column"><a href="/catering/order/payment/continue?method=card" class="ui fluid teal button bottom-button">Pay Now</a></div>
+    </div>
+    <div class="column" style="position: relative;">
+      <table width="100%"><tr>
+        <td><span style="font-size: 2.5em; padding-right: 15px">2</span></td>
+        <td><h2 class="ui dividing header">Pay at Delivery</h2></td>
+      </tr></table>
+      <p> Pay with credit card, cash, or check when we deliver your food. Please make checks out to "David and Dad's Cafe"</p>
+      <div class="column"><a href="/catering/order/payment/continue?method=cash" class="ui fluid teal button bottom-button">Pay at Delivery</a></div>
+    </div>
+    <div class="column">
+      <table width="100%"><tr>
+        <td><span style="font-size: 2.5em">3</span></td>
+        <td><h2 class="ui dividing header">Pay Later</h2></td>
+      </tr></table>
+      <p> We'll give you an invoice when we deliver the order, then you can fill the invoice however is most convenient for you. We ask that you please pay within <b>30 days</b> of your delivery!</p>
+      <div style="height: 15px"></div>
+      <div class="column"><a href="/catering/order/payment/continue?method=invoice" class="ui fluid teal button">Pay Later</a></div>
+    </div>
+  </div>
+
+  <div style="height: 150px"></div>
 </div>
