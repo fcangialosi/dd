@@ -1,10 +1,10 @@
 simpleCart({
-    checkout: { 
-        type: "SendForm" , 
+    checkout: {
+        type: "SendForm" ,
         url: "/catering/order/submit" ,
         method: "POST",
         cartStyle: "table"
-    } 
+    }
 });
 
 ready = function() {
@@ -26,8 +26,13 @@ ready = function() {
         }
       };
   $menuItem.on('click', handler.activate);
-  $('.sticky-sidebar').waypoint('sticky',{
-  	offset: 30
+  $('.sticky-leftbar').waypoint('sticky',{
+  	offset: 30,
+      stuckClass: 'stuck-leftbar',
+  });
+  $('.sticky-topbar').waypoint('sticky',{
+    offset: 0,
+    stuckClass: 'stuck-topbar',
   });
 
   // delivery page
@@ -68,7 +73,7 @@ ready = function() {
   //     form.el.submit();
   //     form.remove();
   //   });
-    
+
   // });
 
 };

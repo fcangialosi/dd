@@ -19,8 +19,8 @@
 html, body {
 	font-size: 15px;
 	height: 100%;
-  margin: 0;
-  padding: 0;
+  margin: none;
+  padding: none;
   width: 100%;
 }
 
@@ -28,7 +28,6 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 1.1em;
   background: url("../../images/cream-tile.png") repeat;
-  margin: 0px;
   color: #39342e;
   text-rendering: optimizeLegibility;
   min-width: 320px;
@@ -79,9 +78,21 @@ td, th {
   padding-right: 15px;
 }
 
-.stuck {
-  top: 30px;
+.stuck-leftbar {
+  top: 50px;
   position: fixed;
+}
+
+.stuck-topbar {
+  top: 0px;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  z-index: 25
+}
+
+.sticky-topbar > b, .sticky-topbar > a, .sticky-topbar > span, .sticky-topbar > .button {
+  font-size: 1.3em;
 }
 
 .ui.button.change.active {
