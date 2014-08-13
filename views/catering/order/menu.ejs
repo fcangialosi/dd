@@ -22,84 +22,85 @@
 <div id="step-section">
   <div class="container">
    <div class="ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
-      <div class="ui disabled step">
-        Start My Order
-      </div>
-      <div class="ui disabled step">
-        When &amp; Where
-      </div>
-      <div class="ui active step">
-        Food
-      </div>
-      <div class="ui disabled step">
-        Payment
-      </div>
-      <div class="ui disabled step">
-        Review &amp; Confirm
-      </div>
+    <div class="ui disabled step">
+      Start My Order
+    </div>
+    <div class="ui disabled step">
+      When &amp; Where
+    </div>
+    <div class="ui active step">
+      Food
+    </div>
+    <div class="ui disabled step">
+      Payment
+    </div>
+    <div class="ui disabled step">
+      Review &amp; Confirm
     </div>
   </div>
-  <div class="up-divider"></div>
 </div>
+<div class="step-up-divider"></div>
+</div>
+<div style="height:30px" class="below-step"></div>
 
 
 <div class="ui page grid">
   <div class="sixteen wide column">
     <div class="ui borderless fluid menu sticky-topbar" style="padding: 4px">
-       <div class="right item">
-        <a href="javascript:;" class="simpleCart_empty ui red button">Empty Cart</a>
-      </div>
-      <div class="right item">
-        <a data-toggle="modal" data-target="#myModal" class="ui green button">View Cart</a>
-      </div>
-      <div class="right item">
-        <a href="/catering/order/payment" class="ui teal button">Checkout</a>
-      </div>
-      <div class="item">
-        <i class="cart icon"></i><b>Current Total: </b><span class="simpleCart_total"></span>
-        <div class="ui red label"><span class="simpleCart_quantity"> </span></div>
-      </div>
+     <div class="right item">
+      <a href="javascript:;" class="simpleCart_empty ui red button">Empty Cart</a>
+    </div>
+    <div class="right item">
+      <a data-toggle="modal" data-target="#myModal" class="ui green button">View Cart</a>
+    </div>
+    <div class="right item">
+      <a href="/catering/order/payment" class="ui teal button">Checkout</a>
+    </div>
+    <div class="item">
+      <i class="cart icon"></i><b>Current Total: </b><span class="simpleCart_total"></span>
+      <div class="ui red label"><span class="simpleCart_quantity"> </span></div>
     </div>
   </div>
-  <div class="four wide column">
+</div>
+<div class="four wide column">
 
-    <div class="ui vertical menu sticky-leftbar">
-      <div class="header item">
-        <i class="coffee icon"></i>
-        Breakfast
-      </div>
-      <% _.each(menu, function(section) { %>
-        <% if(section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><% } %>
-      <% }) %>
-      <div class="header item">
-        <i class="food icon"></i>
-        Lunch
-      </div>
-      <% _.each(menu, function(section) {%>
-        <% if(!section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><%}%>
-      <% }) %>
+  <div class="ui vertical menu sticky-leftbar">
+    <div class="header item">
+      <i class="coffee icon"></i>
+      Breakfast
     </div>
-  </div>
-  <div class="twelve wide column">
     <% _.each(menu, function(section) { %>
-    <h2 class="ui dividing header" id="<%=section.name%>"><%= section.name %></h2>
-    <p> <%= section.subhead %> </p>
-      <% _.each(section.items, function(item) {%>
-        <div class="simpleCart_shelfItem ui segment">
-
-          <b class="item_name"><%= item.name %></b>
-
-          <div id="quantity-box" class="mini ui icon input">
-            <input type="text" placeholder="Quantity" class="item_Quantity">
-            <i class="item_add inverted add icon"></i>
-          </div>
-
-          <h5><% if(item.minimum) { %><%=  item.minimum%><%} else if(item.serves) {%><%=item.serves%><%} else {%><%}%> | <span class="item_price"><%= item.price %></span>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%> </h5>
-
-          <p> <%= item.description %></p>
-        </div>
-      <% })%>
+    <% if(section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><% } %>
+    <% }) %>
+    <div class="header item">
+      <i class="food icon"></i>
+      Lunch
+    </div>
+    <% _.each(menu, function(section) {%>
+    <% if(!section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><%}%>
     <% }) %>
   </div>
+</div>
+<div class="twelve wide column">
+  <% _.each(menu, function(section) { %>
+  <h2 class="ui dividing header" id="<%=section.name%>"><%= section.name %></h2>
+  <p> <%= section.subhead %> </p>
+  <% _.each(section.items, function(item) {%>
+  <div class="simpleCart_shelfItem ui segment">
+
+    <b class="item_name"><%= item.name %></b>
+
+    <div id="quantity-box" class="mini ui icon input">
+      <input type="text" placeholder="Quantity" class="item_Quantity">
+      <i class="item_add inverted add icon"></i>
+    </div>
+
+    <h5><% if(item.minimum) { %><%=  item.minimum%><%} else if(item.serves) {%><%=item.serves%><%} else {%><%}%> | <span class="item_price"><%= item.price %></span>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%> </h5>
+
+    <p> <%= item.description %></p>
+  </div>
+  <% })%>
+  <% }) %>
+</div>
 </div>
 </div>

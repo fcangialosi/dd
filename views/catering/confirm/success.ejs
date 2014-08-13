@@ -18,14 +18,16 @@
       </div>
     </div>
   </div>
-  <div class="up-divider"></div>
+<div class="step-up-divider"></div>
 </div>
+<div style="height:30px" class="below-step"></div>
 
-<br><br><center>
-	<div class="ui vertical segment">
-	  <div class="ui medium header">
+<div class="container">
+	  <center><div class="ui medium header">
 	  Thank you! Your order has been successfully submitted. <br>
-	  Once we have reviewed your order, we will send an e-mail to <%= session.User.email %> <br>
-	  Please remember that no order is final until you've recieved a confirmation e-mail from our staff.</div>
-	</div>
-</center><br><br>
+	  Once we have reviewed your order, we will send an e-mail to <%= session.User.email %>.<br>
+	  Please remember that no order is final until you've recieved a confirmation e-mail from our staff.
+      </div>
+      <a href="/catering/order/start" class="ui teal button">Submit Another Order</a>
+      </center>
+</div>
