@@ -28,7 +28,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 1.1em;
   background: url("../../images/cream-tile.png") repeat;
-  color: #39342e;
+  color: #4B3F3F;
   text-rendering: optimizeLegibility;
   min-width: 320px;
 }
@@ -157,6 +157,7 @@ body {
   left: 0;
   height: 11px;
   position: absolute;
+  z-index: 1;
 }
 
 .navbar-item {
@@ -181,7 +182,6 @@ body {
   background: url("../../images/pastries-light.png");
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: 0px 3px 6px #313131;
 }
 
 .coffee-tile {
@@ -190,20 +190,18 @@ body {
 
 #main-section1 {
   width: 100%;
-  height: 650px;
+  height: 550px;
   background: url("../../images/outside_cafe.png");
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: 1px 3px 6px #313131;
 }
 
 #catering-section1 {
   width: 100%;
-  height: 650px;
+  height: 550px;
   background: url("../../images/baltimore.png");
   background-repeat: no-repeat;
   background-size: cover;
-
 }
 
 #welcome {
@@ -212,7 +210,18 @@ body {
   height: 500px;
   padding-top: 30px;
   padding-bottom: 30px;
-  box-shadow: 2px 1px 6px #313131;
+  box-shadow: 5px 2px 10px 10px #313131;
+  z-index: 0;
+}
+
+#catering-how-it-works {
+  width: 100%;
+  background: url("../../images/cream-tile.png") repeat;
+  height: 500px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  box-shadow: 5px 2px 10px 10px #313131;
+  z-index: 0;
 }
 
 #reviews {
@@ -233,7 +242,7 @@ background: url("../../images/cream-tile.png") repeat;
 
 #express-bg-map {
   width: 100%;
-  height: 600px;
+  height: 550px;
   z-index: 0;
   background: none;
 }
@@ -249,8 +258,10 @@ background: url("../../images/cream-tile.png") repeat;
   padding-bottom: 30px;
   position: relative;
   width: 100%;
-  height: 800px;
-  background: #fff;
+  height: 900px;
+  background: url("../../images/cream-tile.png") repeat;
+  box-shadow: 5px 2px 10px 10px #313131;
+  z-index: 0;
 }
 
 #main-hours-sun {
@@ -271,8 +282,10 @@ background: url("../../images/cream-tile.png") repeat;
   padding-top: 30px;
   padding-bottom: 30px;
   width: 100%;
-  height: 600px;
+  height: 500px;
   background: url("../../images/cream-tile.png") repeat;
+  box-shadow: 0px -6px 3px 3px #3E3E3E;
+  z-index: 0;
 }
 
 .breakfast-specials {
@@ -304,7 +317,7 @@ background: url("../../images/cream-tile.png") repeat;
 
 #login-step-section {
   width: 100%;
-  height: 800px;
+  height: 550px;
    background: url("../../images/unsplash_macaroons.jpg");
 }
 
