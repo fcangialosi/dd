@@ -151,7 +151,7 @@ body {
   position: absolute;
 }
 
-.up-divider {
+.step-up-divider {
   background: url("../../images/divider-up.png") repeat;
   width: 100%;
   left: 0;
@@ -177,7 +177,7 @@ body {
 }
 #home-section1 {
   width: 100%;
-  height: 650px;
+  height: 550px;
   background: url("../../images/pastries-light.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -203,25 +203,39 @@ body {
   background: url("../../images/baltimore.png");
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: 1px 3px 6px #313131;
+
 }
 
 #welcome {
   width: 100%;
-  background-color: #fff;
-  background-size: cover;
+  background: url("../../images/cream-tile.png") repeat;
+  height: 500px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  box-shadow: 2px 1px 6px #313131;
+}
+
+#reviews {
+  width: 100%;
+  height: 650px;
+padding-top: 30px;
+padding-bottom: 30px;
+background-color: #fff;
+background: url("../../images/cream-tile.png") repeat;
+}
+
+#feedback {
+  width: 100%;
   height: 500px;
   padding-top: 30px;
   padding-bottom: 30px;
 }
 
-#express-section1 {
+#express-bg-map {
   width: 100%;
-  height: 650px;
-  background: url("../../images/unsplash_cafe.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  box-shadow: 1px 3px 6px #313131;
+  height: 600px;
+  z-index: 0;
+  background: none;
 }
 
 #section-2 {
@@ -278,6 +292,8 @@ body {
   width:100%;
   height: 55px;
   background: url("../../images/cream-tile.png") repeat;
+  z-index: 25;
+  box-shadow: 0px 8px 8px #313131;
 }
 
 #step-section {
@@ -393,4 +409,59 @@ body {
   -webkit-transform-origin: center bottom;
   -ms-transform-origin: center bottom;
   transform-origin: center bottom;
+}
+
+
+q:before {
+    content: '\201C';
+    font-size:150%;
+    font-family: Times New Roman;
+    padding-right: 5px;
+}
+
+q:after {
+    content: '\201D';
+    font-size:150%;
+    line-height: 1.1em;
+    padding-left: 5px;
+    font-family: Times New Roman;
+}
+
+
+.quote {
+    margin-top: -13px;
+    height: auto;
+    font-size: 1.2em;
+    color: #39342e;
+    font-family: 'mel';
+}
+
+.review {
+  position: relative;
+  border-left: 2px solid #555;
+  padding-left: 10px;
+  padding-bottom:20px;
+}
+
+.reviewer {
+  opacity: 0.8;
+  font-size: 1.0em;
+  float: right;
+}
+
+.below-step {
+  box-shadow: 0px -5px 5px #606060;
+}
+
+#express-title {
+  color: #000;
+  width: 70%;
+  position: absolute;
+  left: 0px;
+  top: 150px;
+  font-size: 3em;
+  background: url("../../images/cream-tile.png") repeat;
+  font-family: 'museo';
+  box-shadow: 2px 2px 5px #313131;
+  padding-left: 30px;
 }
