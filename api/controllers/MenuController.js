@@ -16,11 +16,22 @@
  */
 
 module.exports = {
-   
+
     displayMainMenu: function (req, res, next) {
 
       // Get an array of all  in the Menu collection(e.g. table)
       Menu.find({"menu":"main"}, function foundMenus (err, menu) {
+        if (err) return next(err);
+        res.view('menu',
+        {
+          menu: menu
+        });
+      });
+    },
+
+    displayMainSpecials : function(req, res, next) {
+      // Get an array of all  in the Menu collection(e.g. table)
+      Menu.find({"menu":"main-specials"}, function foundMenus (err, menu) {
         if (err) return next(err);
         res.view('menu',
         {
@@ -45,6 +56,17 @@ module.exports = {
 
       // Get an array of all  in the Menu collection(e.g. table)
       Menu.find({"menu":"express"}, function foundMenus (err, menu) {
+        if (err) return next(err);
+        res.view('menu',
+        {
+          menu: menu
+        });
+      });
+    },
+
+    displayExpressSpecials : function(req, res, next) {
+      // Get an array of all  in the Menu collection(e.g. table)
+      Menu.find({"menu":"express-specials"}, function foundMenus (err, menu) {
         if (err) return next(err);
         res.view('menu',
         {
@@ -194,7 +216,7 @@ module.exports = {
     update: function(req, res, next) {
       Menu.findOne(req.param('id'), function foundMenu(err, menu) {
         if (err) return next(err);
-        if (!menu) return next('Menu doesn\'t exist.');   
+        if (!menu) return next('Menu doesn\'t exist.');
 
         index = Number(req.param('index'));
 
@@ -270,7 +292,7 @@ module.exports = {
         }
 
       });
-      
+
     }
-  
+
 };

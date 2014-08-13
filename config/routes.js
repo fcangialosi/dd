@@ -46,6 +46,8 @@ module.exports.routes = {
 
   '/main/menu' : 'MenuController.displayMainMenu',
 
+  '/main/specials' : 'MenuController.displayMainSpecials',
+
   '/catering' : {
     view: 'catering/index'
   },
@@ -57,6 +59,8 @@ module.exports.routes = {
   },
 
   '/express/menu' : 'MenuController.displayExpressMenu',
+
+  '/express/specials' : 'MenuController.displayExpressSpecials',
 
   '/about' : {
     view :'home/about'
