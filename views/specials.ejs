@@ -1,0 +1,48 @@
+<div id="specials-header">
+  <div class="container">
+    <center><h1 class="ui header"> <%= cafe %> Daily Specials  </h1></center>
+  </div>
+</div>
+<div style="height:10px; position: relative;" class="below-step">
+  <div class="step-up-divider" style="top: -11px;"></div>
+</div>
+<div class="ui grid">
+  <div class="four wide column">
+
+    <div class="ui vertical menu sticky-leftbar">
+      <div class="header item">
+        <i class="coffee icon"></i>
+        Breakfast Specials
+      </div>
+      <% _.each(menu, function(section) { %>
+      <% if(section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><% } %>
+      <% }) %>
+      <div class="header item">
+        <i class="food icon"></i>
+        Lunch Specials
+      </div>
+      <% _.each(menu, function(section) {%>
+      <% if(!section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><%}%>
+      <% }) %>
+    </div>
+  </div>
+  <div class="twelve wide column">
+    <div class="ui two column grid">
+      <% _.each(menu, function(section) { %>
+      <h2 class="ui dividing header" id="<%=section.name%>"><% if (section.breakfast) { %>Breakfast: <% } else  {%>Lunch: <% } %><%= section.name %></h2>
+      <% _.each(section.items, function(item) {%>
+      <div class="tight column">
+      <div class="simpleCart_shelfItem ui segment">
+
+        <b class="item_name"><%= item.name %></b>
+
+        <div class="ui  huge label floated right" style="float: right">
+         <span class="item_price"><%= item.price %></span>
+       </div>
+     </div>
+     </div>
+     <% })%>
+     <% }) %>
+   </div>
+ </div>
+</div>

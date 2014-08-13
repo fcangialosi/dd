@@ -33,9 +33,10 @@ module.exports = {
       // Get an array of all  in the Menu collection(e.g. table)
       Menu.find({"menu":"main-specials"}, function foundMenus (err, menu) {
         if (err) return next(err);
-        res.view('menu',
+        res.view('specials',
         {
-          menu: menu
+          menu: menu,
+          cafe : 'Main Cafe'
         });
       });
     },
@@ -68,9 +69,10 @@ module.exports = {
       // Get an array of all  in the Menu collection(e.g. table)
       Menu.find({"menu":"express-specials"}, function foundMenus (err, menu) {
         if (err) return next(err);
-        res.view('menu',
+        res.view('specials',
         {
-          menu: menu
+          menu: menu,
+          cafe : "David and Dad's Express"
         });
       });
     },
