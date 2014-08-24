@@ -58,7 +58,7 @@
     </div>
     <div class="item">
       <i class="cart icon"></i><b>Current Total: </b><span class="simpleCart_total"></span>
-      <div class="ui red label"><span class="simpleCart_quantity"> </span></div>
+      <div class="ui red label"><span class="simpleCart_quantity"> </span> &nbsp;Items</div>
     </div>
   </div>
 </div>
@@ -92,7 +92,7 @@
 
     <div id="quantity-box" class="mini ui icon input">
       <input type="text" placeholder="Quantity" class="item_Quantity">
-      <i class="item_add inverted add icon"></i>
+      <i class="item_add inverted add icon">Add</i>
     </div>
 
     <h5><% if(item.minimum) { %><%=  item.minimum%><%} else if(item.serves) {%><%=item.serves%><%} else {%><%}%> | <span class="item_price"><%= item.price %></span>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%> </h5>
