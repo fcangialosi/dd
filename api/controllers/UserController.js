@@ -126,7 +126,7 @@ module.exports = {
 
   removeDelivery : function(req, res, next) {
 
-    req.session.User.savedDelivery.splice(req.param('id'));
+    req.session.User.savedDelivery.splice(req.param('id'), 1);
 
     User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
       if (err) {
