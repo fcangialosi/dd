@@ -154,7 +154,7 @@ module.exports = {
   },
 
   removePayment : function(req, res, next) {
-    req.session.User.savedPayment.splice(req.param('id'));
+    req.session.User.savedPayment.splice(req.param('id'), 1);
 
     User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
       if (err) {

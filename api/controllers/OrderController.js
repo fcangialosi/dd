@@ -45,7 +45,6 @@ module.exports = {
 
   'continue' : function(req, res) {
     req.session.paymentMethod = req.param('method');
-    console.log(req.session.User);
     if(req.param('method') == 'card') {
       res.view('catering/payment/card');
     } else {
@@ -58,7 +57,6 @@ module.exports = {
   },
 
   'review' : function(req,res) {
-    console.log(req.session);
     res.view('catering/confirm/review');
   },
 
