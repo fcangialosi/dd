@@ -104,7 +104,7 @@
           <td>
             <h2 class="ui dividing header">
             Choose Credit Card
-            <div class="sub header"> For your security, we process all payments in-store, rather than online. When you submit an order, your credit card <b style="color: #E75859">will not</b> be charged until we have personally <b style="color: #E75859">confirmed</b> your order.</b></div>
+            <div class="sub header"> For your security, we process all payments in-store, rather than online. When you submit an order, your credit card <b style="color: #E75859">will not</b> be charged until we have successfully <b style="color: #E75859">delivered</b> your order.</b></div>
             </h2>
           </td>
         </tr>
@@ -133,7 +133,7 @@
                 <input type="submit" class="right floated medium ui red button" value="Delete"/>
                 <input type="hidden" name="_csrf" value="<%= _csrf %>" />
               </form>
-              <div class="right floated medium ui change button" index="<%= session.User.savedPayment.indexOf(card) %>">Select</div>
+              <div class="right floated medium ui change button" index="<%= session.User.savedPayment.indexOf(card) %>">Select This Card</div>
               <div class="content">
                 <div class="header">Card ending in <%= card.number.substring(card.number.length-4) %>
                 </div>

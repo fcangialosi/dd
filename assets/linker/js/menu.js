@@ -7,7 +7,7 @@ simpleCart({
     },
      taxRate: 0.06,
      shippingCustom: function(){
-        return 10;
+        return 12;
      }
 });
 

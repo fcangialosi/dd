@@ -135,7 +135,7 @@
           <td><span style="font-size: 3em">2</span></td>
           <td>
             <h2 class="ui dividing header">
-              Deliver To?
+              Delivery Location
               <div class="sub header">Please choose from one of your saved delivery addresses to the right, or add a new one!</div>
             </h2>
           </td>
@@ -158,7 +158,7 @@
               <input type="submit" class="right floated medium ui red button" value="Delete"/>
               <input type="hidden" name="_csrf" value="<%= _csrf %>" />
             </form>
-            <div class="right floated medium ui change button" index="<%= session.User.savedDelivery.indexOf(option) %>">Select</div>
+            <div class="right floated medium ui change button" index="<%= session.User.savedDelivery.indexOf(option) %>">Select This Location</div>
             <div class="content">
               <div class="header"> <%= option.address %>,&nbsp;<%= option.city %> </div>
               <div class="description" style="margin-left:20px">

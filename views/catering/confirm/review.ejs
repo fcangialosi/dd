@@ -63,10 +63,10 @@
         <h3> Payment Method </h3>
           <% if(session.paymentMethod == 'cash') { %>
             <b>Method</b>:&nbsp; Pay at Delivery
-            <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">You may pay by credit card, cash, or check at the time of delivery.</p>
+            <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">We will pick up payment at time of delivery.</p>
           <% } else if(session.paymentMethod == 'invoice') { %>
-            <b>Method</b>:&nbsp; Pay Later
-            <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">We will give you an invoice when we deliver your order. We ask that all customers do their best to pay within 30 days of the order, thank you!</p>
+            <b>Method</b>:&nbsp; Invoice
+            <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">An invoice will be left with your order. </p>
           <% } else { %>
             <b>Method</b>:&nbsp; Pay Now (Credit Card) <br>
             <b>Card Number</b>:&nbsp;  XXXXXXXXXXXX<%= session.card.cardNumber.substring(session.card.cardNumber.length-4) %><br>
@@ -100,16 +100,18 @@
       </tr>
     </table>
     </center>
-    <p class="warning-border" style="font-size: 1.0em"> * This is just an estimation of your total order cost based on distance. Once a member of our team reviews your order, we will give you a final price. In most cases, the price will be exactly the same.  </p>
+    <p class="warning-border" style="font-size: 1.0em"> * Actual delivery fee will range from $12 to $32 based on distance. </p>
     <div class="ui divider"></div>
 
     <center style="font-size: 1.5em"><b>Estimated Total:</b>&nbsp;<span class="simpleCart_grandTotal"></span></center>
-
+    <center style="margin-top: 10px">
+      <a id="submit-button" href="javascript:;" class="large ui green submit button simpleCart_checkout">SUBMIT MY ORDER</a>
+    </center>
   </div>
   </div>
 </div>
 
-<a id="submit-button" href="javascript:;" class="fluid ui green submit button simpleCart_checkout">SUBMIT MY ORDER</a>
+
 <!--
 <form action="/catering/order/submit" method="POST" class="ui warning fluid form segment">
   <input type="submit" class="fluid ui green submit button" value="CONFIRM" id="confirm-checkout">
