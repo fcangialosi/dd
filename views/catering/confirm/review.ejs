@@ -62,11 +62,14 @@
         <div class="column">
         <h3> Payment Method </h3>
           <% if(session.paymentMethod == 'cash') { %>
-            <b>Method</b>:&nbsp; Pay at Delivery
-            <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">We will pick up payment at time of delivery.</p>
+            <b>Method</b>:&nbsp; Pay With Cash at Delivery
+            <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">We will pick up cash at time of delivery.</p>
           <% } else if(session.paymentMethod == 'invoice') { %>
             <b>Method</b>:&nbsp; Invoice
             <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">An invoice will be left with your order. </p>
+          <% } else if(session.paymentMethod == 'check') { %>
+            <b>Method</b>:&nbsp; Pay With Check at Delivery
+            <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">We will pick up the check at time of delivery. Please make check out to "David and Dad's Cafe" </p>
           <% } else { %>
             <b>Method</b>:&nbsp; Pay Now (Credit Card) <br>
             <b>Card Number</b>:&nbsp;  XXXXXXXXXXXX<%= session.card.cardNumber.substring(session.card.cardNumber.length-4) %><br>
@@ -99,8 +102,9 @@
         <td class="right-td"><span class="simpleCart_shipping"></span></td>
       </tr>
     </table>
+    <p style="font-size: 0.7em"> * Actual delivery fee will range from $12 to $32 based on distance. </p>
     </center>
-    <p class="warning-border" style="font-size: 1.0em"> * Actual delivery fee will range from $12 to $32 based on distance. </p>
+
     <div class="ui divider"></div>
 
     <center style="font-size: 1.5em"><b>Estimated Total:</b>&nbsp;<span class="simpleCart_grandTotal"></span></center>
