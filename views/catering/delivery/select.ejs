@@ -50,6 +50,7 @@
 </div>
 <!-- Modal End -->
 
+<!-- Step Start -->
 <div id="step-section">
   <div class="container">
    <div class="ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
@@ -73,111 +74,118 @@
 <div class="step-up-divider"></div>
 </div>
 <div style="height:30px" class="below-step"></div>
-
-
+<!-- Step End -->
 
 <div class="container">
+
+  <!--Time Section-->
   <div class="stackable ui middle aligned grid">
     <div class="six wide column">
-  <table class="spaced-table">
-    <tr>
-      <td><span style="font-size: 3em">1</span></td>
-      <td>
-        <h2 class="ui dividing header">
-         Location
-         <div class="sub header">Please choose from one of your saved delivery addresses below, or add a new one!</div>
-       </h2>
-     </td>
-   </tr>
- </table>
- </div>
+      <table  class="spaced-table">
+        <tr>
+          <td><span style="font-size: 3em">1</span></td>
+          <td>
+            <h2 class="ui dividing header">
+            Date and Time
+            <div class="sub header"> Please select a time and date for your delivery. If you would like to order for more than one date, or more than once in a day, please submit <b>seperate</b> orders. </div>
+            </h2>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="ten wide column">
+      <% if(flash && flash.err) { %>
+        <div class="ui warning message">
+          <% Object.keys(flash.err).forEach(function(error) { %>
+            <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+              <ul class="list">
+                <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+              </ul>
+            <% }) %>
+          </div>
+        <% } %>
 
-<div class="ten wide column">
- <div class="ui small fluid form segment">
-  <div class="ui medium divided list">
-    <% _.each(session.User.savedDelivery, function(option){ %>
-    <div class="item">
-      <form action="/user/removeDelivery/<%= session.User.savedDelivery.indexOf(option) %>" method="POST">
-        <input type="hidden" name="_method" value="delete"/>
-        <input type="submit" class="right floated medium ui red button" value="Delete"/>
-        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+      <form class="ui small fluid form segment" id="select-delivery-form">
+        <div class="ui error message"></div>
+        <div class="two fields form-group">
+          <div class="field">
+            <label>Delivery Date</label>
+            <div class="ui left icon input">
+              <input type='text' id='delivery-datepicker' name='date'/>
+              <i class="calendar icon"></i>
+            </div>
+          </div>
+          <div class="field">
+            <label>Delivery Time</label>
+            <div class="ui left icon input">
+              <input type='text' id='delivery-timepicker' name='time'/>
+              <i class="time icon"></i>
+            </div>
+          </div>
+        </div>
       </form>
-      <div class="right floated medium ui change button" index="<%= session.User.savedDelivery.indexOf(option) %>">Select</div>
-      <div class="content">
-        <div class="header"> <%= option.address %>,&nbsp;<%= option.city %> </div>
-        <div class="description" style="margin-left:20px">
-          Contact: <%= option.contactName %> | <%= option.contactPhone %>
-          <% if(option.special) {%>
-          <br> Instructions: <%= option.special %>
-          <% } %>
+    </div>
+  </div>
+  <!--Time Section End-->
+  <div style="height: 25px"></div>
+  <!--Location Section-->
+  <div class="stackable ui middle aligned grid">
+    <div class="six wide column">
+      <table class="spaced-table">
+        <tr>
+          <td><span style="font-size: 3em">2</span></td>
+          <td>
+            <h2 class="ui dividing header">
+              Where Are You?
+              <div class="sub header">Please choose from one of your saved delivery addresses below, or add a new one!</div>
+            </h2>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="ten wide column">
+      <div class="ui small fluid form segment">
+        <div class="ui medium divided list">
+          <% _.each(session.User.savedDelivery, function(option){ %>
+          <div class="item">
+            <form action="/user/removeDelivery/<%= session.User.savedDelivery.indexOf(option) %>" method="POST">
+              <input type="hidden" name="_method" value="delete"/>
+              <input type="submit" class="right floated medium ui red button" value="Delete"/>
+              <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+            </form>
+            <div class="right floated medium ui change button" index="<%= session.User.savedDelivery.indexOf(option) %>">Select</div>
+            <div class="content">
+              <div class="header"> <%= option.address %>,&nbsp;<%= option.city %> </div>
+              <div class="description" style="margin-left:20px">
+                Contact: <%= option.contactName %> | <%= option.contactPhone %>
+                <% if(option.special) {%>
+                <br> Instructions: <%= option.special %>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+        <div class="item">
+          <div class="content">
+            <a data-toggle="modal" data-target="#myModal" class="medium ui green button">Add New Delivery Address</a>
+          </div>
+        </div>
         </div>
       </div>
     </div>
-    <% }) %>
-    <div class="item">
-      <div class="content">
-        <a data-toggle="modal" data-target="#myModal" class="medium ui green button">Add New Location</a>
-      </div>
-    </div>
+  </div>
+  <!--Location Section End-->
+  <div style="height: 25px"></div>
+  <div class="stackable ui grid">
+  <form action="/catering/order/delivery/save" method="POST" class="ui small fluid form segment">
+    <input type="submit" class="fluid ui teal submit button" id="delivery-submit" value="Click here to choose your food items!">
+    <input type="hidden" name="_csrf" value="<%= _csrf %>">
+    <input type="hidden" name="deliveryIndex" value="-1" id="option-index">
+    <input type="hidden" name="date" value="-1" id="delivery-date">
+    <input type="hidden" name="time" value="-1" id="delivery-time">
+  </form>
   </div>
 </div>
-</div>
-</div>
-<div style="height: 50px"></div>
-<div class="stackable ui middle aligned grid">
-  <div class="six wide column">
-<table  class="spaced-table">
-  <tr>
-    <td><span style="font-size: 3em">2</span></td>
-    <td>
-      <h2 class="ui dividing header">
-       Date and Time
-       <div class="sub header"> Please select a time and date for your delivery. If you would like to order for more than one date, or more than once in a day, please submit <b>seperate</b> orders. </div>
-     </h2>
-   </td>
- </tr>
-</table>
-</div>
-<div class="ten wide column">
-<% if(flash && flash.err) { %>
-<div class="ui warning message">
-  <% Object.keys(flash.err).forEach(function(error) { %>
-  <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
-  <ul class="list">
-    <li><%- JSON.stringify(flash.err[error]['message']) %></li>
-  </ul>
-  <% }) %>
-</div>
-<% } %>
 
-<form action="/catering/order/delivery/save" method="POST" class="ui small fluid form segment" id="select-delivery-form">
-  <div class="ui error message"></div>
-
-  <div class="two fields form-group">
-    <div class="field">
-      <label>Delivery Date</label>
-      <div class="ui left icon input">
-        <input type='text' id='delivery-datepicker' name='date'/>
-        <i class="calendar icon"></i>
-      </div>
-    </div>
-    <div class="field">
-      <label>Delivery Time</label>
-      <div class="ui left icon input">
-        <input type='text' id='delivery-timepicker' name='time'/>
-        <i class="time icon"></i>
-      </div>
-    </div>
-  </div>
-
-  <input type="submit" class="fluid ui teal submit button" value="Click here to choose your food items!">
-  <input type="hidden" name="_csrf" value="<%= _csrf %>">
-  <input type="hidden" name="deliveryIndex" value="-1" id="option-index">
-</div>
-
-</form>
-
-</div>
-</div>
-</div>
 <div style="height: 100px"></div>
