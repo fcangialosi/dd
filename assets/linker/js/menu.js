@@ -4,7 +4,11 @@ simpleCart({
         url: "/catering/order/submit" ,
         method: "POST",
         cartStyle: "table"
-    }
+    },
+     taxRate: 0.06,
+     shippingCustom: function(){
+        return 10;
+     }
 });
 
 ready = function() {

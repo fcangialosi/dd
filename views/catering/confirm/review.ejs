@@ -33,7 +33,7 @@
       <div class="row">
         <div class="column">
         <h3> Order Contact </h3>
-        <b>Name</b>:&nbsp;<%= session.User.firstName %>&nbsp;<%= session.User.lastName %><br>
+        <b>Name</b>:&nbsp;<%= session.User.name %><br>
         <b>Company</b>:&nbsp;<%= session.User.companyName %><br>
         <b>Phone</b>:&nbsp;<%= session.User.phone %><br>
         <b>E-Mail</b>:&nbsp;<%= session.User.email %>
@@ -84,7 +84,26 @@
   <p class="warning-border" style="font-size: 0.8em"> If you would like to make any last minute changes to your order, you can use the <i class="minus sign icon"></i> and <i class="add sign icon"></i> buttons to change an items quantity, or the <i class="medium trash icon"></i> button to delete an item. Your grand total will update respectively. Once everything looks good, submit! </p>
   <center><div class="simpleCart_items"></div></center>
   <div class="ui divider"></div>
-  <center style="font-size: 2em;"><b>Grand Total: </b>&nbsp;<span class="simpleCart_total"></span></center>
+  <center style="font-size: 1.3em;">
+    <table id="summary-table">
+      <tr>
+        <td class="left-td">Sub-Total:</td>
+        <td class="right-td"><span class="simpleCart_total"></span></td>
+      </tr>
+      <tr>
+        <td class="left-td">Tax (6%):</td>
+        <td class="right-td"><div class="simpleCart_tax"></div></td>
+      </tr>
+      <tr>
+        <td class="left-td">Estimated Delivery Fee*:</td>
+        <td class="right-td"><span class="simpleCart_shipping"></span></td>
+      </tr>
+    </table>
+    </center>
+    <p class="warning-border" style="font-size: 1.0em"> * This is just an estimation of your total order cost based on distance. Once a member of our team reviews your order, we will give you a final price. In most cases, the price will be exactly the same.  </p>
+    <div class="ui divider"></div>
+
+    <center style="font-size: 1.5em"><b>Estimated Total:</b>&nbsp;<span class="simpleCart_grandTotal"></span></center>
 
   </div>
   </div>
