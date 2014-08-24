@@ -11,6 +11,7 @@
           <div class="column">
             <form action="/user/addDelivery" method="POST" class="ui small fluid form segment" id="delivery-form">
               <p>Once you fill out this form, we'll save it to your account so that you can use it for future orders! </p>
+              <div class="ui error message"></div>
               <div class="two fields">
                 <div class="field">
                   <label>Delivery Contact Name</label>
@@ -37,7 +38,6 @@
               </div>
               <input type="submit" class="ui blue submit button" value="Save This Location">
               <input type="hidden" name="_csrf" value="<%= _csrf %>">
-              <div class="ui error message"></div>
             </form>
           </div>
         </div>
@@ -105,8 +105,7 @@
           </div>
         <% } %>
 
-      <form class="ui small fluid form segment" id="select-delivery-form">
-        <div class="ui error message"></div>
+      <form class="ui small fluid form segment">
         <div class="two fields form-group">
           <div class="field">
             <label>Delivery Date</label>
@@ -136,8 +135,8 @@
           <td><span style="font-size: 3em">2</span></td>
           <td>
             <h2 class="ui dividing header">
-              Where Are You?
-              <div class="sub header">Please choose from one of your saved delivery addresses below, or add a new one!</div>
+              Deliver To?
+              <div class="sub header">Please choose from one of your saved delivery addresses to the right, or add a new one!</div>
             </h2>
           </td>
         </tr>
@@ -146,6 +145,11 @@
 
     <div class="ten wide column">
       <div class="ui small fluid form segment">
+        <% if (session.User.savedDelivery.length < 1) { %>
+          <div class="item">
+              <center><b>It looks like you don't have any saved destinations! Click the green button below to add one!</b></center>
+          </div>
+        <% } %>
         <div class="ui medium divided list">
           <% _.each(session.User.savedDelivery, function(option){ %>
           <div class="item">
@@ -168,7 +172,7 @@
         <% }) %>
         <div class="item">
           <div class="content">
-            <a data-toggle="modal" data-target="#myModal" class="medium ui green button">Add New Delivery Address</a>
+            <a data-toggle="modal" data-target="#myModal" class="medium ui green button">Add Delivery Destination</a>
           </div>
         </div>
         </div>
@@ -177,14 +181,17 @@
   </div>
   <!--Location Section End-->
   <div style="height: 25px"></div>
-  <div class="stackable ui grid">
-  <form action="/catering/order/delivery/save" method="POST" class="ui small fluid form segment">
-    <input type="submit" class="fluid ui teal submit button" id="delivery-submit" value="Click here to choose your food items!">
-    <input type="hidden" name="_csrf" value="<%= _csrf %>">
-    <input type="hidden" name="deliveryIndex" value="-1" id="option-index">
-    <input type="hidden" name="date" value="-1" id="delivery-date">
-    <input type="hidden" name="time" value="-1" id="delivery-time">
-  </form>
+  <div class="ui one column grid">
+    <div class="column">
+      <form action="/catering/order/delivery/save" method="POST" class="ui form segment"  id="select-delivery-form">
+        <div class="ui error message"></div>
+        <input type="submit" class="fluid ui teal submit button" id="delivery-submit" value="Click here to choose your food items!">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <input type="hidden" name="deliveryIndex" value="-1" id="option-index">
+        <input type="hidden" name="date" value="-1" id="delivery-date">
+        <input type="hidden" name="time" value="-1" id="delivery-time">
+      </form>
+    </div>
   </div>
 </div>
 

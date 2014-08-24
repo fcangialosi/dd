@@ -102,7 +102,7 @@ $('#select-delivery-form')
       identifier : 'time',
       rules : [
         {
-          type : 'empty',
+          type : 'not[-1]',
           prompt : 'Please choose a time for your delivery!'
         }
       ]
@@ -111,7 +111,7 @@ $('#select-delivery-form')
       identifier : 'date',
       rules : [
         {
-          type : 'empty',
+          type : 'not[-1]',
           prompt : 'Please choose a date for your delivery!'
         }
       ]
