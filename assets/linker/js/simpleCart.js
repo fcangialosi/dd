@@ -531,6 +531,10 @@
 					return settings.taxRate || 0;
 				},
 
+				setTaxRate: function(newRate) {
+					settings.taxRate = newRate;
+				},
+
 				shipping: function (opt_custom_function) {
 
 					// shortcut to extend options with custom shipping
@@ -895,6 +899,7 @@
 							if( false !== simpleCart.trigger('beforeCheckout', [checkoutData.data]) ){
 								simpleCart.generateAndSendForm( checkoutData );
 							}
+							simpleCart.trigger('checkoutSuccess');
 						}
 
 					} else {

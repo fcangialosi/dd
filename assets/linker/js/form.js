@@ -1,7 +1,3 @@
-$("#submit-button").click(function() {
-  simpleCart.empty();
-});
-
 $('#signup-form')
   .form({
     name: {

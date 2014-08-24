@@ -31,4 +31,13 @@ $(document).ready(function() {
     }
   });
 
+  simpleCart.bind( 'checkoutSuccess' , function( data ){
+    simpleCart.empty();
+  });
+
+  $('#tax-exempt-button').on('click', function(){
+    simpleCart.setTaxRate(0);
+    simpleCart.update();
+  });
+
 });

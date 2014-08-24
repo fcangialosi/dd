@@ -54,28 +54,6 @@ ready = function() {
     container: '.card-wrapper'
   });
 
-  // $('#confirm-checkout').on('click', function(){
-  //   var data = simpleCart.checkout.SendForm({'url' : '/catering/order/submit', 'method' : 'POST'}).data;
-  //   var form = simpleCart.$create("form");
-  //   form.attr('style', 'display:none;');
-  //   form.attr('action', '/catering/order/submit');
-  //   form.attr('method', 'POST');
-  //   simpleCart.each(data, function (val, x, name) {
-  //     form.append(
-  //       simpleCart.$create("input").attr("type","hidden").attr("name",name).val(val)
-  //     );
-  //   });
-  //   $.get("/csrfToken", function(data) {
-  //     if(data) {
-  //       form.append(simpleCart.$create("input").attr("type","hidden").attr("name","_csrf").val(data._csrf));
-  //     }
-  //     simpleCart.$("body").append(form);
-  //     form.el.submit();
-  //     form.remove();
-  //   });
-
-  // });
-
 };
 
 $(document).ready(ready);
