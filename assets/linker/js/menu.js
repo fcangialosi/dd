@@ -43,11 +43,6 @@ ready = function() {
       up: "fa fa-arrow-up",
       down: "fa fa-arrow-down"
     });
-    $('#delivery-timepicker').datetimepicker({
-      pickDate: false,
-      up: "fa fa-arrow-up",
-      down: "fa fa-arrow-down"
-    });
   });
 
   // payment page

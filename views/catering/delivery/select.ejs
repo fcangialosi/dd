@@ -1,3 +1,55 @@
+<!-- Modal Start -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Add New Delivery Address</h4>
+      </div>
+      <div class="modal-body">
+          <div class="ui one column grid">
+  <div class="column">
+    <form action="/user/addDelivery" method="POST" class="ui small fluid form segment" id="delivery-form">
+        <p>Once you fill out this form, we'll save it to your account so that you can use it for future orders! </p>
+        <div class="two fields">
+        <div class="field">
+            <label>Delivery Contact Name</label>
+            <input placeholder="Leave blank if you are the delivery contact" name="name" type="text">
+          </div>
+          <div class="field">
+            <label>Delivery Contact Phone Number</label>
+            <input placeholder="Leave blank if you are the delivery contact" name="phone" type="text">
+          </div>
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Delivery Address</label>
+            <input placeholder="314 N. Charles St." name="address" type="text">
+          </div>
+          <div class="field">
+            <label>City</label>
+            <input placeholder="Baltimore" name="city" type="text">
+          </div>
+        </div>
+        <div class="field">
+          <label>Special Instructions</label>
+          <textarea placeholder="Anything else that will help us deliver your order smoothly and in a timely fashion!" name="instructions"></textarea>
+        </div>
+        <input type="submit" class="ui blue submit button" value="Save This Location">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <div class="ui error message"></div>
+      </form>
+  </div>
+</div>
+      </div>
+      <div class="modal-footer">
+        <a class="ui button" data-dismiss="modal">Close Without Saving</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal End -->
+
 <div id="step-section">
   <div class="container">
    <div class="ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
@@ -58,11 +110,8 @@
       </div>
       <% }) %>
       <div class="item">
-        <a class="right floated medium ui button" href="/catering/order/delivery/new">Create</a>
         <div class="content">
-          <div class="header">
-            Add New Location
-          </div>
+          <a data-toggle="modal" data-target="#myModal" class="medium ui green button">Add New Location</a>
         </div>
       </div>
     </div>
