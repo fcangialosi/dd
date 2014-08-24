@@ -23,6 +23,7 @@
     <div class="six wide column">
       <form action="/user/create" method="POST" class="ui warning form segment" id="signup-form">
         <h4><b>New Customer?</b></h4>
+        <p> Enter your information to get started! </p>
         <% if(flash && flash.err && flash.err[0].type == 'signup') { %>
         <div class="ui warning message">
           <% Object.keys(flash.err).forEach(function(error) { %>

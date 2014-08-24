@@ -8,6 +8,9 @@ $(document).ready(function() {
     time = $('#delivery-timepicker').val()
     $('#delivery-time').attr('value', time);
   });
+  $('#start-over').on('click', function(){
+    $('input[type=text]').val(0);
+  });
 
   var $change = $('.ui.change.button');
   var change_handler = {
@@ -19,4 +22,13 @@ $(document).ready(function() {
     }
   };
   $change.on('click', change_handler.activate);
+
+  simpleCart.bind( 'update' , function(){
+    if(simpleCart.quantity() > 0) {
+      $("#order-summary-contents").html('<p class="warning-border" style="font-size: 0.8em">You can use the <i class="minus sign icon"></i> and <i class="add sign icon"></i> buttons to change an items quantity, or the <i class="medium trash icon"></i> button to delete an item.</p><center><div class="simpleCart_items"></div></center><div class="ui divider"></div><center><b>Grand Total: </b>&nbsp;<span class="simpleCart_total"></span></center>');
+    } else {
+      $("#order-summary-contents").html("<center>It looks like you haven't added any items to your order yet!<br>Make sure you pressed the <b>\"Add\"</b> button next to each item <b>after</b> entering in the quantity.<br>After you add an item, you should see your <b>total</b> increase in the top left hand corner of the menu.</center>");
+    }
+  });
+
 });

@@ -4,12 +4,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Your Order</h4>
+        <h4 class="modal-title" id="myModalLabel">Order Summary</h4>
       </div>
       <div class="modal-body">
-        <center><div class="simpleCart_items"></div></center>
-        <div class="ui divider"></div>
-        <center><b>Grand Total: </b>&nbsp;<span class="simpleCart_total"></span></center>
+        <div id="order-summary-contents">
+          <center>
+          It looks like you haven't added any items to your order yet!<br>
+          Make sure you pressed the <b>"Add"</b> button next to each item <b>after</b> entering in the quantity.<br>
+          After you add an item, you should see your <b>total</b> increase in the top left hand corner of the menu.
+          </center>
+        </div>
       </div>
       <div class="modal-footer">
         <a class="ui button" data-dismiss="modal">Close</a>
@@ -48,17 +52,17 @@
   <div class="sixteen wide column">
     <div class="ui borderless fluid menu sticky-topbar" style="padding: 4px">
      <div class="right item">
-      <a href="javascript:;" class="simpleCart_empty ui red button">Empty Cart</a>
+      <a href="javascript:;" class="simpleCart_empty ui red button" id="start-over">Start Over</a>
     </div>
     <div class="right item">
-      <a data-toggle="modal" data-target="#myModal" class="ui green button">View Cart</a>
+      <a data-toggle="modal" data-target="#myModal" class="ui green button">Order Summary</a>
     </div>
     <div class="right item">
       <a href="/catering/order/payment" class="ui teal button">Checkout</a>
     </div>
     <div class="item">
       <i class="cart icon"></i><b>Current Total: </b><span class="simpleCart_total"></span>
-      <div class="ui red label"><span class="simpleCart_quantity"> </span> &nbsp;Items</div>
+      <div class="ui red label">Excluding Tax and Delivery Fee</div>
     </div>
   </div>
 </div>
@@ -82,6 +86,7 @@
   </div>
 </div>
 <div class="twelve wide column">
+  <p class="warning-border" style="margin-top: 5px;"><b>Instructions:</b> For each item you would like to order, type the quantity in the box to the right, then click "Add." If you accidentally enter the wrong quantity, or click "Add" more than once, you can click on "Order Summary," to change it.</p>
   <% _.each(menu, function(section) { %>
   <h2 class="ui dividing header" id="<%=section.name%>"><%= section.name %></h2>
   <p> <%= section.subhead %> </p>
@@ -92,7 +97,7 @@
 
     <div id="quantity-box" class="mini ui icon input">
       <input type="text" placeholder="Quantity" class="item_Quantity">
-      <i class="item_add inverted add icon">Add</i>
+      <i class="item_add inverted icon">Add</i>
     </div>
 
     <h5><% if(item.minimum) { %><%=  item.minimum%><%} else if(item.serves) {%><%=item.serves%><%} else {%><%}%> | <span class="item_price"><%= item.price %></span>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%> </h5>
