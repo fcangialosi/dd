@@ -22,6 +22,15 @@ $('#signup-form')
         }
       ]
     },
+    phone: {
+      identifier : 'phone',
+      rules: [
+        {
+          type : 'empty',
+          prompt : "Please enter a phone number"
+        }
+      ]
+    },
     companyName : {
       identifier : 'companyName',
       rules : [
