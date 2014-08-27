@@ -1,41 +1,14 @@
-<h1 class="title"> Menu </h1>
-
-<div class="ui grid">
-  <div class="four wide column">
-
-    <div class="ui vertical menu sticky-leftbar">
-      <div class="header item">
-        <i class="coffee icon"></i>
-        Breakfast
-      </div>
-        <% _.each(menu, function(section) { %>
-          <% if(section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><% } %>
-        <% }) %>
-      <div class="header item">
-        <i class="food icon"></i>
-        Lunch
-      </div>
-        <% _.each(menu, function(section) {%>
-          <% if(!section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><%}%>
-        <% }) %>
-    </div>
-  </div>
-  <div class="twelve wide column">
+<h1 class="title">  Catering Menu </h1>
+<div class="ui relaxed one column page grid">
+  <div class="column">
     <% _.each(menu, function(section) { %>
-    <h2 class="ui dividing header" id="<%=section.name%>"><%= section.name %></h2>
-    <p> <%= section.subhead %> </p>
+    <h2 class="section-header" id="<%=section.name%>"><%= section.name %></h2>
+    <h3 class="section-desc"> <%= section.subhead %> </h3>
       <% _.each(section.items, function(item) {%>
-        <div class="simpleCart_shelfItem ui segment">
-
-          <b class="item_name"><%= item.name %></b>
-
-          <div class="mini ui button floated right">
-             <span class="item_price"><%= item.price %></span>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%>
-          </div>
-
-          <h5><% if(item.minimum) { %><%=  item.minimum%><%} else if(item.serves) {%><%=item.serves%><%} else {%><%}%> </h5>
-
-          <p> <%= item.description %></p>
+        <div class="menu-item">
+          <b class="item-name item_name"><%= item.name %></b>
+          <span class="item-price"><span class="item_price"><%= item.price %></span>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%><span class="item-serves"><% if(item.minimum) { %><br>(<%=  item.minimum%>)<%} else if(item.serves) {%><br>(<%=item.serves%>)<%} else {%><%}%> </span></span>
+          <% if ('description' in item) { %><div class="item-desc"> <%= item.description %></div><% } %>
         </div>
       <% })%>
     <% }) %>

@@ -12,7 +12,6 @@ simpleCart({
 });
 
 ready = function() {
-
   // menu page
   var $menuItem = $('.menu a.item, .menu .link.item'),
       $dropdown = $('.main.container .menu .dropdown'),

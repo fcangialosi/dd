@@ -16,6 +16,26 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'bebas';
+  src: url('../../fonts/BebasNeue_Regular.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'simplifica';
+  src: url('../../fonts/simplifica.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@cream: #ECDDAC;
+@cheddar: #FEB535;
+@orange: #EB7309;
+@pie: #B7681A;
+@hrm: #654C0E;
+
 html, body {
 	font-size: 15px;
 	height: 100%;
@@ -24,10 +44,57 @@ html, body {
   width: 100%;
 }
 
+.section-header {
+  font-family: 'bebas';
+  font-size: 4.0em;
+  border-bottom: 1px solid @cheddar;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.section-desc{
+  font-family: 'simplifica', sans-serif;
+  font-size: 1.8em;
+  border-bottom: 1px solid @cheddar;
+  padding-bottom: 20px;
+  text-align: center;
+  padding-left: 150px;
+  padding-right: 150px;
+  line-height: 120%;
+}
+
+.menu-item {
+  padding: 15px;
+  border-bottom: 2px dotted #ccc;
+}
+
+.menu-item .item-name {
+  font-family: 'bebas', sans-serif;
+  font-size: 1.8em;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.menu-item .item-price {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.0em;
+  float: right;
+}
+
+.menu-item .item-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.0em;
+}
+
+#splash-menu {
+  background-color: @cheddar;
+  z-index: 25;
+}
+
 body {
   font-family: 'Source Sans Pro';
   font-size: 1.1em;
-  background: url("../../images/cream-tile.png") repeat;
+  background-color:#FCF7D3;
   color: #4B3F3F;
   text-rendering: optimizeLegibility;
   min-width: 320px;
@@ -67,8 +134,10 @@ body {
 
 .title {
   text-align: center;
-  font-family: 'Source Sans Pro';
-  margin-bottom: 30px;
+  font-family: 'bebas';
+  font-size: 6.0em;
+  margin-top: 30px;
+  text-shadow: 3px 3px 0 #fff,6px 6px 0 @cheddar;
 }
 
 .spaced-table td, .spaced-table th {
@@ -161,15 +230,15 @@ body {
 }
 
 .navbar-item {
-  font-family: 'mel';
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.75em;
   color: #39342e;
   text-decoration: none;
 }
 
 .navbar-item:hover {
-  border-bottom: 3px solid #39342e;
-  color: #F05940;
+  border-bottom: 3px solid @cream;
+  color: #000;
   text-decoration: none;
 }
 
@@ -305,11 +374,11 @@ background: url("../../images/cream-tile.png") repeat;
 
 #header-section {
   width:100%;
-  height: 55px;
-  background-color: #d35400;
-  background: url("../../images/cream-tile.png") repeat;
+  height: 70px;
+  background-color: @cheddar;
   z-index: 25;
-  box-shadow: 0px 8px 8px #313131;
+  padding-top: 5px;
+  box-shadow: 0px 1px 8px #313131;
 }
 
 #step-section {

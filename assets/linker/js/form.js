@@ -57,6 +57,26 @@ $('#signin-form').form({
     ]
   }
 });
+$('#admin-form').form({
+  email : {
+    identifier : 'email',
+    rules : [
+    {
+      type : 'empty',
+      prompt : 'Please enter a username'
+    },
+    ]
+  },
+  password : {
+    identifier : 'password',
+    rules : [
+    {
+      type : 'empty',
+      prompt : 'Please enter a password'
+    }
+    ]
+  }
+});
 $('#new-delivery-form')
   .form({
     contactName: {
