@@ -49,3 +49,5 @@ config/local.js
 ########################
 ignore/
 assets/images/
+*.txt
+*.py
