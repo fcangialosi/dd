@@ -1,17 +1,13 @@
-<h2> Edit Account </h2>
+<div class="ui page grid">
+<div class="column">
+<center><h1 class="ui header" style="font-size: 2.5em"> Edit <%= user.name %> </h1><a href="/user" class="ui red labeled icon button"><i class="hand left icon"></i>Back to Manage Users</a></center>
 
 <form action="/user/update/<%= user.id %>" method="POST" class="ui large fluid form segment" id="edit-form">
 	<p>Edit only the fields you would like to change, everything else will remain the same.</p>
-	<div class="two fields">
 	  <div class="field">
-	    <label>First Name</label>
-	    <input value="<%= user.firstName %>" name="firstName" type="text" class="form-control">
+	    <label>Name</label>
+	    <input value="<%= user.name %>" name="name" type="text" class="form-control">
 	  </div>
-	  <div class="field">
-	    <label>Last Name</label>
-	    <input value="<%= user.lastName %>" name="lastName" type="text" class="form-control">
-	  </div>
-	</div>
 	<div class="two fields">
 	<div class="field">
 	    <label>Company Name</label>

@@ -1,56 +1,66 @@
 <div class="container">
-<h1 class="title"> Manage Menu </h1>
+
+<center><h1 class="ui header" style="font-size: 2.5em"> Manage <%= menu_name %> </h1><a href="/admin/menu" class="ui red labeled icon button"><i class="hand left icon"></i>Back to Edit Menus</a></center>
 
 	<br>
 
-	<% if (this.warning_message) { %>
+	<% if (flash && flash.err) { %>
 		<div class="ui red message">
-			<%= warning_message.text %>
+			<%= flash.err %>
 		</div>
 	<% } %>
-	<% if (this.success_message) { %>
+	<% if (flash && flash.success) { %>
 		<div class="ui green message">
-			<%= success_message.text %>
+			<%= flash.success %>
 		</div>
 	<% } %>
 
 	<br>
 
-	<% _.each(menus, function(menu_type) { %>
-	  <h3 class="ui header"><%= menu_type.name %></h3>
-
-	  <table class='table'>
-
+	  <table class='ui inverted celled table segment'>
+	  		<thead>
 			<tr>
+				<th></th>
+				<th></th>
 				<th>Name</th>
 				<th>Meal</th>
 				<th>Subheading</th>
-				<th></th>
-				<th></th>
-				<th></th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
+			</thead>
 
-			<% _.each(menu_type['menus'], function(menu) { %>
+			<tbody>
+			<% _.each(menus, function(menu) { %>
 				<tr data-id="<%= menu.id %>" data-model="menu">
+
+					<td>
+					<div class="ui tiny vertical buttons">
+					<a href="/menu/shift/<%= menu.id %>?index=<%= menus.indexOf(menu)%>&menu=<%= menu.menu %>&direction=up&max=<%= menus.length %>" class="small ui icon green button"><i class="up arrow icon"></i></a>
+					<a href="/menu/shift/<%= menu.id %>?index=<%= menus.indexOf(menu)%>&menu=<%= menu.menu %>&direction=down&max=<%= menus.length %>" class="small ui icon green button"><i class="down arrow icon"></i></a>
+					</div>
+					</td>
+					<td><%= menu.index %></td>
 					<td><%= menu.name %></td>
 					<td><% if (menu.breakfast) { %> Breakfast <% } else { %> Lunch <% } %></td>
-					<td><%= menu.subhead %></td>
+					<td><% if (menu.subhead) { %><%= menu.subhead %><% } else { %>None<% } %></td>
 					<td><a href="/menu/edit/<%= menu.id %>" class="btn btn-sm btn-warning">Edit</a></td>
 					<td><form action="/menu/destroy/<%= menu.id %>" method="POST">
 						<input type="hidden" name="_method" value="delete"/>
 						<input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
 						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 					</form></td>
-				</tr> 
+				</tr>
 	  	<% }) %>
-
+	  	</tbody>
 		</table>
-
+		<% if (menus.length < 1) { %>
+		<center><h3>Looks like there aren't any menus here yet!</h3></center>
+		<div style="height:50px"></div>
+		<% } %>
 		<center>
-		  <a href="/menu/new" class="btn btn-md btn-success">Add New <%= menu_type.name %></a>
+		  <a href="/menu/new?menu=<%= menu_type %>" class="btn btn-lg btn-success">Add New <%= menu_name %> Section</a>
 		</center>
-	  
-	<% }) %>
 </div>
 
 <br>

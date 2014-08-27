@@ -44,7 +44,7 @@ module.exports = {
     displayCateringMenu: function (req, res, next) {
 
       // Get an array of all  in the Menu collection(e.g. table)
-      Menu.find({"menu":"catering"}, function foundMenus (err, menu) {
+      Menu.find({"menu":"catering"}).sort('index asc').exec(function (err, menu) {
         if (err) return next(err);
         res.view('menu',
         {
@@ -94,13 +94,14 @@ module.exports = {
     },
 
     new : function(req, res, next) {
-      res.view('menu/new_menu');
+      res.view('menu/new_menu', {layout : 'admin/layout', menu : req.param('menu')});
     },
 
     new_item : function(req, res, next) {
       res.view('menu/new_item',
       {
-        menu_id : req.param('id')
+        menu_id : req.param('id'),
+        layout : 'admin/layout'
       });
     },
 
@@ -156,38 +157,44 @@ module.exports = {
     },
 
     index: function (req, res, next) {
+        res.view('menu/index', { layout : 'admin/layout' });
+    },
 
-      // Get an array of all Menus in the Menu collection(e.g. table)
-      Menu.find(function foundMenus (err, menus) {
+    adminMain : function(req, res, next) {
+     Menu.find({"menu":"main"}).sort('index asc').exec(function (err, menu) {
         if (err) return next(err);
-
-        var main = {
-          'name' : 'Main Cafe Menu',
-          'menus' : []
-        };
-        var catering = {
-          'name' : 'Catering Menu',
-          'menus' : []
-        };
-        var express = {
-          'name' : 'Express Cafe Menu',
-          'menus' : []
-        };
-
-        menus.forEach(function(menu) {
-          if (menu['menu'] == 'main') {
-            main['menus'].push(menu);
-          } else if (menu['menu'] == 'catering') {
-            catering['menus'].push(menu);
-          } else if (menu['menu'] == 'express'){
-            express['menus'].push(menu);
-          }
-        });
-
-        categorized_menus = [main, catering, express];
         res.view('menu/list_menus',
         {
-          menus : categorized_menus
+          menus: menu,
+          menu_type : 'main',
+          menu_name : "David and Dad's Main Menu",
+          layout: 'admin/layout'
+        });
+      });
+    },
+
+    adminCatering : function(req, res, next) {
+      Menu.find({"menu":"catering"}).sort('index asc').exec(function (err, menu) {
+        if (err) return next(err);
+        res.view('menu/list_menus',
+        {
+          menus: menu,
+          menu_type : 'catering',
+          menu_name : "David and Dad's Catering Menu",
+          layout: 'admin/layout'
+        });
+      });
+    },
+
+    adminExpress : function(req, res, next) {
+      Menu.find({"menu":"express"}).sort('index asc').exec(function (err, menu) {
+        if (err) return next(err);
+        res.view('menu/list_menus',
+        {
+          menus: menu,
+          menu_type : 'express',
+          menu_name : "David and Dad's Express Menu",
+          layout: 'admin/layout'
         });
       });
     },
@@ -203,13 +210,16 @@ module.exports = {
           res.view('menu/edit_item',
           {
             menu_id : menu.id,
+            menu_name : menu.name,
             item_index : req.param('index'),
+            layout : 'admin/layout',
             item : item
           });
         } else {
           res.view('menu/menu_index',
           {
-            menu : menu
+            menu : menu,
+            layout : 'admin/layout'
           });
         }
       });
@@ -244,6 +254,9 @@ module.exports = {
           });
         } else {
           var edited_menu = JSON.parse(JSON.stringify(req.params.all()));
+          delete edited_menu._csrf;
+          delete edited_menu.index;
+
           edited_menu['subhead'] = req.param('subhead');
           Menu.update(req.param('id'), edited_menu, function itemUpdated(err) {
             if (err) {
@@ -258,6 +271,54 @@ module.exports = {
             res.redirect('/menu/edit/' + req.param('id'));
           });
         }
+      });
+    },
+
+    shift : function(req, res, next) {
+      Menu.findOne(req.param('id'), function foundMenu(err, menu) {
+          if(err) return next(err);
+          if(!menu) return next("Menu doesn't exist.");
+
+          direction = req.param('direction');
+          curr = Number(req.param('index'));
+          menu = req.param('menu');
+          max = Number(req.param('max'));
+
+          if(curr === 0 && direction === 'up') {
+              req.session.flash = { err : 'Menu is already at the top!' }
+              return res.redirect('/admin/' + menu);
+          }
+          if (curr === max && direction === 'down') {
+              req.session.flash = { err : 'Menu is already at the bottom!'}
+              return res.redirect('/admin/' + menu);
+          }
+
+          new_index = curr;
+          if (direction === 'up') {
+            console.log("up");
+            new_index -= 1
+          } else if (direction === 'down') {
+            console.log("down");
+            new_index += 1
+          }
+
+          Menu.update({index : new_index}, {index : curr}).exec(function(err, updated) {
+            if (err) {
+              req.session.flash = { err : 'Database error!'}
+              return res.redirect('/admin/' + menu);
+            }
+            console.log(updated);
+            Menu.update({id : req.param('id')}, {index : new_index}).exec(function(err, updated) {
+              if (err) {
+                req.session.flash = { err : 'Database error!'}
+                return res.redirect('/admin/' + menu);
+              }
+              console.log(updated);
+              req.session.flash = { success : 'Menu moved successfully!'}
+              res.redirect('/admin/' + menu);
+            });
+          });
+
       });
     },
 

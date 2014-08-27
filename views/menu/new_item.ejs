@@ -1,8 +1,6 @@
-<div class="container">
-
-      <br>
-      <h1> Create New Item </h1>
-      <br>
+<div class="ui page grid">
+<div class="column">
+      <center><h1 class="ui header" style="font-size: 2.5em"> Create New Item </h1><a href="/menu/edit/<%= menu_id %>" class="ui red labeled icon button"><i class="hand left icon"></i>Back to Section (Without Saving)</a></center>
 
       <% if (flash && flash.err) { %>
         <div class="ui red message">
@@ -15,7 +13,7 @@
         </div>
       <% } %>
 
-      <form action="/menu/create_item/<%= menu_id %>" method="POST" class="ui large fluid form segment" id="create-item-form">
+      <form action="/menu/create_item/<%= menu_id %>" method="POST" class="ui large inverted form segment" id="create-item-form">
         <p>The placeholders are simply examples to make it clear what is expected in each input!</p>
         <div class="three fields">
           <div class="field">
@@ -24,11 +22,11 @@
           </div>
           <div class="field">
             <label>Minimum (can leave blank) </label>
-            <input  placeholder="Minimum 8 people" name="minimum" type="text" class="form-control">
+            <input  placeholder="Minimum 8" name="minimum" type="text" class="form-control">
           </div>
           <div class="field">
             <label>Serves (can leave blank) </label>
-            <input  placeholder="10 to 15 people" name="serves" type="text" class="form-control">
+            <input  placeholder="Serves 10 to 15" name="serves" type="text" class="form-control">
           </div>
         </div>
         <div class="two fields">

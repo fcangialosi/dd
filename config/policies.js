@@ -21,6 +21,7 @@ module.exports.policies = {
   SessionController : {
   	'new' : 'flash',
   	create : 'flash',
+      'admin' : 'flash',
   	'*': ['flash','isAuthenticated']
   },
 
@@ -43,12 +44,22 @@ module.exports.policies = {
   	'displayExpressMenu' : true,
             'displayMainSpecials' : true,
             'displayExpressSpecials' : true,
-  	'*' : ['flash', 'isAuthenticated']
+  	'*' : ['flash', 'admin']
   },
 
   OrderController : {
   	'start' : 'flash',
   	'*' : ['flash', 'isAuthenticated']
+  },
+
+  HomeController : {
+    '*' : 'flash'
+  },
+
+  AdminController : {
+    'signin' : 'flash',
+    'create' : 'admin',
+    '*' : 'admin'
   }
 
   /*

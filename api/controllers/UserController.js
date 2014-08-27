@@ -57,7 +57,8 @@ module.exports = {
         if (err) return next(err);
         // pass the array down to the /views/index.ejs page
         res.view({
-          users: users
+          users: users,
+          layout : 'admin/layout'
         });
       });
     },
@@ -72,7 +73,8 @@ module.exports = {
       if (!user) return next('User doesn\'t exist.');
 
       res.view({
-        user: user
+        user: user,
+        layout : 'admin/layout'
       });
     });
   },

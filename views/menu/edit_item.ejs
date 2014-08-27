@@ -1,5 +1,7 @@
-<div class="container">
-<h2> Edit <%= item.name %> </h2>
+<div class="ui page grid">
+<div class="column">
+<center><h1 class="ui header" style="font-size: 2.5em"> Edit <%= item.name %> </h1><a href="/menu/edit/<%= menu_id %>" class="ui red labeled icon button"><i class="hand left icon"></i>Back to <%= menu_name %> (Without Saving)</a></center>
+
 
 <form action="/menu/update/<%= menu_id %>?index=<%= item_index %>" method="POST" class="ui large fluid form segment" id="edit-form">
 	<p>Edit only the fields you would like to change, everything else will remain the same.</p>
@@ -35,4 +37,5 @@
 	<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 </form>
 
+</div>
 </div>

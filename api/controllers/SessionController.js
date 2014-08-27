@@ -56,22 +56,78 @@ module.exports = {
 			req.session.authenticated = true;
 			req.session.User = user;
 
-			if (req.session.User.admin){
-				res.redirect('/admin');
-				return;
+			res.redirect('/catering/order/delivery');
+		});
+	},
+
+ 	admin : function(req, res, next){
+	  	// Check for email and password in params sent via the form, if none
+		// redirect the browser back to the sign-in form.
+		if (!req.param('email') || !req.param('password')) {
+			 // return next({err: ["Password doesn't match password confirmation."]});
+
+			var authenticationError = [{name: 'Authentication Error', message: 'Username or password is incorrect.', type : 'signin'}]
+
+			// Remember that err is the object being passed down (a.k.a. flash.err), whose value is another object with
+			// the key of usernamePasswordRequiredError
+			req.session.flash = {
+				err: authenticationError
 			}
 
-			res.redirect('/catering/order/delivery');
+			res.redirect('/admin/signin');
+			return;
+		}
+
+		// Try to find the user by there email address.
+		// findOneByEmail() is a dynamic finder in that it searches the model by a particular attribute.
+		// User.findOneByEmail(req.param('email')).done(function(err, user) {
+		User.findOneByEmail(req.param('email'), function foundUser (err, user) {
+			if (err) return next(err);
+
+			// If no user is found...
+			if (!user || !user.admin) {
+				var noAccountError = [{name: 'Not Admin', message: req.param('email') + " is not an admin.", type : 'signin'}]
+				req.session.flash = {
+					err: noAccountError
+				}
+				res.redirect('/admin/signin');
+				return;
+			}
+			// Compare password from the form params to the encrypted password of the user found.
+			bcrypt.compare(req.param('password'), user.encryptedPassword, function(err, valid) {
+				if (err) return next(err);
+
+				// If the password from the form doesn't match the password from the database...
+				if (!valid) {
+					var usernamePasswordMismatchError = [{name: 'Authentication Error', message: 'Username or password is incorrect.'}]
+					req.session.flash = {
+						err: usernamePasswordMismatchError
+					}
+					res.redirect('/admin/signin');
+					return;
+				}
+
+				// Log user in
+				req.session.authenticated = true;
+				req.session.User = user;
+
+				res.redirect('/admin');
+			});
 		});
 	},
 
 	destroy: function(req, res, next) {
 
+		wasAdmin = req.session.User.admin;
+
 		// Wipe out the session (log out)
 		req.session.destroy();
 
-		// Redirect the browser to the sign-in screen
-		res.redirect('/catering/order/start');
+		if(wasAdmin) {
+			res.redirect('/admin/signin')
+		} else {
+			res.redirect('/catering/order/start');
+		}
 
 	},
 

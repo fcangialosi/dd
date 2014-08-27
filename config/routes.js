@@ -32,9 +32,13 @@ module.exports.routes = {
   // located at `views/home/index.ejs`
   //
   // (This would also work if you had a file at: `/views/home.ejs`)
-  '/': {
-    view: 'home/index'
-  },
+  // '/': {
+  //   view: 'home/index'
+  // },
+
+  // '/test' : 'MenuController.test',
+
+  '/': 'HomeController.index',
 
   '/news' : {
     view :'home/news'
@@ -86,7 +90,15 @@ module.exports.routes = {
 
   '/catering/order/review' : 'OrderController.review',
 
-  'post /catering/order/submit' : 'OrderController.submit'
+  'post /catering/order/submit' : 'OrderController.submit',
+
+  '/admin/menu' : 'MenuController.index',
+
+  '/admin/main' : 'MenuController.adminMain',
+
+  '/admin/catering' : 'MenuController.adminCatering',
+
+  '/admin/express' : 'MenuController.adminExpress'
 
   /*
   // But what if you want your home page to display

@@ -1,15 +1,8 @@
 <div class="container">
-  <h1 class="title"> Edit <%= menu.name %> Menu </h1>
-  <center>
-	  <h3>
-	    Menu Tags:
-	    <span class="huge ui red label"> <% if(menu.breakfast) { %>breakfast<% } else { %>lunch<% } %> </span>
-	    <span class="huge ui teal label"> <%= menu.menu %> </span>
-	  </h3>
-  </center>
+  <center><h1 class="ui header" style="font-size: 2.5em"> Edit <%= menu.name %> (<%= menu.menu.charAt(0).toUpperCase() + menu.menu.slice(1) %>)</h1><a href="/admin/<%= menu.menu %>" class="ui red labeled icon button"><i class="hand left icon"></i>Back to <%= menu.menu.charAt(0).toUpperCase() + menu.menu.slice(1) %> Menu</a></center>
 
   <br>
-	
+
 	<% if (flash && flash.err) { %>
 		<div class="ui red message">
 			<%= flash.err %>
@@ -21,18 +14,16 @@
 		</div>
 	<% } %>
 
-  <br>
-  
+  <h3> Edit This Menu's Subheading </h3>
   <form action="/menu/update/<%= menu.id %>?index=details" method="POST" class="ui large fluid form segment" id="edit-form">
 	<div class="field">
-      <label>Edit Menu Subheading</label>
-      <textarea name="subhead" style="height: 100px"><%= menu.subhead %></textarea>
+    <label>Subheading</label>
+      <textarea name="subhead" style="height: 50px"><%= menu.subhead %></textarea>
     </div>
 	<input type="submit" value="SAVE" class="btn btn-md btn-primary btn-block"/>
 	<input type="hidden" name="_csrf" value="<%= _csrf %>" />
   </form>
 
-  <br>
   <br>
 
   <div>
@@ -40,13 +31,9 @@
   </div>
 
   <br>
-  <center>
-  <a href="/menu/new_item/<%= menu.id %>" class="btn btn-md btn-success">Add New Item</a>
-  </center>
-  <br>
-  
+
   <div>
-	  <table class='table'>
+	  <table class='ui inverted celled table segment'>
 		  <tr>
 				<th>Name</th>
 				<th>Price</th>
@@ -79,8 +66,13 @@
 						<input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
 						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 					</form></td>
-				</tr> 
+				</tr>
 			<% }) %>
 		</table>
+        <center>
+            <a href="/menu/new_item/<%= menu.id %>" class="btn btn-lg btn-success">Add New Item</a>
+        </center>
+        <br>
+        <br>
 	</div>
 </div>

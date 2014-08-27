@@ -6,7 +6,7 @@ module.exports = function(req, res, next) {
 		req.session.flash = {
 			err : notAdminError
 		}
-		res.redirect('/catering/order/start');
+		res.redirect('/admin/signin');
 		return;
 	}
 }
