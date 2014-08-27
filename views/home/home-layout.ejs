@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+  <title><%- title %></title>
+
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!--STYLES-->
+  <link rel="stylesheet" href="/linker/styles/normalize.css">
+  <link rel="stylesheet" href="/linker/styles/bootstrap.css">
+  <link rel="stylesheet" href="/linker/styles/card.css">
+  <link rel="stylesheet" href="/linker/styles/custom.css">
+  <link rel="stylesheet" href="/linker/styles/datetimepicker.min.css">
+  <link rel="stylesheet" href="/linker/styles/fa.min.css">
+  <link rel="stylesheet" href="/linker/styles/semantic.css">
+  <!--STYLES END-->
+  <style type="text/css">
+    #crossfade {
+      display:inline-block;
+      position:relative;
+      height:281px;
+      width:426px;
+      margin:0 auto;
+      float: left;
+      z-index: 0;
+    }
+
+    #crossfade img {
+      position:absolute;
+      left:0;
+      -webkit-transition: opacity 0.4s ease-in-out;
+      -moz-transition: opacity 0.4s ease-in-out;
+      -o-transition: opacity 0.4s ease-in-out;
+      transition: opacity 0.4s ease-in-out;
+    }
+
+    #crossfade img.top {
+      opacity:0.1;
+    }
+
+    #crossfade img.top:hover {
+      opacity:1;
+    }
+  </style>
+</head>
+
+<body style="background: none; background-color: #ECDDAC!important; overflow-y: hidden; overflow-x: hidden;">
+
+  <%- body %>
+
+  <!--SCRIPTS-->
+  <script src="/linker/js/socket.io.js"></script>
+  <script src="/linker/js/sails.io.js"></script>
+  <script src="/linker/js/jquery.js"></script>
+  <script src="/linker/js/app.js"></script>
+  <script src="/linker/js/semantic.js"></script>
+  <script src="/linker/js/simpleCart.js"></script>
+  <script src="/linker/js/waypoints.js"></script>
+  <script src="/linker/js/waypoints-sticky.js"></script>
+  <script src="/linker/js/moment.min.js"></script>
+  <script src="/linker/js/admin.js"></script>
+  <script src="/linker/js/bootstrap.js"></script>
+  <script src="/linker/js/button.js"></script>
+  <script src="/linker/js/card.js"></script>
+  <script src="/linker/js/datetimepicker.js"></script>
+  <script src="/linker/js/form.js"></script>
+  <script src="/linker/js/menu.js"></script>
+  <!--SCRIPTS END-->
+
+</body>
+</html>

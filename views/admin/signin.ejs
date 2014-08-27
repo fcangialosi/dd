@@ -1,0 +1,41 @@
+<div class="ui three column grid">
+  <div class="column"></div>
+  <div class="column">
+      <form action="/session/admin" method="POST" class="ui warning form inverted segment" id="admin-form">
+        <h4><b>David and Dad's Admin</b></h4>
+        <% if(flash && flash.err && flash.err[0].type == 'signin') { %>
+        <div class="ui warning message">
+          <% Object.keys(flash.err).forEach(function(error) { %>
+          <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+          <ul class="list">
+            <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+          </ul>
+          <% }) %>
+        </div>
+        <% } %>
+        <div class="ui error message"></div>
+        <div class="field">
+          <div class="ui left labeled icon input">
+            <input type="text" name="email" placeholder="User">
+            <i class="user icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left labeled icon input">
+            <input type="password" name="password" placeholder="Password">
+            <i class="key icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        </div>
+        <input type="submit" class="ui blue submit button" value="Authenticate">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+      </form>
+  </div>
+  <div class="column">
+  </div>
+</div>
