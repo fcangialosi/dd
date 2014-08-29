@@ -1,0 +1,374 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Narrative Invoice Email</title>
+  <link href='http://fonts.googleapis.com/css?family=Arvo|Montserrat' rel='stylesheet' type='text/css'>
+  <style type="text/css">
+  /* Take care of image borders and formatting */
+
+  img {
+    max-width: 600px;
+    outline: none;
+    text-decoration: none;
+    -ms-interpolation-mode: bicubic;
+  }
+
+  a {
+    border: 0;
+    outline: none;
+  }
+
+  a img {
+    border: none;
+  }
+
+  /* General styling */
+
+  td, h1, h2, h3  {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 400;
+  }
+
+  td {
+    font-size: 13px;
+    line-height: 150%;
+    text-align: left;
+  }
+
+  body {
+    -webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:none;
+    width: 100%;
+    height: 100%;
+    color: #37302d;
+    background: #ECDDAC;
+    font-family: 'Arvo', serif;
+  }
+
+  table {
+    border-collapse: collapse !important;
+  }
+
+
+  h1, h2, h3 {
+    padding: 0;
+    margin: 0;
+    color: #444444;
+    font-weight: 400;
+    line-height: 110%;
+  }
+
+  h1 {
+    font-size: 35px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  h4 {
+    font-size: 18px;
+    font-weight: normal;
+  }
+
+  .important-font {
+    color: #21BEB4;
+    font-weight: bold;
+  }
+
+  .hide {
+    display: none !important;
+  }
+
+  .force-full-width {
+    width: 100% !important;
+  }
+
+  td.desktop-hide {
+    font-size: 0;
+    height: 0;
+    display: none;
+    color: #ECDDAC;
+  }
+
+
+  </style>
+
+  <style type="text/css" media="screen">
+      @media screen {
+        @import url(http://fonts.googleapis.com/css?family=Montserrat:400);
+
+        /* Thanks Outlook 2013! http://goo.gl/XLxpyl */
+        td, h1, h2, h3 {
+          font-family: 'Montserrat', sans-serif !important;
+        }
+      }
+  </style>
+
+  <style type="text/css" media="only screen and (max-width: 600px)">
+    /* Mobile styles */
+    @media only screen and (max-width: 600px) {
+
+      table[class="w320"] {
+        width: 320px !important;
+      }
+
+      table[class="w300"] {
+        width: 300px !important;
+      }
+
+      table[class="w290"] {
+        width: 290px !important;
+      }
+
+      td[class="w320"] {
+        width: 320px !important;
+      }
+
+      td[class~="mobile-padding"] {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+      }
+
+      td[class*="mobile-padding-left"] {
+        padding-left: 14px !important;
+      }
+
+      td[class*="mobile-padding-right"] {
+        padding-right: 14px !important;
+      }
+
+      td[class*="mobile-block"] {
+        display: block !important;
+        width: 100% !important;
+        text-align: left !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-bottom: 15px !important;
+      }
+
+      td[class*="mobile-no-padding-bottom"] {
+        padding-bottom: 0 !important;
+      }
+
+      td[class~="mobile-center"] {
+        text-align: center !important;
+      }
+
+      table[class*="mobile-center-block"] {
+        float: none !important;
+        margin: 0 auto !important;
+      }
+
+      *[class*="mobile-hide"] {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        line-height: 0 !important;
+        font-size: 0 !important;
+      }
+
+      td[class*="mobile-border"] {
+        border: 0 !important;
+      }
+
+      td[class*="desktop-hide"] {
+        display: block !important;
+        font-size: 13px !important;
+        height: 61px !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+        color: #FEB535 !important;
+      }
+    }
+  </style>
+</head>
+<body class="body" style="padding:0 !important; margin:0 !important; display:block !important; background:#ECDDAC; -webkit-text-size-adjust:none" bgcolor="#ECDDAC">
+<table align="center" cellpadding="0" cellspacing="0" width="100%" height="100%">
+  <tr>
+    <td align="center" valign="top" bgcolor="#ECDDAC"  width="100%">
+
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tr>
+        <td style="background:#B7681A" width="100%">
+          <center>
+            <table cellspacing="0" cellpadding="0" width="600" class="w320">
+              <tr>
+                <td valign="top" class="mobile-block mobile-no-padding-bottom mobile-center" width="270" style="background:#B7681A;padding:10px 10px 10px 20px;">
+                    <h1 style="color: #ECDDAC">David and Dad's Order Request</h1>
+                </td>
+              </tr>
+            </table>
+          </center>
+        </td>
+      </tr>
+      <tr>
+        <td style="border-bottom:0px solid #FEB535;">
+          <center>
+            <table cellpadding="0" cellspacing="0" width="500" class="w320">
+              <tr>
+              <br>
+              </tr>
+              <tr style="padding:10px; border: 2px solid #000; margin-top: 5px; margin-bottom: 5px">
+                <td align="left" class="mobile-padding" style="padding-left: 10px">
+
+                  <br class="mobile-hide" />
+
+                  <div>
+                    <u><h3>Order Contact</h3></u><br>
+                    {{ order_contact.name }}<br>
+                    {{ order_contact.companyName }}<br>
+                    {{ order_contact.phone}}<br>
+                    {{ order_contact.email }}<br>
+                  </div>
+
+
+                  <br>
+
+                </td>
+                <td></td>
+              </tr>
+              <tr style="border: 2px solid #000; margin-top: 5px; margin-bottom: 5px">
+              <td align="left" class="mobile-padding" style="padding-left: 10px;">
+                  <br class="mobile-hide" />
+
+                  <div>
+                    <u><h3>Delivery</h3></u><br>
+                    {{ delivery.date }}<br>
+                    {{ delivery.time }}<br>
+                    {{ delivery.address}}, {{ delivery.city}}<br>
+                    {% if delivery.specials %} {{ delivery.specials }} {% else  %} No special instructions provided. {% endif %}<br>
+                  </div>
+
+                  <br>
+
+                </td>
+                <td align="left" class="mobile-padding">
+                <br class="mobile-hide" />
+                    <div>
+                      <u><h3>Contact</h3></u><br>
+                      {{ delivery.contactName }}<br>
+                      {{ delivery.contactPhone }}<br>
+                      <br><br><br>
+                    </div>
+
+                </td>
+              </tr>
+              <tr style="border: 2px solid #000; margin-top: 5px; margin-bottom: 5px">
+              <td align="left" class="mobile-padding" style="padding-left: 10px">
+
+                  <br class="mobile-hide" />
+
+                  <div>
+                    <u><h3>Payment</h3></u><br>
+                    {{ payment.method }}<br>
+                    {{ payment.info|safe }}<br>
+                  </div>
+
+                  <br>
+
+                </td>
+                <td></td>
+              </tr>
+            </table>
+          </center>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" style="background-color:#ECDDAC;border-bottom:0px solid #FEB535;">
+
+          <center>
+            <table border="0" cellpadding="0" cellspacing="0" width="600" class="w320" style="height:100%;">
+              <tr>
+                <td valign="top" class="mobile-padding" style="padding:20px;">
+                  <table cellspacing="0" cellpadding="0" width="100%">
+                    <tr>
+                      <td style="padding-right:10px">
+                        <b>Item</b>
+                      </td>
+                      <td style="padding-right:10px">
+                        <b>Quantity</b>
+                      </td>
+                      <td>
+                        <b>Each</b>
+                      </td>
+                      <td style="padding-right:10px">
+                          <b>Total</b>
+                      </td>
+                    </tr>
+                    {% for item in items -%}
+                    <tr>
+                      <td style="padding-top:5px;padding-right:10px; border-top:1px solid #FEB535; ">
+                          {{item.name}}
+                      </td>
+                      <td style="padding-top:5px;padding-right:10px; border-top:1px solid #FEB535;">
+                          {{item.quantity}}
+                      </td>
+                      <td style="padding-top:5px; border-top:1px solid #FEB535;" class="mobile">
+                          {{item.price}}
+                      </td>
+                      <td style="padding-top:5px; border-top:1px solid #FEB535;" class="mobile">
+                           {{item.total}}
+                      </td>
+                    </tr>
+                    {% endfor -%}
+                  </table>
+                  <hr style="color: #FEB535;background-color: #FEB535;height: 5px;">
+                  <table cellspacing="0" cellpadding="0" width="100%">
+                    <tr>
+                      <td style="padding-top:5px;">
+                        <table cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td style="padding:0px 0 15px 30px;" class="mobile-block">
+                              <table cellspacing="0" cellpadding="0" width="100%">
+                                <tr>
+                                  <td>Subtotal:</td>
+                                  <td> {{ subtotal }}</td>
+                                </tr>
+                                <tr>
+                                  <td>Tax: </td>
+                                  <td> {{ tax }} </td>
+                                </tr>
+                                <tr>
+                                  <td>Total: </td>
+                                  <td><b> {{ total }} </b></td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </center>
+        </td>
+      </tr>
+      <tr>
+        <td style="background-color:#B7681A;">
+          <center>
+            <table border="0" cellpadding="0" cellspacing="0" width="600" class="w320" style="height:100%;color:#654C0E" bgcolor="#654C0E" >
+              <tr>
+                <td align="right" valign="middle" class="mobile-padding" style="font-size:12px;padding:20px; background-color:#B7681A; color:#ECDDAC; text-align:left; ">
+                  &copy; David and Dad's, Inc.
+                </td>
+              </tr>
+            </table>
+          </center>
+        </td>
+      </tr>
+    </table>
+
+    </td>
+  </tr>
+</table>
+</body>
+</html>
