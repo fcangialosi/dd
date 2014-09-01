@@ -61,13 +61,13 @@
       <div class="row">
         <div class="column">
         <h3> Payment Method </h3>
-          <% if(session.paymentMethod == 'cash') { %>
+          <% if(session.paymentMethod == 'Cash') { %>
             <b>Method</b>:&nbsp; Pay With Cash at Delivery
             <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">We will pick up cash at time of delivery.</p>
-          <% } else if(session.paymentMethod == 'invoice') { %>
+          <% } else if(session.paymentMethod == 'Invoice') { %>
             <b>Method</b>:&nbsp; Invoice
             <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">An invoice will be left with your order. </p>
-          <% } else if(session.paymentMethod == 'check') { %>
+          <% } else if(session.paymentMethod == 'Check') { %>
             <b>Method</b>:&nbsp; Pay With Check at Delivery
             <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">We will pick up the check at time of delivery. Please make check out to "David and Dad's Cafe" </p>
           <% } else { %>

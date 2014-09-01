@@ -36,12 +36,67 @@
 @pie: #B7681A;
 @hrm: #654C0E;
 
+@circus: #FFDC68;
+@ground: #352504;
+@blush: #A7321C;
+@sun: #CC982A;
+@gold: #928941;
+
+
 html, body {
 	font-size: 15px;
 	height: 100%;
   margin: none;
   padding: none;
   width: 100%;
+}
+
+body {
+  font-family: 'Source Sans Pro';
+  font-size: 1.1em;
+  background-color: @circus;
+  color: @ground;
+  text-rendering: optimizeLegibility;
+  min-width: 320px;
+}
+
+
+.double-divider::before {
+  left: 5%;
+  margin-left: -1.5rem;
+}
+
+.double-divider::after {
+  left: auto;
+  right: 5%;
+  margin-right: -1.5rem;
+}
+
+.double-divider::before, .double-divider::after {
+  position: absolute;
+  content: " ";
+  z-index: 3;
+  width: 23%;
+  top: 50%;
+  height: 0%;
+  border-top: 5px double #313131;
+  border-bottom: none;
+}
+
+.sub-header {
+  position: relative;
+  top: 0%;
+  left: 0%;
+  margin: 1rem 1.5rem;
+  height: auto;
+  padding: 0em;
+  line-height: 1;
+  background-color: transparent;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  color: @ground;
 }
 
 .section-header {
@@ -93,14 +148,6 @@ html, body {
   z-index: 25;
 }
 
-body {
-  font-family: 'Source Sans Pro';
-  font-size: 1.1em;
-  background-color:#FCF7D3;
-  color: #4B3F3F;
-  text-rendering: optimizeLegibility;
-  min-width: 320px;
-}
 
 .masthead.segment {
       background-image: url(../../images/cafe.jpg);
@@ -185,7 +232,7 @@ body {
 }
 
 .dark-brown {
-  background-color: #39342e !important;
+  background-color: @ground !important;
   color: #FFFFFF !important;
 }
 
@@ -232,21 +279,17 @@ body {
 }
 
 .navbar-item {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.75em;
-  color: #39342e;
-  text-decoration: none;
-}
-
-.navbar-item:hover {
-  border-bottom: 3px solid @cream;
+  font-family: 'bebas';
+  font-size: 1.5em;
   color: #000;
   text-decoration: none;
 }
 
-#footer {
-  box-shadow: 0px -1px 3px #313131;
+.navbar-item:hover {
+  color: @circus;
+  text-decoration: none;
 }
+
 #home-section1 {
   width: 100%;
   height: 550px;
@@ -261,7 +304,7 @@ body {
 
 #main-section1 {
   width: 100%;
-  height: 550px;
+  min-height: 250px;
   background: url("../../images/outside_cafe.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -269,7 +312,7 @@ body {
 
 #catering-section1 {
   width: 100%;
-  height: 550px;
+  min-height: 550px;
   background: url("../../images/baltimore.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -277,7 +320,6 @@ body {
 
 #welcome {
   width: 100%;
-  background: url("../../images/cream-tile.png") repeat;
   height: 500px;
   padding-top: 30px;
   padding-bottom: 30px;
@@ -287,11 +329,9 @@ body {
 
 #catering-how-it-works {
   width: 100%;
-  background: url("../../images/cream-tile.png") repeat;
   height: 500px;
   padding-top: 30px;
   padding-bottom: 30px;
-  box-shadow: 0px -6px 3px 3px #606060;
   z-index: 0;
 }
 
@@ -301,7 +341,6 @@ body {
 padding-top: 30px;
 padding-bottom: 30px;
 background-color: #fff;
-background: url("../../images/cream-tile.png") repeat;
 }
 
 #feedback {
@@ -311,9 +350,9 @@ background: url("../../images/cream-tile.png") repeat;
   padding-bottom: 30px;
 }
 
-#express-bg-map {
+#express-section1 {
   width: 100%;
-  height: 550px;
+  min-height: 250px;
   z-index: 0;
   background: url("../../images/outside_cafe.png");
   background-repeat: no-repeat;
@@ -323,7 +362,6 @@ background: url("../../images/cream-tile.png") repeat;
 #section-2 {
   width: 100%;
   height: 400px;
-  background: url("../../images/cream-tile.png") repeat;
 }
 
 #main-hours-section {
@@ -331,16 +369,18 @@ background: url("../../images/cream-tile.png") repeat;
   padding-bottom: 30px;
   position: relative;
   width: 100%;
-  height: 900px;
-  background: url("../../images/cream-tile.png") repeat;
-  box-shadow: 5px 2px 10px 10px #313131;
+  min-height: 450px;
+  box-shadow: 5px 1px 10px #313131;
   z-index: 0;
 }
 
 #main-hours-sun {
   position: absolute;
-  top: 0;
-  right: 0;
+  left: -100px;
+top: 50px;
+z-index:-1;
+height: 200px;
+width: 200px;
 }
 
 #cafe-front-section {
@@ -356,8 +396,6 @@ background: url("../../images/cream-tile.png") repeat;
   padding-bottom: 30px;
   width: 100%;
   height: 500px;
-  background: url("../../images/cream-tile.png") repeat;
-  box-shadow: 0px -6px 3px 3px #3E3E3E;
   z-index: 0;
 }
 
@@ -369,15 +407,14 @@ background: url("../../images/cream-tile.png") repeat;
 
 .lunch-specials {
   width: 100%;
-  background: url('../../images/cream-tile.png') repeat;
   height: 1000px;
 
 }
 
 #header-section {
   width:100%;
-  height: 70px;
-  background-color: @cheddar;
+  height: 60px;
+  background-color: @blush;
   z-index: 25;
   padding-top: 5px;
   box-shadow: 0px 1px 8px #313131;
@@ -552,14 +589,15 @@ q:after {
 
 .review {
   position: relative;
-  border-left: 2px solid #555;
+  font-size: 0.9em;
+  border-left: 3px solid #313131;
   padding-left: 10px;
   padding-bottom:20px;
 }
 
 .reviewer {
   opacity: 0.8;
-  font-size: 1.0em;
+  font-size: 0.8em;
   float: right;
 }
 
@@ -574,7 +612,6 @@ q:after {
   left: 0px;
   top: 150px;
   font-size: 3em;
-  background: url("../../images/cream-tile.png") repeat;
   font-family: 'museo';
   box-shadow: 2px 2px 5px #313131;
   padding-left: 30px;

@@ -44,7 +44,7 @@ module.exports.policies = {
   	'displayExpressMenu' : true,
             'displayMainSpecials' : true,
             'displayExpressSpecials' : true,
-  	'*' : ['flash', 'admin']
+  	'*' : ['flash', 'isAuthenticated']
   },
 
   OrderController : {

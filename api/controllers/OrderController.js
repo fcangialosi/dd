@@ -112,6 +112,11 @@ module.exports = {
               "email": "fcangialosi94@gmail.com",
               "name": "David and Dad's",
               "type": "to"
+          },
+          {
+              "email": "catering@davidanddads.com",
+              "name": "David and Dad's",
+              "type": "to"
           }]
     };
     mandrill_client.messages.send({"message": message_to_dd, "async": false}, function(result) {
