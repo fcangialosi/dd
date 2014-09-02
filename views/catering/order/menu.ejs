@@ -51,7 +51,7 @@
 
 <div class="ui page grid" style="border-top: 7px solid #822421;">
   <div class="sixteen wide column">
-    <div class="ui borderless fluid menu sticky-topbar" style="padding: 4px">
+    <div class="ui borderless fluid menu sticky-topbar" style="padding: 4px; background-color: #352504;">
      <div class="right item">
       <a href="javascript:;" class="simpleCart_empty ui red button" id="start-over">Start Over</a>
     </div>
@@ -61,28 +61,28 @@
     <div class="right item">
       <a href="/catering/order/payment" class="ui teal button">Checkout</a>
     </div>
-    <div class="item">
-      <i class="cart icon"></i><b>Current Total: </b><span class="simpleCart_total"></span>
+    <div class="item"  style="color: #fff;">
+      <i class="white cart icon"></i><b>Current Total: </b><span class="simpleCart_total"></span>
       <div class="ui red label">Excluding Tax and Delivery Fee</div>
     </div>
   </div>
 </div>
 <div class="four wide column">
 
-  <div class="ui vertical menu sticky-leftbar">
-    <div class="header item">
+  <div class="ui vertical menu sticky-leftbar" style="background-color: #352504; color: #fff;">
+    <div class="header item" style="color: #fff;">
       <i class="coffee icon"></i>
       Breakfast
     </div>
     <% _.each(menu, function(section) { %>
-    <% if(section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><% } %>
+    <% if(section.breakfast) { %><a class="item" style="color: #fff;" href="#<%= section.name%>"><%= section.name %></a><% } %>
     <% }) %>
-    <div class="header item">
+    <div class="header item" style="color: #fff;">
       <i class="food icon"></i>
       Lunch
     </div>
     <% _.each(menu, function(section) {%>
-    <% if(!section.breakfast) { %><a class="orange item" href="#<%= section.name%>"><%= section.name %></a><%}%>
+    <% if(!section.breakfast) { %><a class="item" style="color: #fff;" href="#<%= section.name%>"><%= section.name %></a><%}%>
     <% }) %>
   </div>
 </div>
