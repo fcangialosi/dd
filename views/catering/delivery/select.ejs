@@ -51,86 +51,40 @@
 <!-- Modal End -->
 
 <!-- Step Start -->
-<div id="step-section">
-  <div style="height: 60px;"></div>
+<div id="step-section" style="border-bottom: 7px solid #352504;">
+  <div style="height: 55px;"></div>
   <div class="container">
    <div class="ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
     <div class="ui disabled step">
       Start My Order
     </div>
     <div class="ui active step">
-      When &amp; Where
+      <a style="text-decoration: none; color: #ccc" href="/catering/order/delivery">When &amp; Where</a>
     </div>
     <div class="ui disabled step">
-      Food
+      <a style="text-decoration: none; color: #ccc" href="/catering/order/menu">Food</a>
     </div>
     <div class="ui disabled step">
-      Payment
+      <a style="text-decoration: none; color: #ccc" href="/catering/order/payment">Payment</a>
     </div>
     <div class="ui disabled step">
-      Review &amp; Confirm
+      <a style="text-decoration: none; color: #ccc" href="/catering/order/review">Review &amp; Confirm</a>
     </div>
+  </div>
+  <div style="height: 10px;"></div>
   </div>
 </div>
 <!-- Step End -->
 
+<div style="border-top: 7px solid #822421;">
 <div class="container">
-
-  <!--Time Section-->
-  <div class="stackable ui middle aligned grid">
-    <div class="six wide column">
-      <table  class="spaced-table">
-        <tr>
-          <td><span style="font-size: 3em">1</span></td>
-          <td>
-            <h2 class="ui dividing header">
-            Date and Time
-            <div class="sub header"> Please select a time and date for your delivery. If you would like to order for more than one date, or more than once in a day, please submit <b>seperate</b> orders. </div>
-            </h2>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="ten wide column">
-      <% if(flash && flash.err) { %>
-        <div class="ui warning message">
-          <% Object.keys(flash.err).forEach(function(error) { %>
-            <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
-              <ul class="list">
-                <li><%- JSON.stringify(flash.err[error]['message']) %></li>
-              </ul>
-            <% }) %>
-          </div>
-        <% } %>
-
-      <form class="ui small fluid form segment">
-        <div class="two fields form-group">
-          <div class="field">
-            <label>Delivery Date</label>
-            <div class="ui left icon input">
-              <input type='text' id='delivery-datepicker' name='date'/>
-              <i class="calendar icon"></i>
-            </div>
-          </div>
-          <div class="field">
-            <label>Delivery Time</label>
-            <div class="ui left icon input">
-              <input type='text' id='delivery-timepicker' name='time'/>
-              <i class="time icon"></i>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-  <!--Time Section End-->
-  <div style="height: 25px"></div>
+  <div style="height: 50px;"></div>
   <!--Location Section-->
   <div class="stackable ui middle aligned grid">
     <div class="six wide column">
       <table class="spaced-table">
         <tr>
-          <td><span style="font-size: 3em">2</span></td>
+          <td><span style="font-size: 3em">1</span></td>
           <td>
             <h2 class="ui dividing header">
               Delivery Location
@@ -178,6 +132,60 @@
     </div>
   </div>
   <!--Location Section End-->
+
+  <div style="height: 25px"></div>
+
+  <!--Time Section-->
+  <div class="stackable ui middle aligned grid">
+    <div class="six wide column">
+      <table  class="spaced-table">
+        <tr>
+          <td><span style="font-size: 3em">2</span></td>
+          <td>
+            <h2 class="ui dividing header">
+            Date and Time
+            <div class="sub header"> Please select a time and date for your delivery. If you would like to order for more than one date, or more than once in a day, please submit <b>seperate</b> orders. </div>
+            </h2>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="ten wide column">
+      <% if(flash && flash.err) { %>
+        <div class="ui warning message">
+          <% Object.keys(flash.err).forEach(function(error) { %>
+            <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+              <ul class="list">
+                <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+              </ul>
+            <% }) %>
+          </div>
+        <% } %>
+
+      <form class="ui small fluid form segment">
+        <div class="two fields form-group">
+          <div class="field">
+            <label>Delivery Date</label>
+            <div class="ui left icon input">
+              <input type='text' id='delivery-datepicker' name='date'/>
+              <i class="calendar icon"></i>
+            </div>
+          </div>
+          <div class="field">
+            <label>Delivery Time</label>
+            <div class="ui left icon input">
+              <input type='text' id='delivery-timepicker' name='time'/>
+              <i class="time icon"></i>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--Time Section End-->
+
+
+
   <div style="height: 25px"></div>
   <div class="ui one column grid">
     <div class="column">
@@ -193,4 +201,5 @@
   </div>
 </div>
 
-<div style="height: 100px"></div>
+<div style="height: 150px"></div>
+</div>

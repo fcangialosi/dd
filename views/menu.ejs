@@ -1,7 +1,10 @@
-<h1 class="title">  Catering Menu </h1>
+<div style="height: 75px"></div>
+<h1 class="title"> <%= menu_name %> Menu </h1>
 <div class="ui relaxed one column page grid">
   <div class="column">
-    <center style="padding-bottom: -15px"><a href="/catering/order/start/" class="ui green labeled icon button"><i class="hand right icon"></i>Ready To Place an Order? Click Here!</a></center>
+    <% if (menu_name === "Catering") { %>
+    <center style="padding-bottom: -25px"><a href="/catering/order/start/" class="ui small green labeled icon button"><i class="hand right icon"></i>Ready To Place an Order? Click Here!</a></center>
+    <% } %>
     <% _.each(menu, function(section) { %>
     <h2 class="section-header" id="<%=section.name%>"><%= section.name %></h2>
     <h3 class="section-desc"> <%= section.subhead %> </h3>
@@ -15,3 +18,4 @@
     <% }) %>
   </div>
 </div>
+<div style="height: 150px"></div>
