@@ -7,7 +7,7 @@
         <h4 class="modal-title" id="myModalLabel">Add New Credit Card</h4>
       </div>
       <div class="modal-body">
-          <div class="ui two column grid">
+          <div class="ui two column stackable grid">
             <div class="middle aligned row">
               <div class="column">
                 <form action="/user/addPayment" method="POST" class="ui warning fluid form segment" id="card-form">
@@ -23,7 +23,7 @@
                   </div>
                   <% } %>
 
-                  <p class="warning-border">By default, we store your credit card information locally to make the order process as quick and easy as possible. However, if you would prefer that we don't store any of your information, just check box below!</p>
+                  <p class="warning-border">We store your credit card information locally to make the order process as quick and easy as possible.</p>
 
                   <div class="field">
                     <label>Card Number</label>
@@ -41,12 +41,6 @@
                     <div class="field">
                       <label>CVC Code</label>
                       <input placeholder="123" name="cvc" type="text">
-                    </div>
-                  </div>
-                  <div class="field">
-                    <div class="ui checkbox">
-                      <input type="checkbox" name="save">
-                      <label>Please don't store any of my credit card information!</label>
                     </div>
                   </div>
                   <input type="submit" class="ui teal submit button" value="Continue">
@@ -74,7 +68,7 @@
 <div id="step-section" style="border-bottom: 7px solid #352504;">
   <div style="height: 55px;"></div>
   <div class="container">
-   <div class="ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
+   <div class="removable ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
     <div class="ui disabled step">
       Start My Order
     </div>
@@ -131,18 +125,18 @@
         <div class="ui medium divided list">
           <% _.each(session.User.savedPayment, function(card){ %>
             <div class="item">
+              <div class="left floated content">
+                <div class="header">Card ending in <%= card.number.substring(card.number.length-4) %>
+                </div>
+                <div class="description"><%= card.name %>
+                </div>
+              </div>
               <form action="/user/removePayment/<%= session.User.savedPayment.indexOf(card) %>" method="POST">
                 <input type="hidden" name="_method" value="delete"/>
                 <input type="submit" class="right floated medium ui red button" value="Delete"/>
                 <input type="hidden" name="_csrf" value="<%= _csrf %>" />
               </form>
               <div class="right floated medium ui change button" index="<%= session.User.savedPayment.indexOf(card) %>">Select This Card</div>
-              <div class="content">
-                <div class="header">Card ending in <%= card.number.substring(card.number.length-4) %>
-                </div>
-                <div class="description"><%= card.name %>
-                </div>
-              </div>
             </div>
           <% }) %>
           <div class="item">

@@ -18,41 +18,10 @@
   <link rel="stylesheet" href="/linker/styles/fa.min.css">
   <link rel="stylesheet" href="/linker/styles/semantic.css">
   <!--STYLES END-->
-  <style type="text/css">
-    #crossfade {
-      display:inline-block;
-      position:relative;
-      height:281px;
-      width:426px;
-      margin:0 auto;
-      float: left;
-      z-index: 0;
-    }
 
-    #crossfade img {
-      position:absolute;
-      left:0;
-      -webkit-transition: opacity 0.4s ease-in-out;
-      -moz-transition: opacity 0.4s ease-in-out;
-      -o-transition: opacity 0.4s ease-in-out;
-      transition: opacity 0.4s ease-in-out;
-    }
-
-    #crossfade img.top {
-      opacity:1;
-    }
-
-    #crossfade img.top:hover {
-      opacity:0.1;
-    }
-
-    .description {
-      font-size: 1.5em;
-    }
-  </style>
 </head>
 
-<body style="background: none; background-color: #ECDDAC!important; ">
+<body style="background: none; background-color: #ECDDAC!important; overflow-x: hidden;">
 
   <%- body %>
 

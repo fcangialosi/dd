@@ -24,8 +24,7 @@
 
   <div id="header-section" style="position:relative">
     <header id="header">
-      <div class="ui center aligned top aligned seven column grid">
-        <div class="column"></div>
+      <div class="ui center aligned top aligned five column page grid">
         <div class="column">
           <a href="/" class="navbar-item">Home</a>
         </div>
@@ -33,37 +32,35 @@
           <a href="/main" class="navbar-item">Main Caf&eacute;</a>
         </div>
         <div class="column">
-          <img src="/images/circle.png" height="160" width="160" style="margin-top: -35px">
+          <img src="/images/circle.png" height="90%" width="90%" id="circle-logo">
         </div>
         <div class="column">
           <a href="/catering" class="navbar-item">Catering</a>
         </div>
         <div class="column">
-          <a href="/express" class="navbar-item">Express Caf&eacute;s</a>
+          <a href="/express" class="navbar-item">Express <span class="removable">Caf&eacute;s</span></a>
         </div>
-         <div class="column"></div>
       </div>
     </header>
   </div>
 
   <%- body %>
-
-  <div id="city">
+<div id="city">
   </div>
   <div class="ui inverted dark-brown page grid" id="footer">
     <div class="ui stackable grid">
       <div class="row">
         <div class="twelve wide column">
-          <h1 class="ui dividing header"> Our Locations </h1>
+          <h1 class="footer-header ui dividing header"> Our Locations </h1>
         </div>
         <div class="four wide column">
-          <h1 class="ui dividing header"> Our Company </h1>
+          <h1 class="footer-header ui dividing header"> Our Company </h1>
         </div>
       </div>
       <div class="row">
         <div class="three wide column">
-          <h2 class="ui header" style="font-family: 'Montserrat'; font-weight: normal; font-size: 1.2em;">D&amp;D Cafe</h2>
-          <div class="ui inverted list" style="line-height: 1em;">
+          <h2 class="footer-header ui header" style="font-family: 'Montserrat'; font-weight: normal; font-size: 1.2em; color: #F5D894;">D&amp;D Cafe</h2>
+          <div class="ui inverted list" style="line-height: 1em; color: #F5D894;">
             <div class="item"><span class="footer-item"> Cathedral Hill </span></div>
             <div class="item"><span class="footer-item"> 334 N. Charles St.</span></div>
             <div class="item"><span class="footer-item"> Baltimore, MD 21201</span></div>
@@ -75,8 +72,8 @@
           </div>
         </div>
         <div class="three wide column">
-          <h2 class="ui header" style="font-family: 'Montserrat'; font-weight: normal; font-size: 1.2em;">Cafe Express</h2>
-          <div class="ui inverted list" style="line-height: 1em;">
+          <h2 class="footer-header ui header" style="font-family: 'Montserrat'; font-weight: normal; font-size: 1.2em; color: #F5D894;">Cafe Express</h2>
+          <div class="ui inverted list" style="line-height: 1em; color: #F5D894;">
             <div class="item"><span class="footer-item"> T. Rowe Price Bldg. </span></div>
             <div class="item"><span class="footer-item">  Light St. Entrance </span></div>
             <div class="item"><span class="footer-item"> 100 East Pratt St.</span></div>
@@ -88,8 +85,8 @@
           </div>
         </div>
         <div class="three wide column">
-          <h2 class="ui header" style="font-family: 'Montserrat'; font-weight: normal; font-size: 1.2em;">D&amp;D Express</h2>
-          <div class="ui inverted list" style="line-height: 1em;">
+          <h2 class="footer-header ui header" style="font-family: 'Montserrat'; font-weight: normal; font-size: 1.2em; color: #F5D894;">D&amp;D Express</h2>
+          <div class="ui inverted list" style="line-height: 1em; color: #F5D894;">
             <div class="item"><span class="footer-item"> Blaustein Building</span></div>
             <div class="item"><span class="footer-item"> At Charles and Fayette</span></div>
             <div class="item"><span class="footer-item"> 1 N. Charles St.</span></div>
@@ -101,8 +98,8 @@
           </div>
         </div>
         <div class="three wide column">
-          <h2 class="ui header" style="font-family: 'Montserrat'; font-weight: normal; font-size: 1.2em;">Garden View Cafe</h2>
-          <div class="ui inverted list" style="line-height: 1em;">
+          <h2 class="footer-header ui header" style="font-family: 'Montserrat'; font-weight: normal; font-size: 1.2em; color: #F5D894;">Garden View Cafe</h2>
+          <div class="ui inverted list" style="line-height: 1em; color: #F5D894;">
             <div class="item"><span class="footer-item"> 2nd Floor Kennedy Krieger Institute</span></div>
             <div class="item"><span class="footer-item"> 801 N. Broadway</span></div>
             <div class="item"><span class="footer-item"> Baltimore, MD 21205</span></div>
@@ -113,13 +110,13 @@
           </div>
         </div>
         <div class="four wide column">
-          <div class="ui inverted list" style="line-height: 1em;">
-            <div class="item"><a href="/contact" style="text-decoration: none; color: #F5D894;">Contact Us</a></div>
-            <div class="item"><a href="/jobs" style="text-decoration: none; color: #F5D894;">Jobs</a></div>
-            <div class="item"><a href="/press" style="text-decoration: none; color: #F5D894;">Press</a></div>
-            <div class="item"><a href="/news" style="text-decoration: none; color: #F5D894;">News</a></div>
+          <div class="ui inverted list" style="line-height: 1em; color: #F5D894;">
+            <div class="item"><span class="footer-item"> <a href="/contact" style="text-decoration: none; color: #F5D894;">Contact Us</a></span></div>
+            <div class="item"><span class="footer-item"> <a href="/jobs" style="text-decoration: none; color: #F5D894;">Jobs</a></span></div>
+            <div class="item"><span class="footer-item"> <a href="/press" style="text-decoration: none; color: #F5D894;">Press</a></span></div>
+            <div class="item"><span class="footer-item"> <a href="/news" style="text-decoration: none; color: #F5D894;">News</a></span></div>
             <div class="item">
-              <a href="https://www.facebook.com/davidanddadscafe" style="text-decoration: none; color: #F5D894;"><img style="margin-right: 15px" src="/icons/facebook.png" height="30px" width="30px"> Visit us on Facebook!</a>
+              <span class="footer-item"> <a href="https://www.facebook.com/davidanddadscafe" style="text-decoration: none; color: #F5D894;"><img style="margin-right: 15px" src="/icons/facebook.png" height="30px" width="30px"> Visit us on Facebook!</a></span>
             </div>
           </div>
         </div>
@@ -127,7 +124,7 @@
       <div class="row">
         <div class="column">
           <center>
-            <span>&copy; 2014 David and Dad's, Inc.</span>
+            <span style="color: #F5D894;">&copy; 2014 David and Dad's, Inc.</span>
           </center>
         </div>
       </div>

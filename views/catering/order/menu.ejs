@@ -27,7 +27,7 @@
 <div id="step-section" style="border-bottom: 7px solid #352504;">
   <div style="height: 55px;"></div>
   <div class="container">
-   <div class="ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
+   <div class="removable ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
     <div class="ui disabled step">
       Start My Order
     </div>
@@ -52,24 +52,25 @@
 <div class="ui page grid" style="border-top: 7px solid #822421;">
   <div class="sixteen wide column">
     <div class="ui borderless fluid menu sticky-topbar" style="padding: 4px; background-color: #352504;">
-     <div class="right item">
+     <div class="removable-button right item">
       <a href="javascript:;" class="simpleCart_empty ui red button" id="start-over">Start Over</a>
     </div>
-    <div class="right item">
+    <div class="removable-button right item">
       <a data-toggle="modal" data-target="#myModal" class="ui green button">Order Summary</a>
     </div>
-    <div class="right item">
+    <div class="removable-button right item">
       <a href="/catering/order/payment" class="ui teal button">Checkout</a>
     </div>
+    <div class="replacement-button item"><a href="javascript:;" class="simpleCart_empty ui red button" id="start-over">Start Over</a><a data-toggle="modal" data-target="#myModal" class="ui green button">Order Summary</a><a href="/catering/order/payment" class="ui teal button">Checkout</a></div>
     <div class="item"  style="color: #fff;">
       <i class="white cart icon"></i><b>Current Total: </b><span class="simpleCart_total"></span>
-      <div class="ui red label">Excluding Tax and Delivery Fee</div>
+      <div class="removable-button ui red label">Excluding Tax and Delivery Fee</div>
     </div>
   </div>
 </div>
 <div class="four wide column">
 
-  <div class="ui vertical menu sticky-leftbar" style="background-color: #352504; color: #fff;">
+  <div class="removable ui vertical menu sticky-leftbar" style="background-color: #352504; color: #fff;">
     <div class="header item" style="color: #fff;">
       <i class="coffee icon"></i>
       Breakfast

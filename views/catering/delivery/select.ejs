@@ -54,7 +54,7 @@
 <div id="step-section" style="border-bottom: 7px solid #352504;">
   <div style="height: 55px;"></div>
   <div class="container">
-   <div class="ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
+   <div class="removable ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
     <div class="ui disabled step">
       Start My Order
     </div>
@@ -105,13 +105,7 @@
         <div class="ui medium divided list">
           <% _.each(session.User.savedDelivery, function(option){ %>
           <div class="item">
-            <form action="/user/removeDelivery/<%= session.User.savedDelivery.indexOf(option) %>" method="POST">
-              <input type="hidden" name="_method" value="delete"/>
-              <input type="submit" class="right floated medium ui red button" value="Delete"/>
-              <input type="hidden" name="_csrf" value="<%= _csrf %>" />
-            </form>
-            <div class="right floated medium ui change button" index="<%= session.User.savedDelivery.indexOf(option) %>">Select This Location</div>
-            <div class="content">
+            <div class="left floated content">
               <div class="header"> <%= option.address %>,&nbsp;<%= option.city %> </div>
               <div class="description" style="margin-left:20px">
                 Contact: <%= option.contactName %> | <%= option.contactPhone %>
@@ -120,6 +114,12 @@
                 <% } %>
               </div>
             </div>
+            <form action="/user/removeDelivery/<%= session.User.savedDelivery.indexOf(option) %>" method="POST">
+              <input type="hidden" name="_method" value="delete"/>
+              <input type="submit" class="right floated medium ui red button" value="Delete"/>
+              <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+            </form>
+            <div class="right floated medium ui change button" index="<%= session.User.savedDelivery.indexOf(option) %>">Select This Location</div>
           </div>
         <% }) %>
         <div class="item">
