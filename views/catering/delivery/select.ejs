@@ -119,7 +119,7 @@
               <input type="submit" class="right floated medium ui red button" value="Delete"/>
               <input type="hidden" name="_csrf" value="<%= _csrf %>" />
             </form>
-            <div class="right floated medium ui change button" index="<%= session.User.savedDelivery.indexOf(option) %>">Select This Location</div>
+            <div class="right floated medium ui delivery-change button" index="<%= session.User.savedDelivery.indexOf(option) %>">Select This Location</div>
           </div>
         <% }) %>
         <div class="item">

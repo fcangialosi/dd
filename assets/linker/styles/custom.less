@@ -225,7 +225,12 @@ body {
   font-size: 0.85rem!important;
 }
 
-.ui.button.change.active {
+.ui.button.delivery-change.active {
+  background-color: #5BBD72!important;
+  color: #FFF!important;
+}
+
+.ui.button.payment-change.active {
   background-color: #5BBD72!important;
   color: #FFF!important;
 }
@@ -294,14 +299,14 @@ body {
 }
 
 .navbar-item:hover {
-  color: @ground;
+  border-bottom: solid 3px @ground;
+  color: @chili;
   text-decoration: none;
 }
 
 #home-section1 {
   width: 100%;
-  min-height: 1000px;
-  background: url("../../images/unsplash_macaroons.jpg");
+  background: url("../../images/IMG_2124.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -312,8 +317,8 @@ body {
 
 #main-section1 {
   width: 100%;
-  min-height: 250px;
-  background: url("../../images/outside_cafe.png");
+  min-height: 550px;
+  background: url("../../images/IMG_2128.png");
   background-repeat: no-repeat;
   background-size: cover;
   border-bottom: 7px solid @ground;
@@ -322,10 +327,61 @@ body {
 #catering-section1 {
   width: 100%;
   min-height: 550px;
-  background: url("../../images/baltimore.png");
+  background: url("../../images/IMG_2111.png");
   background-repeat: no-repeat;
   background-size: cover;
   border-bottom: 7px solid @ground;
+}
+
+#catering-1 {
+  background: url("../../images/IMG_2046.jpg") bottom center no-repeat;
+  background-size: cover;
+  border-right: 7px solid @blush;
+  border-left: 7px solid @ground;
+}
+
+#cafe-front-2 {
+  background: url("../../images/IMG_2107.jpg") bottom center no-repeat;
+  background-size: cover;
+  border-right: 7px solid @ground;
+  border-left: 7px solid @ground;
+}
+
+#cafe-front-3 {
+  background: url("../../images/IMG_2051.jpg") top center no-repeat;
+  background-size: cover;
+  width: 34%;
+  border-right: 7px solid @ground;
+  border-left: 7px solid @blush;
+}
+
+#catering-1 {
+  background: url("../../images/IMG_2134.jpg") bottom center no-repeat;
+  background-size: cover;
+  border-right: 7px solid @blush;
+  border-left: 7px solid @ground;
+}
+
+#catering-2 {
+  background: url("../../images/IMG_2136.jpg") bottom center no-repeat;
+  background-size: cover;
+  border-right: 7px solid @ground;
+  border-left: 7px solid @ground;
+}
+
+#catering-3 {
+  background: url("../../images/IMG_2139.jpg") top center no-repeat;
+  background-size: cover;
+  width: 34%;
+  border-right: 7px solid @ground;
+  border-left: 7px solid @blush;
+}
+
+
+.three-picture {
+  width: 33%;
+  height: 300px;
+  float: left;
 }
 
 #welcome {
@@ -339,11 +395,17 @@ body {
 
 #catering-how-it-works {
   width: 100%;
-  height: 500px;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  min-height: 400px;
+  padding-top: 40px;
+  padding-bottom: 20px;
   z-index: 0;
-  border-top: 7px solid #822421
+  border-top: 7px solid #822421;
+  border-bottom: 7px solid @blush;
+}
+
+#catering-reviews {
+  border-top: 7px solid @blush;
+  padding-top: 40px;
 }
 
 #reviews {
@@ -365,7 +427,7 @@ background-color: #fff;
   width: 100%;
   min-height: 250px;
   z-index: 0;
-  background: url("../../images/outside_cafe.png");
+  background: url("../../images/IMG_2120.png");
   background-repeat: no-repeat;
   background-size: cover;
   border-bottom: 7px solid @ground;
@@ -397,13 +459,9 @@ height: 250px;
 width: 250px;
 }
 
-#cafe-front-section {
-  width: 100%;
-  height: 300px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background: url("../../images/cafe_front.png");
-   border-top: 7px solid @ground;
+#three-picture-section{
+  height: 314px;
+  border-top: 7px solid @ground;
   border-bottom: 7px solid @ground;
 }
 
@@ -540,7 +598,7 @@ width: 250px;
 #step-section {
   width: 100%;
   height: 170px;
-   background: url("../../images/unsplash_macaroons.jpg");
+   background: url("../../images/kathy/IMG_2112.jpg");
 }
 
 #specials-header {
@@ -558,7 +616,7 @@ width: 250px;
 #login-step-section {
   width: 100%;
   min-height: 850px;
-   background: url("../../images/unsplash_macaroons.jpg");
+   background: url("../../images/kathy/IMG_2112.jpg");
 }
 
 .simpleCart_shelfItem {

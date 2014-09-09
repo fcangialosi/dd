@@ -136,7 +136,7 @@
                 <input type="submit" class="right floated medium ui red button" value="Delete"/>
                 <input type="hidden" name="_csrf" value="<%= _csrf %>" />
               </form>
-              <div class="right floated medium ui change button" index="<%= session.User.savedPayment.indexOf(card) %>">Select This Card</div>
+              <div class="right floated medium ui payment-change button" index="<%= session.User.savedPayment.indexOf(card) %>">Select This Card</div>
             </div>
           <% }) %>
           <div class="item">

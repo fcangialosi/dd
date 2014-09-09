@@ -12,16 +12,27 @@ $(document).ready(function() {
     $('input[type=text]').val(0);
   });
 
-  var $change = $('.ui.change.button');
-  var change_handler = {
+  var $delivery_change = $('.ui.delivery-change.button');
+  var delivery_handler = {
     activate: function() {
-      $change.removeClass('active').text("Select This Location"); // wipe all selected
+      $delivery_change.removeClass('active').text("Select This Location"); // wipe all selected
       $(this).addClass('active').text("Selected"); // select just the clicked option
       // set hidden field in form as the index of this option in the saved options array
       $('#option-index').attr('value', $(this).attr('index'));
     }
   };
-  $change.on('click', change_handler.activate);
+  $delivery_change.on('click', delivery_handler.activate);
+
+  var $payment_change = $('.ui.payment-change.button');
+  var payment_handler = {
+    activate: function() {
+      $payment_change.removeClass('active').text("Select This Card"); // wipe all selected
+      $(this).addClass('active').text("Selected"); // select just the clicked option
+      // set hidden field in form as the index of this option in the saved options array
+      $('#option-index').attr('value', $(this).attr('index'));
+    }
+  };
+  $payment_change.on('click', payment_handler.activate);
 
   simpleCart.bind( 'update' , function(){
     if(simpleCart.quantity() > 0) {

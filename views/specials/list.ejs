@@ -1,0 +1,214 @@
+<div class="ui container">
+    <center>
+      <h1 class="ui header" style="font-size: 2.5em"> Manage <%= cafe_name %>  Daily Specials</h1>
+      <a href="/admin/specials" class="ui red labeled icon button"><i class="hand left icon"></i>Back to Choose Cafe</a>
+    </center>
+
+    <br>
+
+    <% if (flash && flash.err) { %>
+        <div class="ui red message">
+            <%= flash.err %>
+        </div>
+    <% } %>
+    <% if (flash && flash.success) { %>
+        <div class="ui green message">
+            <%= flash.success %>
+        </div>
+    <% } %>
+
+    <br>
+
+    <h2 class="ui dividing header"> Breakfast Specials</h2>
+
+    <table class='ui inverted celled table segment'>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <% _.each(breakfast_specials, function(special) { %>
+                <tr>
+                    <td><%= special.i %></td>
+                    <td><%= special.n %></td>
+                    <td>$<%= special.p %></td>
+                    <td><% if (special.d) { %><%= special.d %><% } else { %>None<% } %></td>
+                    <td><a href="/special/edit/<%= special.id %>" class="btn btn-sm btn-warning">Edit</a></td>
+                    <td><form action="/special/destroy/<%= special.id %>" method="POST">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+                        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+                    </form></td>
+                </tr>
+            <% }) %>
+            </tbody>
+    </table>
+
+    <h2 class="ui dividing header">Monday Lunch Specials</h2>
+
+        <table class='ui inverted celled table segment'>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <% _.each(breakfast_specials, function(special) { %>
+                <tr>
+                    <td><%= special.i %></td>
+                    <td><%= special.n %></td>
+                    <td>$<%= special.p %></td>
+                    <td><% if (special.d) { %><%= special.d %><% } else { %>None<% } %></td>
+                    <td><a href="/special/edit/<%= special.id %>" class="btn btn-sm btn-warning">Edit</a></td>
+                    <td><form action="/special/destroy/<%= special.id %>" method="POST">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+                        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+                    </form></td>
+                </tr>
+            <% }) %>
+            </tbody>
+    </table>
+
+    <h2 class="ui dividing header">Tuesday Lunch Specials</h2>
+
+        <table class='ui inverted celled table segment'>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <% _.each(breakfast_specials, function(special) { %>
+                <tr>
+                    <td><%= special.i %></td>
+                    <td><%= special.n %></td>
+                    <td>$<%= special.p %></td>
+                    <td><% if (special.d) { %><%= special.d %><% } else { %>None<% } %></td>
+                    <td><a href="/special/edit/<%= special.id %>" class="btn btn-sm btn-warning">Edit</a></td>
+                    <td><form action="/special/destroy/<%= special.id %>" method="POST">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+                        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+                    </form></td>
+                </tr>
+            <% }) %>
+            </tbody>
+    </table>
+
+    <h2 class="ui dividing header">Wednesday Lunch Specials</h2>
+
+        <table class='ui inverted celled table segment'>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <% _.each(breakfast_specials, function(special) { %>
+                <tr>
+                    <td><%= special.i %></td>
+                    <td><%= special.n %></td>
+                    <td>$<%= special.p %></td>
+                    <td><% if (special.d) { %><%= special.d %><% } else { %>None<% } %></td>
+                    <td><a href="/special/edit/<%= special.id %>" class="btn btn-sm btn-warning">Edit</a></td>
+                    <td><form action="/special/destroy/<%= special.id %>" method="POST">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+                        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+                    </form></td>
+                </tr>
+            <% }) %>
+            </tbody>
+    </table>
+
+    <h2 class="ui dividing header">Thursday Lunch Specials</h2>
+
+        <table class='ui inverted celled table segment'>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <% _.each(breakfast_specials, function(special) { %>
+                <tr>
+                    <td><%= special.i %></td>
+                    <td><%= special.n %></td>
+                    <td>$<%= special.p %></td>
+                    <td><% if (special.d) { %><%= special.d %><% } else { %>None<% } %></td>
+                    <td><a href="/special/edit/<%= special.id %>" class="btn btn-sm btn-warning">Edit</a></td>
+                    <td><form action="/special/destroy/<%= special.id %>" method="POST">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+                        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+                    </form></td>
+                </tr>
+            <% }) %>
+            </tbody>
+    </table>
+
+    <h2 class="ui dividing header">Friday Lunch Specials</h2>
+
+        <table class='ui inverted celled table segment'>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <% _.each(breakfast_specials, function(special) { %>
+                <tr>
+                    <td><%= special.i %></td>
+                    <td><%= special.n %></td>
+                    <td>$<%= special.p %></td>
+                    <td><% if (special.d) { %><%= special.d %><% } else { %>None<% } %></td>
+                    <td><a href="/special/edit/<%= special.id %>" class="btn btn-sm btn-warning">Edit</a></td>
+                    <td><form action="/special/destroy/<%= special.id %>" method="POST">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+                        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+                    </form></td>
+                </tr>
+            <% }) %>
+            </tbody>
+    </table>
+
+</div>

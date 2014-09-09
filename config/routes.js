@@ -98,7 +98,17 @@ module.exports.routes = {
 
   '/admin/catering' : 'MenuController.adminCatering',
 
-  '/admin/express' : 'MenuController.adminExpress'
+  '/admin/express' : 'MenuController.adminExpress',
+
+  '/admin/specials' : 'SpecialsController.index',
+
+  '/admin/specials/charles' : 'SpecialsController.charles',
+
+  '/admin/specials/fayette' : 'SpecialsController.fayette',
+
+  '/admin/specials/pratt' : 'SpecialsController.pratt',
+
+  '/admin/specials/broadway' : 'SpecialsController.broadway'
 
   /*
   // But what if you want your home page to display
