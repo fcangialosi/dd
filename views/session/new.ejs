@@ -25,14 +25,12 @@
       <form action="/user/create" method="POST" class="ui warning form segment" id="signup-form">
         <h4><b>New Customer?</b></h4>
         <p> Enter your information to get started! </p>
-        <% if(flash && flash.err && flash.err[0].type == 'signup') { %>
+        <% if(flash && flash.err && flash.type == 'signup') { %>
         <div class="ui warning message">
-          <% Object.keys(flash.err).forEach(function(error) { %>
-          <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+          <div class="header"><%- JSON.stringify(flash.err['name']) %></div>
           <ul class="list">
-            <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+            <li><%- JSON.stringify(flash.err['err']) %></li>
           </ul>
-          <% }) %>
         </div>
         <% } %>
         <div class="ui error message"></div>
@@ -83,7 +81,7 @@
     <div class="six wide column">
       <form action="/session/create" method="POST" class="ui warning form segment" id="signin-form">
         <h4><b>Returning Customer?</b></h4>
-        <% if(flash && flash.err && flash.err[0].type == 'signin') { %>
+        <% if(flash && flash.err && flash.type == 'signin') { %>
         <div class="ui warning message">
           <% Object.keys(flash.err).forEach(function(error) { %>
           <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>

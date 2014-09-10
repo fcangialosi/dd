@@ -25,11 +25,12 @@ module.exports = {
 		if (!req.param('email')) {
 			 // return next({err: ["Password doesn't match password confirmation."]});
 
-			var usernameRequiredError = [{name: 'Missing E-mail Error', message: 'Woops.. Looks like you forgot your e-mail address!', type : 'signin'}]
+			var usernameRequiredError = [{name: 'Missing E-mail Error', message: 'Woops.. Looks like you forgot your e-mail address!'}]
 
 				// Remember that err is the object being passed down (a.k.a. flash.err), whose value is another object with
 				// the key of usernamePasswordRequiredError
 				req.session.flash = {
+					type: 'signin',
 					err: usernameRequiredError
 			}
 
@@ -45,8 +46,9 @@ module.exports = {
 
 			// If no user is found...
 			if (!user) {
-				var noAccountError = [{name: 'No Account ', message: "Sorry, we don't know of any " + req.param('email') + "'s!", type : 'signin'}]
+				var noAccountError = [{name: 'No Account ', message: "Sorry, we don't know of any " + req.param('email') + "'s!"}]
 				req.session.flash = {
+					type: 'signin',
 					err: noAccountError
 				}
 				res.redirect('/catering/order/start');
@@ -66,11 +68,12 @@ module.exports = {
 		if (!req.param('email') || !req.param('password')) {
 			 // return next({err: ["Password doesn't match password confirmation."]});
 
-			var authenticationError = [{name: 'Authentication Error', message: 'Username or password is incorrect.', type : 'signin'}]
+			var authenticationError = [{name: 'Authentication Error', message: 'Username or password is incorrect.'}]
 
 			// Remember that err is the object being passed down (a.k.a. flash.err), whose value is another object with
 			// the key of usernamePasswordRequiredError
 			req.session.flash = {
+				type: 'signin',
 				err: authenticationError
 			}
 
@@ -86,8 +89,9 @@ module.exports = {
 
 			// If no user is found...
 			if (!user || !user.admin) {
-				var noAccountError = [{name: 'Not Admin', message: req.param('email') + " is not an admin.", type : 'signin'}]
+				var noAccountError = [{name: 'Not Admin', message: req.param('email') + " is not an admin."}]
 				req.session.flash = {
+					type: 'signin',
 					err: noAccountError
 				}
 				res.redirect('/admin/signin');
@@ -101,6 +105,7 @@ module.exports = {
 				if (!valid) {
 					var usernamePasswordMismatchError = [{name: 'Authentication Error', message: 'Username or password is incorrect.'}]
 					req.session.flash = {
+						type: 'signin',
 						err: usernamePasswordMismatchError
 					}
 					res.redirect('/admin/signin');
