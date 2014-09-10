@@ -48,11 +48,11 @@ module.exports.policies = {
   },
 
   SpecialsController : {
-    index : 'admin',
-    'charles' : 'admin',
-    'fayette' : 'admin',
-    'pratt' : 'admin',
-    'broadway' : 'admin',
+    index : ['admin', 'flash'],
+    'charles' : ['admin', 'flash'],
+    'fayette' : ['admin', 'flash'],
+    'pratt' : ['admin', 'flash'],
+    'broadway' : ['admin', 'flash'],
     '*' : true
   },
 

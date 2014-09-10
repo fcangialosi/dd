@@ -22,15 +22,120 @@ module.exports = {
      res.view('specials/index', {layout: 'admin/layout'});
   },
 
+  update : function(req, res, next) {
+
+    Specials.findOne(req.param('id'), function foundMenu(err, menu) {
+      if (err) return next(err);
+      if (!menu) return next('Menu doesn\'t exist.');
+
+      var edited_item = JSON.parse(JSON.stringify(req.params.all()));
+      index = Number(req.param('index'));
+      cafe = req.param('cafe');
+      delete edited_item._csrf;
+      delete edited_item.cafe;
+      delete edited_item.index;
+      if ('description' in edited_item && (edited_item.description == 'EMPTY' || edited_item.description == "")) {
+        delete edited_item.description;
+      }
+
+      menu['items'][index] = edited_item;
+
+      Specials.update(req.param('id'), menu, function itemUpdated(err) {
+        if (err) {
+          req.session.flash = {
+            err : err
+          }
+          return res.redirect('/admin/specials/' + cafe);
+        }
+        req.session.flash = {
+          success : "Updated " + edited_item.name + " successfully."
+        }
+        res.redirect('/admin/specials/' + cafe);
+      });
+    });
+  },
+
+  delete : function(req, res, next) {
+    Specials.findOne(req.param('id'), function foundMenu (err, menu) {
+      if (err) return next(err);
+      if (!menu) return next('Menu doesn\'t exist.');
+
+      var index = Number(req.param('index'));
+      var cafe = req.param('cafe');
+      var name = menu['items'][index].name;
+      var edited_menu = JSON.parse(JSON.stringify(menu));
+      edited_menu['items'].splice(index, 1);
+      Specials.update(req.param('id'), edited_menu, function itemUpdated(err) {
+        if (err) {
+          req.session.flash = {
+            err: err
+          }
+          return res.redirect('/admin/specials/' + cafe);
+        }
+        req.session.flash = {
+          success: "Removed " + name + " successfully."
+        }
+        res.redirect('/admin/specials/' + cafe);
+      });
+    });
+  },
+
+  deleteAll : function(req, res, next) {
+    Specials.findOne(req.param('id'), function foundMenu (err, menu) {
+      if (err) return next(err);
+      if (!menu) return next('Menu doesn\'t exist.');
+
+      var cafe = req.param('cafe');
+      var edited_menu = JSON.parse(JSON.stringify(menu));
+      edited_menu['items'] = [];
+      Specials.update(req.param('id'), edited_menu, function itemUpdated(err) {
+        if (err) {
+          req.session.flash = {
+            err: err
+          }
+          return res.redirect('/admin/specials/' + cafe);
+        }
+        req.session.flash = {
+          success: "Removed all items from " + edited_menu.name + " successfully."
+        }
+        res.redirect('/admin/specials/' + cafe);
+      });
+    });
+  },
+
+  add : function(req, res, next){
+    console.log(req.param('id'));
+    Specials.findOne(req.param('id'), function foundMenu (err, menu) {
+      if (err) return next(err);
+      if (!menu) return next('Menu doesn\'t exist.');
+
+      var cafe = req.param('cafe');
+      menu['items'].push({name : "EMPTY", price : "EMPTY", description: "EMPTY"});
+      Specials.update(req.param('id'), menu, function itemUpdated(err) {
+        if (err) {
+          req.session.flash = {
+            err: err
+          }
+          return res.redirect('/admin/specials/' + cafe);
+        }
+        req.session.flash = {
+          success: "Added new blank item to " + menu.name + " successfully."
+        }
+        res.redirect('/admin/specials/' + cafe);
+      });
+    });
+  },
+
   charles : function(req, res, next) {
      // Get an array of all  in the Menu collection(e.g. table)
-      Specials.find({"cafe":0}, function foundSpecials (err, specials) {
+      Specials.find({'cafe' : 0}).sort('i asc').exec(function foundSpecials (err, menu) {
         if (err) return next(err);
         res.view('specials/list',
         {
           layout: 'admin/layout',
           cafe_name: 'Charles St. Cafe',
-          breakfast_specials : specials
+          cafe : 'charles',
+          specials : menu
         });
       });
   },
@@ -70,7 +175,7 @@ module.exports = {
   },
 
   displayPrattSpecials : function(req, res, next) {
-    Specials.find({'cafe' : 0}).sort('i asc').exec(function foundSpecials (err, menu) {
+    Specials.find({'cafe' : 2}).sort('i asc').exec(function foundSpecials (err, menu) {
       if (err) return next(err);
 
       res.view('specials', {
@@ -81,7 +186,7 @@ module.exports = {
   },
 
   displayBroadwaySpecials : function(req, res, next) {
-    Specials.find({'cafe' : 0}).sort('i asc').exec(function foundSpecials (err, menu) {
+    Specials.find({'cafe' : 3}).sort('i asc').exec(function foundSpecials (err, menu) {
       if (err) return next(err);
 
       res.view('specials', {
