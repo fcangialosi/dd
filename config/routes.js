@@ -50,7 +50,7 @@ module.exports.routes = {
 
   '/main/menu' : 'MenuController.displayMainMenu',
 
-  '/main/specials' : 'MenuController.displayMainSpecials',
+  '/main/specials' : 'SpecialsController.displayCharlesSpecials',
 
   '/catering' : {
     view: 'catering/index'
@@ -58,13 +58,15 @@ module.exports.routes = {
 
   '/catering/menu' : 'MenuController.displayCateringMenu',
 
-  '/express' : {
-    view : 'express/index'
-  },
+  '/express' : 'SpecialsController.todaysSpecials',
 
   '/express/menu' : 'MenuController.displayExpressMenu',
 
-  '/express/specials' : 'MenuController.displayExpressSpecials',
+  '/express/fayette/specials' : 'SpecialsController.displayFayetteSpecials',
+
+  '/express/pratt/specials' : 'SpecialsController.displayPrattSpecials',
+
+  '/express/broadway/specials' : 'SpecialsController.displayBroadwaySpecials',
 
   '/about' : {
     view :'home/about'

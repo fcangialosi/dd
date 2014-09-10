@@ -15,6 +15,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 module.exports = {
 
   index : function(req, res, next) {
@@ -44,6 +45,63 @@ module.exports = {
 
   broadway : function(req, res, next) {
     res.view('specials/list', {layout: 'admin/layout', cafe_name : 'Garden View Cafe'});
+  },
+
+  displayCharlesSpecials : function(req, res, next) {
+    Specials.find({'cafe' : 0}).sort('i asc').exec(function foundSpecials (err, menu) {
+      if (err) return next(err);
+
+      res.view('specials', {
+        cafe : 'Charles St. Cafe',
+        specials : menu
+      })
+    });
+  },
+
+  displayFayetteSpecials : function(req, res, next) {
+    Specials.find({'cafe' : 1}).sort('i asc').exec(function foundSpecials (err, menu) {
+      if (err) return next(err);
+
+      res.view('specials', {
+        cafe : 'David and Dad\'s Express',
+        specials : menu
+      })
+    });
+  },
+
+  displayPrattSpecials : function(req, res, next) {
+    Specials.find({'cafe' : 0}).sort('i asc').exec(function foundSpecials (err, menu) {
+      if (err) return next(err);
+
+      res.view('specials', {
+        cafe : 'Cafe Express',
+        specials : menu
+      })
+    });
+  },
+
+  displayBroadwaySpecials : function(req, res, next) {
+    Specials.find({'cafe' : 0}).sort('i asc').exec(function foundSpecials (err, menu) {
+      if (err) return next(err);
+
+      res.view('specials', {
+        cafe : 'Garden View Cafe',
+        specials : menu
+      })
+    });
+  },
+
+  todaysSpecials : function(req, res, next) {
+    date = new Date();
+    today = daysOfTheWeek[date.getDay()];
+    console.log(today);
+    //Specials.find().where({ or: [{'day': today},{'name' : 'Breakfast Specials'}]}).sort('cafe asc').exec
+    Specials.find().where({ or: [{'subhead': today},{'name' : 'Breakfast Specials'}]}).sort('cafe asc').sort('i asc').exec(function foundSpecials (err, menu) {
+      console.log(menu);
+      res.view('express/index', {
+        specials : menu
+      });
+    });
   }
 
 };

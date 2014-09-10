@@ -47,6 +47,15 @@ module.exports.policies = {
   	'*' : ['flash', 'isAuthenticated']
   },
 
+  SpecialsController : {
+    index : 'admin',
+    'charles' : 'admin',
+    'fayette' : 'admin',
+    'pratt' : 'admin',
+    'broadway' : 'admin',
+    '*' : true
+  },
+
   OrderController : {
   	'start' : 'flash',
   	'*' : ['flash', 'isAuthenticated']

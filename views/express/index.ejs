@@ -9,23 +9,25 @@
       <div class="column"><center>
         <h2 class="ui dividing header">David and Dad's Express</h2>
         <p style="font-size: 1.3em; font-family: 'Montserrat'">Charles &amp; Fayette<br>(410) - 637  - 4840</p>
-        <a class="medium ui teal button" href="/main/specials" style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Specials </a>
+        <a class="medium ui teal button" href="/express/fayette/specials" style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Specials </a>
       </center>
     </div>
     <div class="column"><center>
       <h2 class="ui dividing header">Cafe Express</h2>
       <p style="font-size: 1.3em; font-family: 'Montserrat'">Light St. &amp; Pratt<br>(410) - 385  - 6267</p>
-      <a class="medium ui teal button" href="/main/specials" style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Specials </a>
+      <a class="medium ui teal button" href="/express/pratt/specials" style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Specials </a>
     </center>
   </div>
   <div class="column"><center>
     <h2 class="ui dividing header">Garden View Cafe</h2>
     <p style="font-size: 1.3em; font-family: 'Montserrat'">801 N. Broadway<br>(443) - 923  - 9480</p>
-    <a class="medium ui teal button" href="/main/specials" style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Specials </a>
+    <a class="medium ui teal button" href="/express/broadway/specials" style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Specials </a>
   </center>
 </div>
-
 </div>
+
+
+<!-- CAFE START -->
 <div style="height: 30px"></div>
 </div>
 </div>
@@ -49,7 +51,6 @@
 </div>
 <div class="ui two column stackable page grid">
   <div class="column">
-    <iframe width='100%' height='250px' frameBorder='0' src='https://a.tiles.mapbox.com/v4/fcangial.j7e35hep/zoompan.html?access_token=pk.eyJ1IjoiZmNhbmdpYWwiLCJhIjoiSEE2NW84ayJ9.I_SmNeUGjd30kkUHN9hPVA'></iframe>
     <div class="ui three column stackable grid">
       <div class="column">
         <h3 class="ui dividing header">Address</h3>
@@ -64,23 +65,27 @@
         <p>(410) - 637 - 4840</p>
       </div>
     </div>
-    <h3 class="ui dividing header">Today's Specials</h3>
-    <div class="menu-item">
-          <b class="item-name item_name" style="font-size: 1.0em">Item Name</b><span class="spacer" style="display:none;"><br></span>
-          <span class="item-price"><span class="item_price">$5.00</span></span></span>
-    </div>
-     <div class="menu-item">
-          <b class="item-name item_name" style="font-size: 1.0em">Item Name</b><span class="spacer" style="display:none;"><br></span>
-          <span class="item-price"><span class="item_price">$5.00</span></span></span>
-    </div>
-     <div class="menu-item">
-          <b class="item-name item_name" style="font-size: 1.0em">Item Name</b><span class="spacer" style="display:none;"><br></span>
-          <span class="item-price"><span class="item_price">$5.00</span></span></span>
-    </div>
-
+    <h3 class="ui dividing header">Today's Breakfast Specials</h3>
+    <% _.each(specials[2].items, function (item) {%>
+      <div class="menu-item" style="padding: 10px">
+            <b class="item-name item_name" style="font-size: 1.0em"><%= item.name %></b><span class="spacer" style="display:none;"><br></span>
+            <span class="item-price"><span class="item_price"><%= item.price %></span></span></span>
+             <% if ('description' in item) { %><div class="item-desc"> <%= item.description %></div><% } %>
+      </div>
+    <% }) %>
+    <h3 class="ui dividing header">Today's Lunch Specials</h3>
+    <% _.each(specials[3].items, function (item) {%>
+      <div class="menu-item" style="padding: 10px">
+            <b class="item-name item_name" style="font-size: 1.0em"><%= item.name %></b><span class="spacer" style="display:none;"><br></span>
+            <span class="item-price"><span class="item_price"><%= item.price %></span></span></span>
+      </div>
+    <% }) %>
   </div>
   <div class="column">
     <div class="ui grid">
+    <div class="sixteen wide column">
+        <iframe width='100%' height='250px' frameBorder='0' src='https://a.tiles.mapbox.com/v4/fcangial.j7e35hep/zoompan.html?access_token=pk.eyJ1IjoiZmNhbmdpYWwiLCJhIjoiSEE2NW84ayJ9.I_SmNeUGjd30kkUHN9hPVA'></iframe>
+      </div>
       <div class="sixteen wide column">
         <img src="/images/IMG_2103.JPG" style="width: 100%; border-radius: 10px">
       </div>
@@ -99,9 +104,17 @@
     </div>
   </div>
 </div>
-<div style="height:30px"></div>
+<!-- CAFE END -->
+
+
+
+<!-- CAFE START -->
+<div style="height: 30px"></div>
+</div>
+</div>
 <div class="ui page grid">
   <div class="column">
+    <div style="height: 50px"></div>
     <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
       <tr>
         <td style="width: 50px"><span style="font-size: 3em">2</span></td>
@@ -119,29 +132,70 @@
 </div>
 <div class="ui two column stackable page grid">
   <div class="column">
-    <iframe width='100%' height='250px' frameBorder='0' src='https://a.tiles.mapbox.com/v4/fcangial.j7e35hep/zoompan.html?access_token=pk.eyJ1IjoiZmNhbmdpYWwiLCJhIjoiSEE2NW84ayJ9.I_SmNeUGjd30kkUHN9hPVA'></iframe>
-    <div class="ui two column grid">
+    <div class="ui three column stackable grid">
       <div class="column">
         <h3 class="ui dividing header">Address</h3>
-        <p>T. Rowe Price Bldg. <br> Light St. Entrance<br>100 East Pratt St.<br>Baltimore, MD 21201</p>
+         <p>T. Rowe Price Bldg. <br> Light St. Entrance<br>100 East Pratt St.<br>Baltimore, MD 21201 </p>
       </div>
       <div class="column">
-      <h3 class="ui dividing header">Hours</h3>
-      <p>
-        Monday - Friday<br>7:00am - 3:00pm
-      </p>
-       <h3 class="ui dividing header">Phone</h3>
-       <p>(410) - 385 - 6267</p>
+        <h3 class="ui dividing header">Hours</h3>
+        <p>Monday - Friday<br>7:00am - 3:00pm</p>
+      </div>
+      <div class="column">
+        <h3 class="ui dividing header">Phone</h3>
+        <p>(410) - 385 - 6267</p>
+      </div>
+    </div>
+    <h3 class="ui dividing header">Today's Breakfast Specials</h3>
+    <% _.each(specials[4].items, function (item) {%>
+      <div class="menu-item" style="padding: 10px">
+            <b class="item-name item_name" style="font-size: 1.0em"><%= item.name %></b><span class="spacer" style="display:none;"><br></span>
+            <span class="item-price"><span class="item_price"><%= item.price %></span></span></span>
+             <% if ('description' in item) { %><div class="item-desc"> <%= item.description %></div><% } %>
+      </div>
+    <% }) %>
+    <h3 class="ui dividing header">Today's Lunch Specials</h3>
+    <% _.each(specials[5].items, function (item) {%>
+      <div class="menu-item" style="padding: 10px">
+            <b class="item-name item_name" style="font-size: 1.0em"><%= item.name %></b><span class="spacer" style="display:none;"><br></span>
+            <span class="item-price"><span class="item_price"><%= item.price %></span></span></span>
+      </div>
+    <% }) %>
+  </div>
+  <div class="column">
+    <div class="ui grid">
+    <div class="sixteen wide column">
+        <iframe width='100%' height='250px' frameBorder='0' src='https://a.tiles.mapbox.com/v4/fcangial.j7e35hep/zoompan.html?access_token=pk.eyJ1IjoiZmNhbmdpYWwiLCJhIjoiSEE2NW84ayJ9.I_SmNeUGjd30kkUHN9hPVA'></iframe>
+      </div>
+      <div class="sixteen wide column">
+        <img src="/images/IMG_2103.JPG" style="width: 100%; border-radius: 10px">
+      </div>
+      <div class="eight wide column">
+        <img src="/images/IMG_2100.JPG" style="border-radius: 10px; width: 100%">
+      </div>
+      <div class="eight wide column">
+        <img src="/images/IMG_2097.JPG" style="border-radius: 10px; width: 100%">
+      </div>
+      <div class="eight wide column">
+        <img src="/images/IMG_2105.JPG" style="border-radius: 10px; width: 100%">
+      </div>
+      <div class="eight wide column">
+        <img src="/images/IMG_2088.JPG" style="border-radius: 10px; width: 100%">
       </div>
     </div>
   </div>
-  <div class="column">
-    <img src="http://kaitsvintagecafe.com/images/gallery/vintage%20cafe%201.jpg" width="512" height="384" style="border-radius: 10px">
-  </div>
 </div>
-<div style="height:30px"></div>
+<!-- CAFE END -->
+
+
+
+<!-- CAFE START -->
+<div style="height: 30px"></div>
+</div>
+</div>
 <div class="ui page grid">
   <div class="column">
+    <div style="height: 50px"></div>
     <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
       <tr>
         <td style="width: 50px"><span style="font-size: 3em">3</span></td>
@@ -159,26 +213,62 @@
 </div>
 <div class="ui two column stackable page grid">
   <div class="column">
-    <iframe width='100%' height='250px' frameBorder='0' src='https://a.tiles.mapbox.com/v4/fcangial.j7e35hep/zoompan.html?access_token=pk.eyJ1IjoiZmNhbmdpYWwiLCJhIjoiSEE2NW84ayJ9.I_SmNeUGjd30kkUHN9hPVA'></iframe>
-    <div class="ui two column grid">
+    <div class="ui three column stackable grid">
       <div class="column">
         <h3 class="ui dividing header">Address</h3>
-       <p>2nd Floor Kennedy Krieger Institute<br>801 N. Broadway<br>Baltimore, MD 21205</p>
+         <p>2nd Floor Kennedy Krieger Institute<br>801 N. Broadway<br>Baltimore, MD 21205</p>
       </div>
       <div class="column">
-      <h3 class="ui dividing header">Hours</h3>
-      <p>
-        Monday - Friday<br> 7:00am - 4:00pm
-      </p>
-       <h3 class="ui dividing header">Phone</h3>
-       <p>(443) - 923 - 9480</p>
+        <h3 class="ui dividing header">Hours</h3>
+        <p> Monday - Friday<br> 7:00am - 4:00pm</p>
+      </div>
+      <div class="column">
+        <h3 class="ui dividing header">Phone</h3>
+         <p>(443) - 923 - 9480</p>
+      </div>
+    </div>
+    <h3 class="ui dividing header">Today's Breakfast Specials</h3>
+    <% _.each(specials[6].items, function (item) {%>
+      <div class="menu-item" style="padding: 10px">
+            <b class="item-name item_name" style="font-size: 1.0em"><%= item.name %></b><span class="spacer" style="display:none;"><br></span>
+            <span class="item-price"><span class="item_price"><%= item.price %></span></span></span>
+             <% if ('description' in item) { %><div class="item-desc"> <%= item.description %></div><% } %>
+      </div>
+    <% }) %>
+    <h3 class="ui dividing header">Today's Lunch Specials</h3>
+    <% _.each(specials[7].items, function (item) {%>
+      <div class="menu-item" style="padding: 10px">
+            <b class="item-name item_name" style="font-size: 1.0em"><%= item.name %></b><span class="spacer" style="display:none;"><br></span>
+            <span class="item-price"><span class="item_price"><%= item.price %></span></span></span>
+      </div>
+    <% }) %>
+  </div>
+  <div class="column">
+    <div class="ui grid">
+    <div class="sixteen wide column">
+        <iframe width='100%' height='250px' frameBorder='0' src='https://a.tiles.mapbox.com/v4/fcangial.j7e35hep/zoompan.html?access_token=pk.eyJ1IjoiZmNhbmdpYWwiLCJhIjoiSEE2NW84ayJ9.I_SmNeUGjd30kkUHN9hPVA'></iframe>
+      </div>
+      <div class="sixteen wide column">
+        <img src="/images/IMG_2103.JPG" style="width: 100%; border-radius: 10px">
+      </div>
+      <div class="eight wide column">
+        <img src="/images/IMG_2100.JPG" style="border-radius: 10px; width: 100%">
+      </div>
+      <div class="eight wide column">
+        <img src="/images/IMG_2097.JPG" style="border-radius: 10px; width: 100%">
+      </div>
+      <div class="eight wide column">
+        <img src="/images/IMG_2105.JPG" style="border-radius: 10px; width: 100%">
+      </div>
+      <div class="eight wide column">
+        <img src="/images/IMG_2088.JPG" style="border-radius: 10px; width: 100%">
       </div>
     </div>
   </div>
-  <div class="column">
-    <img src="http://kaitsvintagecafe.com/images/gallery/vintage%20cafe%201.jpg" width="512" height="384" style="border-radius: 10px">
-  </div>
 </div>
+<!-- CAFE END -->
+
+<!-- CAFE START -->
 <div style="height:30px"></div>
 <div class="ui page grid">
   <div class="column">
@@ -205,4 +295,7 @@
     <img src="/images/baltimore.png" height="300" style="border-radius: 10px">
   </div>
 </div>
+<!-- CAFE END -->
+
+
 <div style="height: 150px"></div>
