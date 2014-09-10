@@ -127,7 +127,6 @@ module.exports = {
   },
 
   charles : function(req, res, next) {
-     // Get an array of all  in the Menu collection(e.g. table)
       Specials.find({'cafe' : 0}).sort('i asc').exec(function foundSpecials (err, menu) {
         if (err) return next(err);
         res.view('specials/list',
@@ -141,15 +140,42 @@ module.exports = {
   },
 
   fayette : function(req, res, next) {
-    res.view('specials/list', {layout: 'admin/layout', cafe_name : 'David and Dad\'s Express'});
+    Specials.find({'cafe' : 1}).sort('i asc').exec(function foundSpecials (err, menu) {
+        if (err) return next(err);
+        res.view('specials/list',
+        {
+          layout: 'admin/layout',
+          cafe_name: 'David and Dad\'s Express',
+          cafe : 'fayette',
+          specials : menu
+        });
+      });
   },
 
   pratt : function(req, res, next) {
-    res.view('specials/list', {layout: 'admin/layout', cafe_name : 'Cafe Express'});
+    Specials.find({'cafe' : 2}).sort('i asc').exec(function foundSpecials (err, menu) {
+        if (err) return next(err);
+        res.view('specials/list',
+        {
+          layout: 'admin/layout',
+          cafe_name: 'Cafe Express',
+          cafe : 'pratt',
+          specials : menu
+        });
+      });
   },
 
   broadway : function(req, res, next) {
-    res.view('specials/list', {layout: 'admin/layout', cafe_name : 'Garden View Cafe'});
+    Specials.find({'cafe' : 3}).sort('i asc').exec(function foundSpecials (err, menu) {
+        if (err) return next(err);
+        res.view('specials/list',
+        {
+          layout: 'admin/layout',
+          cafe_name: 'Garden View Cafe',
+          cafe : 'charles',
+          specials : menu
+        });
+      });
   },
 
   displayCharlesSpecials : function(req, res, next) {
@@ -199,10 +225,7 @@ module.exports = {
   todaysSpecials : function(req, res, next) {
     date = new Date();
     today = daysOfTheWeek[date.getDay()];
-    console.log(today);
-    //Specials.find().where({ or: [{'day': today},{'name' : 'Breakfast Specials'}]}).sort('cafe asc').exec
     Specials.find().where({ or: [{'subhead': today},{'name' : 'Breakfast Specials'}]}).sort('cafe asc').sort('i asc').exec(function foundSpecials (err, menu) {
-      console.log(menu);
       res.view('express/index', {
         specials : menu
       });
