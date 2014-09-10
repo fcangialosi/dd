@@ -104,7 +104,6 @@ module.exports = {
   },
 
   add : function(req, res, next){
-    console.log(req.param('id'));
     Specials.findOne(req.param('id'), function foundMenu (err, menu) {
       if (err) return next(err);
       if (!menu) return next('Menu doesn\'t exist.');
@@ -120,6 +119,29 @@ module.exports = {
         }
         req.session.flash = {
           success: "Added new blank item to " + menu.name + " successfully."
+        }
+        res.redirect('/admin/specials/' + cafe);
+      });
+    });
+  },
+
+  changeDay : function(req, res, next) {
+    Specials.findOne(req.param('id'), function foundMenu (err, menu) {
+      if (err) return next(err);
+      if (!menu) return next('Menu doesn\'t exist.');
+
+      var cafe = req.param('cafe');
+      var day = req.param('day');
+      menu['day'] = day
+      Specials.update(req.param('id'), menu, function itemUpdated(err) {
+        if (err) {
+          req.session.flash = {
+            err: err
+          }
+          return res.redirect('/admin/specials/' + cafe);
+        }
+        req.session.flash = {
+          success: "Updated date for " + menu.name + " successfully."
         }
         res.redirect('/admin/specials/' + cafe);
       });
