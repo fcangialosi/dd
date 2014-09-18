@@ -20,7 +20,7 @@ module.exports = {
     displayMainMenu: function (req, res, next) {
 
       // Get an array of all  in the Menu collection(e.g. table)
-      Menu.find({"menu":"main"}, function foundMenus (err, menu) {
+      Menu.find({"menu":"main"}).sort('index asc').exec(function (err, menu) {
         if (err) return next(err);
         res.view('menu',
         {
@@ -58,7 +58,7 @@ module.exports = {
 	displayExpressMenu: function (req, res, next) {
 
       // Get an array of all  in the Menu collection(e.g. table)
-      Menu.find({"menu":"express"}, function foundMenus (err, menu) {
+      Menu.find({"menu":"express"}).sort('index asc').exec(function (err, menu) {
         if (err) return next(err);
         res.view('menu',
         {
@@ -82,7 +82,7 @@ module.exports = {
 
     displayOrderingMenu: function (req, res, next) {
       // Get an array of all  in the Menu collection(e.g. table)
-      Menu.find({"menu":"catering"}, function foundMenus (err, menu) {
+      Menu.find({"menu":"catering"}).sort('index asc').exec(function (err, menu) {
         if (err) return next(err);
         res.view('catering/order/menu',
         {
