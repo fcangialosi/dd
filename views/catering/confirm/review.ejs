@@ -76,7 +76,7 @@
             <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">We will pick up the check at time of delivery. Please make check out to "David and Dad's Cafe" </p>
           <% } else if(session.paymentMethod == 'Credit') { %>
             <b>Method</b>:&nbsp; Pay Now (Credit Card) <br>
-            <b>Card Number</b>:&nbsp;  XXXXXXXXXXXX<%= session.card.cardNumber.substring(session.card.cardNumber.length-4) %><br>
+            <b>Card Number</b>:&nbsp;  XXXXXXXXXXXX<%= session.card.lastFour %><br>
             <b>Card Holder</b>:&nbsp; <%= session.card.cardName %>
             <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">Remember, clicking "submit" below will <b>not </b> charge your credit card. We will only charge your card once we have peresonally confirmed the order with you.</p>
           <% } %>

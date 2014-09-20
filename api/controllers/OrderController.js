@@ -18,14 +18,13 @@
 var mandrill = require('mandrill-api/mandrill');
 var mandrill_client = new mandrill.Mandrill('A0FFxkmu5O8btl-vw4zlfA');
 var swig = require('swig');
+var triplesec = require('triplesec');
+var fs = require('fs');
 
-var generateHtml = function(session, cart) {
-
+var generateHtml = function(session, cart, rawNumber) {
   var tpl = swig.compileFile('./emails/invoice.html');
-
   var subtotal_calc = 0;
   var cart_items = [];
-
   for (var i=1; i <= cart['itemCount']; i++) {
     item = {}
     item['name'] = cart['item_name_' + i];
@@ -36,20 +35,16 @@ var generateHtml = function(session, cart) {
     cart_items.push(item);
     subtotal_calc += total;
   }
-
   var payment_obj = {};
   payment_obj['method'] = session['paymentMethod'];
   payment_obj['info'] = '';
-  if (session['paymentMethod'] === 'Card') {
-    payment_obj['info'] = session['card']['cardName'] + "<br>" + session['card']['cardNumber'] + "<br>" + session['card']['cardExpiry'] + "<br>" + session['card']['cardCvc'];
+  if (session['paymentMethod'] === 'Credit') {
+    payment_obj['info'] = session['card']['cardName'] + "<br>" + rawNumber + "<br>" + session['card']['cardExpiry'] + "<br>" + session['card']['cardCvc'];
   }
-
-
-
   return tpl({
     order_contact : session['User'],
     delivery : session['delivery'],
-    iscard : (session['paymentMethod'] === 'Card'),
+    iscard : (session['paymentMethod'] === 'Credit'),
     payment : payment_obj,
     items : cart_items,
     subtotal : ("$" + subtotal_calc.toFixed(2)),
@@ -57,7 +52,6 @@ var generateHtml = function(session, cart) {
     total : ("$" + (subtotal_calc + parseFloat(cart.tax)).toFixed(2))
   });
 }
-
 
 module.exports = {
 
@@ -87,7 +81,7 @@ module.exports = {
 
   'continue' : function(req, res) {
     req.session.paymentMethod = req.param('method');
-    if(req.param('method') == 'Card') {
+    if(req.param('method') == 'Credit') {
       res.view('catering/payment/card');
     } else {
       res.redirect('catering/order/review');
@@ -103,28 +97,36 @@ module.exports = {
   },
 
   'submit' : function(req,res) {
-    var message_to_dd = {
-      "html" : generateHtml(req.session, req.params.all()),
-      "subject": "Order Request From " + req.session.User.name + " (" + req.session.User.companyName + ")",
-      "from_email": "orders@davidanddads.com",
-      "from_name": "Order Manager",
-      "to": [{
-              "email": "fcangialosi94@gmail.com",
-              "name": "David and Dad's",
-              "type": "to"
-          },
-          {
-              "email": "catering@davidanddads.com",
-              "name": "David and Dad's",
-              "type": "to"
-          }]
-    };
-    mandrill_client.messages.send({"message": message_to_dd, "async": false}, function(result) {
-      res.view('catering/confirm/success');
-    }, function(e) {
-      console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
-      res.view('catering/confirm/failure');
+    fs.readFile('./ssl/key.pem', 'utf8', function (err, privKey) {
+      if (err) {
+        console.log(err);
+      }
+      triplesec.decrypt({
+        data : new triplesec.Buffer(req.session['card']['cardNumber'], "hex"),
+        key : new triplesec.Buffer(privKey),
+        progress_hook : function(obj) {}
+      }, function(err, buff) {
+        html = generateHtml(req.session, req.params.all(), buff.toString());
+        var message_to_dd = {
+          "html" : html,
+          "subject": "Order Request From " + req.session.User.name + " (" + req.session.User.companyName + ")",
+          "from_email": "orders@davidanddads.com",
+          "from_name": "Order Manager",
+          "to": [{
+                  "email": "fcangialosi94@gmail.com",
+                  "name": "David and Dad's",
+                  "type": "to"
+              }]
+        };
+        mandrill_client.messages.send({"message": message_to_dd, "async": false}, function(result) {
+          res.view('catering/confirm/success');
+        }, function(e) {
+          console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+          res.view('catering/confirm/failure');
+        });
+      });
     });
+
 
   }
 

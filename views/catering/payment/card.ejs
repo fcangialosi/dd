@@ -93,6 +93,16 @@
 <div style="border-top: 7px solid #822421;">
 <div class="container" style="margin-top:15px">
   <!--Card Section-->
+  <% if (flash && flash.err) { %>
+    <div class="ui red message">
+      <%= flash.err %>
+    </div>
+  <% } %>
+  <% if (flash && flash.success) { %>
+    <div class="ui green message">
+      <%= flash.success %>
+    </div>
+  <% } %>
   <div class="stackable ui middle aligned grid">
     <div class="six wide column">
       <table  class="spaced-table">
@@ -126,7 +136,7 @@
           <% _.each(session.User.savedPayment, function(card){ %>
             <div class="item">
               <div class="left floated content">
-                <div class="header">Card ending in <%= card.number.substring(card.number.length-4) %>
+                <div class="header">Card ending in <%= card.lastFour %>
                 </div>
                 <div class="description"><%= card.name %>
                 </div>

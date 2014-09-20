@@ -15,6 +15,9 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var triplesec = require('triplesec');
+var fs = require('fs');
+
 module.exports = {
 
     'new' : function(req, res){
@@ -148,18 +151,48 @@ module.exports = {
 
   addPayment : function(req, res, next) {
 
-    req.session.User.savedPayment.push({
-      number : req.body.number,
-      name : req.body.name,
-      expiry : req.body.expiry,
-      cvc : req.body.cvc
-    });
+    fs.readFile('./ssl/key.pem', 'utf8', function (err, privKey) {
+      if (!err) {
+        triplesec.encrypt({
+          data  : new triplesec.Buffer(req.body.number),
+          key : new triplesec.Buffer(privKey),
+          progress_hook : function (obj) {}
+        }, function(err, buff){
+          if (! err) {
+            var ciphertext = buff.toString('hex');
+            newCard = {
+              lastFour : req.body.number.substring(req.body.number.length - 4),
+              number : ciphertext,
+              name : req.body.name,
+              expiry : req.body.expiry,
+              cvc : req.body.cvc
+            }
+            req.session.User.savedPayment.push(newCard);
+            req.session.card = newCard;
 
-    User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
-      if (err) {
-        return res.redirect('/catering/order/payment/new');
+            User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
+              if (! err) {
+                res.redirect('/catering/order/payment/continue?method=Credit');
+              } else {
+                req.session.flash = {
+                  failure : "Sorry, we had some trouble saving your card, please try again."
+                }
+                res.redirect('/catering/order/payment/continue?method=Credit');
+              }
+            });
+          } else {
+            req.session.flash = {
+              failure : "Sorry, we had some trouble saving your card, please try again."
+            }
+            res.redirect('/catering/order/payment/continue?method=Credit');
+          }
+        });
+      } else {
+        req.session.flash = {
+          failure : "Sorry, we had some trouble saving your card, please try again."
+        }
+        res.redirect('/catering/order/payment/continue?method=Credit');
       }
-      res.redirect('/catering/order/payment/continue?method=card');
     });
   },
 
@@ -168,9 +201,15 @@ module.exports = {
 
     User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
       if (err) {
-        return res.redirect('/catering/order/payment');
+        req.session.flash = {
+          failure : "Error deleting card, please try again."
+        }
+        return res.redirect('/catering/order/payment/continue?method=Credit');
       }
-      res.redirect('/catering/order/payment/continue?method=card');
+      req.session.flash = {
+        success : "Card removed successfully."
+      }
+      res.redirect('/catering/order/payment/continue?method=Credit');
     });
   }
 

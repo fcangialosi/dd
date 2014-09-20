@@ -175,6 +175,7 @@ module.exports = {
 		}
 
 		req.session.card = {
+			lastFour : option.lastFour,
 			cardNumber : option.number,
 			cardName : option.name,
 			cardExpiry : option.expiry,
