@@ -40,13 +40,13 @@ module.exports.routes = {
 
   '/': 'HomeController.index',
 
+  'post /feedback' : 'HomeController.feedback',
+
   '/news' : {
     view :'home/news'
   },
 
-  '/main' : {
-    view : 'main/index'
-  },
+  '/main' : 'HomeController.main',
 
   '/main/menu' : 'MenuController.displayMainMenu',
 

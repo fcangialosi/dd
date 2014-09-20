@@ -95,6 +95,16 @@
   <div class="ui page grid">
     <div class="column">
       <h1 class="ui dividing header" style="color: #822421;"> Share Your Thoughts </h1>
+        <% if (flash && flash.err) { %>
+        <div class="ui red message">
+          <%= flash.err %>
+        </div>
+      <% } %>
+      <% if (flash && flash.success) { %>
+        <div class="ui green message">
+          <%= flash.success %>
+        </div>
+      <% } %>
       <form method="POST" action="/feedback" class="ui small form segment">
         <p style="border-left: 5px solid #822421; padding-left: 10px"> Whether you're a new customer, or a regular, we'd love to hear your thoughts about our website!<br> Any comments, compliments, or criticisms will be greatly appreciated! </p>
         <div class="field">
