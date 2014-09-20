@@ -43,7 +43,19 @@ module.exports.routes = {
   'post /feedback' : 'HomeController.feedback',
 
   '/news' : {
-    view :'home/news'
+    view :'main/news'
+  },
+
+  '/contact' : {
+    view : 'main/contact'
+  },
+
+  '/jobs' : {
+    view : 'main/jobs'
+  },
+
+  '/press' : {
+    view : 'main/press'
   },
 
   '/main' : 'HomeController.main',
