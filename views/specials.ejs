@@ -8,7 +8,7 @@
       <% _.each(section.items, function(item) {%>
         <div class="menu-item">
           <b class="item-name item_name"><%= item.name %></b><span class="spacer" style="display:none;"><br></span>
-          <span class="item-price"><span class="item_price"><%= item.price %></span></span>
+          <span class="item-price"><span style="font-size:1.4em" class="item_price"><%= item.price %></span></span>
           <% if ('description' in item) { %><div class="item-desc"> <%= item.description %></div><% } %>
         </div>
       <% })%>

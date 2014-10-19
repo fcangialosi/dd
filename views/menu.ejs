@@ -11,7 +11,7 @@
       <% _.each(section.items, function(item) {%>
         <div class="menu-item">
           <b class="item-name item_name"><%= item.name %></b><span class="spacer" style="display:none;"><br></span>
-          <span class="item-price"><span class="item_price">$<%= item.price %></span><% if (menu_name === "Catering") { %>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%><span class="item-serves"><% if(item.minimum) { %><br>(<%=  item.minimum%>)<%} else if(item.serves) {%><br>(<%=item.serves%>)<%} else {%><%}%> </span><% } %></span>
+          <span style="margin-left: 40px" class="item-price"><span style="font-size:1.4em" class="item_price"><%= item.price %></span><% if (menu_name === "Catering") { %><br><%= item.priceSuffix ? item.priceSuffix : "each"%><span class="item-serves"><% if(item.minimum) { %><br>(<%=  item.minimum%>)<%} else if(item.serves) {%><br>(<%=item.serves%>)<%} else {%><%}%> </span><% } %></span>
           <% if ('description' in item) { %><div class="item-desc"> <%= item.description %></div><% } %>
         </div>
       <% })%>
