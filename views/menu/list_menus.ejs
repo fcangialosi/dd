@@ -40,7 +40,11 @@
 					<a href="/menu/shift/<%= menu.id %>?index=<%= menus.indexOf(menu)%>&menu=<%= menu.menu %>&direction=down&max=<%= menus.length %>" class="small ui icon green button"><i class="down arrow icon"></i></a>
 					</div>
 					</td>
-					<td><%= menu.index %></td>
+					<td><input value="<%= menu.index %>" name="index" type="text" class="form-control"><form action="/menu/destroy/<%= menu.id %>" method="POST">
+						<input type="hidden" name="_method" value="delete"/>
+						<input type="submit" class="btn btn-sm btn-success" value="Delete"/>
+						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+					</form></td>
 					<td><%= menu.name %></td>
 					<td><% if (menu.breakfast) { %> Breakfast <% } else { %> Lunch <% } %></td>
 					<td><% if (menu.subhead) { %><%= menu.subhead %><% } else { %>None<% } %></td>
