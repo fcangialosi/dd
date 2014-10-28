@@ -53,7 +53,7 @@ var generateHtml = function(session, cart, rawNumber) {
   });
 }
 
-var sendEmail = function(html, name, companyName) {
+var sendEmail = function(html, name, companyName, res) {
   var message_to_dd = {
     "html" : html,
     "subject": "Order Request From " + name + " (" + companyName + ")",
@@ -133,7 +133,7 @@ module.exports = {
       });
     }
     html = generateHtml(req.session, req.params.all(), rawNumber);
-    sendEmail(html, req.session.User.name, req.session.User.companyName);
+    sendEmail(html, req.session.User.name, req.session.User.companyName,res);
   }
 
 };
