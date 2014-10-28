@@ -53,6 +53,26 @@ var generateHtml = function(session, cart, rawNumber) {
   });
 }
 
+var sendEmail = function(html, name, companyName) {
+  var message_to_dd = {
+    "html" : html,
+    "subject": "Order Request From " + name + " (" + companyName + ")",
+    "from_email": "orders@davidanddads.com",
+    "from_name": "Order Manager",
+    "to": [{
+            "email": "fcangialosi94@gmail.com",
+            "name": "David and Dad's",
+            "type": "to"
+        }]
+  };
+  mandrill_client.messages.send({"message": message_to_dd, "async": false}, function(result) {
+    res.view('catering/confirm/success');
+  }, function(e) {
+    console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+    res.view('catering/confirm/failure');
+  });
+}
+
 module.exports = {
 
   'start' : function(req, res) {
@@ -97,37 +117,23 @@ module.exports = {
   },
 
   'submit' : function(req,res) {
-    fs.readFile('./ssl/key.pem', 'utf8', function (err, privKey) {
-      if (err) {
-        console.log(err);
-      }
-      triplesec.decrypt({
-        data : new triplesec.Buffer(req.session['card']['cardNumber'], "hex"),
-        key : new triplesec.Buffer(privKey),
-        progress_hook : function(obj) {}
-      }, function(err, buff) {
-        html = generateHtml(req.session, req.params.all(), buff.toString());
-        var message_to_dd = {
-          "html" : html,
-          "subject": "Order Request From " + req.session.User.name + " (" + req.session.User.companyName + ")",
-          "from_email": "orders@davidanddads.com",
-          "from_name": "Order Manager",
-          "to": [{
-                  "email": "fcangialosi94@gmail.com",
-                  "name": "David and Dad's",
-                  "type": "to"
-              }]
-        };
-        mandrill_client.messages.send({"message": message_to_dd, "async": false}, function(result) {
-          res.view('catering/confirm/success');
-        }, function(e) {
-          console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
-          res.view('catering/confirm/failure');
+    var rawNumber = null;
+    if ('card' in req.session && 'cardNumber' in req.session['card']) {
+      fs.readFile('./ssl/key.pem', 'utf8', function (err, privKey) {
+        if (err) {
+          console.log(err);
+        }
+        triplesec.decrypt({
+          data : new triplesec.Buffer(req.session['card']['cardNumber'], "hex"),
+          key : new triplesec.Buffer(privKey),
+          progress_hook : function(obj) {}
+        }, function(err, buff) {
+          rawNumber = buff.toString();
         });
       });
-    });
-
-
+    }
+    html = generateHtml(req.session, req.params.all(), rawNumber);
+    sendEmail(html, req.session.User.name, req.session.User.companyName);
   }
 
 };
