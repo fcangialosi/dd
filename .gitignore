@@ -51,3 +51,5 @@ ignore/
 assets/images/
 *.txt
 *.py
+ssl/
+nginx/

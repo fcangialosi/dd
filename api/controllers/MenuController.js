@@ -25,7 +25,7 @@ module.exports = {
         res.view('menu',
         {
           menu: menu,
-          menu_name: "Main"
+          menu_name: "David and Dad's Cafe"
         });
       });
     },
@@ -37,7 +37,7 @@ module.exports = {
         res.view('specials',
         {
           menu: menu,
-          menu_name: "Main"
+          menu_name: "David and Dad's Cafe"
         });
       });
     },
@@ -50,7 +50,7 @@ module.exports = {
         res.view('menu',
         {
           menu: menu,
-          menu_name: "Catering"
+          menu_name: "David and Dad's Catering"
         });
       });
     },
@@ -63,7 +63,7 @@ module.exports = {
         res.view('menu',
         {
           menu: menu,
-          menu_name: "Express"
+          menu_name: "David and Dad's Express"
         });
       });
     },
@@ -75,7 +75,7 @@ module.exports = {
         res.view('specials',
         {
           menu: menu,
-          menu_name: "Express"
+          menu_name: "David and Dad's Express"
         });
       });
     },
