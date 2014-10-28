@@ -247,11 +247,22 @@ module.exports = {
   todaysSpecials : function(req, res, next) {
     date = new Date();
     today = daysOfTheWeek[date.getDay()];
-    Specials.find().where({ or: [{'subhead': today},{'name' : 'Breakfast Specials'}]}).sort('cafe asc').sort('i asc').exec(function foundSpecials (err, menu) {
+    if (today === 'Saturday' || today === 'Sunday') {
+      var closed = [];
+      for (var i=0; i < 8; i++) {
+        closed.push({items: [{name : "Sorry, we're closed today!", price: " "}]});
+      }
       res.view('express/index', {
-        specials : menu
+          specials : closed
+        }
       });
-    });
+    } else {
+      Specials.find().where({ or: [{'subhead': today},{'name' : 'Breakfast Specials'}]}).sort('cafe asc').sort('i asc').exec(function foundSpecials (err, menu) {
+        res.view('express/index', {
+          specials : menu
+        });
+      });
+    }
   }
 
 };
