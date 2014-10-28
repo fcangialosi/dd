@@ -255,7 +255,7 @@ module.exports = {
       res.view('express/index', {
           specials : closed
         }
-      });
+      );
     } else {
       Specials.find().where({ or: [{'subhead': today},{'name' : 'Breakfast Specials'}]}).sort('cafe asc').sort('i asc').exec(function foundSpecials (err, menu) {
         res.view('express/index', {
@@ -264,5 +264,4 @@ module.exports = {
       });
     }
   }
-
 };
