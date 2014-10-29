@@ -60,7 +60,7 @@ var sendEmail = function(html, name, companyName, res) {
     "from_email": "orders@davidanddads.com",
     "from_name": "Order Manager",
     "to": [{
-            "email": "fcangialosi94@gmail.com",
+            "email": "davidcan@verizon.net",
             "name": "David and Dad's",
             "type": "to"
         }]
