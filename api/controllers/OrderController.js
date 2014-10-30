@@ -110,12 +110,7 @@ module.exports = {
 
   'saveSpecialRequest' : function(req, res) {
     req.session.User.specialRequest = req.body.request;
-    User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
-       if (err) {
-        return res.redirect('/catering/order/menu');
-      }
-      res.redirect('/catering/order/payment');
-    });
+    return res.redirect('/catering/order/menu');
   },
 
   'newCard' : function(req,res) {
