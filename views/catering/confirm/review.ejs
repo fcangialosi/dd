@@ -78,7 +78,7 @@
             <b>Method</b>:&nbsp; Pay Now (Credit Card) <br>
             <b>Card Number</b>:&nbsp;  XXXXXXXXXXXX<%= session.card.lastFour %><br>
             <b>Card Holder</b>:&nbsp; <%= session.card.cardName %>
-            <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">Remember, clicking "submit" below will <b>not </b> charge your credit card. We will only charge your card once we have peresonally confirmed the order with you.</p>
+            <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">Remember, clicking "submit" below will <b>not </b> charge your credit card. We will only charge your card after your order has been delievered.</p>
           <% } %>
 
         <br>
@@ -90,7 +90,17 @@
   <h3> Summary </h3>
   <p class="warning-border" style="font-size: 0.8em"> If you would like to make any last minute changes to your order, you can use the <i class="minus sign icon"></i> and <i class="add sign icon"></i> buttons to change an items quantity, or the <i class="medium trash icon"></i> button to delete an item. Your grand total will update respectively. Once everything looks good, submit! </p>
   <center><div class="simpleCart_items"></div></center>
+
   <div class="ui divider"></div>
+   <center style="font-size: 1.3em;">
+    <div class="ui checkbox">
+      <input id="tax-exempt" type="checkbox">
+      <label for="tax-exempt">My order is tax-exempt*</label>
+    </div>
+    <p style="font-size: 0.7em"> * You will be asked to submit proof that your order is tax-exempt. If you are unable to provide proof at that time, then the standard 6% tax will be added back to your order total.</p>
+    </center>
+  <div class="ui divider"></div>
+
   <center style="font-size: 1.3em;">
     <table id="summary-table">
       <tr>
@@ -98,15 +108,15 @@
         <td class="right-td"><span class="simpleCart_total"></span></td>
       </tr>
       <tr>
-        <td class="left-td">Tax (6%):</td>
+        <td class="left-td">Tax (<span id="tax-rate">6</span>%):</td>
         <td class="right-td"><div class="simpleCart_tax"></div></td>
       </tr>
       <tr>
-        <td class="left-td">Estimated Delivery Fee*:</td>
+        <td class="left-td">Estimated Delivery Fee**:</td>
         <td class="right-td"><span class="simpleCart_shipping"></span></td>
       </tr>
     </table>
-    <p style="font-size: 0.7em"> * Actual delivery fee will range from $12 to $32 based on distance. </p>
+    <p style="font-size: 0.7em"> ** Actual delivery fee may vary based on distance and time of delivery </p>
     </center>
 
     <div class="ui divider"></div>
