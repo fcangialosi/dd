@@ -60,7 +60,7 @@ var sendEmail = function(html, name, companyName, res) {
     "from_email": "orders@davidanddads.com",
     "from_name": "Order Manager",
     "to": [{
-            "email": "davidcan@verizon.net",
+            "email": "catering@davidanddads.com",
             "name": "David and Dad's",
             "type": "to"
         }]
@@ -106,6 +106,16 @@ module.exports = {
     } else {
       res.redirect('catering/order/review');
     }
+  },
+
+  'saveSpecialRequest' : function(req, res) {
+    req.session.User.specialRequest = req.body.request;
+    User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
+       if (err) {
+        return res.redirect('/catering/order/menu');
+      }
+      res.redirect('/catering/order/payment');
+    });
   },
 
   'newCard' : function(req,res) {

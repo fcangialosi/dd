@@ -92,16 +92,9 @@
   <center><div class="simpleCart_items"></div></center>
 
   <div class="ui divider"></div>
-   <center style="font-size: 1.3em;">
-    <div class="ui checkbox">
-      <input id="tax-exempt" type="checkbox">
-      <label for="tax-exempt">My order is tax-exempt*</label>
-    </div>
-    <p style="font-size: 0.7em"> * You will be asked to submit proof that your order is tax-exempt. If you are unable to provide proof at that time, then the standard 6% tax will be added back to your order total.</p>
-    </center>
-  <div class="ui divider"></div>
 
   <center style="font-size: 1.3em;">
+
     <table id="summary-table">
       <tr>
         <td class="left-td">Sub-Total:</td>
@@ -112,19 +105,31 @@
         <td class="right-td"><div class="simpleCart_tax"></div></td>
       </tr>
       <tr>
-        <td class="left-td">Estimated Delivery Fee**:</td>
+        <td class="left-td">Estimated Delivery Fee*:</td>
         <td class="right-td"><span class="simpleCart_shipping"></span></td>
       </tr>
     </table>
-    <p style="font-size: 0.7em"> ** Actual delivery fee may vary based on distance and time of delivery </p>
     </center>
 
     <div class="ui divider"></div>
 
     <center style="font-size: 1.5em"><b>Estimated Total:</b>&nbsp;<span class="simpleCart_grandTotal"></span></center>
+
+    <div class="ui divider"></div>
+
+    <div class="ui checkbox">
+      <input id="tax-exempt" type="checkbox">
+      <label for="tax-exempt">Tax-Exempt?**</label>
+    </div>
+    <br>
+    <b> Special Requests: </b> <%= session.User.specialRequest %>
+    <div class="ui divider"></div>
+
     <center style="margin-top: 10px">
       <a id="submit-button" href="javascript:;" class="large ui green submit button simpleCart_checkout">SUBMIT MY ORDER</a>
     </center>
+    <br>
+    <p style="font-size: 0.9em"> * Actual delivery fee may vary based on distance and time of delivery. <br> ** You will be asked to submit proof that your order is tax-exempt. If you are unable to provide proof at that time, then the standard 6% tax will be added back to your order total. </p>
   </div>
   </div>
 </div>

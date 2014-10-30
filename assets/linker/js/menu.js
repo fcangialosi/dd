@@ -39,6 +39,17 @@ ready = function() {
   });
   $('.ui.checkbox').checkbox();
 
+  $('*#checkout-button').each(function() {
+    $(this).click(function() {
+      var requestText = $('#special-request').val();
+      var csrf = $('#csrf').val();
+      $.post("/catering/order/saveSpecialRequest", { _csrf: csrf, request : requestText });
+      window.location.href= "/catering/order/payment";
+    });
+  });
+
+
+
   // delivery page
   $(function () {
     $('#delivery-datepicker').datetimepicker({

@@ -106,6 +106,8 @@ module.exports.routes = {
 
   'post /catering/order/submit' : 'OrderController.submit',
 
+  'post /catering/order/saveSpecialRequest' : 'OrderController.saveSpecialRequest',
+
   '/admin/menu' : 'MenuController.index',
 
   '/admin/main' : 'MenuController.adminMain',
