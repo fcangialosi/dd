@@ -234,7 +234,7 @@ module.exports = {
         if (!menu) return next('Menu doesn\'t exist.');
 
         if (req.param('index') !== undefined) {
-          var index = Number(index);
+          var index = Number(req.param('index'));
           var edited_item = JSON.parse(JSON.stringify(req.params.all()));
           delete edited_item._csrf;
           delete edited_item.id;
