@@ -240,7 +240,7 @@ module.exports = {
         if (err) return next(err);
         if (!menu) return next('Menu doesn\'t exist.');
 
-        if (req.param('index') !== undefined) {
+        if (req.param('index') !== "details") {
           var index = Number(req.param('index'));
           var edited_item = JSON.parse(JSON.stringify(req.params.all()));
           delete edited_item._csrf;
