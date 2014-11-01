@@ -110,6 +110,8 @@ module.exports.routes = {
 
   '/admin/menu' : 'MenuController.index',
 
+  '/menu/reorder' : 'MenuController.reorderMenu',
+
   '/admin/main' : 'MenuController.adminMain',
 
   '/admin/catering' : 'MenuController.adminCatering',

@@ -14,6 +14,15 @@
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+var duplicates = function(arr) {
+  sorted = arr.slice().sort();
+  for(i=0; i < sorted.length-1; i++) {
+    if (sorted[i] == sorted[i+1]) {
+      return true;
+    }
+  }
+  return false;
+}
 
 module.exports = {
 
@@ -92,7 +101,6 @@ module.exports = {
     },
 
     printOrder: function (req, res, next) {
-      console.log(req.query);
       res.redirect('/');
     },
 
@@ -120,7 +128,6 @@ module.exports = {
 
       Menu.create(new_menu, function menuCreated(err, menu) {
         if (err) {
-          console.log(err);
           req.session.flash = {
             err : JSON.stringify(err, null, 4)
           }
@@ -276,6 +283,36 @@ module.exports = {
       });
     },
 
+    reorderMenu : function(req, res, next) {
+      Menu.findOne(req.body.id, function foundMenu(err, menu) {
+        if(err) return next(err);
+        if(!menu) return next("Menu doesn't exist.");
+
+        new_order = req.body.order;
+        if (duplicates(new_order)) {
+          req.session.flash = { err : 'You gave two items the same index! Make sure each one is unique.'}
+          return res.redirect('/menu/edit/' + req.body.id);
+        }
+        var new_items = [];
+        new_order.forEach(function(new_index, old_index, arr) {
+          new_items[new_index] = menu['items'][old_index];
+        });
+        menu['items'] = new_items;
+        Menu.update(req.param('id'), menu, function itemUpdated(err) {
+          if (err) {
+            req.session.flash = {
+              err: err
+            }
+            return res.redirect('/menu/edit/' + req.body.id);
+          }
+          req.session.flash = {
+            success: "Menu reordered succesfully!"
+          }
+          res.redirect('/menu/edit/' + req.body.id);
+        });
+      });
+    },
+
     shift : function(req, res, next) {
       Menu.findOne(req.param('id'), function foundMenu(err, menu) {
           if(err) return next(err);
@@ -297,10 +334,8 @@ module.exports = {
 
           new_index = curr;
           if (direction === 'up') {
-            console.log("up");
             new_index -= 1
           } else if (direction === 'down') {
-            console.log("down");
             new_index += 1
           }
 
@@ -309,13 +344,11 @@ module.exports = {
               req.session.flash = { err : 'Database error!'}
               return res.redirect('/admin/' + menu);
             }
-            console.log(updated);
             Menu.update({id : req.param('id')}, {index : new_index}).exec(function(err, updated) {
               if (err) {
                 req.session.flash = { err : 'Database error!'}
                 return res.redirect('/admin/' + menu);
               }
-              console.log(updated);
               req.session.flash = { success : 'Menu moved successfully!'}
               res.redirect('/admin/' + menu);
             });

@@ -1,39 +1,17 @@
 ready = function() {
-
-  // selector cache
-  var
-    $menuItem = $('.menu a.item, .menu .link.item'),
-    $dropdown = $('.main.container .menu .dropdown'),
-    // alias
-    handler = {
-
-      activate: function() {
-        if(!$(this).hasClass('dropdown')) {
-          $(this)
-            .addClass('active')
-            .closest('.ui.menu')
-            .find('.item')
-              .not($(this))
-              .removeClass('active')
-          ;
-        }
-      }
-
-    }
-  ;
-
-  $dropdown
-    .dropdown({
-      on: 'hover'
-    })
-  ;
-
-  $menuItem
-    .on('click', handler.activate)
-  ;
-
+  $('#reorder-button').click(function() {
+    var new_order = {}
+    $('*#item-index').each(function(index, item) {
+      new_order[item.name] = item.value;
+    });
+    console.log(new_order);
+    var csrf = $('input[name="_csrf"]')[0].value;
+    var menu_id = document.URL.split("/")[document.URL.split("/").length-1];
+    $.post("/menu/reorder/", {_csrf : csrf, id: menu_id, order : new_order}).done(function(data) {
+      window.location.reload();
+    });
+  });
 };
-
 
 // attach ready event
 $(document).ready(ready);
