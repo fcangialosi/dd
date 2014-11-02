@@ -194,7 +194,7 @@ module.exports = {
         {
           layout: 'admin/layout',
           cafe_name: 'Garden View Cafe',
-          cafe : 'charles',
+          cafe : 'broadway',
           specials : menu
         });
       });
