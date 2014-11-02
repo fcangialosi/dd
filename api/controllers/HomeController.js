@@ -15,14 +15,8 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
- var nodemailer = require('nodemailer');
- var transporter = nodemailer.createTransport({
-    service : 'Gmail',
-    auth: {
-        user: 'fcangialosi94@gmail.com',
-        pass :'ENTER PASSWORD HERE'
-    }
- });
+var mandrill = require('mandrill-api/mandrill');
+var mandrill_client = new mandrill.Mandrill('A0FFxkmu5O8btl-vw4zlfA');
 
 module.exports = {
 
@@ -35,24 +29,39 @@ module.exports = {
   },
 
   feedback: function(req, res, next) {
-    var mailOptions = {
-        from : 'Feedback <feedback@davidanddads.com>',
-        to: 'david@davidanddads.com, fcangialosi94@gmail.com',
-        subject : 'Someone left a comment on the website!',
-        text : req.params.all()['description']
+
+    var feedback = {
+      "subject" : "Someone left a comment on the website!",
+      "from_email" : "feedback@davidanddads.com",
+      "from_name" : "Feedback",
+      "to" : [{
+            "email": "david@davidanddads.com",
+            "name": "David Cangialosi",
+            "type": "to"
+        },
+        {
+            "email": "davidcan@verizon.net",
+            "name": "David Cangialosi",
+            "type": "to"
+        },
+        {
+            "email": "fcangialosi94@gmail.com",
+            "name": "David Cangialosi",
+            "type": "to"
+        }],
+        "text" : req.params.all()['description']
     }
-    transporter.sendMail(mailOptions, function(err, info) {
-        if (err){
-            req.session.flash = {
-                failure : 'An error occured while trying to submit your feedback, please try again!'
-            }
-        }
-        req.session.flash = {
+    mandrill_client.messages.send({"message" : feedback, "async" : false}, function(result) {
+      req.session.flash = {
             success : 'Your feedback has been successfully submitted. Thanks for taking the time to write to us!'
         }
         res.redirect('main#feedback');
+    }, function (e) {
+      req.session.flash = {
+        failure : 'An error occured while trying to submit your feedback, please try again!'
+      };
+      res.redirect('main#feedback');
     });
-
   }
 
 
