@@ -80,10 +80,6 @@ module.exports.routes = {
 
   '/express/broadway/specials' : 'SpecialsController.displayBroadwaySpecials',
 
-  '/about' : {
-    view :'home/about'
-  },
-
   '/catering/order/start' : 'OrderController.start',
 
   '/catering/order/delivery' : 'OrderController.selectDelivery',
