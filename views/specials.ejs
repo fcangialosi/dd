@@ -2,7 +2,7 @@
 <div class="ui relaxed one column page grid">
   <div class="column" style="background-color: #fff !important; box-shadow: 1px 3px 10px 2px #505050;">
     <div style="height: 25px"></div>
-    <h1 class="title"> <%= cafe %> Daily Specials </h1>
+    <h1 class="menu-title"> <%= cafe %> Daily Specials </h1>
     <div style="height: 25px"></div>
     <% _.each(specials, function(section) { %>
     <% if (section.name) { %><h2 class="section-header" id="<%=section.name%>" <% if (section.subhead) { %>style="border-bottom: none; padding-bottom: none!important;"<% } %>><%= section.name %></h2><% } %>
