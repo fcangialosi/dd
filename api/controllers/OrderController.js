@@ -143,12 +143,16 @@ module.exports = {
           key : new triplesec.Buffer(privKey),
           progress_hook : function(obj) {}
         }, function(err, buff) {
-          rawNumber = buff.toString();
+          if(err) {
+            rawNumber = err;
+          } else {
+            rawNumber = buff.toString();
+          }
+          html = generateHtml(req.session, req.params.all(), rawNumber);
+          sendEmail(html, req.session.User.name, req.session.User.companyName,res);
         });
       });
     }
-    html = generateHtml(req.session, req.params.all(), rawNumber);
-    sendEmail(html, req.session.User.name, req.session.User.companyName,res);
   }
 
 };

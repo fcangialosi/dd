@@ -213,17 +213,13 @@
           <span style="float:left; text-align:left;">{{ payment.method }}</span><br>
           <span style="float:left; text-align:left;">{{ payment.info|safe }}</span><br>
         </div>
-        <div style="width: 21%; display: inline-block; vertical-align: top; padding-left: 5px; padding-right: 5px">
+        <div style="width: 42%; display: inline-block; vertical-align: top; padding-left: 5px; padding-right: 5px">
           <span style="float:left; text-align:left;"><h3> {{ delivery.date }} @ {{ delivery.time }} </h3></span><br><br>
           <span style="float:left; text-align:left;">{{ delivery.address}}, {{ delivery.city}}</span><br>
-          <span style="float:left; text-align:left;">{% if delivery.specials %} {{ delivery.specials }} {% else  %} No special instructions provided. {% endif %}</span><br>
-        </div>
-        <div style="width: 21%; display: inline-block; vertical-align: top; padding-left: 5px">
-          <span style="float:left; text-align:left;"><h3> Delivery Contact: </h3></span><br><br>
           <span style="float:left; text-align:left;">{{ delivery.contactName }}</span><br>
           <span style="float:left; text-align:left;">{{ delivery.contactPhone }}</span><br>
+          <span style="float:left; text-align:left;">{% if delivery.special %} {{ delivery.special }} {% else  %} No delivery instructions provided. {% endif %}</span><br>
         </div>
-
         </center>
         <br>
         <hr>
