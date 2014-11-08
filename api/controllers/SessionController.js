@@ -54,6 +54,15 @@ module.exports = {
 				res.redirect('/catering/order/start');
 				return;
 			}
+			if(user.admin) {
+				var isAdminError = [{name : 'Password Required', message : "Admin accounts require a password. Please sign in on the admin page."}]
+				req.session.flash = {
+					type : 'signin',
+					err : isAdminError
+				}
+				res.redirect('/catering/order/start');
+				return;
+			}
 			// Log user in
 			req.session.authenticated = true;
 			req.session.User = user;
