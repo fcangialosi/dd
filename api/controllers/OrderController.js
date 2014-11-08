@@ -152,6 +152,9 @@ module.exports = {
           sendEmail(html, req.session.User.name, req.session.User.companyName,res);
         });
       });
+    } else {
+      html = generateHtml(req.session, req.params.all(), rawNumber);
+      sendEmail(html, req.session.User.name, req.session.User.companyName,res);
     }
   }
 

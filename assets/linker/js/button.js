@@ -43,7 +43,7 @@ $(document).ready(function() {
   });
 
   simpleCart.bind( 'checkoutSuccess' , function( data ){
-    simpleCart.empty();
+    $('.ui.fluid.form.segment').attr('class','ui fluid loading form segment');
   });
 
   $('#tax-exempt-button').on('click', function(){

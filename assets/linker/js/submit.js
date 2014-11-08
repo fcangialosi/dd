@@ -13,6 +13,10 @@ ready = function() {
     }
   });
 
+  if (window.location.pathname == "/catering/order/submit" && $('#success-signal').length) {
+    simpleCart.empty();
+  }
+
 };
 
 $(document).ready(ready);
