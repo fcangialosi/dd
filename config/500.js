@@ -53,6 +53,8 @@ module.exports[500] = function serverErrorOccurred(errors, req, res) {
   // In production, don't display any identifying information about the error(s)
   if (sails.config.environment === 'development') {
     result.errors = errorsToDisplay;
+  } else {
+    return res.redirect("/home");
   }
 
   // If the user-agent wants JSON, respond with JSON

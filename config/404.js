@@ -31,8 +31,10 @@ module.exports[404] = function pageNotFound(req, res) {
     // If the view doesn't exist, or an error occured, send json
     if (err) { return res.json(result, result.status); }
 
+    res.redirect('/home');
+    
     // Otherwise, serve the `views/404.*` page
-    res.render(viewFilePath);
+    //res.render(viewFilePath);
   });
 
 };
