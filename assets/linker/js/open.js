@@ -25,13 +25,17 @@ if (day == 0) { // Sunday
     set_closed(fayette);
     set_closed(broadway);
 } else {
-    if ((hour < 6 && minute < 30) || (hour > 16)) {
+    if ((hour < 6) || (hour > 16)) {
+        set_closed(main);
+    } else if ((hour == 6) && (minute < 30)) {
         set_closed(main);
     }
     if ((hour < 7) || (hour > 15)) {
         set_closed(pratt);
     }
-    if ((hour < 6 && minute < 30) || (hour > 16)) {
+    if ((hour < 6) || (hour > 15)) {
+        set_closed(fayette);
+    } else if ((hour == 6) && (minute < 30)) {
         set_closed(fayette);
     }
     if ((hour < 7) || (hour > 16)) {
