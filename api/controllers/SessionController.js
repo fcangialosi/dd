@@ -165,7 +165,8 @@ module.exports = {
 			contactPhone : option.contactPhone,
 			address : option.address,
 			city : option.city,
-			special : option.special
+			special : option.special,
+			index : parseInt(req.body.deliveryIndex)
 		}
 
 		res.redirect('/catering/order/menu');
@@ -188,7 +189,8 @@ module.exports = {
 			cardNumber : option.number,
 			cardName : option.name,
 			cardExpiry : option.expiry,
-			cardCvc : option.cvc
+			cardCvc : option.cvc,
+			index : parseInt(req.body.paymentIndex)
 		}
 
 		res.redirect('/catering/order/review');

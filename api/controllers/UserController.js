@@ -120,14 +120,20 @@ module.exports = {
   },
 
   addDelivery : function(req, res, next) {
-
-    req.session.User.savedDelivery.push({
+    new_delivery = {
         contactName : req.body.name,
         contactPhone : req.body.phone,
         address : req.body.address,
         city : req.body.city,
         special : req.body.instructions
-    });
+    };
+    if (!req.body.name || req.body.name.trim() == "") {
+      new_delivery.contactName = req.session.User.name;
+    }
+    if (!req.body.phone || req.body.phone.trim() == " ") {
+      new_delivery.contactPhone = req.session.User.phone;
+    }
+    req.session.User.savedDelivery.push(new_delivery);
 
     User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
       if (err) {

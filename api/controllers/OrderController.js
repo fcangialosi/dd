@@ -97,7 +97,6 @@ module.exports = {
   // list a user's saved delivery options
   // and prompt for date/time for current order
   'selectDelivery' : function(req,res) {
-    // TODO what if User.savedDelivery doesnt exist?
     res.view('catering/delivery/select');
   },
 
@@ -120,6 +119,7 @@ module.exports = {
 
   'saveSpecialRequest' : function(req, res) {
     req.session.User.specialRequest = req.body.request;
+    req.session.foodComplete = true;
     return res.redirect('/catering/order/menu');
   },
 

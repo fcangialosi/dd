@@ -4,23 +4,27 @@
   <div class="container">
    <div class="removable ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
     <div class="ui disabled step">
+      <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i>
       Start My Order
     </div>
     <div class="ui disabled step">
-      <a style="text-decoration: none; color: #ccc" href="/catering/order/delivery">When &amp; Where</a>
+      <% if(session.delivery) { %> <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i> <% } %>
+      <a style="text-decoration: none; color: #ccc" href="/catering/order/delivery">Delivery</a>
     </div>
     <div class="ui disabled step">
+      <% if(session.foodComplete) { %> <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i> <% } %>
       <a style="text-decoration: none; color: #ccc" href="/catering/order/menu">Food</a>
     </div>
     <div class="ui disabled step">
+      <% if(session.paymentMethod && ((session.paymentMethod == 'Credit' && session.card) || (session.paymentMethod != 'Credit'))) { %> <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i> <% } %>
       <a style="text-decoration: none; color: #ccc" href="/catering/order/payment">Payment</a>
     </div>
     <div class="ui active step">
-      <a style="text-decoration: none; color: #ccc" href="/catering/order/review">Review &amp; Confirm</a>
+       <a style="text-decoration: none; color: #ccc" href="/catering/order/review">Review</a>
     </div>
   </div>
   <div style="height: 10px;"></div>
-</div>
+  </div>
 </div>
 <!-- Step End -->
 
@@ -28,7 +32,7 @@
 <div class="container" style="margin-top:30px">
 <div style="height: 30px"></div>
 
-<center> Please review your order information below, then click "submit my order". <br> If you notice anything you would like to change, please click on the respective section above, save your changes on that page, <br>and then click on "Review &amp; Confirm" again.<br><b>We will confirm all orders via E-Mail or telephone. Please do not consider your order final until we have confirmed it!</b></center>
+<center> Please review your order information below, then click "submit my order". <br> If you notice anything you would like to change, please click on the respective section above, save your changes on that page, <br>and then click on "Review" again.<br><b>We will confirm all orders via E-Mail or telephone. Please do not consider your order final until we have confirmed it!</b></center>
 
 <div class="ui fluid form segment">
   <div class="ui stackable celled grid">
@@ -47,18 +51,26 @@
       <div class="row">
         <div class="column">
         <h3> Delivery Contact </h3>
+        <% if (session.delivery) { %>
         <b>Name</b>:&nbsp;<%= session.delivery.contactName %><br>
         <b>Phone</b>:&nbsp;<%= session.delivery.contactPhone %>
+        <% } else { %>
+        <p> It looks like you haven't filled out the <a href="/catering/order/delivery">delivery</a> section yet! Please go back and enter that information before submitting your order. </p>
+        <% } %>
         </div>
       </div>
 
       <div class="row">
         <div class="column">
         <h3> Delivery Information </h3>
+        <% if (session.delivery) { %>
         <b>Date</b>:&nbsp;<%= session.delivery.date %><br>
         <b>Time</b>:&nbsp;<%= session.delivery.time %><br>
         <b>Address</b>:&nbsp;<%= session.delivery.address %>,&nbsp;<%= session.delivery.city %><br>
         <b>Instructions</b>:&nbsp;<%= session.delivery.special %>
+        <% } else { %>
+        <p> It looks like you haven't filled out the <a href="/catering/order/delivery">delivery</a> section yet! Please go back and enter that information before submitting your order. </p>
+        <% } %>
         </div>
       </div>
 
@@ -75,11 +87,17 @@
             <b>Method</b>:&nbsp; Pay With Check at Delivery
             <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">We will pick up the check at time of delivery. Please make check out to "David and Dad's Cafe" </p>
           <% } else if(session.paymentMethod == 'Credit') { %>
+            <% if (session.card) { %>
             <b>Method</b>:&nbsp; Pay Now (Credit Card) <br>
             <b>Card Number</b>:&nbsp;  XXXXXXXXXXXX<%= session.card.lastFour %><br>
             <b>Card Holder</b>:&nbsp; <%= session.card.cardName %>
             <p class="warning-border" style="margin-top: 5px; font-size: 0.9em">Remember, clicking "submit" below will <b>not </b> charge your credit card. We will only charge your card after your order has been delivered.</p>
-          <% } %>
+            <% } else {%>
+              <p> It looks like you haven't selected a credit card yet! Please go back and <a href="/catering/order/payment/continue?method=Credit">select one or add a new one</a> before submitting your order. </p>
+            <% } %>
+          <% } else { %>
+        <p> It looks like you haven't filled out the <a href="/catering/order/payment">payment</a> section yet! Please go back and enter that information before submitting your order. </p>
+        <% } %>
 
         <br>
         </div>
@@ -126,7 +144,13 @@
     <div class="ui divider"></div>
 
     <center style="margin-top: 10px">
-      <a id="submit-button" href="javascript:;" class="large ui green submit button simpleCart_checkout">SUBMIT MY ORDER</a>
+      <% if (session.paymentMethod && session.delivery) { %>
+        <a id="submit-button" href="javascript:;" class="large ui green submit button simpleCart_checkout">SUBMIT MY ORDER</a>
+      <% } else { %>
+       <a id="submit-button" class="large ui submit button">SUBMIT MY ORDER</a>
+       <br>
+       <p> You must finish filling out all the necessary information before you can submit your order! </p>
+      <% } %>
     </center>
     <br>
     <p style="font-size: 0.9em"> * Actual delivery fee may vary based on distance and time of delivery. </p>

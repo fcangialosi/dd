@@ -28,7 +28,7 @@ if (day == 0) { // Sunday
     if ((hour < 6) || (hour > 16)) {
         set_closed(main);
     } else if ((hour == 6) && (minute < 30)) {
-        set_closed(main);
+        set_closedo(main);
     }
     if ((hour < 7) || (hour > 15)) {
         set_closed(pratt);

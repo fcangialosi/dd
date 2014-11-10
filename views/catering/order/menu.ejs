@@ -23,29 +23,34 @@
   </div>
 </div>
 
+
 <!-- Step Start -->
 <div id="step-section" style="border-bottom: 7px solid #352504;">
   <div style="height: 55px;"></div>
   <div class="container">
    <div class="removable ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
     <div class="ui disabled step">
+      <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i>
       Start My Order
     </div>
     <div class="ui disabled step">
-      <a style="text-decoration: none; color: #ccc" href="/catering/order/delivery">When &amp; Where</a>
+      <% if(session.delivery) { %> <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i> <% } %>
+      <a style="text-decoration: none; color: #ccc" href="/catering/order/delivery">Delivery</a>
     </div>
     <div class="ui active step">
+      <% if(session.foodComplete) { %> <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i> <% } %>
       <a style="text-decoration: none; color: #ccc" href="/catering/order/menu">Food</a>
     </div>
     <div class="ui disabled step">
-      <a style="text-decoration: none; color: #ccc" id="checkout-button">Payment</a>
+      <% if(session.paymentMethod && ((session.paymentMethod == 'Credit' && session.card) || (session.paymentMethod != 'Credit'))) { %> <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i> <% } %>
+      <a style="text-decoration: none; color: #ccc" href="/catering/order/payment">Payment</a>
     </div>
     <div class="ui disabled step">
-      <a style="text-decoration: none; color: #ccc" href="/catering/order/review">Review &amp; Confirm</a>
+       <a style="text-decoration: none; color: #ccc" href="/catering/order/review">Review</a>
     </div>
   </div>
   <div style="height: 10px;"></div>
-</div>
+  </div>
 </div>
 <!-- Step End -->
 
@@ -88,7 +93,7 @@
   </div>
 </div>
 <div class="twelve wide column">
-  <p class="warning-border" style="margin-top: 5px;"><b>Instructions:</b> For each item you would like to order, type the quantity in the box to the right, then click "Add." If you accidentally enter the wrong quantity, or click "Add" more than once, you can click on "Order Summary," to change it. Please specify any special requests or changes in the box below:</p>
+  <p class="warning-border" style="margin-top: 5px;"><b>Instructions:</b> Navigate the menu quickly and easily using the sidebar on the left (clicking on a section just scrolls for you). For each item you would like to order, type the quantity in the box to the right, then click "Add." If you accidentally enter the wrong quantity, or click "Add" more than once, you can click on "Order Summary," to change it. Please specify any special requests or changes in the box below:</p>
   <form class="ui form segment">
   <div class="field">
           <label>Special Requests</label>
@@ -106,7 +111,7 @@
 
     <div id="quantity-box" class="mini ui icon input">
       <input type="text" placeholder="Quantity" class="item_Quantity">
-      <i class="item_add inverted icon">Add</i>
+      <i class="item_add inverted icon">Set</i>
     </div>
 
     <h5><% if(item.minimum) { %><%=  item.minimum%><%} else if(item.serves) {%><%=item.serves%><%} else {%><%}%> | <span class="item_price"><%= item.price %></span>&nbsp;<%= item.priceSuffix ? item.priceSuffix : "each"%> </h5>

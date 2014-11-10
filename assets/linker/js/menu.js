@@ -11,7 +11,7 @@ simpleCart({
      }
 });
 
-simpleCart.bind( 'beforeAdd' , function( item ){
+simpleCart.bind('beforeAdd' , function( item ){
     item_in_cart = simpleCart.has(item);
     if (item_in_cart) {
         item_in_cart.set('quantity',0);

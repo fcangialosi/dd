@@ -1,36 +1,42 @@
-<div style="height: 50px">
-</div>
-<div id="step-section">
+<!-- Step Start -->
+<div id="step-section" style="border-bottom: 7px solid #352504;">
+  <div style="height: 55px;"></div>
   <div class="container">
    <div class="removable ui five medium steps" style="margin-top: 46px; margin-bottom: 35px;">
-      <div class="ui disabled step">
-        Start My Order
-      </div>
-      <div class="ui disabled step">
-        When &amp; Where
-      </div>
-      <div class="ui disabled step">
-        Food
-      </div>
-      <div class="ui disabled step">
-        Payment
-      </div>
-      <div class="ui active step">
-        Review &amp; Confirm
-      </div>
+    <div class="ui disabled step">
+      <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i>
+      Start My Order
+    </div>
+    <div class="ui disabled step">
+      <% if(session.delivery) { %> <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i> <% } %>
+      <a style="text-decoration: none; color: #ccc" href="/catering/order/delivery">Delivery</a>
+    </div>
+    <div class="ui disabled step">
+      <% if(session.foodComplete) { %> <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i> <% } %>
+      <a style="text-decoration: none; color: #ccc" href="/catering/order/menu">Food</a>
+    </div>
+    <div class="ui disabled step">
+      <% if(session.paymentMethod && ((session.paymentMethod == 'Credit' && session.card) || (session.paymentMethod != 'Credit'))) { %> <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i> <% } %>
+      <a style="text-decoration: none; color: #ccc" href="/catering/order/payment">Payment</a>
+    </div>
+    <div class="ui active step">
+       <a style="text-decoration: none; color: #ccc" href="/catering/order/review">Review</a>
     </div>
   </div>
-<div class="step-up-divider"></div>
+  <div style="height: 10px;"></div>
+  </div>
 </div>
-<div style="height:30px" class="below-step"></div>
+<!-- Step End -->
+
 <div class="container"><span id="success-signal"></span>
 	  <center><div class="ui medium header">
 	  Thank you! Your order has been successfully submitted. <br>
 	  Once we have reviewed your order, we will send confirmation to <%= session.User.email %>.<br>
-	  Please remember that no order is final until you've recieved your confirmation.
+	  Please remember that no order is final until you've received your confirmation.
       </div>
       <a href="/catering/order/start" class="ui teal button">Submit Another Order</a>
       </center>
 </div>
 <div style="height: 200px">
 </div>
+
