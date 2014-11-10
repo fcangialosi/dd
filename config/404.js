@@ -28,9 +28,10 @@ module.exports[404] = function pageNotFound(req, res) {
 
   res.status(result.status);
   res.render(viewFilePath, function (err) {
+    console.log("404 (Error): " + err);
     // If the view doesn't exist, or an error occured, send json
     if (err) { return res.json(result, result.status); }
-
+    console.log("404: " + viewFilePath);
     res.redirect('/home');
     
     // Otherwise, serve the `views/404.*` page
