@@ -15,8 +15,8 @@ $(document).ready(function() {
   var $delivery_change = $('.ui.delivery-change.button');
   var delivery_handler = {
     activate: function() {
-      $delivery_change.removeClass('active').text("Select This Location"); // wipe all selected
-      $(this).addClass('active').text("Selected"); // select just the clicked option
+      $delivery_change.removeClass('active').text("Select Location"); // wipe all selected
+      $(this).addClass('active').text("Selected Location"); // select just the clicked option
       // set hidden field in form as the index of this option in the saved options array
       $('#option-index').attr('value', $(this).attr('index'));
     }

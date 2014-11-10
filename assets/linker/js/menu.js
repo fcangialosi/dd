@@ -11,6 +11,13 @@ simpleCart({
      }
 });
 
+simpleCart.bind( 'beforeAdd' , function( item ){
+    item_in_cart = simpleCart.has(item);
+    if (item_in_cart) {
+        item_in_cart.set('quantity',0);
+    }
+});
+
 ready = function() {
   // menu page
   var $menuItem = $('.menu a.item, .menu .link.item'),
@@ -48,7 +55,32 @@ ready = function() {
     });
   });
 
+  $('.item_add').click(function(){
+    set_button = $(this);
+    set_button.attr('class','item_add inverted check icon');
+    set_button.text("");
+    set_button.attr('style','opacity:1;background-color:#5BBD72;');
+  });
 
+  var last_val;
+
+  $('.item_Quantity').focusin(function() {
+    check_box = $(this).next();
+    check_box.attr('class','item_add inverted icon');
+    check_box.text("Set");
+    check_box.attr('style','');
+    last_val = $(this).val();
+  });
+
+  $('.item_Quantity').focusout(function() {
+    curr_val = $(this).val();
+    if (curr_val > 0 && curr_val == last_val) {
+      set_button = $(this).next();
+      set_button.attr('class','item_add inverted check icon');
+      set_button.text("");
+      set_button.attr('style','opacity:1;background-color:#5BBD72;');
+    }
+  });
 
   // delivery page
   $(function () {
