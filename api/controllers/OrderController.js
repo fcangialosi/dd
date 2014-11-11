@@ -53,12 +53,12 @@ var generateHtml = function(session, cart, rawNumber) {
   });
 }
 
-var sendEmail = function(html, name, companyName, res) {
+var sendEmail = function(html, user, res) {
   var message_to_dd = {
     "html" : html,
-    "subject": "Order Request From " + name + " (" + companyName + ")",
-    "from_email": "orders@davidanddads.com",
-    "from_name": "Order Manager",
+    "subject": "Order Request",
+    "from_email": user.email,
+    "from_name": user.name,
     "to": [{
             "email": "catering@davidanddads.com",
             "name": "David and Dad's",
@@ -149,12 +149,12 @@ module.exports = {
             rawNumber = buff.toString();
           }
           html = generateHtml(req.session, req.params.all(), rawNumber);
-          sendEmail(html, req.session.User.name, req.session.User.companyName,res);
+          sendEmail(html, req.session.User, res);
         });
       });
     } else {
       html = generateHtml(req.session, req.params.all(), rawNumber);
-      sendEmail(html, req.session.User.name, req.session.User.companyName,res);
+      sendEmail(html, req.session.User, res);
     }
   }
 
