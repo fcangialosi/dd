@@ -215,15 +215,11 @@ $('#card-form')
       rules : [
         {
           type : 'empty',
-          prompt : 'Please enter the 3-digit CVC code on the back of your card'
+          prompt : 'Please enter the CVC code on the back of your card'
         },
         {
-          type   : 'length[3]',
-          prompt : 'Your CVC code should be exactly 3 numbers'
-        },
-        {
-          type   : 'maxLength[3]',
-          prompt : 'Your CVC code should be exactly 3 numbers'
+          type   : 'maxLength[4]',
+          prompt : 'Your CVC code should not be longer than 4 numbers'
         }
       ]
     }
