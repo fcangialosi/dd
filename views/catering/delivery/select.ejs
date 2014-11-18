@@ -182,14 +182,14 @@
           <div class="field">
             <label>Delivery Date</label>
             <div class="ui left icon input">
-              <input type='text' id='delivery-datepicker' name='date' value ="<% if (session.delivery) { %><%= session.delivery.date %><% } %>"/>
+              <input type='text' id='delivery-datepicker' name='date' value ="<% if (session.delivery && session.delivery.date) { %><%= session.delivery.date %><% } %>"/>
               <i class="calendar icon"></i>
             </div>
           </div>
           <div class="field">
             <label>Delivery Time</label>
             <div class="ui left icon input">
-              <input type='text' id='delivery-timepicker' name='time' value="<% if (session.delivery) { %><%= session.delivery.time %><% } %>"/>
+              <input type='text' id='delivery-timepicker' name='time' value="<% if (session.delivery && session.delivery.time) { %><%= session.delivery.time %><% } %>"/>
               <i class="time icon"></i>
             </div>
           </div>
@@ -209,8 +209,8 @@
         <input type="submit" class="fluid ui teal submit button" id="delivery-submit" value="Next (Choose Your Food Items)">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">
         <input type="hidden" name="deliveryIndex" value="<% if (session.delivery) { %><%= session.delivery.index %><% } else { %>-1<% } %>" id="option-index">
-        <input type="hidden" name="date" value="<% if (session.delivery) { %><%= session.delivery.date %><% } else { %>-1<% } %>" id="delivery-date">
-        <input type="hidden" name="time" value="<% if (session.delivery) { %><%= session.delivery.time %><% } else { %>-1<% } %>" id="delivery-time">
+        <input type="hidden" name="date" value="<% if (session.delivery && session.delivery.date) { %><%= session.delivery.date %><% } else { %>-1<% } %>" id="delivery-date">
+        <input type="hidden" name="time" value="<% if (session.delivery && session.delivery.time) { %><%= session.delivery.time %><% } else { %>-1<% } %>" id="delivery-time">
       </form>
     </div>
   </div>

@@ -135,6 +135,9 @@ module.exports = {
     }
     req.session.User.savedDelivery.push(new_delivery);
 
+    req.session.delivery = new_delivery;
+    req.session.delivery.index = req.session.User.savedDelivery.length-1;
+
     User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
       if (err) {
         return res.redirect('/catering/order/delivery/new');
@@ -175,6 +178,7 @@ module.exports = {
             }
             req.session.User.savedPayment.push(newCard);
             req.session.card = newCard;
+            req.session.card.index = req.session.User.savedPayment.length-1;
 
             User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
               if (! err) {
