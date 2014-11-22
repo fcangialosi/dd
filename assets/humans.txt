@@ -1,4 +1,4 @@
-/* TEAM */ 
+/* TEAM */
 
 Chef: Frank Cangialosi
 Site: https://www.github.com/sbfcangialosi
@@ -8,10 +8,10 @@ Location: College Park, MD
 
 /* THANKS! :) */
 
-To: Su-Young Nam
-For: Design advice, editing, and testing
+Connoisseur: Su-Young Nam
+For: Design advice, editing, testing
 
-To: Eric Thomas
+Connoisseur: Eric Thomas
 For: Professional review and critique, security advice
 
 
@@ -25,4 +25,4 @@ Components: Node.js, Express, MongoDB, Triplesec, EJS, jQuery, Normalize, Card, 
 Styles: Semantic UI, Font Awesome, Less
 IDE: Vim
 Hosting: Digital Ocean, nginx
-SSL Certificate: Comodo 
+SSL Certificate: Comodo
