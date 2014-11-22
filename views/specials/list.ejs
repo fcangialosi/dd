@@ -20,8 +20,14 @@
     <br>
 
     <% _.each(specials, function(menu) { %>
-    <h2 class="ui dividing header"> <% if ('name' in menu) { %> <%= menu.name %><% } else { %>Lunch Specials<% } %><% if ('subhead' in menu) { %> - <%= menu.subhead%><% } %><% if (menu.name != 'Breakfast Specials') {%><form style="margin: 0; padding: 0; display: inline;" action="/specials/changeDay/<%= menu.id %>?cafe=<%= cafe %>" method="POST"> ( <input style="display: inline; width: 20%" value="<%= menu.day %>" name="day" type="text" class="form-control"> ) <input style="display: inline;" type="submit" class="ui small blue button" value="Update Date"/>
-                        <input type="hidden" name="_csrf" value="<%= _csrf %>" /><% } %></form>
+    <h2 class="ui dividing header"> <% if ('name' in menu) { %> <%= menu.name %><% } else { %>Lunch Specials<% } %><% if ('subhead' in menu) { %> - <%= menu.subhead%><% } %>
+    <% if (menu.name != 'Breakfast Specials') {%>
+        <div style="display: inline;"><div style="display: inline;">
+        ( <input style="display: inline; width: 20%" value="<%= menu.day %>" name="day" type="text" class="form-control bg-update-in"> )
+        <div style="display: inline;" type="submit" class="ui small blue button" action="/specials/changeDay/<%= menu.id %>?cafe=<%= cafe %>" method="POST" id="bg-update-btn">Update Date</div>
+        <input type="hidden" name="_csrf" value="<%= _csrf %>" class="bg-update-in" />
+        </div></div>
+    <% } %>
 
 <form style="margin: 0; padding: 0; display: inline; float: right"  action="/specials/deleteAll/<%= menu.id %>?cafe=<%= cafe %>" method="POST">
                         <input type="hidden" name="_method" value="delete"/>
@@ -44,15 +50,17 @@
                     <th>Delete</th>
                 </tr>
             </thead>
-
             <tbody>
             <% _.each(menu.items, function(item) { %>
-                <tr><form action="/specials/update/<%= menu.id %>?index=<%= menu.items.indexOf(item)%>&cafe=<%= cafe %>" method="POST">
+                <tr>
                     <td><%= menu.items.indexOf(item) %></td>
-                    <td><input value="<%= item.name %>" name="name" type="text" class="form-control"></td>
-                    <td><input value="<%= item.price %>" name="price" type="text" class="form-control"></td>
-                    <td><input value="<% if ('description' in item) { %><%= item.description %><% } else { %><% } %>" name="description" type="text" class="form-control"></td>
-                    <td><input type="hidden" name="_csrf" value="<%= _csrf %>" /><input type="submit" value="Save"  class="ui small green button"></td></form>
+                    <td><input value="<%= item.name %>" name="name" type="text" class="form-control bg-update-in"></td>
+                    <td><input value="<%= item.price %>" name="price" type="text" class="form-control bg-update-in"></td>
+                    <td><input value="<% if ('description' in item) { %><%= item.description %><% } else { %><% } %>" name="description" type="text" class="form-control bg-update-in"></td>
+                    <td>
+                        <input type="hidden" name="_csrf" value="<%= _csrf %>" class="bg-update-in"/>
+                        <div type="submit" class="ui small green button" action="/specials/update/<%= menu.id %>?index=<%= menu.items.indexOf(item)%>&cafe=<%= cafe %>" method="POST" id="bg-update-btn">Save</div>
+                    </td>
                     <td><form action="/specials/delete/<%= menu.id %>?index=<%= menu.items.indexOf(item)%>&cafe=<%= cafe %>" method="POST">
                         <input type="hidden" name="_method" value="delete"/>
                         <input type="submit" class="ui small red button" value="Delete"/>

@@ -11,6 +11,21 @@ ready = function() {
       window.location.reload();
     });
   });
+
+  $("*#bg-update-btn").each(function() {
+    var submit = $(this);
+    submit.click(function() {
+      submit.html("...");
+      $.ajax({
+        type:submit.attr('method'),
+        url:submit.attr('action'),
+        data:submit.parent().parent().find(".bg-update-in").serialize(),
+        success : function(data) {
+          submit.html("&#10003;");
+        }
+      });
+    });
+  });
 };
 
 // attach ready event
