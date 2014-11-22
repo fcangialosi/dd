@@ -9,15 +9,40 @@
       <div class="modal-body">
         <div id="order-summary-contents">
           <center>
-          It looks like you haven't added any items to your order yet!<br>
-          Make sure you pressed the <b>"Add"</b> button next to each item <b>after</b> entering in the quantity.<br>
-          After you add an item, you should see your <b>total</b> increase in the top left hand corner of the menu.
+          It looks like you haven't added any items to your order yet!<br><br>
+          Make sure to click the <b>"Set"</b> button next to each item <b>after</b> entering in the quantity.<br>
+          Once you add an item, you should see your <b>current total</b> increase in the top left hand corner of the menu.
           </center>
         </div>
       </div>
       <div class="modal-footer">
         <a class="ui button" data-dismiss="modal">Go Back To Order Form</a>
         <a class="ui green button" id="checkout-button">Checkout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="cartEmptyModal" tabindex="-1" role="dialog" aria-labelledby="cartEmptyLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="cartEmptyLabel">Your cart is empty!</h4>
+      </div>
+      <div class="modal-body">
+        <div id="order-summary-contents">
+          <center>
+          You haven't added any items to your order yet!<br><br>
+          Make sure to click the <b>"Set"</b> button next to each item <b>after</b> entering or changing the quantity.<br>
+          Once you add an item, you should see your <b>current total</b> increase in the top left hand corner of the menu.<br>
+          You can view the current status of yoru order at any time by clicking "Order Summary" on the top bar.
+          </center>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="ui button" data-dismiss="modal">Go Back To Order Form</a>
       </div>
     </div>
   </div>
@@ -93,7 +118,7 @@
   </div>
 </div>
 <div class="twelve wide column">
-  <p class="warning-border" style="margin-top: 5px;"><b>Instructions:</b> Navigate the menu quickly and easily using the sidebar on the left (clicking on a section just scrolls for you). For each item you would like to order, type the quantity in the box to the right, then click "Add." If you accidentally enter the wrong quantity, or click "Add" more than once, you can click on "Order Summary," to change it. Please specify any special requests or changes in the box below:</p>
+  <p class="warning-border" style="margin-top: 5px;"><b>Instructions:</b> Navigate the menu quickly and easily using the sidebar on the left (clicking on a section just scrolls for you). For each item you would like to order, type the quantity in the box to the right, then click "Set." You can change the quantity at any time by typing a different number in the box and then clicking "Set" again. A green check will appear once the items have been saved to your order. <br> Please specify any special requests or changes in the box below:</p>
   <form class="ui form segment">
   <div class="field">
           <label>Special Requests</label>

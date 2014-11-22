@@ -48,10 +48,17 @@ ready = function() {
 
   $('*#checkout-button').each(function() {
     $(this).click(function() {
-      var requestText = $('#special-request').val();
-      var csrf = $('#csrf').val();
-      $.post("/catering/order/saveSpecialRequest", { _csrf: csrf, request : requestText });
-      window.location.href= "/catering/order/payment";
+      if (simpleCart.quantity() > 0) {
+        var requestText = $('#special-request').val();
+        var csrf = $('#csrf').val();
+        $.post("/catering/order/saveSpecialRequest", { _csrf: csrf, request : requestText });
+        window.location.href= "/catering/order/payment";
+      } else {
+        var cartEmptyModal =  $("#cartEmptyModal");
+        console.log(cartEmptyModal);
+        $("#myModal").modal('hide')
+        cartEmptyModal.modal('toggle');
+      }
     });
   });
 
