@@ -42,21 +42,13 @@ module.exports.routes = {
 
   'post /feedback' : 'HomeController.feedback',
 
-  '/news' : {
-    view :'main/news'
-  },
+  '/news' : 'HomeController.news',
 
-  '/contact' : {
-    view : 'main/contact'
-  },
+  '/contact' : 'HomeController.contact',
 
-  '/jobs' : {
-    view : 'main/jobs'
-  },
+  '/jobs' : 'HomeController.jobs',
 
-  '/press' : {
-    view : 'main/press'
-  },
+  '/press' : 'HomeController.press',
 
   '/main' : 'HomeController.main',
 
@@ -122,7 +114,29 @@ module.exports.routes = {
 
   '/admin/specials/pratt' : 'SpecialsController.pratt',
 
-  '/admin/specials/broadway' : 'SpecialsController.broadway'
+  '/admin/specials/broadway' : 'SpecialsController.broadway',
+
+  '/admin/messages' : 'AdminController.messages',
+
+  'get /admin/messages/home' : 'PageController.editHomeMessage',
+
+  'get /admin/messages/jobs' : 'PageController.editJobs',
+
+  'get /admin/messages/press' : 'PageController.editPress',
+
+  'get /admin/messages/news' : 'PageController.editNews',
+
+  'get /admin/messages/contact' : 'PageController.editContact',
+
+  'post /admin/messages/home' : 'PageController.setHomeMessage',
+
+  'post /admin/messages/jobs' : 'PageController.setJobs',
+
+  'post /admin/messages/press' : 'PageController.setPress',
+
+  'post /admin/messages/news' : 'PageController.setNews',
+
+  'post /admin/messages/contact' : 'PageController.setContact'
 
   /*
   // But what if you want your home page to display

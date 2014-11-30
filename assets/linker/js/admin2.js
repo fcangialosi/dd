@@ -12,6 +12,18 @@ ready = function() {
     });
   });
 
+  $('#preview-btn').click(function() {
+    if (!$('#preview').attr('style')) { // Need to hide
+      $('#preview').attr('style', 'display: none;');
+      $('#editor').attr('style', '');
+      $(this).text('Show Preview');
+    } else { // Need to show
+      $('#preview').attr('style', '');
+      $('#editor').attr('style', 'display:none;');
+      $(this).text('Hide Preview');
+    }
+  });
+
   $("*#bg-update-btn").each(function() {
     var submit = $(this);
     submit.click(function() {

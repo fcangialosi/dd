@@ -1,0 +1,45 @@
+<div class="ui page grid">
+<div class="column">
+
+  <center><h1 class="ui header" style="font-size: 2.5em;"> Edit Jobs Page Content</h1><a href="/admin/messages" class="ui red labeled icon button"><i class="hand left icon"></i>Back</a></center>
+  <div style="height:50px">
+  </div>
+
+    <br>
+
+    <% if (flash && flash.err) { %>
+        <div class="ui red message">
+            <%= flash.err %>
+        </div>
+    <% } %>
+    <% if (flash && flash.success) { %>
+        <div class="ui green message">
+            <%= flash.success %>
+        </div>
+    <% } %>
+
+    <div class="ui blue button" id="preview-btn">Show Preview</div>
+
+
+  <form id ="editor" action="/admin/messages/jobs" method="POST" class="ui form segment">
+    <div class="field">
+        <label> Content: </label>
+        <textarea name="message" type="text" class="form-control"><%= content %></textarea>
+    </div>
+    <input type="submit" class="ui fluid green button" value="Save"/>
+    <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+  </form>
+
+</div>
+</div>
+
+<div id="preview"  style="display: none;">
+    <%- partial ('../main/jobs.ejs') %>
+</div>
+
+<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+<script>tinymce.init({selector:'textarea', plugins: [
+         "autolink link image lists charmap print preview hr anchor spellchecker",
+         "searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+         "table contextmenu directionality paste textcolor"
+],});</script>

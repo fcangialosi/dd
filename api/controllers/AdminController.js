@@ -15,6 +15,9 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var jobs_message = '';
+var contact_message = '';
+
 module.exports = {
 
   index: function (req, res, next) {
@@ -22,11 +25,27 @@ module.exports = {
   },
 
   signin: function(req,res,next) {
-    res.view('admin/signin', {layout: 'admin/empty-layout'})
+    res.view('admin/signin', {layout: 'admin/empty-layout'});
   },
 
   create: function(req,res,next) {
-    res.view('admin/create', {layout: 'admin/empty-layout'})
+    res.view('admin/create', {layout: 'admin/empty-layout'});
+  },
+
+  messages: function(req, res, next) {
+    res.view('admin/messages', {layout: 'admin/layout'});
+  },
+
+  editJobs: function(req, res, next) {
+    res.view('admin/edit-jobs', {layout: 'admin/layout'});
+  },
+
+  editNews: function(req, res, next) {
+    res.view('admin/edit-news', {layout: 'admin/layout'});
+  },
+
+  editContact: function(req, res, next) {
+    res.view('admin/edit-contact', {layout: 'admin/layout'});
   }
 
 };
