@@ -53,24 +53,34 @@ var generateHtml = function(session, cart, rawNumber) {
   });
 }
 
-var sendEmail = function(html, user, res) {
+var startNewOrder = function(req) {
+  delete req.session.foodComplete;
+  delete req.session.paymentMethod;
+  delete req.session.delivery;
+  delete req.session.User.specialRequest;
+}
+
+var sendEmail = function(html, req, res) {
   var message_to_dd = {
     "html" : html,
     "subject": "Order Request",
-    "from_email": user.email,
-    "from_name": user.name,
+    "from_email": req.session.User.email,
+    "from_name": req.session.User.name,
     "to": [{
             "email": "catering@davidanddads.com",
             "name": "David and Dad's",
             "type": "to"
         }]
   };
-  mandrill_client.messages.send({"message": message_to_dd, "async": false}, function(result) {
-    res.view('catering/confirm/success');
-  }, function(e) {
-    console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
-    res.view('catering/confirm/failure');
-  });
+  startNewOrder(req);
+  res.view('catering/confirm/success');
+  // mandrill_client.messages.send({"message": message_to_dd, "async": false}, function(result) {
+  //   startNewOrder(req);
+  //   res.view('catering/confirm/success');
+  // }, function(e) {
+  //   console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+  //   res.view('catering/confirm/failure');
+  // });
 }
 
 module.exports = {
@@ -139,12 +149,12 @@ module.exports = {
             rawNumber = buff.toString();
           }
           html = generateHtml(req.session, req.params.all(), rawNumber);
-          sendEmail(html, req.session.User, res);
+          sendEmail(html, req, res);
         });
       });
     } else {
       html = generateHtml(req.session, req.params.all(), rawNumber);
-      sendEmail(html, req.session.User, res);
+      sendEmail(html, req, res);
     }
   }
 

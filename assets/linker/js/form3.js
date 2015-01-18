@@ -129,6 +129,10 @@ $('#select-delivery-form')
         {
           type : 'not[-1]',
           prompt : 'Please choose a time for your delivery!'
+        },
+        {
+          type   : 'empty',
+          prompt : 'Please choose a time for your delivery!'
         }
       ]
     },
@@ -138,6 +142,10 @@ $('#select-delivery-form')
         {
           type : 'not[-1]',
           prompt : 'Please choose a date for your delivery!'
+        },
+        {
+          type   : 'empty',
+          prompt : 'Please choose a date for your delivery!'
         }
       ]
     },
@@ -146,6 +154,10 @@ $('#select-delivery-form')
       rules : [
         {
           type : 'not[-1]',
+          prompt : 'Please choose a location or add a new one!'
+        },
+        {
+          type   : 'empty',
           prompt : 'Please choose a location or add a new one!'
         }
       ]

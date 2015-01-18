@@ -68,6 +68,7 @@ module.exports = {
 			req.session.User = user;
 
 			res.redirect('/catering/order/delivery');
+
 		});
 	},
 
