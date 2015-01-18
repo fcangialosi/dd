@@ -53,13 +53,6 @@ var generateHtml = function(session, cart, rawNumber) {
   });
 }
 
-var startNewOrder = function(req) {
-  delete req.session.foodComplete;
-  delete req.session.paymentMethod;
-  delete req.session.delivery;
-  delete req.session.User.specialRequest;
-}
-
 var sendEmail = function(html, req, res) {
   var message_to_dd = {
     "html" : html,
@@ -72,8 +65,15 @@ var sendEmail = function(html, req, res) {
             "type": "to"
         }]
   };
-  startNewOrder(req);
-  res.view('catering/confirm/success');
+
+  User.update(req.session.User.id, {specialRequest:''}).exec(function afterwards(err, updated) {
+    delete req.session.foodComplete;
+      delete req.session.paymentMethod;
+      delete req.session.delivery;
+      delete req.session.User.specialRequest;
+      res.view('catering/confirm/success');
+  });
+
   // mandrill_client.messages.send({"message": message_to_dd, "async": false}, function(result) {
   //   startNewOrder(req);
   //   res.view('catering/confirm/success');

@@ -121,6 +121,13 @@
       <tr>
         <td class="left-td">Tax (<span id="tax-rate">6</span>%):</td>
         <td class="right-td"><div class="simpleCart_tax"></div></td>
+        <td class="right-td">
+          (&nbsp;<div class="ui checkbox">
+            <input id="tax-exempt" type="checkbox">
+            <label for="tax-exempt">Tax-Exempt?</label>
+          </div>&nbsp;)
+        </td>
+
       </tr>
       <tr>
         <td class="left-td">Estimated Delivery Fee*:</td>
@@ -134,11 +141,6 @@
     <center style="font-size: 1.5em"><b>Estimated Total:</b>&nbsp;<span class="simpleCart_grandTotal"></span></center>
 
     <div class="ui divider"></div>
-
-    <div class="ui checkbox">
-      <input id="tax-exempt" type="checkbox">
-      <label for="tax-exempt">Tax-Exempt?</label>
-    </div>
     <br>
     <b> Special Requests: </b> <%= session.User.specialRequest %>
     <div class="ui divider"></div>

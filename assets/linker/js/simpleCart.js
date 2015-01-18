@@ -596,7 +596,7 @@
 				},
 
 				remove: function (item, column) {
-					return "<div class='" + namespace + "_remove small ui red icon button'> <i class='medium trash icon'></i></div>";
+					return "<div class='" + namespace + "_remove small ui red button'> Delete </div>";
 				}
 			};
 

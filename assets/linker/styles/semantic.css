@@ -10341,7 +10341,7 @@ a.ui.teal.label:hover:before {
 .ui.checkbox .box,
 .ui.checkbox label {
   cursor: pointer;
-  padding-left: 2em;
+  padding-left: 1em;
   outline: none;
 }
 .ui.checkbox .box:before,
@@ -10388,7 +10388,6 @@ a.ui.teal.label:hover:before {
 /*--- Inside Label ---*/
 .ui.checkbox label {
   display: block;
-  color: rgba(0, 0, 0, 0.6);
   -webkit-transition: color 0.2s ease;
   -moz-transition: color 0.2s ease;
   transition: color 0.2s ease;
