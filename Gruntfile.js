@@ -289,9 +289,9 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/**/*.html': ['.tmp/public/min/production.js'],
-          'views/**/*.html': ['.tmp/public/min/production.js'],
-          'views/**/*.ejs': ['.tmp/public/min/production.js']
+          '.tmp/public/**/*.html': ['.tmp/public/min/production_v2.js'],
+          'views/**/*.html': ['.tmp/public/min/production_v2.js'],
+          'views/**/*.ejs': ['.tmp/public/min/production_v2.js']
         }
       },
 
@@ -319,9 +319,9 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/index.html': ['.tmp/public/min/production.css'],
-          'views/**/*.html': ['.tmp/public/min/production.css'],
-          'views/**/*.ejs': ['.tmp/public/min/production.css']
+          '.tmp/public/index.html': ['.tmp/public/min/production_v2.css'],
+          'views/**/*.html': ['.tmp/public/min/production_v2.css'],
+          'views/**/*.ejs': ['.tmp/public/min/production_v2.css']
         }
       },
 
@@ -365,7 +365,7 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          'views/**/*.jade': ['.tmp/public/min/production.js']
+          'views/**/*.jade': ['.tmp/public/min/production_v2.js']
         }
       },
 
@@ -389,7 +389,7 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          'views/**/*.jade': ['.tmp/public/min/production.css']
+          'views/**/*.jade': ['.tmp/public/min/production_v2.css']
         }
       },
 
