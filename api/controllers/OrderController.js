@@ -66,21 +66,18 @@ var sendEmail = function(html, req, res) {
         }]
   };
 
-  User.update(req.session.User.id, {specialRequest:''}).exec(function afterwards(err, updated) {
-    delete req.session.foodComplete;
-      delete req.session.paymentMethod;
-      delete req.session.delivery;
-      delete req.session.User.specialRequest;
-      res.view('catering/confirm/success');
+  mandrill_client.messages.send({"message": message_to_dd, "async": false}, function(result) {
+      User.update(req.session.User.id, {specialRequest:''}).exec(function afterwards(err, updated) {
+        delete req.session.foodComplete;
+          delete req.session.paymentMethod;
+          delete req.session.delivery;
+          delete req.session.User.specialRequest;
+          res.view('catering/confirm/success');
+      });
+  }, function(e) {
+     console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+     res.view('catering/confirm/failure');
   });
-
-  // mandrill_client.messages.send({"message": message_to_dd, "async": false}, function(result) {
-  //   startNewOrder(req);
-  //   res.view('catering/confirm/success');
-  // }, function(e) {
-  //   console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
-  //   res.view('catering/confirm/failure');
-  // });
 }
 
 module.exports = {
