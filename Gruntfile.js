@@ -254,14 +254,14 @@ module.exports = function (grunt) {
     uglify: {
       dist: {
         src: ['.tmp/public/concat/production.js'],
-        dest: '.tmp/public/min/production.js'
+        dest: '.tmp/public/min/production_v2.js'
       }
     },
 
     cssmin: {
       dist: {
         src: ['.tmp/public/concat/production.css'],
-        dest: '.tmp/public/min/production.css'
+        dest: '.tmp/public/min/production_v2.css'
       }
     },
 
