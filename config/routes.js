@@ -74,6 +74,8 @@ module.exports.routes = {
 
   '/catering/order/start' : 'OrderController.start',
 
+  '/catering/order/reminder' : 'OrderController.reminder',
+
   '/catering/order/delivery' : 'OrderController.selectDelivery',
 
   'get /catering/order/delivery/new' : 'OrderController.newDelivery',

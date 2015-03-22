@@ -67,7 +67,7 @@ module.exports = {
 			req.session.authenticated = true;
 			req.session.User = user;
 
-			res.redirect('/catering/order/delivery');
+			res.redirect('/catering/order/reminder');
 
 		});
 	},

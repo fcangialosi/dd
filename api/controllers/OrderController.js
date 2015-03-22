@@ -60,7 +60,7 @@ var sendEmail = function(html, req, res) {
     "from_email": req.session.User.email,
     "from_name": req.session.User.name,
     "to": [{
-            "email": "catering@davidanddads.com",
+            "email": "fcangialosi94@gmail.com",
             "name": "David and Dad's",
             "type": "to"
         }]
@@ -83,9 +83,16 @@ var sendEmail = function(html, req, res) {
 module.exports = {
 
   'start' : function(req, res) {
-
     if(req.session.authenticated) {
-      res.redirect('/catering/order/delivery');
+      res.redirect('/catering/order/reminder');
+    } else {
+      res.view('session/new');
+    }
+  },
+
+  'reminder' : function(req, res) {
+    if(req.session.authenticated) {
+      res.view('catering/reminder')
     } else {
       res.view('session/new');
     }
