@@ -138,7 +138,11 @@
         <p class="warning-border"></p>
         <div class="ui medium divided list">
           <% _.each(session.User.savedPayment, function(card){ %>
-            <div class="item">
+          <% if (session.card && session.User.savedPayment.indexOf(card) == session.card.index) { %>
+            <div class="active item payment-option" index="<%= session.User.savedPayment.indexOf(card) %>">
+          <% } else { %>
+            <div class="item payment-option" index="<%= session.User.savedPayment.indexOf(card) %>">
+          <% } %>
               <div class="left floated content">
                 <div class="header">Card ending in <%= card.lastFour %>
                 </div>
@@ -150,11 +154,7 @@
                 <input type="submit" class="right floated medium ui red button" value="Delete"/>
                 <input type="hidden" name="_csrf" value="<%= _csrf %>" />
               </form>
-              <% if (session.card && session.User.savedPayment.indexOf(card) == session.card.index) { %>
-              <div class="active right floated medium ui payment-change button" index="<%= session.User.savedPayment.indexOf(card) %>">Selected</div>
-              <% } else { %>
-              <div class="right floated medium ui payment-change button" index="<%= session.User.savedPayment.indexOf(card) %>">Select This Card</div>
-              <% } %>
+              <div class="right floated medium ui payment-change button" style="width:15%"><% if (session.card && session.User.savedPayment.indexOf(card) == session.card.index) { %><i class="ui medium icon check" style="margin-left:10px;"> </i><% } else {%> Select <% } %></div>
             </div>
           <% }) %>
           <div class="item">

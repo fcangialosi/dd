@@ -70,6 +70,7 @@ var sendEmail = function(html, req, res) {
       User.update(req.session.User.id, {specialRequest:''}).exec(function afterwards(err, updated) {
         delete req.session.foodComplete;
           delete req.session.paymentMethod;
+          delete req.session.card;
           delete req.session.delivery;
           delete req.session.User.specialRequest;
           res.view('catering/confirm/success');
