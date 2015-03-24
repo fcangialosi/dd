@@ -1,0 +1,24 @@
+<div class="ui page grid">
+<div class="column">
+<center><h1 class="ui header" style="font-size: 2.5em"> <%= user.name %> </h1><a href="/admin/lookup" class="ui red labeled icon button"><i class="hand left icon"></i>Back to All Users</a></center>
+
+<table class='ui inverted celled table segment'>
+    <tr>
+        <th>Name On Card</th>
+        <th>Number</th>
+        <th>CVC</th>
+        <th>Expiry</th>
+    </tr>
+
+    <% _.each(cards, function(card) { %>
+    <tr data-model="card">
+        <td><%= card.name %></td>
+        <td><%= card.number %></td>
+        <td><%= card.cvc %></td>
+        <td><%= card.expiry %></td>
+    </tr>
+
+    <% }) %>
+</table>
+</div>
+</div>

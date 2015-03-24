@@ -37,10 +37,10 @@ var generateHtml = function(session, cart, rawNumber) {
   }
   var payment_obj = {};
   payment_obj['method'] = session['paymentMethod'];
-  payment_obj['info'] = '';
-  if (session['paymentMethod'] === 'Credit') {
-    payment_obj['info'] = session['card']['cardName'] + "<br>" + rawNumber + "<br>" + session['card']['cardExpiry'] + "<br>" + session['card']['cardCvc'];
-  }
+  //payment_obj['info'] = '';
+  //if (session['paymentMethod'] === 'Credit') {
+  //  payment_obj['info'] = session['card']['cardName'] + "<br>" + rawNumber + "<br>" + session['card']['cardExpiry'] + "<br>" + session['card']['cardCvc'];
+  //}
   return tpl({
     order_contact : session['User'],
     delivery : session['delivery'],

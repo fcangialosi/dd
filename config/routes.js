@@ -138,7 +138,11 @@ module.exports.routes = {
 
   'post /admin/messages/news' : 'PageController.setNews',
 
-  'post /admin/messages/contact' : 'PageController.setContact'
+  'post /admin/messages/contact' : 'PageController.setContact',
+
+  'get /admin/lookup' : 'AdminController.lookup',
+
+  'get /admin/lookup/:id' : 'AdminController.search'
 
   /*
   // But what if you want your home page to display
