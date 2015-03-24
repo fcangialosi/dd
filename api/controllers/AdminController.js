@@ -97,8 +97,15 @@ module.exports = {
         if (err) {
           console.log(err);
         }
-
-        decrypt(0, user, privKey, res);
+        if (user.savedPayment.length <= 0) {
+            res.view('admin/view-cards', {
+                user: user,
+                cards: [],
+                layout : 'admin/layout'
+            });
+        } else {
+            decrypt(0, user, privKey, res);
+        }
 
       });
 
