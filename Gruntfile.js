@@ -435,7 +435,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('compileAssets', [
-    'clean:dev',
+    //'clean:dev',
     'jst:dev',
     'less:dev',
     'copy:dev',
@@ -465,7 +465,7 @@ module.exports = function (grunt) {
 
   // When sails is lifted in production
   grunt.registerTask('prod', [
-    'clean:dev',
+   // 'clean:dev',
     'jst:dev',
     'less:dev',
     'copy:dev',
