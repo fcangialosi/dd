@@ -60,7 +60,7 @@ var sendEmail = function(html, req, res) {
     "from_email": req.session.User.email,
     "from_name": req.session.User.name,
     "to": [{
-            "email": "fcangialosi94@gmail.com",
+	    "email": "catering@davidanddads.com",
             "name": "David and Dad's",
             "type": "to"
         }]
