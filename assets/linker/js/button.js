@@ -12,24 +12,43 @@ $(document).ready(function() {
     $('input[type=text]').val(0);
   });
 
-  var $delivery_change = $('.ui.delivery-change.button');
+  var $delivery_change = $('.ui.grid.delivery-option');
+  var $delivery_button = $('.ui.delivery-change.button');
+  var last_delivery = null;
   var delivery_handler = {
     activate: function() {
-      $delivery_change.removeClass('active').text("Select Location"); // wipe all selected
-      $(this).addClass('active').text("Selected Location"); // select just the clicked option
-      // set hidden field in form as the index of this option in the saved options array
+      if (!last_delivery) {
+        last_delivery = $('.ui.grid.delivery-option.active');
+      }
+      if (typeof last_delivery != 'undefined' && typeof last_delivery.children()[1] != 'undefined') {
+        last_delivery.removeClass('active');
+        last_delivery.children()[1].children[0].innerHTML = " Select Location";
+      }
+      $(this).addClass("active");
+      $(this).children()[1].children[0].innerHTML = '<i class="ui large icon check" style="margin-left:10px;padding-top:5px;margin-bottom:9px;"></i>';
       $('#option-index').attr('value', $(this).attr('index'));
+      last_delivery = $(this);
     }
   };
+
   $delivery_change.on('click', delivery_handler.activate);
 
-  var $payment_change = $('.ui.payment-change.button');
+  var $payment_change = $('.item.payment-option');
+  var $payment_button = $('.ui.payment-change.button');
+  var last_payment = null;
   var payment_handler = {
     activate: function() {
-      $payment_change.removeClass('active').text("Select This Card"); // wipe all selected
-      $(this).addClass('active').text("Selected"); // select just the clicked option
-      // set hidden field in form as the index of this option in the saved options array
+      if (!last_payment) {
+        last_payment = $('.item.payment-option.active');
+      }
+      if (typeof last_payment != 'undefined' && typeof last_payment.children()[2] != 'undefined') {
+        last_payment.removeClass('active');
+        last_payment.children()[2].innerHTML = " Select";
+      }
+      $(this).addClass("active");
+      $(this).children()[2].innerHTML = '<i class="ui medium icon check" style="margin-left:10px;"></i>';
       $('#option-index').attr('value', $(this).attr('index'));
+      last_payment = $(this);
     }
   };
   $payment_change.on('click', payment_handler.activate);

@@ -68,10 +68,10 @@
     </div>
     <div class="ui disabled step">
       <% if(session.paymentMethod && ((session.paymentMethod == 'Credit' && session.card) || (session.paymentMethod != 'Credit'))) { %> <i class="ui large icon check" style="color:#5BBD72; margin-top:-10px;"></i> <% } %>
-      <a style="text-decoration: none; color: #ccc" href="/catering/order/payment">Payment</a>
+      <span style="text-decoration: none; color: #ccc" href="/catering/order/payment">Payment</span>
     </div>
     <div class="ui disabled step">
-       <a style="text-decoration: none; color: #ccc" href="/catering/order/review">Review</a>
+       <span style="text-decoration: none; color: #ccc" href="/catering/order/review">Review</span>
     </div>
   </div>
   <div style="height: 10px;"></div>

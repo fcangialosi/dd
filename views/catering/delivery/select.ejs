@@ -109,7 +109,11 @@
         <div class="ui medium divided list">
           <% _.each(session.User.savedDelivery, function(option){ %>
           <div class="item">
-            <div class="ui grid">
+          <% if (session.delivery && session.User.savedDelivery.indexOf(option) == session.delivery.index) { %>
+            <div class="ui grid delivery-option active" index="<%= session.User.savedDelivery.indexOf(option) %>" >
+          <% } else { %>
+            <div class="ui grid delivery-option" index="<%= session.User.savedDelivery.indexOf(option) %>">
+          <% } %>
               <div class="twelve wide column">
                 <div class="header"> <%= option.address %>,&nbsp;<%= option.city %> </div>
                 <br>
@@ -121,11 +125,7 @@
                 </div>
               </div>
               <div class="four wide column">
-              <% if (session.delivery && session.User.savedDelivery.indexOf(option) == session.delivery.index) { %>
-              <div class="active medium ui delivery-change button" index="<%= session.User.savedDelivery.indexOf(option) %>" style="width:100%">Selected Location</div>
-              <% } else { %>
-              <div class="medium ui delivery-change button" index="<%= session.User.savedDelivery.indexOf(option) %>" style="width:100%">Select Location</div>
-              <% } %>
+              <div class="medium ui delivery-change button" style="width:100%"> <% if (session.delivery && session.User.savedDelivery.indexOf(option) == session.delivery.index) { %> <i class="ui large icon check" style="margin-left:10px;padding-top:5px;margin-bottom:9px;"></i> <% } else { %> Select Location <% } %></div>
                 <br><br>
                 <form action="/user/removeDelivery/<%= session.User.savedDelivery.indexOf(option) %>" method="POST">
                   <input type="hidden" name="_method" value="delete"/>

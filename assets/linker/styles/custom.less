@@ -189,12 +189,28 @@ body {
   font-size: 0.85rem!important;
 }
 
-.ui.button.delivery-change.active {
+.delivery-option {
+  border: 7px solid #ffffff;
+}
+
+.delivery-option.active {
+  border: 7px solid #5BBD72;
+}
+
+.ui.button.delivery-change {
   background-color: #5BBD72!important;
   color: #FFF!important;
 }
 
-.ui.button.payment-change.active {
+.payment-option {
+  border: 7px solid #ffffff!important;
+}
+
+.payment-option.active {
+  border: 7px solid #5BBD72!important;
+}
+
+.ui.button.payment-change {
   background-color: #5BBD72!important;
   color: #FFF!important;
 }
@@ -395,9 +411,17 @@ body {
   padding-top: 40px;
   padding-bottom: 20px;
   z-index: 0;
-  border-top: 7px solid #822421;
+  border-top: 7px solid @ground;
   border-bottom: 7px solid @blush;
 }
+
+/*#catering-reminder {
+  width: 100%;
+  min-height: 200px;
+  padding-top: 40px;
+  padding-bottom: 20px;
+  z-index: 0;
+}*/
 
 #catering-reviews {
   border-top: 7px solid @blush;
