@@ -37,10 +37,10 @@ var generateHtml = function(session, cart, rawNumber) {
   }
   var payment_obj = {};
   payment_obj['method'] = session['paymentMethod'];
-  payment_obj['info'] = '';
-  if (session['paymentMethod'] === 'Credit') {
-    payment_obj['info'] = session['card']['cardName'] + "<br>" + rawNumber + "<br>" + session['card']['cardExpiry'] + "<br>" + session['card']['cardCvc'];
-  }
+  //payment_obj['info'] = '';
+  //if (session['paymentMethod'] === 'Credit') {
+  //  payment_obj['info'] = session['card']['cardName'] + "<br>" + rawNumber + "<br>" + session['card']['cardExpiry'] + "<br>" + session['card']['cardCvc'];
+  //}
   return tpl({
     order_contact : session['User'],
     delivery : session['delivery'],
@@ -60,7 +60,7 @@ var sendEmail = function(html, req, res) {
     "from_email": req.session.User.email,
     "from_name": req.session.User.name,
     "to": [{
-            "email": "catering@davidanddads.com",
+	    "email": "catering@davidanddads.com",
             "name": "David and Dad's",
             "type": "to"
         }]
@@ -70,6 +70,7 @@ var sendEmail = function(html, req, res) {
       User.update(req.session.User.id, {specialRequest:''}).exec(function afterwards(err, updated) {
         delete req.session.foodComplete;
           delete req.session.paymentMethod;
+          delete req.session.card;
           delete req.session.delivery;
           delete req.session.User.specialRequest;
           res.view('catering/confirm/success');
@@ -83,9 +84,16 @@ var sendEmail = function(html, req, res) {
 module.exports = {
 
   'start' : function(req, res) {
-
     if(req.session.authenticated) {
-      res.redirect('/catering/order/delivery');
+      res.redirect('/catering/order/reminder');
+    } else {
+      res.view('session/new');
+    }
+  },
+
+  'reminder' : function(req, res) {
+    if(req.session.authenticated) {
+      res.view('catering/reminder')
     } else {
       res.view('session/new');
     }

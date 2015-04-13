@@ -142,7 +142,7 @@
 
     <div class="ui divider"></div>
     <br>
-    <b> Special Requests: </b> <%= session.User.specialRequest %>
+    <b> Special Requests: </b> <% if (session.User.specialRequest) { %> <%= session.User.specialRequest %> <% } else { %> <i> None! If you thought you entered a special request, please go back to the "Food" page, and be sure to click "Checkout" to save your request. If it still isn't appearing here, please do not hesitate to call the cafe at (410)-547-0550 or email <a href="mailto:catering@davidanddads.com">catering@davidanddads.com</a> </i> <% } %>
     <div class="ui divider"></div>
 
     <center style="margin-top: 10px">

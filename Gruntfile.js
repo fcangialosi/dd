@@ -254,14 +254,14 @@ module.exports = function (grunt) {
     uglify: {
       dist: {
         src: ['.tmp/public/concat/production.js'],
-        dest: '.tmp/public/min/production_v2.js'
+        dest: '.tmp/public/min/production_v3.js'
       }
     },
 
     cssmin: {
       dist: {
         src: ['.tmp/public/concat/production.css'],
-        dest: '.tmp/public/min/production_v2.css'
+        dest: '.tmp/public/min/production_v3.css'
       }
     },
 
@@ -289,9 +289,9 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/**/*.html': ['.tmp/public/min/production_v2.js'],
-          'views/**/*.html': ['.tmp/public/min/production_v2.js'],
-          'views/**/*.ejs': ['.tmp/public/min/production_v2.js']
+          '.tmp/public/**/*.html': ['.tmp/public/min/production_v3.js'],
+          'views/**/*.html': ['.tmp/public/min/production_v3.js'],
+          'views/**/*.ejs': ['.tmp/public/min/production_v3.js']
         }
       },
 
@@ -319,9 +319,9 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/index.html': ['.tmp/public/min/production_v2.css'],
-          'views/**/*.html': ['.tmp/public/min/production_v2.css'],
-          'views/**/*.ejs': ['.tmp/public/min/production_v2.css']
+          '.tmp/public/index.html': ['.tmp/public/min/production_v3.css'],
+          'views/**/*.html': ['.tmp/public/min/production_v3.css'],
+          'views/**/*.ejs': ['.tmp/public/min/production_v3.css']
         }
       },
 
@@ -365,7 +365,7 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          'views/**/*.jade': ['.tmp/public/min/production_v2.js']
+          'views/**/*.jade': ['.tmp/public/min/production_v3.js']
         }
       },
 
@@ -389,7 +389,7 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          'views/**/*.jade': ['.tmp/public/min/production_v2.css']
+          'views/**/*.jade': ['.tmp/public/min/production_v3.css']
         }
       },
 
@@ -435,7 +435,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('compileAssets', [
-    'clean:dev',
+    //'clean:dev',
     'jst:dev',
     'less:dev',
     'copy:dev',
@@ -465,7 +465,7 @@ module.exports = function (grunt) {
 
   // When sails is lifted in production
   grunt.registerTask('prod', [
-    'clean:dev',
+   // 'clean:dev',
     'jst:dev',
     'less:dev',
     'copy:dev',

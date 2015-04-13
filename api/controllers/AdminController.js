@@ -17,6 +17,34 @@
 
 var jobs_message = '';
 var contact_message = '';
+var fs = require('fs');
+var triplesec = require('triplesec');
+
+var decrypt = function(index, user, key, res) {
+  console.log(user.savedPayment[index].number);
+  console.log(typeof user.savedPayment[index].number)
+  triplesec.decrypt({
+    data : new triplesec.Buffer(user.savedPayment[index].number, "hex"),
+    key : new triplesec.Buffer(key),
+    progress_hook : function(obj) {}
+  }, function(err, buff) {
+    if(err) {
+      rawNumber = err;
+    } else {
+      rawNumber = buff.toString();
+    }
+    user.savedPayment[index].number = rawNumber;
+    if (index == user.savedPayment.length-1) {
+      res.view('admin/view-cards', {
+        user: user,
+        cards: user.savedPayment,
+        layout : 'admin/layout'
+      });
+    } else {
+      decrypt(index+1, user, key, res);
+    }
+  });
+}
 
 module.exports = {
 
@@ -46,6 +74,42 @@ module.exports = {
 
   editContact: function(req, res, next) {
     res.view('admin/edit-contact', {layout: 'admin/layout'});
+  },
+
+  lookup: function(req, res, next) {
+    User.find({ sort: 'companyName' }, function foundUsers (err, users) {
+      if (err) return next(err);
+      res.view('admin/lookup', {
+        users: users,
+        layout : 'admin/layout'
+      });
+    });
+  },
+
+  search: function(req, res, next) {
+    // Find the user from the id passed in via params
+    User.findOne(req.param('id'), function foundUser (err, user) {
+
+      if (err) return next(err);
+      if (!user) return next('User doesn\'t exist.');
+
+      fs.readFile('./ssl/key.pem', 'utf8', function (err, privKey) {
+        if (err) {
+          console.log(err);
+        }
+        if (user.savedPayment.length <= 0) {
+            res.view('admin/view-cards', {
+                user: user,
+                cards: [],
+                layout : 'admin/layout'
+            });
+        } else {
+            decrypt(0, user, privKey, res);
+        }
+
+      });
+
+    });
   }
 
 };
