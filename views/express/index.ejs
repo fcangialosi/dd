@@ -2,107 +2,36 @@
   <div class="container">
     <center style="margin-top: 100px;">
       <h1 style="font-family: 'bebas'; font-size: 5em; color: #352504;">David and Dad's Express</h1>
-      <div class="sub-header" style="padding-top: 1px;"><h1 style="font-family: 'Montserrat'; font-size: 1.3em">In addition to our Charles St. cafe, we have three express locations to serve you.<br> All are open Monday through Friday for breakfast and lunch.</h1><br><a class="large teal ui button" href="/express/menu" style="background-color: #352504; font-family: 'Montserrat', sans-serif;"> View Our Express Menu </a></div>
+      <div class="sub-header" style="padding-top: 1px;"><h1 style="font-family:
+      'Montserrat'; font-size: 1.3em">In addition to our Charles St. cafe, we
+      have two express locations to serve you.<br> Both are open Monday through Friday for breakfast and lunch.</h1><br><a class="large teal ui button" href="/express/menu" style="background-color: #352504; font-family: 'Montserrat', sans-serif;"> View Our Express Menu </a></div>
     </center>
     <div style="height: 20px"></div>
-    <div class="ui three column stackable grid">
-      <div class="column"><center>
-        <h2 class="ui dividing header">David and Dad's Express</h2>
-        <p style="font-size: 1.3em; font-family: 'Montserrat'">Charles &amp; Fayette<br>(410) - 637  - 4840</p>
-        <a class="medium ui teal button" href="/express/fayette/specials" style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Specials </a>
-      </center>
-    </div>
-    <div class="column"><center>
-      <h2 class="ui dividing header">Cafe Express</h2>
-      <p style="font-size: 1.3em; font-family: 'Montserrat'">Light St. &amp; Pratt<br>(410) - 385  - 6267</p>
-      <a class="medium ui teal button" href="/express/pratt/specials" style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Specials </a>
-    </center>
-  </div>
-  <div class="column"><center>
-    <h2 class="ui dividing header">Garden View Cafe</h2>
-    <p style="font-size: 1.3em; font-family: 'Montserrat'">801 N. Broadway<br>(443) - 923  - 9480</p>
-    <a class="medium ui teal button" href="/express/broadway/specials" style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Specials </a>
-  </center>
-</div>
-</div>
+      <div class="ui four column stackable grid">
+        <div class="column">
+        </div>
 
+        <div class="column">
+          <center>
+            <h2 class="ui dividing header">Cafe Express</h2>
+            <p style="font-size: 1.3em; font-family: 'Montserrat'">Light St. &amp; Pratt<br>(410) - 385  - 6267</p>
+            <a class="medium ui teal button" href="/express/pratt/specials" 
+            style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Specials </a>
+          </center>
+        </div>
 
-<!-- CAFE START -->
-<div style="height: 30px"></div>
-</div>
-</div>
-<div class="ui page grid" style="border-top: 7px solid #822421;">
-  <div class="column">
-    <div style="height: 50px"></div>
-    <table class="spaced-table" style="width: 100%; margin-bottom: 30px" >
-      <tr>
-        <td style="width: 50px"><span style="font-size: 3em">1</span></td>
-        <td>
-          <div class="ui inverted segment" style="background-color: #352504 !important">
-            <h2 class="ui inverted header" style="font-family: 'Montserrat'; order-right: 2px solid #fff">
-              David and Dad's Express
-              <div class="sub header">Located at the corner of Charles and Fayette</div>
-            </h2>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-<div class="ui two column stackable page grid">
-  <div class="column">
-    <div class="ui three column stackable grid">
       <div class="column">
-        <h3 class="ui dividing header">Address</h3>
-        <p>Blaustein Building<br>At Charles and Fayette<br>1 N. Charles St.<br>Baltimore, MD 21201</p>
+        <center>
+          <h2 class="ui dividing header">Garden View Cafe</h2>
+          <p style="font-size: 1.3em; font-family: 'Montserrat'">801 N. Broadway<br>(443) - 923  - 9480</p>
+          <a class="medium ui teal button" href="/express/broadway/specials"
+          style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Specials </a>
+        </center>
       </div>
+
       <div class="column">
-        <h3 class="ui dividing header">Hours</h3>
-        <p>Monday - Friday<br> 6:30am - 3:00pm</p>
-      </div>
-      <div class="column">
-        <h3 class="ui dividing header">Phone</h3>
-        <p>(410) - 637 - 4840</p>
       </div>
     </div>
-    <h3 class="ui dividing header">Today's Breakfast Specials</h3>
-    <% _.each(specials[2].items, function (item) {%>
-      <div class="menu-item" style="padding: 10px">
-            <b class="item-name item_name" style="font-size: 1.0em"><%= item.name %></b><span class="spacer" style="display:none;"><br></span>
-            <span class="item-price"><span class="item_price"><%= item.price %></span></span></span>
-             <% if ('description' in item) { %><div class="item-desc"> <%= item.description %></div><% } %>
-      </div>
-    <% }) %>
-    <h3 class="ui dividing header">Today's Lunch Specials</h3>
-    <% _.each(specials[3].items, function (item) {%>
-      <div class="menu-item" style="padding: 10px">
-            <b class="item-name item_name" style="font-size: 1.0em"><%= item.name %></b><span class="spacer" style="display:none;"><br></span>
-            <span class="item-price"><span class="item_price"><%= item.price %></span></span></span>
-      </div>
-    <% }) %>
-    <br><br>
-    <div class="sixteen wide column">
-        <iframe padding-top: 1px;" width='100%' height='550px' frameBorder='0' src='https://a.tiles.mapbox.com/v4/fcangial.j7e35hep/zoompan.html?access_token=pk.eyJ1IjoiZmNhbmdpYWwiLCJhIjoiSEE2NW84ayJ9.I_SmNeUGjd30kkUHN9hPVA#15/39.29/-76.616'></iframe>
-      </div>
-  </div>
-  <div class="column">
-    <div class="ui grid">
-
-      <div class="sixteen wide column">
-        <img src="/images/IMG_2103.JPG" style="width: 100%; border-radius: 10px">
-      </div>
-      <div class="sixteen wide column">
-        <img src="/images/IMG_2104.JPG" style="border-radius: 10px; width: 100%">
-      </div>
-      <div class="sixteen wide column">
-        <img src="/images/IMG_2105.JPG" style="border-radius: 10px; width: 100%">
-      </div>
-    </div>
-  </div>
-</div>
-<!-- CAFE END -->
-
-
 
 <!-- CAFE START -->
 <div style="height: 30px"></div>
@@ -113,7 +42,7 @@
     <div style="height: 50px"></div>
     <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
       <tr>
-        <td style="width: 50px"><span style="font-size: 3em">2</span></td>
+        <td style="width: 50px"><span style="font-size: 3em">1</span></td>
         <td>
           <div class="ui inverted segment" style="background-color: #822421!important;">
             <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
@@ -189,7 +118,7 @@
     <div style="height: 50px"></div>
     <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
       <tr>
-        <td style="width: 50px"><span style="font-size: 3em">3</span></td>
+        <td style="width: 50px"><span style="font-size: 3em">2</span></td>
         <td>
           <div class="ui inverted segment" style="background-color: #352504!important;">
             <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
@@ -261,7 +190,7 @@
   <div class="column">
     <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
       <tr>
-        <td style="width: 50px"><span style="font-size: 3em">4</span></td>
+        <td style="width: 50px"><span style="font-size: 3em">3</span></td>
         <td>
           <div class="ui inverted segment" style="background-color: #822421!important;">
             <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
