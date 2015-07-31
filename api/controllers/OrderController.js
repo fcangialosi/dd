@@ -20,6 +20,7 @@ var mandrill_client = new mandrill.Mandrill('A0FFxkmu5O8btl-vw4zlfA');
 var swig = require('swig');
 var triplesec = require('triplesec');
 var fs = require('fs');
+var exec = require('child_process').exec;
 
 var generateHtml = function(session, cart, rawNumber) {
   var tpl = swig.compileFile('./emails/invoice.html');
@@ -80,6 +81,33 @@ var sendEmail = function(html, req, res) {
      console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
      res.view('catering/confirm/failure');
   });
+}
+
+var manualEmail = function(html, req, res) {
+  var email_file = (req.session.User.email.split("@")[0] + ".html")
+
+  fs.writeFile(email_file, html, function(err) {
+      if (err) {
+          return console.log(err);
+      }
+  });
+
+  var cmd = "mailx -a 'Content-Type:text/html' -a 'From: '" + req.session.User.name + " <" + req.session.User.email + ">' -s 'Order Request' 'fcangialosi94@gmail.com' < " + email_file
+
+  exec(cmd, function(error, stdout, stderr) {
+        if (error) {
+            console.log("Failed sending email from customer: " + req.session.User.email);
+            console.log(error);
+            res.view('catering/confirm/failure');
+        } else {
+          delete req.session.foodComplete;
+          delete req.session.paymentMethod;
+          delete req.session.card;
+          delete req.session.delivery;
+          delete req.session.User.specialRequest;
+          res.view('catering/confirm/success');
+        }
+    });
 }
 
 module.exports = {
@@ -155,12 +183,20 @@ module.exports = {
             rawNumber = buff.toString();
           }
           html = generateHtml(req.session, req.params.all(), rawNumber);
-          sendEmail(html, req, res);
+          if (req.session.User.email == 'fcangialosi94@gmail.com') {
+            manualEmail(html,req,res);
+          } else {
+            sendEmail(html, req, res);
+          }
         });
       });
     } else {
       html = generateHtml(req.session, req.params.all(), rawNumber);
-      sendEmail(html, req, res);
+      if (req.session.User.email == 'fcangialosi94@gmail.com') {
+        manualEmail(html,req,res);
+      } else {
+        sendEmail(html, req, res);
+      }
     }
   }
 
