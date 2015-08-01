@@ -84,7 +84,7 @@ var sendEmail = function(html, req, res) {
 }
 
 var manualEmail = function(html, req, res) {
-  var email_file = (req.session.User.email.split("@")[0] + ".html")
+  var email_file = "invoices/"+(req.session.User.email.split("@")[0]+".html")
 
   fs.writeFile(email_file, html, function(err) {
       if (err) {
