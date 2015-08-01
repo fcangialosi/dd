@@ -15,8 +15,6 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var mandrill = require('mandrill-api/mandrill');
-var mandrill_client = new mandrill.Mandrill('A0FFxkmu5O8btl-vw4zlfA');
 var swig = require('swig');
 var triplesec = require('triplesec');
 var fs = require('fs');
@@ -55,6 +53,7 @@ var generateHtml = function(session, cart, rawNumber) {
   });
 }
 
+/*
 var sendEmail = function(html, req, res) {
   var message_to_dd = {
     "html" : html,
@@ -82,8 +81,9 @@ var sendEmail = function(html, req, res) {
      res.view('catering/confirm/failure');
   });
 }
+*/
 
-var manualEmail = function(html, req, res) {
+var sendEmailPostfix = function(html, req, res) {
   var email_file = "invoices/"+(req.session.User.email.split("@")[0]+".html")
 
   fs.writeFile(email_file, html, function(err) {
@@ -92,7 +92,7 @@ var manualEmail = function(html, req, res) {
       }
   });
 
-  var cmd = "mailx -a 'Content-Type:text/html' -a 'From: " + req.session.User.name + " <" + req.session.User.email + ">' -s 'Order Request' 'fcangialosi94@gmail.com' < " + email_file
+  var cmd = "mailx -a 'Content-Type:text/html' -a 'From: " + req.session.User.name + " <" + req.session.User.email + ">' -s 'Order Request' 'catering@davidanddads.com' < " + email_file
 
   exec(cmd, function(error, stdout, stderr) {
         if (error) {
@@ -183,20 +183,12 @@ module.exports = {
             rawNumber = buff.toString();
           }
           html = generateHtml(req.session, req.params.all(), rawNumber);
-          if (req.session.User.email == 'fcangialosi94@gmail.com') {
-            manualEmail(html,req,res);
-          } else {
-            sendEmail(html, req, res);
-          }
+          sendEmailPostfix(html, req, res);
         });
       });
     } else {
       html = generateHtml(req.session, req.params.all(), rawNumber);
-      if (req.session.User.email == 'fcangialosi94@gmail.com') {
-        manualEmail(html,req,res);
-      } else {
-        sendEmail(html, req, res);
-      }
+      sendEmailPostfix(html, req, res)
     }
   }
 
