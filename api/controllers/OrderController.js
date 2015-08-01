@@ -92,7 +92,7 @@ var manualEmail = function(html, req, res) {
       }
   });
 
-  var cmd = "mailx -a 'Content-Type:text/html' -a 'From: '" + req.session.User.name + " <" + req.session.User.email + ">' -s 'Order Request' 'fcangialosi94@gmail.com' < " + email_file
+  var cmd = "mailx -a 'Content-Type:text/html' -a 'From: " + req.session.User.name + " <" + req.session.User.email + ">' -s 'Order Request' 'fcangialosi94@gmail.com' < " + email_file
 
   exec(cmd, function(error, stdout, stderr) {
         if (error) {
