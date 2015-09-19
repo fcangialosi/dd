@@ -55,4 +55,5 @@ ssl/
 nginx/
 
 # 
-invoices/
+invoices/*.html
+invoices/*.archive
