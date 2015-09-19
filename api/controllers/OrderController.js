@@ -16,19 +16,57 @@
  */
 
 var swig = require('swig');
+swig.setDefaults({ autoescape : false });
 var triplesec = require('triplesec');
 var fs = require('fs');
 var exec = require('child_process').exec;
 
+var getDateTime = function() {
+
+  var date = new Date();
+
+  var hour = date.getHours();
+  hour = (hour < 10 ? "0" : "") + hour;
+
+  var min  = date.getMinutes();
+  min = (min < 10 ? "0" : "") + min;
+
+  var sec  = date.getSeconds();
+  sec = (sec < 10 ? "0" : "") + sec;
+
+  var year = date.getFullYear();
+
+  var month = date.getMonth() + 1;
+  month = (month < 10 ? "0" : "") + month;
+
+  var day  = date.getDate();
+  day = (day < 10 ? "0" : "") + day;
+
+  return "[" + year + "/" + month + "/" + day + " " + hour + ":" + min + "]";
+};
+
 var generateHtml = function(session, cart, rawNumber) {
-  var tpl = swig.compileFile('./emails/invoice.html');
+  var tpl = swig.compileFile('./emails/invoice.txt');
   var subtotal_calc = 0;
   var cart_items = [];
+  var longest_item = 0;
+  for (var i=1; i <= cart['itemCount']; i++) {
+    var item_length = cart['item_name_' + i].length;
+    if (item_length > longest_item) {
+      longest_item = item_length;
+    }
+  }
+  var item_padding = longest_item + 6;
+  var padded_item = "Item" + new Array(item_padding - 4).join(' ');
+  var divider = new Array(item_padding + 28).join('=');
   for (var i=1; i <= cart['itemCount']; i++) {
     item = {}
     item['name'] = cart['item_name_' + i];
+    item['name'] = item['name'] + new Array(item_padding - item['name'].length).join(' ')
     item['price'] = "$" + parseFloat(cart['item_price_' + i]).toFixed(2);
+    item['price'] = item['price'] + new Array(11 - item['price'].length).join(' ')
     item['quantity'] = cart['item_quantity_' + i];
+    item['quantity'] = item['quantity'] + new Array(8 - item['quantity'].length).join(' ')
     total = parseFloat(cart['item_price_' + i]) * parseFloat(cart['item_quantity_' + i]);
     item['total'] = "$" + total.toFixed(2);
     cart_items.push(item);
@@ -46,6 +84,8 @@ var generateHtml = function(session, cart, rawNumber) {
     delivery : session['delivery'],
     iscard : (session['paymentMethod'] === 'Credit'),
     payment : payment_obj,
+    item_header : padded_item,
+    divider : divider,
     items : cart_items,
     subtotal : ("$" + subtotal_calc.toFixed(2)),
     tax : ("$" + parseFloat(cart.tax).toFixed(2)),
@@ -92,7 +132,9 @@ var sendEmailPostfix = function(html, req, res) {
       }
   });
 
-  var cmd = "mailx -a 'Content-Type:text/html' -a 'From: " + req.session.User.name + " <" + req.session.User.email + ">' -s 'Order Request' 'catering@davidanddads.com' < " + email_file
+  //var cmd = "mailx -a 'Content-Type:text/html' -a 'From: " + req.session.User.name + " <" + req.session.User.email + ">' -s 'Order Request' 'catering@davidanddads.com' < " + email_file
+  //var cmd = "mailx -a 'Reply-to: " + req.session.User.name + "<" + req.session.User.email + ">' -a 'From: Order Form <orders@davidanddads.com>' -s 'Order Request' 'catering@davidanddads.com' < " + email_file;
+  var cmd = "mailx -a 'Reply-to: " + req.session.User.name + "<" + req.session.User.email + ">' -a 'From: Order Form <orders@davidanddads.com>' -s 'Order Request' 'catering@davidanddads.com' < " + email_file;
 
   exec(cmd, function(error, stdout, stderr) {
         if (error) {
@@ -100,12 +142,25 @@ var sendEmailPostfix = function(html, req, res) {
             console.log(error);
             res.view('catering/confirm/failure');
         } else {
-          delete req.session.foodComplete;
-          delete req.session.paymentMethod;
-          delete req.session.card;
-          delete req.session.delivery;
-          delete req.session.User.specialRequest;
-          res.view('catering/confirm/success');
+          console.log("mailx command returned successfully for email to " + req.session.User.email);
+          var log_entry = getDateTime() + " - " + req.session.User.name + ", " + 
+                          req.session.User.email + ", " + req.session.User.companyName + 
+                          ", DELIVER ON " + req.session.delivery.date + " @ " + 
+                          req.session.delivery.time + "\n";
+
+          fs.appendFile('invoices/recent_orders.txt',log_entry,function(append_error) {
+            if (append_error) {
+              console.log("could not append order to log file:");
+              console.log(append_error);
+            } else { 
+              delete req.session.foodComplete;
+              delete req.session.paymentMethod;
+              delete req.session.card;
+              delete req.session.delivery;
+              delete req.session.User.specialRequest;
+              res.view('catering/confirm/success');
+            }
+          });
         }
     });
 }
