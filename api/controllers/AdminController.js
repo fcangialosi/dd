@@ -21,8 +21,6 @@ var fs = require('fs');
 var triplesec = require('triplesec');
 
 var decrypt = function(index, user, key, res) {
-  console.log(user.savedPayment[index].number);
-  console.log(typeof user.savedPayment[index].number)
   triplesec.decrypt({
     data : new triplesec.Buffer(user.savedPayment[index].number, "hex"),
     key : new triplesec.Buffer(key),
