@@ -133,6 +133,15 @@
         <td class="left-td">Estimated Delivery Fee*:</td>
         <td class="right-td"><span class="simpleCart_shipping"></span></td>
       </tr>
+      <tr>
+        <td class="left-td">Gratuity:</td>
+        <td class="right-td">
+            <div class="ui mini labeled input">
+                <div class="ui label">$</div>
+                <input id="gratuity-box" type="text" name="gratuity" placeholder="0.00" style="width:75px;height:35px;font-size:1.1em;margin-left:-5px;padding-left:5px;padding-right:0em;">
+            </div>
+        </td>
+      </tr>
     </table>
     </center>
 
@@ -142,7 +151,10 @@
 
     <div class="ui divider"></div>
     <br>
-    <b> Special Requests: </b> <% if (session.User.specialRequest) { %> <%= session.User.specialRequest %> <% } else { %> <i> None! If you thought you entered a special request, please go back to the "Food" page, and be sure to click "Checkout" to save your request. If it still isn't appearing here, please do not hesitate to call the cafe at (410)-547-0550 or email <a href="mailto:catering@davidanddads.com">catering@davidanddads.com</a> </i> <% } %>
+    <b> Special Requests: </b> <% if (session.User.specialRequest) { %> <%=
+		session.User.specialRequest %> <% } else { %> <i> None! If you thought you
+			entered a special request, please go back to the "Food" page, re-enter
+			your request,and be sure to click "Checkout" to save your request. If it still isn't appearing here, please do not hesitate to call the cafe at (410)-547-0550 or email <a href="mailto:catering@davidanddads.com">catering@davidanddads.com</a> </i> <% } %>
     <div class="ui divider"></div>
 
     <center style="margin-top: 10px">
@@ -155,7 +167,7 @@
       <% } %>
     </center>
     <br>
-    <p style="font-size: 0.9em"> * Actual delivery fee may vary based on distance and time of delivery. </p>
+    <p style="font-size: 0.9em"> * Actual delivery fee may vary based on distance and time of delivery. Delivery fee is not a gratuity for your delivery driver -- it helps to cover the cost of operating our delivery vehicles.</p>
   </div>
   </div>
 </div>
