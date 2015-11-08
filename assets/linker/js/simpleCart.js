@@ -113,6 +113,8 @@
 
 					taxShipping			: false,
 
+					gratuity			: 0,
+
 					data				: {}
 
 				},
@@ -371,7 +373,7 @@
 				},
 
 				grandTotal: function () {
-					return simpleCart.total() + simpleCart.tax() + simpleCart.shipping();
+					return simpleCart.total() + simpleCart.tax() + simpleCart.shipping() + simpleCart.gratuity();
 				},
 
 
@@ -533,6 +535,14 @@
 
 				setTaxRate: function(newRate) {
 					settings.taxRate = newRate;
+				},
+
+				gratuity: function() {
+					return parseFloat(settings.gratuity || 0);
+				},
+
+				setGratuity: function(newGratuity) {
+					settings.gratuity = newGratuity;
 				},
 
 				shipping: function (opt_custom_function) {
@@ -1157,6 +1167,7 @@
 							, shipping	: simpleCart.shipping()
 							, tax		: simpleCart.tax()
 							, taxRate	: simpleCart.taxRate()
+							, gratuity  : simpleCart.gratuity()
 							, itemCount : simpleCart.find({}).length
 						},
 						action = opts.url,

@@ -1,5 +1,6 @@
 ready = function() {
   var taxExempt = $('#tax-exempt');
+  var gratuityBox = $('#gratuity-box');
   taxExempt.change(function() {
     var taxRate = $('#tax-rate');
     if (this.checked) {
@@ -11,6 +12,11 @@ ready = function() {
       simpleCart.update();
       taxRate.text("6");
     }
+  });
+  gratuityBox.on('input', function() {
+    var gratuity = gratuityBox.val();
+    simpleCart.setGratuity(gratuity);
+    simpleCart.update();
   });
 
   if (window.location.pathname == "/catering/order/submit" && $('#success-signal').length) {

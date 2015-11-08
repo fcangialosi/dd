@@ -89,6 +89,7 @@ var generateHtml = function(session, cart, rawNumber) {
     items : cart_items,
     subtotal : ("$" + subtotal_calc.toFixed(2)),
     tax : ("$" + parseFloat(cart.tax).toFixed(2)),
+    gratuity : ("$" + parseFloat(cart.gratuity).toFixed(2)),
     total : ("$" + (subtotal_calc + parseFloat(cart.tax)).toFixed(2))
   });
 }
@@ -143,16 +144,16 @@ var sendEmailPostfix = function(html, req, res) {
             res.view('catering/confirm/failure');
         } else {
           console.log("mailx command returned successfully for email to " + req.session.User.email);
-          var log_entry = getDateTime() + " - " + req.session.User.name + ", " + 
-                          req.session.User.email + ", " + req.session.User.companyName + 
-                          ", DELIVER ON " + req.session.delivery.date + " @ " + 
+          var log_entry = getDateTime() + " - " + req.session.User.name + ", " +
+                          req.session.User.email + ", " + req.session.User.companyName +
+                          ", DELIVER ON " + req.session.delivery.date + " @ " +
                           req.session.delivery.time + "\n";
 
           fs.appendFile('invoices/recent_orders.txt',log_entry,function(append_error) {
             if (append_error) {
               console.log("could not append order to log file:");
               console.log(append_error);
-            } else { 
+            } else {
               delete req.session.foodComplete;
               delete req.session.paymentMethod;
               delete req.session.card;
