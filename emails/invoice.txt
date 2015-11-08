@@ -1,0 +1,40 @@
+David and Dad's Order Request
+=============================
+
+Order Contact
+-------------
+Name: {{ order_contact.name }}
+Company: {{ order_contact.companyName }}
+Phone: {{ order_contact.phone}}
+Email: {{ order_contact.email }}
+
+Payment
+-------
+Method: {{ payment.method }}
+{{ payment.info|safe }}
+
+Delivery
+--------
+Date: {{ delivery.date }}
+Time: {{ delivery.time }}
+Address: {{ delivery.address}}, {{ delivery.city}}
+Contact Name: {{ delivery.contactName }}
+Contact Phone: {{ delivery.contactPhone }}
+Special Instructions: {% if delivery.special %} {{ delivery.special }} {% else  %} No delivery instructions provided. {% endif %} 
+
+Order
+-----
+
+{{ item_header }}Qty.   Each      Total  
+{{ divider }} 
+{% for item in items -%}
+{{item.name}}{{item.quantity}}{{item.price}}{{item.total}}
+{% endfor -%}
+{{ divider }}
+Subtotal:   {{ subtotal }}
+Tax:        {{ tax }}
+Gratuity:   {{ gratuity }}
+Total:      {{ total }}
+
+Additional Instructions: 
+{{order_contact.specialRequest}}
