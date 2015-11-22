@@ -5,10 +5,17 @@ simpleCart({
         method: "POST",
         cartStyle: "table"
     },
-     taxRate: 0.06,
-     shippingCustom: function(){
+    taxRate: 0.06,
+    shippingCustom: function(){
+      if (simpleCart.isCatering) {
         return 12;
+      } else {
+        return 0;
+      }
      }
+});
+simpleCart.extend({
+  isCatering : true
 });
 
 simpleCart.bind('beforeAdd' , function( item ){
@@ -44,7 +51,6 @@ ready = function() {
     offset: 0,
     stuckClass: 'stuck-topbar',
   });
-  $('.ui.checkbox').checkbox();
 
   $('*#checkout-button').each(function() {
     $(this).click(function() {
@@ -55,7 +61,6 @@ ready = function() {
         window.location.href= "/catering/order/payment";
       } else {
         var cartEmptyModal =  $("#cartEmptyModal");
-        console.log(cartEmptyModal);
         $("#myModal").modal('hide')
         cartEmptyModal.modal('toggle');
       }

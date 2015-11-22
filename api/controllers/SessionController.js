@@ -20,6 +20,7 @@ var bcrypt = require('bcrypt');
 module.exports = {
 
  	create : function(req, res, next){
+
 	  	// Check for email and password in params sent via the form, if none
 		// redirect the browser back to the sign-in form.
 		if (!req.param('email')) {
@@ -67,7 +68,11 @@ module.exports = {
 			req.session.authenticated = true;
 			req.session.User = user;
 
-			res.redirect('/catering/order/reminder');
+			if (req.param('_type') == 'catering') {
+				res.redirect('/catering/order/reminder');
+			} else if (req.param('_type') == 'virtual') {
+				res.redirect('/virtualcafe/order');
+			}
 
 		});
 	},

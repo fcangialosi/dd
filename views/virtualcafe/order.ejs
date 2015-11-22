@@ -1,0 +1,413 @@
+<div style="height: 100px"></div>
+
+<div class="container">
+    <h1 class="ui center aligned dividing header"> Virtual Cafe Order Form </h1>
+
+    <center>
+      <h3>
+        It is currently <span style="color:<%if(isBeforeDeadline&!isWeekend){%>#2ecc71<%}else{%>#e74c3c<%}%>"><%= time %></span> on  <span style="color:<%if(isWeekend){%>#e74c3c<%}else{%>#2ecc71<%}%>"><%= dayOfTheWeek %></span>, <%= date %>.
+      </h3>
+      <h4>
+        <% if (isWeekend) { %>
+        Although we don't deliver on weekends, you may still place an order for any date this coming week!
+        <% } else { %>
+          <% if (isBeforeDeadline) { %>
+             If you would like your order to be delivered today, please be sure to submit this form by <b style="color:#e74c3c">10:30AM</b>!
+          <% } else { %>
+            Unfortunately, it is too late to make an order for today (our cutoff is 10:30AM, but you can still place one for a future date!).
+          <% } %>
+        <% } %>
+      </h4>
+    </center>
+
+    <div class="ui page grid">
+        <div class="sixteen wide column">
+            <form class="ui warning form segment" id="virtualcafe-form">
+              <% if(flash && flash.err && flash.type == 'signup') { %>
+              <div class="ui warning message">
+                <div class="header"><%- JSON.stringify(flash.err['name']) %></div>
+                <ul class="list">
+                  <li><%- JSON.stringify(flash.err['err']) %></li>
+                </ul>
+              </div>
+              <% } %>
+              <div class="ui error message"></div>
+
+
+              <h1 class="ui dividing header">1. Name</h1>
+              <p>Feel free to edit this information if necessary, we'll save it for next time to make your order even faster!</p>
+
+              <div class="three fields">
+                <div class="field">
+                  <label>Name</label>
+                    <div class="field">
+                      <input type="text" name="name" value="<%=session.User.name%>">
+                    </div>
+                </div>
+                <div class="field">
+                  <label>E-Mail</label>
+                    <div class="field">
+                      <input type="text" name="email" value="<%=session.User.email%>">
+                    </div>
+                </div>
+                <div class="field">
+                  <label>Phone</label>
+                    <div class="field">
+                      <input type="text" name="phone" value="<%=session.User.phone%>">
+                    </div>
+                </div>
+              </div>
+
+              <h1 class="ui dividing header">2. Date </h1>
+
+
+
+              <div class="ui stackable page grid">
+                <div class="three wide column">
+                </div>
+                <div class="three wide column">
+                    <br>
+                    <center>
+                        <div class="ui <%if(!isBeforeDeadline|isWeekend){%>disabled<%}%> big toggle button" id="today-button">Today</div>
+                        <%if(isWeekend){%>
+                    <p>(Sorry, we don't deliver on weekends!)</p>
+                  <%} else if (!isBeforeDeadline) { %>
+                    <p>(Sorry, we cannot accept orders past 10:30AM for today!)</p>
+                  <% } %>
+                    </center>
+                    <input type="hidden" id="date-input" value="">
+                </div>
+                <div class="four wide column">
+                <br>
+                    <center><h1>OR</h1></center>
+                </div>
+                <div class="five wide column">
+                  <div class="field">
+                    <label>Future Date</label>
+                    <div class="ui left icon input">
+                      <input type='text' id='virtual-datepicker' name='date' value =""/>
+                      <i class="calendar icon"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h1 class="ui dividing header">3. Location</h1>
+              <p> Click on your location to select it.</p>
+              <div class="field">
+                    <table class="ui celled table">
+                        <thead>
+                            <tr>
+                              <th >Location</th>
+                              <th >Time</th>
+                              <th >Contact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% _.each(locations, function(location) {%>
+                            <tr onclick="locationSelected(this);">
+                              <td><%= location.name %></td>
+                              <td><%= location.time %></td>
+                              <td><%= location.contact.name %> <br><%=location.contact.email%></td>
+                            </tr>
+                            </a>
+                            <% })%>
+                        </tbody>
+                    </table>
+                    <input type="hidden" id="location-input" type="text" name="location" value="">
+              </div>
+
+              <h1 class="ui dividing header">4. Choose your lunch items</h1>
+
+              <center><h2> 2 ways to order... </h2></center>
+              <div class="ui segment">
+              <h3 class="ui header virtual method">Method 1: Simply type in what you want </h3>
+              <div class="ui stackable grid">
+                <div class="four wide column">
+                <br>
+                <br>
+                  <p> Be as specific as possible and don't forget drinks and a dessert!</p>
+                </div>
+                <div class="twelve wide column">
+                  <div class="required field">
+                  <label>Describe your order</label>
+                  <textarea placeholder="For example: &quot;Turkey on white toast w/ lettuce, tomato & mayo, can of coke, and chocolate chip cookie.&quot;"></textarea>
+                </div>
+                </div>
+              </div>
+              </div>
+
+              <div class="ui segment">
+              <h3 class="ui header virtual method">Method 2: Choose from the menu </h3>
+              <div class="ui top attached tabular menu" id="virtualcafe-sections">
+              <% for(var i=0; i<menu.length; i++) { section = menu[i]; %>
+                <% if(!section.breakfast) { %>
+                  <a class="item" target="menu-<%=i%>">
+                    <%= section.name %>
+                  </a>
+                <%}%>
+              <% } %>
+              <a class="item" target="menu-custom">
+                Create-Your-Own
+              </a>
+              </div>
+
+              <% for(var i=0; i<menu.length; i++) { section = menu[i]; %>
+                <div class="ui bottom attached segment menu-tab" id="menu-<%=i%>">
+                  <p> <%= section.subhead %> </p>
+                  <div class="ui stackable grid">
+                  <% for(var j=0; j<section.items.length; j++) { item = section.items[j]; %>
+                    <div class="five wide column">
+                      <div class="simpleCart_shelfItem ui segment">
+                        <b class="item_name"><%= item.name %></b> (<span class="item_price"><%= item.price %></span>)
+                        <% if ('description' in item) { %><p>(click to see more)</p><% } %>
+                        <div class="item_description">
+                          <% if ('description' in item) { %>
+                            <%= item.description %>
+                          <% } %>
+                          <div class="item_select ui tiny blue button">Select</div>
+                        </div>
+                      </div>
+                    </div>
+
+                  <% }%>
+                  </div>
+                </div>
+              <% } %>
+              <div class="ui bottom attached segment menu-tab" id="menu-extras">
+                  <div class ="field"><label>Add a drink:</label></div>
+
+                  <div class="simpleCart_shelfItem">
+                     <select class="drink-select ui dropdown">
+                      <option value="">Drinks</option>
+                      <% for(var i=0; i<drinks.length; i++) { drink = drinks[i]; %>
+                        <option value="<%=drink.name%>,<%=drink.price%>"><%=drink.name%> <span class="item_price">(<%=drink.price%>)</span></option>
+                      <% } %>
+                     </select>
+                  </div>
+
+                  <hr>
+
+                  <div class ="field"><label>Add sides:</label></div>
+                  <div class="ui stackable grid">
+                    <% for(var i=0; i<sides.length; i++) { side = sides[i]; %>
+                      <div class="four wide column">
+                        <div class="simpleCart_shelfItem ui checkbox">
+                          <input type="checkbox">
+                          <label><span class="item_name"><%=side.name%></span> <span class="item_price">(<%=side.price%>)</span></label>
+                        </div>
+                      </div>
+                    <% } %>
+                  </div>
+
+                  <hr>
+
+                  <div class ="field"><label>Add dessert:</label></div>
+                  <div class="ui stackable grid">
+                    <% for(var i=0; i<desserts.length; i++) { dessert = desserts[i]; %>
+                      <div class="four wide column">
+                        <div class="simpleCart_shelfItem ui checkbox">
+                          <input type="checkbox" class="item_add">
+                          <label><span class="item_name"><%=dessert.name%></span> <span class="item_price">(<%=dessert.price%>)</span></label>
+                        </div>
+                      </div>
+                    <% } %>
+                  </div>
+
+                  <hr>
+
+                  <div class="field"><label>Special Requests:</label></div>
+                  <textarea placeholder="For example: No mushrooms" style="height:30%"></textarea>
+              </div>
+              <div class="ui bottom attached segment menu-tab" id="menu-custom">
+                <p> Create a custom sandwich or wrapper from the deli, or burger from the grill. </p>
+
+                <div class="field">
+                  <label>Type:</label>
+                  <select class="custom-type-select ui dropdown">
+                    <option value=""></option>
+                    <option value="sandwich">Sandwich or Sub</option>
+                    <option value="wrapper">Wrapper</option>
+                    <option value="burger">Burger</option>
+                  </select>
+                </div>
+
+                <hr class="sandwich-field wrapper-field burger-field custom-field">
+
+
+                <div class="sandwich-field custom-field">
+                  <label>Bread:</label>
+                  <select class="custom-select ui dropdown">
+                    <option value=""></option>
+                    <% for(var i=0; i< custom.bread.length; i++) { bread = custom.bread[i]; %>
+                      <option value="bread-<%=bread.type%>"><%=bread.type%> (<%=bread.price%>)</option>
+                    <% } %>
+                  </select>
+                </div>
+
+                <div class="wrapper-field custom-field">
+                  <label>Wrapper:</label>
+                  <select class="custom-select ui dropdown">
+                    <option value=""></option>
+                    <% for(var i=0; i< custom.wrapper.length; i++) { wrapper = custom.wrapper[i]; %>
+                      <option value="wrapper-<%=wrapper.type%>"><%=wrapper.type%> (<%=wrapper.price%>)</option>
+                    <% } %>
+                  </select>
+                </div>
+
+                <div class="burger-field custom-field">
+                  <label>Burger Type:</label>
+                  <select class="custom-select ui dropdown">
+                    <option value=""></option>
+                    <% for(var i=0; i< custom.burger.length; i++) { burger = custom.burger[i]; %>
+                      <option value="burger-<%=burger%>"><%=burger%></option>
+                    <% } %>
+                  </select>
+                </div>
+
+                <hr class="sandwich-field wrapper-field custom-field">
+
+                <div class="sandwich-field wrapper-field custom-field">
+                  <label>Meat:</label>
+                  <div class="ui stackable grid">
+                    <% for(var i=0; i<custom.delimeat.length; i++) { meat = custom.delimeat[i]; %>
+                      <div class="three wide column">
+                        <div class="simpleCart_customItem ui checkbox">
+                          <input type="checkbox">
+                          <label><span class="item_name" type="meat"><%=meat.type%></span> ($<span class="item_price"><%=meat.price%></span>)</label>
+                        </div>
+                      </div>
+                    <% } %>
+                  </div>
+                </div>
+
+                <hr class="sandwich-field wrapper-field burger-field custom-field">
+
+                <div class="sandwich-field wrapper-field burger-field custom-field">
+                  <label>Cheese:</label>
+                  <div class="ui stackable grid">
+                    <% for(var i=0; i<custom.cheese.length; i++) { cheese = custom.cheese[i]; %>
+                      <div class="three wide column">
+                        <div class="simpleCart_customItem ui checkbox">
+                          <input type="checkbox">
+                          <label><span class="item_name" type="cheese"><%=cheese.type%></span> ($<span class="item_price"><%=cheese.price%></span>)</label>
+                        </div>
+                      </div>
+                    <% } %>
+                  </div>
+                </div>
+
+
+                <hr class="sandwich-field wrapper-field burger-field custom-field">
+
+                <div class="sandwich-field wrapper-field burger-field custom-field">
+                  <label>Add-Ons:</label>
+                  <div class="ui stackable grid">
+                    <% for(var i=0; i<custom.addons.length; i++) { addon = custom.addons[i]; %>
+                      <div class="three wide column">
+                        <div class="simpleCart_customItem ui checkbox">
+                          <input type="checkbox">
+                          <label><span class="item_name" type="addons"><%=addon.type%></span> <% if (addon.price) { %>($<span class="item_price"><%=addon.price%></span>)<% } %></label>
+                        </div>
+                      </div>
+                    <% } %>
+                  </div>
+                </div>
+
+                <hr class="sandwich-field wrapper-field burger-field custom-field">
+                <div class="sandwich-field wrapper-field burger-field custom-field">
+                    <div class="ui medium blue button" id="custom-addtocart">Add to cart</div>
+                </div>
+
+              </div>
+
+              <hr>
+              <div class="simpleCart_items"></div>
+              <hr>
+              <table class="fat-table spaced-table">
+              <tr>
+                <td> <span class="ui large label">Subtotal:</span></td>
+                <td> <span class="simpleCart_total"></span></td>
+              </tr>
+              <tr>
+                <td><span class="ui large label">Tax:</span></td>
+                <td><span class="simpleCart_tax"></span></td>
+              </tr>
+              <hr>
+              <tr>
+                <td><span class="ui large label">Total:</span></td>
+                <td><span class="simpleCart_grandTotal"></span></td>
+              </tr>
+              </table>
+              </div>
+
+
+               <h3 class="ui dividing header">5. Credit Card</h3>
+
+
+              <div class="ui stackable two column middle aligned grid" id="card-form">
+                <div class="column">
+                   <% if(session.User.savedPayment && session.User.savedPayment.length > 0) { %>
+                   <p>Enter a new credit card below, or select one you've used before:</p>
+                     <center><select class="card-select ui dropdown">
+                      <option value="">Saved Cards</option>
+                      <% _.each(session.User.savedPayment, function(card){ %>
+                        <option value="<%= [card.lastFour,card.name,card.expiry,card.cvc,session.User.savedPayment.indexOf(card)].join() %>">XXXX-XXXX-XXXX-<%= card.lastFour %> (<%= card.name %>)</option>
+                      <% }) %>
+                    </select></center>
+                    <% } %>
+                    <br>
+                    <div class="ui warning fluid form segment">
+                      <div class="ui error message"></div>
+                      <% if(flash && flash.err) { %>
+                      <div class="ui warning message">
+                        <% Object.keys(flash.err).forEach(function(error) { %>
+                        <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+                        <ul class="list">
+                          <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+                        </ul>
+                        <% }) %>
+                      </div>
+                      <% } %>
+                      <div class="field">
+                        <label>Card Number</label>
+                        <input placeholder="1234 5678 1234 5678" name="number" type="text" id="card-number">
+                      </div>
+                      <div class="field">
+                        <label>Name On Card</label>
+                        <input placeholder="David Cangialosi" name="card_name" type="text" id="card-name">
+                      </div>
+                      <div class="two fields">
+                        <div class="field">
+                          <label>Expiration Date</label>
+                          <input placeholder="06/2016" name="expiry" type="text" id="card-expiry">
+                        </div>
+                        <div class="field">
+                          <label>CVC Code</label>
+                          <input placeholder="123" name="cvc" type="text" id="card-cvc">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div class="card-wrapper">
+                    </div>
+                  </div>
+                </div>
+
+
+               <div class="ui  divider"></div>
+            <center>
+              <a id="submit-button" href="javascript:;" class="ui huge green submit button simpleCart_checkout">
+                Submit My Order (<span class="simpleCart_grandTotal"></span>)
+              </a>
+            </center>
+            <input type="hidden" name="_csrf" value="<%= _csrf %>">
+            <input type="hidden" name="_type" value="virtual" id="is-virtual">
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div style="height: 150px"></div>

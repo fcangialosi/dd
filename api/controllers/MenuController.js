@@ -209,6 +209,19 @@ module.exports = {
       });
     },
 
+    adminVirtual : function(req, res, next) {
+     Menu.find({"menu":"virtual"}).sort('index asc').exec(function (err, menu) {
+        if (err) return next(err);
+        res.view('menu/list_menus',
+        {
+          menus: menu,
+          menu_type : 'virtual',
+          menu_name : "David and Dad's Virtual Cafe",
+          layout: 'admin/layout'
+        });
+      });
+    },
+
     edit: function (req, res, next) {
 
       Menu.findOne(req.param('id'), function foundMenu (err, menu) {

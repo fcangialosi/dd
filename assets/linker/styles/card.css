@@ -7,6 +7,40 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
 
+.logo.xxxx.xxxx {
+  background: white;
+  text-transform: uppercase;
+  color: #1A1876;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px; }
+  .logo.xxxx.xxxx:before, .logo.xxxx.xxxx:after {
+    content: " ";
+    display: block;
+    width: 100%;
+    height: 25%; }
+  .logo.xxxx.xxxx:before {
+    background: #1A1876;
+    bottom: 100%; }
+  .logo.xxxx.xxxx:after {
+    background: #E79800;
+    top: 100%; }
+
+.card.xxxx.identified .front:before, .card.xxxx.identified .back:before {
+  background-color: #191278; }
+.card.xxxx.identified .logo.xxxx {
+  opacity: 1; }
+
+
+.logo {
+  height: 36px;
+  width: 60px;
+  font-style: italic; }
+  .logo, .logo:before, .logo:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+
 .logo.amex {
   text-transform: uppercase;
   font-size: 4px;

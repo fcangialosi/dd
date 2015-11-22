@@ -37,6 +37,23 @@ module.exports = {
       });
   },
 
+	indexTest: function (req, res, next) {
+     Page.findOne({"page":"home"}, function (err, page) {
+        if (err) return next(err);
+        if (!page) {
+            message = '';
+        } else {
+            message = page.message;
+        }
+
+        res.view('home/test', {
+            layout: 'home/home-layout',
+            message : message
+        });
+
+      });
+	},
+
   jobs: function(req, res, next) {
     Page.findOne({"page":"jobs"}, function (err, page) {
         if (err) return next(err);

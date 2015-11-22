@@ -537,7 +537,7 @@ Card = (function() {
       numberInput: 'input[name="number"]',
       expiryInput: 'input[name="expiry"]',
       cvcInput: 'input[name="cvc"]',
-      nameInput: 'input[name="name"]'
+      nameInput: 'input[name="card_name"]'
     },
     cardSelectors: {
       cardContainer: '.card-container',

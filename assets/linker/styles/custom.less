@@ -303,10 +303,30 @@ body {
   -o-background-size: cover;
   background-size: cover;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-        src='../../images/bgs/fruit_salad.jpg',
+        src='../../images/fruit_salad.jpg',
         sizingMethod='scale');
 
   border-bottom: 7px solid @ground;
+}
+
+#virtual-section1 {
+  width: 100%;
+  min-height: 150px;
+  background: url("../../images/baltimore.jpg") no-repeat fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+        src='../../images/baltimore.jpg',
+        sizingMethod='scale');
+
+  border-bottom: 7px solid @ground;
+
+}
+
+#virtual-start {
+  border-top: 7px solid @blush;
 }
 
 #cafe-front-1 {
@@ -632,7 +652,7 @@ background-color: #fff;
   min-height: 850px;
 }
 
-.simpleCart_shelfItem {
+.catering_item {
   box-shadow: 1px 1px 3px #313131!important;
 }
 
@@ -771,4 +791,44 @@ q:after {
   padding-left: 5px;
 }
 
+.location-selected {
+  background:#418E47!important;
+  color:#FFFFFF!important;
+}
 
+.menu-tab {
+  display:none;
+}
+.menu-tab.active {
+  display:block;
+}
+
+.virtual.method {
+  color:@blush;
+}
+
+.disabled.column {
+  opacity:0.75;
+  color: #DDDDDD;
+}
+
+.item_description {
+  display:none;
+}
+.item_description.active {
+  display:block;
+}
+
+.fat-table {
+  font-size: 1.65em;
+}
+
+.custom-field {
+  display:none;
+}
+
+.active.custom-field {
+  display:block;
+  margin: 0em 0em 1em;
+  clear:both;
+}

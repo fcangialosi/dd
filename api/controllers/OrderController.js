@@ -45,7 +45,65 @@ var getDateTime = function() {
   return "[" + year + "/" + month + "/" + day + " " + hour + ":" + min + "]";
 };
 
-var generateHtml = function(session, cart, rawNumber) {
+var parseVirtualData = function(session, body, loc) {
+  var subtotal_calc = 0;
+  var cart_items = [];
+  var longest_item = 0;
+  for (var i=1; i <= body['itemCount']; i++) {
+    var item_length = body['item_name_' + i].split("(add:")[0].length;
+    if (item_length > longest_item) {
+      longest_item = item_length;
+    }
+  }
+  var item_padding = longest_item + 6;
+  var padded_item = "Item" + new Array(item_padding - 4).join(' ');
+  var divider = new Array(item_padding + 28).join('=');
+  for (var i=1; i <= body['itemCount']; i++) {
+    item = {}
+    sp = body['item_name_' + i].split("(add:");
+    item['name'] = sp[0];
+    if (sp.length > 1) {
+      item['add'] = ("(add:" + sp[1]);
+    }
+    //item['name'] = body['item_name_' + i];
+    item['name'] = item['name'] + new Array(item_padding - item['name'].length).join(' ')
+    item['price'] = "$" + parseFloat(body['item_price_' + i]).toFixed(2);
+    item['price'] = item['price'] + new Array(11 - item['price'].length).join(' ')
+    item['quantity'] = body['item_quantity_' + i];
+    item['quantity'] = item['quantity'] + new Array(8 - item['quantity'].length).join(' ')
+    total = parseFloat(body['item_price_' + i]) * parseFloat(body['item_quantity_' + i]);
+    item['total'] = "$" + total.toFixed(2);
+    cart_items.push(item);
+    subtotal_calc += total;
+  }
+
+  location = {
+    building_name : loc.name,
+    contact_name : loc.contact.name,
+    contact_email : loc.contact.email,
+    time : loc.time
+  };
+
+  obj = {
+    name : body.name,
+    phone : body.phone,
+    email : body.email,
+    card : body.number,
+    item_header : padded_item,
+    date : body.date,
+    location : location,
+    divider : divider,
+    items : cart_items,
+    subtotal : ("$" + subtotal_calc.toFixed(2)),
+    tax : ("$" + parseFloat(body.tax).toFixed(2)),
+    gratuity : ("$" + parseFloat(body.gratuity).toFixed(2)),
+    total : ("$" + (subtotal_calc + parseFloat(body.tax)).toFixed(2))
+  };
+  console.log(obj);
+  return obj;
+}
+
+var generateCateringHTML = function(session, cart, rawNumber) {
   var tpl = swig.compileFile('./emails/invoice.txt');
   var subtotal_calc = 0;
   var cart_items = [];
@@ -124,7 +182,50 @@ var sendEmail = function(html, req, res) {
 }
 */
 
-var sendEmailPostfix = function(html, req, res) {
+var sendEmailVirtual = function(customer_html, our_html, body, res) {
+  var customer_email_file = "customer_copies/"+(body.email.split("@")[0]+".html");
+  var our_email_file = "invoices/"+(body.email.split("@")[0]+".html");
+
+  try {
+    fs.writeFileSync(customer_email_file, customer_html);
+    fs.writeFileSync(our_email_file, our_html);
+    var send_customer_email_cmd = "mailx -a 'From: David and Dads Catering <catering@davidanddads.com>' -s 'Your Virtual Cafe Order' '" + body.email + "' < " + customer_email_file;
+    var send_our_email_cmd = "mailx -a 'Reply-to: " + body.name + "<" + body.email + ">' -a 'From: Order Form <orders@davidanddads.com>' -s 'Virtual Cafe Request' 'catering@davidanddads.com' < " + our_email_file;
+
+    exec(send_our_email_cmd, function(error, stdout, stderr) {
+      if (error) {
+          console.log("Failed sending email from customer: " + body.email);
+          console.log(error);
+          res.view('virtualcafe/failure');
+      } else {
+        exec(send_customer_email_cmd, function(error, stdout, stderr) {
+          if (error) {
+            console.log("Failed sending email TO customer: " + body.email);
+            console.log(error);
+            res.view('virtualcafe/failure');
+          } else {
+            console.log("mailx commands returned successfully for email to " + body.email);
+
+            var log_entry = getDateTime() + " - " + body.name + ", " +
+                          body.email + ", " + body.location + ", " + body.date + "\n";
+
+            fs.appendFileSync('invoices/recent_virtual_orders.txt',log_entry);
+            // clear some stuff??
+            res.view('virtualcafe/success');
+          }
+        });
+      }
+    });
+
+  } catch (e) {
+    console.log("Error sending email for virtual cafe order");
+    console.log(e);
+    console.log(body);
+    res.view('virtualcafe/failure');
+  }
+}
+
+var sendEmailCatering = function(html, req, res) {
   var email_file = "invoices/"+(req.session.User.email.split("@")[0]+".html")
 
   fs.writeFile(email_file, html, function(err) {
@@ -223,29 +324,30 @@ module.exports = {
 
   'submit' : function(req,res) {
     var rawNumber = null;
-    if ('card' in req.session && 'cardNumber' in req.session['card']) {
-      fs.readFile('./ssl/key.pem', 'utf8', function (err, privKey) {
-        if (err) {
-          console.log(err);
-        }
-        triplesec.decrypt({
-          data : new triplesec.Buffer(req.session['card']['cardNumber'], "hex"),
-          key : new triplesec.Buffer(privKey),
-          progress_hook : function(obj) {}
-        }, function(err, buff) {
-          if(err) {
-            rawNumber = err;
-          } else {
-            rawNumber = buff.toString();
-          }
-          html = generateHtml(req.session, req.params.all(), rawNumber);
-          sendEmailPostfix(html, req, res);
-        });
-      });
-    } else {
-      html = generateHtml(req.session, req.params.all(), rawNumber);
-      sendEmailPostfix(html, req, res)
-    }
-  }
 
+    if (req.body.isCatering === "true") { // sanity check
+      html = generateCateringHTML(req.session, req.params.all(), rawNumber);
+      sendEmailCatering(html, req, res);
+    }
+  },
+
+  'submitVirtual' : function(req,res) {
+    console.log(req.body);
+    if (req.body.isCatering === "false") { // sanity check
+      console.log("passed sanity check");
+
+      Locations.findOne({'name' : req.body.location}, function foundLocation (err, loc) {
+
+        obj = parseVirtualData(req.session, req.body, loc);
+
+        customer_template = swig.compileFile('./emails/virtual-customer-copy.txt');
+        customer_html = customer_template(obj);
+        our_template = swig.compileFile('./emails/virtual-invoice.txt');
+        our_html = our_template(obj);
+        sendEmailVirtual(customer_html, our_html, req.body, res);
+        //updateUser(req.body); // might need to save card and update name info, and save order for future orders
+      });
+    }
+
+  }
 };

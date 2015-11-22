@@ -40,6 +40,14 @@ module.exports.routes = {
 
   '/': 'HomeController.index',
 
+	'/test' : 'HomeController.indexTest',
+
+	'/virtualcafe' : 'VirtualCafeController.index',
+
+  'get /virtualcafe/order' : 'VirtualCafeController.orderForm',
+
+  'post /virtualcafe/order' : 'OrderController.submitVirtual',
+
   'post /feedback' : 'HomeController.feedback',
 
   '/news' : 'HomeController.news',
@@ -108,6 +116,8 @@ module.exports.routes = {
 
   '/admin/express' : 'MenuController.adminExpress',
 
+  '/admin/virtual' : 'MenuController.adminVirtual',
+
   '/admin/specials' : 'SpecialsController.index',
 
   '/admin/specials/charles' : 'SpecialsController.charles',
@@ -143,6 +153,7 @@ module.exports.routes = {
   'get /admin/lookup' : 'AdminController.lookup',
 
   'get /admin/lookup/:id' : 'AdminController.search'
+
 
   /*
   // But what if you want your home page to display

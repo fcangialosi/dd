@@ -69,7 +69,12 @@ module.exports.policies = {
     'signin' : 'flash',
     'create' : 'admin',
     '*' : 'admin'
-  }
+  },
+
+	VirtualCafeController : {
+		index : 'flash',
+    '*' : ['flash','isAuthenticatedVirtual']
+	}
 
   /*
 	// Here's an example of adding some policies to a controller

@@ -211,7 +211,6 @@
 					return newItem;
 				},
 
-
 				// iteration function
 				each: function (array, callback) {
 					var next,
@@ -929,13 +928,24 @@
 							simpleCart.$create("input").attr("type","hidden").attr("name",name).val(val)
 						);
 					});
+					if(!simpleCart.isCatering) {
+						simpleCart.each($('#virtualcafe-form').serializeArray(), function (obj, x, y) {
+							if (obj.name != "_csrf") {
+								form.append(
+									simpleCart.$create("input").attr("type","hidden").attr("name",obj.name).val(obj.value)
+								);
+							}
+						});
+					}
 					$.get("/csrfToken", function(data) {
 						if(data) {
 							form.append(
 								simpleCart.$create("input").attr("type","hidden").attr("name","_csrf").val(data._csrf)
 							);
 						}
-						console.log(data);
+						form.append
+							(simpleCart.$create("input").attr("type","hidden").attr("name","isCatering").val(simpleCart.isCatering)
+						);
 						simpleCart.$("body").append(form);
 						form.el.submit();
 						form.remove();
@@ -1159,6 +1169,9 @@
 					// url required
 					if (!opts.url) {
 						return simpleCart.error('URL required for SendForm Checkout');
+					}
+					if (!simpleCart.isCatering) {
+						opts.url = "/virtualcafe/order";
 					}
 
 					// build basic form options

@@ -237,3 +237,48 @@ $('#card-form')
     }
   })
 ;
+
+$('#virtualcafe-form')
+  .form({
+    name: {
+      identifier  : 'name',
+      rules: [
+        {
+          type   : 'empty',
+          prompt : 'Please enter your name'
+        }
+      ]
+    },
+    email: {
+      identifier : 'email',
+      rules: [
+        {
+          type   : 'empty',
+          prompt : "Please enter an email address"
+        },
+        {
+          type : 'email',
+          prompt : 'Please enter a valid email address'
+        }
+      ]
+    },
+    phone: {
+      identifier : 'phone',
+      rules: [
+        {
+          type : 'empty',
+          prompt : "Please enter a phone number"
+        }
+      ]
+    },
+    companyName : {
+      identifier : 'companyName',
+      rules : [
+        {
+          type : 'empty',
+          prompt : 'Please enter the name of the company you are ordering for'
+        }
+      ]
+    }
+  })
+;

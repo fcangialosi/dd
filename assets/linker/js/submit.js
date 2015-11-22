@@ -1,3 +1,16 @@
+monify = function(x) {
+  y = x.replace(/[^0-9\.]+/g, '').split(".");
+  dollars = y[0];
+  if (y.length > 1) {
+    cents = "."+y[1].substring(0,2);
+    while (cents.length < 3) {
+      cents += "0";
+    }
+    return dollars+cents;
+  } else {
+    return dollars+".00";
+  }
+}
 ready = function() {
   var taxExempt = $('#tax-exempt');
   var gratuityBox = $('#gratuity-box');
@@ -16,6 +29,13 @@ ready = function() {
   gratuityBox.on('input', function() {
     var gratuity = gratuityBox.val();
     simpleCart.setGratuity(gratuity);
+    simpleCart.update();
+  });
+  gratuityBox.on('focusout', function() {
+    var gratuity = gratuityBox.val();
+    fixed = monify(gratuity);
+    gratuityBox.val(fixed);
+    simpleCart.setGratuity(fixed);
     simpleCart.update();
   });
 

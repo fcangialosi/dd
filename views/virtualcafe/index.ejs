@@ -1,0 +1,150 @@
+<div id="virtual-section1">
+  <div class="container">
+    <center style="margin-top: 100px;">
+        <div class="ui header" style="font-size: 4em; color: #352504; font-family: 'bebas'">David and Dad's Virtual Cafe</div>
+        <div class="ui header" style="font-size:1.5em;margin-top:-1em">We deliver Monday thru Friday to each Virtual Cafe location.</div>
+        <div style="height:10px"></div>
+        <div>
+        <center>
+        <a class="huge ui green button" href="#virtual-start" style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Order Now! </a>
+        </center>
+        </div>
+        <div style="height:20px"></div>
+    </center>
+  </div>
+</div>
+
+        <div class="ui page grid">
+            <div class="six wide column">
+                   <h1 class="ui dividing header"  style="color: #822421;"> HOW IT WORKS </h1>
+                 <div class="ui divided list" style="font-size:1.3em">
+                  <div class="item">
+                    <i class="large laptop icon"></i>
+                    <div class="content">
+                      <a class="header" style="color: #822421;">1. Place Order</a>
+                      <div class="description">Place your order online by 10:30am</div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <i class="large building icon"></i>
+                    <div class="content">
+                      <span class="header">2. Pick-Up</span>
+                      <div class="description">Pick up your fresh, custom-made lunch at the designated time and location.</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="ten wide column">
+            <h1 class="ui dividing header"  style="color: #822421;"> LOCATIONS* </h1>
+                <table class="ui celled table">
+                    <thead>
+                        <tr>
+                          <th >Location</th>
+                          <th >Time</th>
+                          <th >Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% _.each(locations, function(location) {%>
+                        <tr>
+                          <td><%= location.name %></td>
+                          <td><%= location.time %></td>
+                          <td><%= location.contact.name %> <br><%=location.contact.email%></td>
+                        </tr>
+                        <% })%>
+                    </tbody>
+                </table>
+                * If your workplace is not listed here, call us at <a href="tel:4105470550" style="color: #822421;">(410)-547-0550</a> and ask about setting up a virtual cafe!
+
+            </div>
+        </div>
+
+        <div style="height:25px"></div>
+<div id="virtual-start">
+<div class="container">
+<div style="height:15px"></div>
+<h1 class="ui center aligned huge dividing header">Order Now</h1>
+
+<% if (session && session.User && session.User.email != null) { %>
+    <center>
+        You're already logged in!
+        <br>
+        <a class="huge ui green button" href="/virtualcafe/order" style="font-family: 'Montserrat', sans-serif;">Get Started</a>
+    </center>
+<% } else { %>
+<div class="ui top aligned stackable grid">
+    <div class="two wide column"></div>
+    <div class="six wide column">
+      <form action="/user/create" method="POST" class="ui warning form segment" id="signup-form">
+        <h4><b>New Customer?</b></h4>
+        <% if(flash && flash.err && flash.type == 'signup') { %>
+        <div class="ui warning message">
+          <div class="header"><%- JSON.stringify(flash.err['name']) %></div>
+          <ul class="list">
+            <li><%- JSON.stringify(flash.err['err']) %></li>
+          </ul>
+        </div>
+        <% } %>
+        <div class="ui error message"></div>
+        <div class="field">
+          <label>Name</label>
+          <div class="ui left labeled icon input">
+            <input type="text" name="name" placeholder="Your Name">
+            <i class="user icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>E-Mail</label>
+          <div class="ui left labeled icon input">
+            <input type="text" name="email" placeholder="Your Email">
+            <i class="mail icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        </div>
+        <input type="submit" class="ui blue submit button" value="Continue">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <input type="hidden" name="_type" value="virtual">
+        <input type="hidden" name="_new_customer" value="true">
+      </form>
+    </div>
+    <div class="six wide column">
+      <form action="/session/create" method="POST" class="ui warning form segment" id="signin-form">
+        <h4><b>Returning Customer?</b></h4>
+        <% if(flash && flash.err && flash.type == 'signin') { %>
+        <div class="ui warning message">
+          <% Object.keys(flash.err).forEach(function(error) { %>
+          <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+          <ul class="list">
+            <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+          </ul>
+          <% }) %>
+        </div>
+        <% } %>
+        <div class="ui error message"></div>
+        <div class="field">
+        <label>E-Mail</label>
+          <div class="ui left labeled icon input">
+            <input type="text" name="email" placeholder="Email Address">
+            <i class="user icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        </div>
+        <input type="submit" class="ui blue submit button" value="Continue!">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <input type="hidden" name="_type" value="virtual">
+        <input type="hidden" name="_new_customer" value="false">
+      </form>
+    </div>
+    <div class="two wide column"></div>
+    </div>
+<% } %>
+<div style="height:150px"></div>
+</div>
+</div>
