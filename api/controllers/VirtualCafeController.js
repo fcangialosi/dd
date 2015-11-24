@@ -67,7 +67,7 @@ module.exports = {
     var min = date.getMinutes();
 
     var isWeekend = day == 0 || day == 6;
-    var isBeforeDeadline = hour <= 10 && min <= 30;
+    var isBeforeDeadline = (hour < 10) || (hour == 10 && min <= 30);
 
     min = (min < 10 ? "0" : "") + min;
     hour = (hour < 10 ? "0" : "") + hour;
