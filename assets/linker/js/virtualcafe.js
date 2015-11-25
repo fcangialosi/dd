@@ -40,15 +40,16 @@ $(document).ready(function() {
     down: "fa fa-arrow-down"
   });
 
-  dateInput = $('#date-input');
   $('#today-button').click(function() {
     if ($('#toolate').length) {
       return;
     }
     if (this.classList.contains('active')) {
       datePicker.parent().parent()[0].setAttribute('class','field');
+      datePicker.val('');
     } else {
-      dateInput.val('today');
+      today = new Date();
+      datePicker.val((today.getMonth()+1)+"/"+today.getDate()+"/"+today.getFullYear());
       datePicker.parent().parent()[0].setAttribute('class','disabled field');
     }
     this.classList.toggle('active');
