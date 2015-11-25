@@ -67,7 +67,8 @@
 
 <% if (session && session.User && session.User.email != null) { %>
     <center>
-        You're already logged in!
+        Hi <%= session.User.name %>, you're already logged in! (<a href="/session/destroy">not you?</a>)
+        <br>
         <br>
         <a class="huge ui green button" href="/virtualcafe/order" style="font-family: 'Montserrat', sans-serif;">Get Started</a>
     </center>
@@ -75,7 +76,7 @@
 <div class="ui top aligned stackable grid">
     <div class="two wide column"></div>
     <div class="six wide column">
-      <form action="/user/create" method="POST" class="ui warning form segment" id="signup-form">
+      <form action="/user/create" method="POST" class="ui warning form segment" id="virtual-signup-form">
         <h4><b>New Customer?</b></h4>
         <% if(flash && flash.err && flash.type == 'signup') { %>
         <div class="ui warning message">

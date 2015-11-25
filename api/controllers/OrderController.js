@@ -96,7 +96,7 @@ var parseVirtualData = function(session, body, loc) {
     items : cart_items,
     subtotal : ("$" + subtotal_calc.toFixed(2)),
     tax : ("$" + parseFloat(body.tax).toFixed(2)),
-    gratuity : ("$" + parseFloat(body.gratuity).toFixed(2)),
+    shipping : ("$" + parseFloat(body.shipping).toFixed(2)),
     total : ("$" + (subtotal_calc + parseFloat(body.tax)).toFixed(2))
   };
   console.log(obj);

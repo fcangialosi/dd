@@ -42,6 +42,32 @@ $('#signup-form')
     }
   })
 ;
+$('#virtual-signup-form')
+  .form({
+    name: {
+      identifier  : 'name',
+      rules: [
+        {
+          type   : 'empty',
+          prompt : 'Please enter your name'
+        }
+      ]
+    },
+    email: {
+      identifier : 'email',
+      rules: [
+        {
+          type   : 'empty',
+          prompt : "Please enter an email address"
+        },
+        {
+          type : 'email',
+          prompt : 'Please enter a valid email address'
+        }
+      ]
+    }
+  })
+;
 $('#signin-form').form({
   email : {
     identifier : 'email',
@@ -213,10 +239,6 @@ $('#card-form')
           prompt : "Please enter the experation date of your credit card"
         },
         {
-          type   : 'length[9]',
-          prompt : 'Please make sure you entered a valid experation date!'
-        },
-        {
           type   : 'maxLength[9]',
           prompt : 'Please make sure you entered a valid experation date!'
         }
@@ -268,15 +290,64 @@ $('#virtualcafe-form')
         {
           type : 'empty',
           prompt : "Please enter a phone number"
+        },
+        {
+          type : 'length[9]',
+          prompt : 'Please enter a valid phone number (XXX-XXX-XXXX)'
         }
       ]
     },
-    companyName : {
-      identifier : 'companyName',
+    date : {
+      identifier : 'date',
       rules : [
         {
           type : 'empty',
-          prompt : 'Please enter the name of the company you are ordering for'
+          prompt : 'Please select a date for your order'
+        }
+      ]
+    },
+    location : {
+      identifier : 'location',
+      rules : [
+        {
+          type : 'empty',
+          prompt : 'Please select your location'
+        }
+      ]
+    },
+    card_number : {
+      identifier : 'number',
+      rules : [
+        {
+          type : 'empty',
+          prompt : 'Please enter a credit card number'
+        }
+      ]
+    },
+    card_name : {
+      identifier : 'card_name',
+      rules : [
+        {
+          type : 'empty',
+          prompt : 'Please enter your full name as it appears on your card'
+        }
+      ]
+    },
+    expiry : {
+      identifier : 'expiry',
+      rules : [
+        {
+          type : 'empty',
+          prompt : 'Please enter the expiration date on your credit card'
+        }
+      ]
+    },
+    cvc : {
+      identifier : 'cvc',
+      rules : [
+        {
+          type : 'empty',
+          prompt : 'Please enter the CVC code on the back of your credit card'
         }
       ]
     }

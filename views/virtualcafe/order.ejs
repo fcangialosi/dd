@@ -20,20 +20,10 @@
       </h4>
     </center>
 
-    <div class="ui page grid">
+    <div class="ui grid">
         <div class="sixteen wide column">
             <form class="ui warning form segment" id="virtualcafe-form">
-              <% if(flash && flash.err && flash.type == 'signup') { %>
-              <div class="ui warning message">
-                <div class="header"><%- JSON.stringify(flash.err['name']) %></div>
-                <ul class="list">
-                  <li><%- JSON.stringify(flash.err['err']) %></li>
-                </ul>
-              </div>
-              <% } %>
               <div class="ui error message"></div>
-
-
               <h1 class="ui dividing header">1. Name</h1>
               <p>Feel free to edit this information if necessary, we'll save it for next time to make your order even faster!</p>
 
@@ -70,9 +60,9 @@
                     <center>
                         <div class="ui <%if(!isBeforeDeadline|isWeekend){%>disabled<%}%> big toggle button" id="today-button">Today</div>
                         <%if(isWeekend){%>
-                    <p>(Sorry, we don't deliver on weekends!)</p>
+                    <p id="toolate">(Sorry, we don't deliver on weekends!)</p>
                   <%} else if (!isBeforeDeadline) { %>
-                    <p>(Sorry, we cannot accept orders past 10:30AM for today!)</p>
+                    <p id="toolate">(Sorry, we cannot accept orders past 10:30AM for today!)</p>
                   <% } %>
                     </center>
                     <input type="hidden" id="date-input" value="">
@@ -101,6 +91,7 @@
                               <th >Location</th>
                               <th >Time</th>
                               <th >Contact</th>
+                              <th> Fee </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,6 +100,7 @@
                               <td><%= location.name %></td>
                               <td><%= location.time %></td>
                               <td><%= location.contact.name %> <br><%=location.contact.email%></td>
+                              <td><%= location.fee %> </td>
                             </tr>
                             </a>
                             <% })%>
@@ -121,7 +113,10 @@
 
               <center><h2> 2 ways to order... </h2></center>
               <div class="ui segment">
-              <h3 class="ui header virtual method">Method 1: Simply type in what you want </h3>
+              <h3 class="ui header virtual method" id="method-one">Method 1: Simply type in what you want
+                <span style="float:right"><i class="large plus icon" id="method-one-plus"></i></span>
+              </h3>
+              <div class="invisible" id="method-one-expand">
               <div class="ui stackable grid">
                 <div class="four wide column">
                 <br>
@@ -131,14 +126,18 @@
                 <div class="twelve wide column">
                   <div class="required field">
                   <label>Describe your order</label>
-                  <textarea placeholder="For example: &quot;Turkey on white toast w/ lettuce, tomato & mayo, can of coke, and chocolate chip cookie.&quot;"></textarea>
+                  <textarea id="method-one-text" placeholder="For example: &quot;Turkey on white toast w/ lettuce, tomato & mayo, can of coke, and chocolate chip cookie.&quot;"></textarea>
                 </div>
                 </div>
+              </div>
               </div>
               </div>
 
               <div class="ui segment">
-              <h3 class="ui header virtual method">Method 2: Choose from the menu </h3>
+              <h3 class="ui header virtual method" id="method-two">Method 2: Choose from the menu
+                <span style="float:right"><i class="large plus icon" id="method-two-plus"></i></span>
+              </h3>
+              <div class="invisible" id="method-two-expand">
               <div class="ui top attached tabular menu" id="virtualcafe-sections">
               <% for(var i=0; i<menu.length; i++) { section = menu[i]; %>
                 <% if(!section.breakfast) { %>
@@ -333,12 +332,17 @@
                 <td><span class="ui large label">Tax:</span></td>
                 <td><span class="simpleCart_tax"></span></td>
               </tr>
+              <tr>
+                <td><span class="ui large label">Delivery Fee:</span></td>
+                <td><span class="simpleCart_shipping"></span></td>
+              </tr>
               <hr>
               <tr>
                 <td><span class="ui large label">Total:</span></td>
                 <td><span class="simpleCart_grandTotal"></span></td>
               </tr>
               </table>
+              </div>
               </div>
 
 
@@ -357,8 +361,7 @@
                     </select></center>
                     <% } %>
                     <br>
-                    <div class="ui warning fluid form segment">
-                      <div class="ui error message"></div>
+                    <div class="ui fluid segment">
                       <% if(flash && flash.err) { %>
                       <div class="ui warning message">
                         <% Object.keys(flash.err).forEach(function(error) { %>
@@ -397,6 +400,7 @@
 
 
                <div class="ui  divider"></div>
+            <div class="ui error message"></div>
             <center>
               <a id="submit-button" href="javascript:;" class="ui huge green submit button simpleCart_checkout">
                 Submit My Order (<span class="simpleCart_grandTotal"></span>)

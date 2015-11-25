@@ -1677,6 +1677,7 @@ $.fn.form = function(fields, parameters) {
             // reset errors
             formErrors = [];
             $.each(validation, function(fieldName, field) {
+              console.log(fieldName);
               if( !( module.validate.field(field) ) ) {
                 allValid = false;
               }

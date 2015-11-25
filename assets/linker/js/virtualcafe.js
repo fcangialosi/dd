@@ -16,6 +16,14 @@ $(document).ready(function() {
     choice.setAttribute('class','location-selected');
     locationInput.val(choice.children[0].innerHTML);
 
+    //update location-based shipping fee
+    fee = choice.children[3].innerHTML.replace(/(\$|\s)?/g, "");
+
+    simpleCart.shipping(function() {
+      return fee;
+    });
+    simpleCart.update();
+
     allChoices = choice.parentElement.children;
     for (var i=0; i < allChoices.length; i++){
       curr = allChoices[i];
@@ -34,8 +42,10 @@ $(document).ready(function() {
 
   dateInput = $('#date-input');
   $('#today-button').click(function() {
+    if ($('#toolate').length) {
+      return;
+    }
     if (this.classList.contains('active')) {
-
       datePicker.parent().parent()[0].setAttribute('class','field');
     } else {
       dateInput.val('today');
@@ -261,6 +271,18 @@ $(document).ready(function() {
       $('#card-number').trigger("keyup"); // updates display
       $('#card-form .form.segment').addClass("disabled");
       $('.card-wrapper').children().children()[0].classList.add("xxxx","identified"); // pretty formatting
+  });
+
+  $('#method-one').click(function () {
+    $('#method-one-expand').toggleClass('invisible');
+    $('#method-one-plus').toggleClass('plus');
+    $('#method-one-plus').toggleClass('minus');
+  });
+
+  $('#method-two').click(function () {
+    $('#method-two-expand').toggleClass('invisible');
+    $('#method-two-plus').toggleClass('plus');
+    $('#method-two-plus').toggleClass('minus');
   });
 
 });

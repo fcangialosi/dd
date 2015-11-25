@@ -21,6 +21,10 @@ module.exports = {
 
  	create : function(req, res, next){
 
+ 		redirect = '/catering/order/start';
+ 		if (req.param('_type') == 'virtual') {
+ 			redirect = '/virtualcafe';
+ 		};
 	  	// Check for email and password in params sent via the form, if none
 		// redirect the browser back to the sign-in form.
 		if (!req.param('email')) {
@@ -35,7 +39,7 @@ module.exports = {
 					err: usernameRequiredError
 			}
 
-			res.redirect('/catering/order/start');
+			res.redirect(redirect);
 			return;
 		}
 
@@ -52,7 +56,7 @@ module.exports = {
 					type: 'signin',
 					err: noAccountError
 				}
-				res.redirect('/catering/order/start');
+				res.redirect(redirect);
 				return;
 			}
 			if(user.admin) {
@@ -61,7 +65,7 @@ module.exports = {
 					type : 'signin',
 					err : isAdminError
 				}
-				res.redirect('/catering/order/start');
+				res.redirect(redirect);
 				return;
 			}
 			// Log user in
@@ -146,7 +150,7 @@ module.exports = {
 		if(wasAdmin) {
 			res.redirect('/admin/signin')
 		} else {
-			res.redirect('/catering/order/start');
+			res.redirect('/');
 		}
 
 	},

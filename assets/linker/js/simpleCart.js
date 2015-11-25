@@ -900,6 +900,9 @@
 					if (settings.checkout.type.toLowerCase() === 'custom' && isFunction(settings.checkout.fn)) {
 						settings.checkout.fn.call(simpleCart,settings.checkout);
 					} else if (isFunction(simpleCart.checkout[settings.checkout.type])) {
+						if (!$('#virtualcafe-form').form('validate').form()) {
+							return false;
+						}
 						var checkoutData = simpleCart.checkout[settings.checkout.type].call(simpleCart,settings.checkout);
 
 						// if the checkout method returns data, try to send the form

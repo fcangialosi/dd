@@ -25,28 +25,34 @@ module.exports = {
     },
 
     create : function(req, res, next) {
+
+      redirect = '/catering/order/start';
+      skip_to = '/catering/order/delivery';
+      if (req.param('_type') == 'virtual') {
+        redirect = '/virtualcafe';
+        skip_to = '/virtualcafe/order';
+      };
+
     	User.create(req.params.all(), function userCreated(err,user) {
     		if(err){
-                  if ('code' in err && err['code'] == 11000) {
-                    req.session.flash = {
-                      err: {'name' : 'E-Mail Already Exists', 'err' : 'Looks like you already have an account with us! Just enter your e-mail in the box on the right to log-in.'},
-                      type: 'signup'
-                    }
-                  } else {
-                    req.session.flash = {
-                      err: err,
-                      type: 'signup'
-                    }
-                  }
-
-          console.log(err);
-    			return res.redirect('/catering/order/start');
+          if ('code' in err && err['code'] == 11000) {
+            req.session.flash = {
+              err: {'name' : 'E-Mail Already Exists', 'err' : 'Looks like you already have an account with us! Just enter your e-mail in the box on the right to log-in.'},
+              type: 'signup'
+            }
+          } else {
+            req.session.flash = {
+              err: err,
+              type: 'signup'
+            }
+          }
+    			return res.redirect(redirect);
     		}
 
           // automatically log them in now
           req.session.authenticated = true;
           req.session.User = user;
-    	    res.redirect('/catering/order/delivery');
+    	    res.redirect(skip_to);
 
     	});
     },
