@@ -57,3 +57,4 @@ nginx/
 # 
 invoices/*.html
 invoices/*.archive
+customer_copies/
