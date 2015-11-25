@@ -1,0 +1,33 @@
+Thanks for your order! 
+
+This email confirms that we have recieved your virtual cafe order for {{ date }} at {{ location.building_name }}. If you are unsure of the dropoff location in your building, you can get in touch with your virtual cafe contact, {{ location.contact_name }} at {{ location.contact_email }}. 
+
+A copy of your order is below. If there are any errors, please do not hesistate to call us at (410)-547-0550 or email us at  catering@davidanddads.com.
+
+
+
+
+David and Dad's Virtual Cafe
+============================
+
+Name:      {{ name }}
+Phone:     {{ phone }}
+Email:     {{ email }}
+Card:      {{ card | safe }} 
+
+Date:      {{ date }} @ {{ location.time }} 
+Location:  {{ location.building_name }}
+Contact:   {{ location.contact_name }}, {{ location.contact_email }}
+
+{{ item_header }}Qty.   Each      Total  
+{{ divider }} 
+{% for item in items -%}
+{{item.name}}{{item.quantity}}{{item.price}}{{item.total}}{%if item.add%}
+{{item.add}}{%endif%}
+{% endfor -%}
+Special Requests: {{specialRequest}}
+{{ divider }}
+Subtotal:        {{ subtotal }}
+Tax:             {{ tax }}
+Delivery Fee:    {{ shipping }}
+Total:           {{ total }}

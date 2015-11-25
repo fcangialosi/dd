@@ -1,0 +1,25 @@
+David and Dad's Virtual Cafe
+============================
+
+Name:      {{ name }}
+Phone:     {{ phone }}
+Email:     {{ email }}
+Card:      {{ card | safe }} 
+
+Date:      {{ date }} @ {{ location.time }} 
+Location:  {{ location.building_name }}
+Contact:   {{ location.contact_name }}, {{ location.contact_email }}
+
+{{ item_header }}Qty.   Each      Total  
+{{ divider }} 
+{% for item in items -%}
+{{item.name}}{{item.quantity}}{{item.price}}{{item.total}}{%if item.add%}
+{{item.add}}{%endif%}
+{% endfor -%}
+Special Requests: {{specialRequest}}
+{{ divider }}
+Subtotal:        {{ subtotal }}
+Tax:             {{ tax }}
+Delivery Fee:    {{ shipping }}
+Total:           {{ total }}
+

@@ -1,0 +1,13 @@
+David and Dad's Virtual Cafe 
+============================
+
+Name:      {{ name }}
+Phone:     {{ phone }}
+Email:     {{ email }}
+Card:      {{ card | safe }} 
+
+Date:      {{ date }} @ {{ location.time }} 
+Location:  {{ location.building_name }}
+Contact:   {{ location.contact_name }}, {{ location.contact_email }}
+
+Order:     {{ order_description }} 
