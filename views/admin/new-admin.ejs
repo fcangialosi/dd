@@ -1,0 +1,52 @@
+<div class="ui stackable page grid">
+<div class="four wide column"></div>
+<div class="eight wide column">
+<center><h1 class="ui header" style="font-size: 2.5em"> Create New Admin </h1><a href="/admin" class="ui red labeled icon button"><i class="hand left icon"></i>Back to Main Page</a></center>
+
+  <form action="/user/create" method="POST" class="ui warning form segment" id="admin-signup-form">
+        <% if(flash && flash.err && flash.type == 'signup') { %>
+        <div class="ui warning message">
+          <div class="header"><%= flash.err['name'] %></div>
+          <p><%= flash.err['err'] %></p>
+        </div>
+        <% } %>
+        <div class="ui error message"></div>
+        <div class="field">
+          <label>Name</label>
+          <div class="ui left labeled icon input">
+            <input type="text" name="name" placeholder="Your Name">
+            <i class="user icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>E-Mail</label>
+          <div class="ui left labeled icon input">
+            <input type="text" name="email" placeholder="Your Email">
+            <i class="mail icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <div class="ui left labeled icon input">
+            <input type="password" name="password" placeholder="Password">
+            <i class="key icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        </div>
+        <input type="submit" class="ui blue submit button" value="Continue">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <input type="hidden" name="_type" value="admin">
+        <input type="hidden" name="createAdmin" value="true">
+      </form>
+
+</div>
+<div class="four wide column"></div>
+</div>

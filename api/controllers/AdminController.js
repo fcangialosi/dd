@@ -74,6 +74,10 @@ module.exports = {
     res.view('admin/edit-contact', {layout: 'admin/layout'});
   },
 
+  newAdmin: function(req, res, next) {
+    res.view('admin/new-admin', {layout : 'admin/layout'});
+  },
+
   lookup: function(req, res, next) {
     User.find({ sort: 'companyName' }, function foundUsers (err, users) {
       if (err) return next(err);

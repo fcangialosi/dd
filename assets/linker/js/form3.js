@@ -42,6 +42,45 @@ $('#signup-form')
     }
   })
 ;
+$('#admin-signup-form')
+  .form({
+    name: {
+      identifier  : 'name',
+      rules: [
+        {
+          type   : 'empty',
+          prompt : 'Please enter your name'
+        }
+      ]
+    },
+    email: {
+      identifier : 'email',
+      rules: [
+        {
+          type   : 'empty',
+          prompt : "Please enter an email address"
+        },
+        {
+          type : 'email',
+          prompt : 'Please enter a valid email address'
+        }
+      ]
+    },
+    password: {
+      identifier : 'password',
+      rules: [
+        {
+          type : 'empty',
+          prompt : "Please enter a phone number"
+        },
+        {
+          type : 'length[8]',
+          prompt : "Your password must be at least 8 characters long"
+        }
+      ]
+    }
+  })
+;
 $('#virtual-signup-form')
   .form({
     name: {

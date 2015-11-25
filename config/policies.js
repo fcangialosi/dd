@@ -35,10 +35,10 @@ module.exports.policies = {
   },
 
   MenuController : {
-  	index : 'admin',
-  	create : 'admin',
-  	destroy : 'admin',
-  	update : 'admin',
+  	index : ['admin','flash'],
+  	create : ['admin','flash'],
+  	destroy : ['admin','flash'],
+  	update : ['admin','flash'],
   	'displayMainMenu' : true,
   	'displayCateringMenu' : true,
   	'displayExpressMenu' : true,
@@ -67,8 +67,8 @@ module.exports.policies = {
 
   AdminController : {
     'signin' : 'flash',
-    'create' : 'admin',
-    '*' : 'admin'
+    'create' : ['flash','admin'],
+    '*' : ['flash','admin']
   },
 
 	VirtualCafeController : {

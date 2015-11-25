@@ -31,7 +31,10 @@ module.exports = {
       if (req.param('_type') == 'virtual') {
         redirect = '/virtualcafe';
         skip_to = '/virtualcafe/order';
-      };
+      } else if (req.param('_type') == 'admin') {
+        redirect = '/admin/new';
+        skip_to = '/admin';
+      }
 
     	User.create(req.params.all(), function userCreated(err,user) {
     		if(err){
@@ -49,10 +52,21 @@ module.exports = {
     			return res.redirect(redirect);
     		}
 
+        if (req.param('_type') == 'admin') {
+          req.session.flash = {
+            err : {
+              'name' : "Success",
+              'err' : "User " + user.name + " created successfully, but has no permissions."
+            },
+            type : 'success'
+          }
+        } else {
           // automatically log them in now
           req.session.authenticated = true;
           req.session.User = user;
-    	    res.redirect(skip_to);
+        }
+
+    	  res.redirect(skip_to);
 
     	});
     },

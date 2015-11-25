@@ -17,7 +17,7 @@
 
  		companyName : {
  			type : 'string',
- 			required : true
+ 			required : false
  		},
 
  		email : {
@@ -51,6 +51,7 @@
  		if('createAdmin' in formParams) {
 			require('bcrypt').hash(formParams.password, 5, function encryptionFinishsed(err, encryptedPassword) {
 				if (err) return next(err);
+                formParams.admin = true;
 				formParams.encryptedPassword = encryptedPassword;
 	    			next();
 	    		});
