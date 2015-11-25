@@ -31,19 +31,19 @@
                 <div class="field">
                   <label>Name</label>
                     <div class="field">
-                      <input type="text" name="name" value="<%=session.User.name%>">
+                      <input type="text" name="name" value="<% if ('virtualName' in session.User) { %><%= session.User.virtualName %><% } else if ('name' in session.User) { %><%= session.User.name %><% } %>">
                     </div>
                 </div>
                 <div class="field">
                   <label>E-Mail</label>
                     <div class="field">
-                      <input type="text" name="email" value="<%=session.User.email%>">
+                      <input type="text" name="email" value="<% if ('virtualEmail' in session.User) { %><%= session.User.virtualEmail %><% } else if ('email' in session.User) { %><%= session.User.email %><% } %>">
                     </div>
                 </div>
                 <div class="field">
                   <label>Phone</label>
                     <div class="field">
-                      <input type="text" name="phone" value="<%=session.User.phone%>">
+                      <input type="text" name="phone" value="<% if ('virtualPhone' in session.User) { %><%= session.User.virtualPhone %><% } else if ('phone' in session.User) { %><%= session.User.phone %><% } %>">
                     </div>
                 </div>
               </div>
@@ -126,7 +126,7 @@
                 <div class="twelve wide column">
                   <div class="required field">
                   <label>Describe your order</label>
-                  <textarea id="method-one-text" placeholder="For example: &quot;Turkey on white toast w/ lettuce, tomato & mayo, can of coke, and chocolate chip cookie.&quot;"></textarea>
+                  <textarea id="method-one-text" name="order_description" placeholder="For example: &quot;Turkey on white toast w/ lettuce, tomato & mayo, can of coke, and chocolate chip cookie.&quot;"></textarea>
                 </div>
                 </div>
               </div>
@@ -216,7 +216,7 @@
                   <hr>
 
                   <div class="field"><label>Special Requests:</label></div>
-                  <textarea placeholder="For example: No mushrooms" style="height:30%"></textarea>
+                  <textarea placeholder="For example: No mushrooms" name="special_request" style="height:30%"></textarea>
               </div>
               <div class="ui bottom attached segment menu-tab" id="menu-custom">
                 <p> Create a custom sandwich or wrapper from the deli, or burger from the grill. </p>

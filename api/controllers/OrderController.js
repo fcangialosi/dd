@@ -45,61 +45,64 @@ var getDateTime = function() {
   return "[" + year + "/" + month + "/" + day + " " + hour + ":" + min + "]";
 };
 
-var parseVirtualData = function(session, body, loc) {
-  var subtotal_calc = 0;
-  var cart_items = [];
-  var longest_item = 0;
-  for (var i=1; i <= body['itemCount']; i++) {
-    var item_length = body['item_name_' + i].split("(add:")[0].length;
-    if (item_length > longest_item) {
-      longest_item = item_length;
-    }
-  }
-  var item_padding = longest_item + 6;
-  var padded_item = "Item" + new Array(item_padding - 4).join(' ');
-  var divider = new Array(item_padding + 28).join('=');
-  for (var i=1; i <= body['itemCount']; i++) {
-    item = {}
-    sp = body['item_name_' + i].split("(add:");
-    item['name'] = sp[0];
-    if (sp.length > 1) {
-      item['add'] = ("(add:" + sp[1]);
-    }
-    //item['name'] = body['item_name_' + i];
-    item['name'] = item['name'] + new Array(item_padding - item['name'].length).join(' ')
-    item['price'] = "$" + parseFloat(body['item_price_' + i]).toFixed(2);
-    item['price'] = item['price'] + new Array(11 - item['price'].length).join(' ')
-    item['quantity'] = body['item_quantity_' + i];
-    item['quantity'] = item['quantity'] + new Array(8 - item['quantity'].length).join(' ')
-    total = parseFloat(body['item_price_' + i]) * parseFloat(body['item_quantity_' + i]);
-    item['total'] = "$" + total.toFixed(2);
-    cart_items.push(item);
-    subtotal_calc += total;
-  }
-
+var parseVirtualData = function(body, loc, method) {
   location = {
     building_name : loc.name,
     contact_name : loc.contact.name,
     contact_email : loc.contact.email,
     time : loc.time
   };
-
   obj = {
     name : body.name,
     phone : body.phone,
     email : body.email,
     card : body.number,
-    item_header : padded_item,
     date : body.date,
-    location : location,
-    divider : divider,
-    items : cart_items,
-    subtotal : ("$" + subtotal_calc.toFixed(2)),
-    tax : ("$" + parseFloat(body.tax).toFixed(2)),
-    shipping : ("$" + parseFloat(body.shipping).toFixed(2)),
-    total : ("$" + (subtotal_calc + parseFloat(body.tax)).toFixed(2))
-  };
-  console.log(obj);
+    location : location
+  }
+
+  if (method == 1) {
+    obj.order_description = body['order_description'];
+  } else if (method == 2) {
+    var subtotal_calc = 0;
+    var cart_items = [];
+    var longest_item = 0;
+    for (var i=1; i <= body['itemCount']; i++) {
+      var item_length = body['item_name_' + i].split("(add:")[0].length;
+      if (item_length > longest_item) {
+        longest_item = item_length;
+      }
+    }
+    var item_padding = longest_item + 6;
+    var padded_item = "Item" + new Array(item_padding - 4).join(' ');
+    var divider = new Array(item_padding + 28).join('=');
+    for (var i=1; i <= body['itemCount']; i++) {
+      item = {}
+      sp = body['item_name_' + i].split("(add:");
+      item['name'] = sp[0];
+      if (sp.length > 1) {
+        item['add'] = ("(add:" + sp[1]);
+      }
+      //item['name'] = body['item_name_' + i];
+      item['name'] = item['name'] + new Array(item_padding - item['name'].length).join(' ')
+      item['price'] = "$" + parseFloat(body['item_price_' + i]).toFixed(2);
+      item['price'] = item['price'] + new Array(11 - item['price'].length).join(' ')
+      item['quantity'] = body['item_quantity_' + i];
+      item['quantity'] = item['quantity'] + new Array(8 - item['quantity'].length).join(' ')
+      total = parseFloat(body['item_price_' + i]) * parseFloat(body['item_quantity_' + i]);
+      item['total'] = "$" + total.toFixed(2);
+      cart_items.push(item);
+      subtotal_calc += total;
+    }
+    obj.item_header = padded_item;
+    obj.divider = divider;
+    obj.items = cart_items;
+    obj.special_request = body['special_request'];
+    obj.subtotal = ("$" + subtotal_calc.toFixed(2)),
+    obj.tax = ("$" + parseFloat(body.tax).toFixed(2)),
+    obj.shipping = ("$" + parseFloat(body.shipping).toFixed(2)),
+    obj.total = ("$" + (subtotal_calc + parseFloat(body.tax)).toFixed(2))
+  }
   return obj;
 }
 
@@ -267,6 +270,67 @@ var sendEmailCatering = function(html, req, res) {
     });
 }
 
+var createCard = function(user, name, number, expiry, cvc, cb) {
+  fs.readFile('./ssl/key.pem', 'utf8', function (err, privKey) {
+    if (!err) {
+      triplesec.encrypt({
+        data  : new triplesec.Buffer(number),
+        key : new triplesec.Buffer(privKey),
+        progress_hook : function (obj) {}
+      }, function(err, buff){
+        if (! err) {
+          var ciphertext = buff.toString('hex');
+          newCard = {
+            lastFour : number.substring(number.length - 4),
+            number : ciphertext,
+            name : name,
+            expiry : expiry,
+            cvc : cvc
+          }
+          cb(user, newCard);
+        } else {
+          cb(user, null);
+        }
+      });
+    } else {
+      cb(user, null);
+    }
+  });
+}
+
+var updateUser = function(user, body) {
+  if (!('phone' in user)) {
+    user.phone = body.phone;
+  }
+  user.virtualName = body.name;
+  user.virtualEmail = body.email;
+  user.virtualPhone = body.phone;
+
+  var after_decrypt = function(user, newCard) {
+    if (newCard) {
+      if ('savedPayment' in user) {
+        user.savedPayment.push(newCard);
+      } else {
+        user.savedPayment = [newCard];
+      }
+    }
+    User.update(user.id, user, function userUpdate (err) {
+      if (err) {
+        console.log("Error updating user after submitting virtual order.");
+        console.log(err);
+      }
+    });
+  }
+
+  if (body.number.indexOf('X') < 0) {
+    createCard(user, body.card_name, body.number, body.expiry, body.cvc, after_decrypt);
+  } else {
+    after_decrypt(user, null);
+  }
+
+
+}
+
 module.exports = {
 
   'start' : function(req, res) {
@@ -332,20 +396,25 @@ module.exports = {
   },
 
   'submitVirtual' : function(req,res) {
-    console.log(req.body);
     if (req.body.isCatering === "false") { // sanity check
-      console.log("passed sanity check");
+
+      updateUser(req.session.User, req.body);
 
       Locations.findOne({'name' : req.body.location}, function foundLocation (err, loc) {
+        if ('order_description' in req.body) {
+          customer_template = swig.compileFile('./emails/virtual-customer-copy-m1.txt')
+          our_template = swig.compileFile('./emails/virtual-invoice-m1.txt');
+          method = 1;
+        } else {
+          customer_template = swig.compileFile('./emails/virtual-customer-copy-m2.txt');
+          our_template = swig.compileFile('./emails/virtual-invoice-m2.txt');
+          method = 2;
+        }
 
-        obj = parseVirtualData(req.session, req.body, loc);
-
-        customer_template = swig.compileFile('./emails/virtual-customer-copy.txt');
+        obj = parseVirtualData(req.body, loc, method);
         customer_html = customer_template(obj);
-        our_template = swig.compileFile('./emails/virtual-invoice.txt');
         our_html = our_template(obj);
         sendEmailVirtual(customer_html, our_html, req.body, res);
-        //updateUser(req.body); // might need to save card and update name info, and save order for future orders
       });
     }
 
