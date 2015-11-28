@@ -402,7 +402,6 @@ module.exports = {
 
       Locations.findOne({'name' : req.body.location}, function foundLocation (err, loc) {
         if ('order_description' in req.body && req.body['order_description'] !== "") {
-          console.log(req.body['order_description']);
           customer_template = swig.compileFile('./emails/virtual-customer-copy-m1.txt')
           our_template = swig.compileFile('./emails/virtual-invoice-m1.txt');
           method = 1;
