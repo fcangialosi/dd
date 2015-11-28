@@ -400,14 +400,14 @@
 
                <div class="ui  divider"></div>
             <div class="ui error message"></div>
+            <input type="hidden" name="_csrf" value="<%= _csrf %>">
+            <input type="hidden" name="_type" value="virtual" id="is-virtual">
+            </form>
             <center>
               <a id="submit-button" href="javascript:;" class="ui huge green submit button simpleCart_checkout">
                 Submit My Order
               </a>
             </center>
-            <input type="hidden" name="_csrf" value="<%= _csrf %>">
-            <input type="hidden" name="_type" value="virtual" id="is-virtual">
-            </form>
         </div>
     </div>
 
