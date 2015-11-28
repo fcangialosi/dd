@@ -37,7 +37,7 @@ module.exports = {
 				req.session.flash = {
 					type: 'signin',
 					err: usernameRequiredError
-			}
+				}
 
 			res.redirect(redirect);
 			return;
@@ -73,8 +73,10 @@ module.exports = {
 			req.session.User = user;
 
 			if (req.param('_type') == 'catering') {
+				req.session.virtual = false;
 				res.redirect('/catering/order/reminder');
 			} else if (req.param('_type') == 'virtual') {
+				req.session.virtual = true;
 				res.redirect('/virtualcafe/order');
 			}
 
@@ -143,14 +145,17 @@ module.exports = {
 	destroy: function(req, res, next) {
 
 		wasAdmin = req.session.User.admin;
+		wasVirtual = req.session.virtual;
 
 		// Wipe out the session (log out)
 		req.session.destroy();
 
 		if(wasAdmin) {
 			res.redirect('/admin/signin')
+		} else if (wasVirtual) {
+			res.redirect('/virtualcafe');
 		} else {
-			res.redirect('/');
+			res.redirect('/catering/order/start');
 		}
 
 	},
