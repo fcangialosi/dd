@@ -65,7 +65,6 @@
                     <p id="toolate">(Sorry, we cannot accept orders past 10:30AM for today!)</p>
                   <% } %>
                     </center>
-                    <input type="hidden" id="date-input" value="">
                 </div>
                 <div class="four wide column">
                 <br>
@@ -365,9 +364,9 @@
                       <% if(flash && flash.err) { %>
                       <div class="ui warning message">
                         <% Object.keys(flash.err).forEach(function(error) { %>
-                        <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>
+                        <div class="header"><%- flash.err[error]['name'] %></div>
                         <ul class="list">
-                          <li><%- JSON.stringify(flash.err[error]['message']) %></li>
+                          <li><%- flash.err[error]['message'] %></li>
                         </ul>
                         <% }) %>
                       </div>
@@ -403,7 +402,7 @@
             <div class="ui error message"></div>
             <center>
               <a id="submit-button" href="javascript:;" class="ui huge green submit button simpleCart_checkout">
-                Submit My Order (<span class="simpleCart_grandTotal"></span>)
+                Submit My Order
               </a>
             </center>
             <input type="hidden" name="_csrf" value="<%= _csrf %>">

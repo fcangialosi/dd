@@ -23,6 +23,24 @@ simpleCart.bind('beforeAdd' , function( item ){
     if (item_in_cart) {
         item_in_cart.set('quantity',0);
     }
+    console.log("beforeAdd");
+    console.log(simpleCart.total());
+    console.log(simpleCart.isCatering);
+    if (!simpleCart.total() && !simpleCart.isCatering) {
+      console.log("yay");
+      $('#submit-button').html("Submit My Order (<span class='simpleCart_grandTotal'></span>)")
+    }
+});
+
+
+simpleCart.bind('beforeRemove', function (item) {
+  console.log("beforeRemove");
+  console.log(simpleCart.total());
+  console.log(simpleCart.isCatering);
+  if (!(simpleCart.total() - item.price) && !simpleCart.isCatering) {
+    console.log("yay");
+    $('#submit-button').html("Submit My Order");
+  }
 });
 
 ready = function() {
