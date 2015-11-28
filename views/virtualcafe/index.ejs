@@ -70,13 +70,13 @@
         Hi <%= session.User.name %>, you're already logged in! (<a href="/session/destroy">not you?</a>)
         <br>
         <br>
-        <a class="huge ui green button" href="/virtualcafe/order" style="font-family: 'Montserrat', sans-serif;">Get Started</a>
+        <a id="clear-button" class="huge ui green button" href="/virtualcafe/order" style="font-family: 'Montserrat', sans-serif;">Get Started</a>
     </center>
 <% } else { %>
 <div class="ui top aligned stackable grid">
     <div class="two wide column"></div>
     <div class="six wide column">
-      <form action="/user/create" method="POST" class="ui warning form segment" id="virtual-signup-form">
+      <form action="/user/create" method="POST" class="ui warning form segment" id="virtual-signup-form" onsubmit="simpleCart.empty()">
         <h4><b>New Customer?</b></h4>
         <% if(flash && flash.err && flash.type == 'signup') { %>
         <div class="ui warning message">
@@ -107,14 +107,14 @@
             </div>
           </div>
         </div>
-        <input type="submit" class="ui blue submit button" value="Continue">
+        <input type="submit" class="ui blue submit button" value="Continue" id="clear-button">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">
         <input type="hidden" name="_type" value="virtual">
         <input type="hidden" name="_new_customer" value="true">
       </form>
     </div>
     <div class="six wide column">
-      <form action="/session/create" method="POST" class="ui warning form segment" id="signin-form">
+      <form action="/session/create" method="POST" class="ui warning form segment" id="signin-form" onsubmit="simpleCart.empty()">
         <h4><b>Returning Customer?</b></h4>
         <% if(flash && flash.err && flash.type == 'signin') { %>
         <div class="ui warning message">
@@ -137,7 +137,7 @@
             </div>
           </div>
         </div>
-        <input type="submit" class="ui blue submit button" value="Continue!">
+        <input type="submit" class="ui blue submit button" value="Continue!" id="clear-button">
         <input type="hidden" name="_csrf" value="<%= _csrf %>">
         <input type="hidden" name="_type" value="virtual">
         <input type="hidden" name="_new_customer" value="false">
