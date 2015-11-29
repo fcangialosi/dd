@@ -370,7 +370,12 @@
                         </ul>
                         <% }) %>
                       </div>
-                      <% } %>
+											<% } else { %>
+											<p>Please enter your credit card information. We'll
+											automatically save it for next time to make the ordering
+											process even faster!</p>
+											<% } %>
+
                       <div class="field">
                         <label>Card Number</label>
                         <input placeholder="1234 5678 1234 5678" name="number" type="text" id="card-number">

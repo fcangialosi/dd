@@ -67,7 +67,7 @@
 
 <% if (session && session.User && session.User.email != null) { %>
     <center>
-        Hi <%= session.User.name %>, you're already logged in! (<a href="/session/destroy">not you?</a>)
+        Hi <%= session.User.name %>, you're already logged in! (<a href="/session/destroy">logout</a>)
         <br>
         <br>
         <a id="clear-button" class="huge ui green button" href="/virtualcafe/order" style="font-family: 'Montserrat', sans-serif;">Get Started</a>
