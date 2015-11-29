@@ -28,7 +28,9 @@ module.exports = {
 
       redirect = '/catering/order/start';
       skip_to = '/catering/order/delivery';
+			req.session.virtual = false;
       if (req.param('_type') == 'virtual') {
+				req.session.virtual = true;
         redirect = '/virtualcafe';
         skip_to = '/virtualcafe/order';
       } else if (req.param('_type') == 'admin') {
