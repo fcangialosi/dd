@@ -4,6 +4,10 @@ String.prototype.capitalize = function() {
 
 $(document).ready(function() {
 
+	if (simpleCart.total() && !simpleCart.isCatering) {
+		$('#submit-button').html("Submit My Order (<span class='simpleCart_grandTotal'></span>)")
+	}
+
   if($('#is-virtual').length) {
     simpleCart.isCatering = false;
   }
