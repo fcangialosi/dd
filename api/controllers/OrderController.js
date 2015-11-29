@@ -298,7 +298,8 @@ var createCard = function(user, name, number, expiry, cvc, cb) {
   });
 }
 
-var updateUser = function(user, body) {
+var updateUser = function(session, body) {
+  user = session.User;
   if (!('phone' in user)) {
     user.phone = body.phone;
   }
@@ -319,6 +320,7 @@ var updateUser = function(user, body) {
         console.log("Error updating user after submitting virtual order.");
         console.log(err);
       }
+      session.User = user; 
     });
   }
 
@@ -398,7 +400,7 @@ module.exports = {
   'submitVirtual' : function(req,res) {
     if (req.body.isCatering === "false") { // sanity check
 
-      updateUser(req.session.User, req.body);
+      updateUser(req.session, req.body);
 
       Locations.findOne({'name' : req.body.location}, function foundLocation (err, loc) {
         if ('order_description' in req.body && req.body['order_description'] !== "") {
