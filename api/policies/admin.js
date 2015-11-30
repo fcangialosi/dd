@@ -3,7 +3,7 @@ checkPermissions = function (user, target) {
 		return false;
 	}
 	viableActions = user.permissions[target.controller];
-	if (!viableActions.length) {
+	if (!viableActions || !viableActions.length) {
 		return false;
 	}
 	if ((viableActions.indexOf('*') > -1) || (viableActions.indexOf(target.action) > -1)) {
