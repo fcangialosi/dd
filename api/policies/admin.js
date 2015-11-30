@@ -11,6 +11,7 @@ checkPermissions = function (user, target) {
 	}
 	return false;
 }
+
 module.exports = function(req, res, next) {
 
 	if(req.session.User && req.session.User.admin) {
@@ -20,15 +21,14 @@ module.exports = function(req, res, next) {
 		if (checkPermissions(req.session.User, req.target)) {
 			return next();
 		} else {
-			console.log("no permissions");
-			var notAllowedError = [{name : 'permissionsError', message : 'You do not have permission to view or edit ' + req.route.path}];
+			var notAllowedError = {name : 'permissionsError', message : 'You do not have permission to view or edit ' + req.route.path};
 			req.session.flash = {
 				err : notAllowedError
 			}
 			res.redirect('/admin');
 		}
 	} else {
-		var notAdminError = [{name : 'notAdminError', message : 'You must be an admin to view or edit this page.'}]
+		var notAdminError = {name : 'notAdminError', message : 'You must be an admin to view or edit this page.'};
 		req.session.flash = {
 			err : notAdminError
 		}

@@ -28,26 +28,36 @@
     <a class="active item" href="/admin">
       David and Dad's Admin
     </a>
+    <% if (req.session.User.permissions.menu && req.session.User.permissions.menu.length) {%>
     <a class="item" href="/admin/menu">
       <i class="browser icon"></i>
       Edit Menus
     </a>
+    <% } %>
+    <% if (req.session.User.permissions.specials && req.session.User.permissions.specials.length) {%>
     <a class="item" href="/admin/specials">
       <i class="sun icon"></i>
       Edit Specials
     </a>
+    <% } %>
+    <% if (req.session.User.permissions.user && req.session.User.permissions.user.length) {%>
     <a class="item" href="/user">
       <i class="users icon"></i>
       View Users
     </a>
+    <% } %>
+    <% if (req.session.User.permissions.page && req.session.User.permissions.page.length) {%>
     <a class="item" href="/admin/messages">
       <i class="file text icon"></i>
       Edit Pages
     </a>
+    <% } %>
+    <% if (req.session.User.permissions.admin && req.session.User.permissions.admin.length) {%>
     <a class="item" href="/admin/lookup">
       <i class="payment icon"></i>
       Card Lookup
     </a>
+    <% } %>
     <div class="right menu">
       <div class="ui item">
       <span> Admin <%= req.session.User.name.split(" ")[0] %> </span>
