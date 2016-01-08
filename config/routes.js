@@ -48,6 +48,8 @@ module.exports.routes = {
 
   'post /virtualcafe/order' : 'OrderController.submitVirtual',
 
+	'get /virtualcafe/subscribe' : 'VirtualCafeController.subscribe',
+
   'post /feedback' : 'HomeController.feedback',
 
   '/news' : 'HomeController.news',

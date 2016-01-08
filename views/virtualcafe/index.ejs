@@ -6,7 +6,9 @@
           <div style="height:10px"></div>
           <div>
             <center>
-              <a class="huge ui green button" href="#virtual-start" style="background-color: #822421; font-family: 'Montserrat', sans-serif;"> Order Now! </a>
+              <span class="huge ui inactive button"
+								style="font-family: 'Montserrat',
+								sans-serif;"> Coming Soon! </span>
             </center>
           </div>
           <div style="height:20px"></div>
@@ -76,7 +78,8 @@
 <div class="ui top aligned stackable grid">
     <div class="two wide column"></div>
     <div class="six wide column">
-      <form action="/user/create" method="POST" class="ui warning form segment" id="virtual-signup-form" onsubmit="simpleCart.empty()">
+      <form action="/user/create" method="POST" class="ui inactive warning form
+				segment" id="virtual-signup-form" onsubmit="simpleCart.empty()" style="pointer-events: all;">
         <h4><b>New Customer?</b></h4>
         <% if(flash && flash.err && flash.type == 'signup') { %>
         <div class="ui warning message">
@@ -114,7 +117,8 @@
       </form>
     </div>
     <div class="six wide column">
-      <form action="/session/create" method="POST" class="ui warning form segment" id="signin-form" onsubmit="simpleCart.empty()">
+      <form action="/session/create" method="POST" class="ui inactive warning
+				form segment" id="signin-form" onsubmit="simpleCart.empty()" style="pointer-events: all;">
         <h4><b>Returning Customer?</b></h4>
         <% if(flash && flash.err && flash.type == 'signin') { %>
         <div class="ui warning message">
