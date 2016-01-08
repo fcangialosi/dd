@@ -44,6 +44,7 @@ $(document).ready(function() {
     down: "fa fa-arrow-down"
   });
 
+
   $('#today-button').click(function() {
     if ($('#toolate').length) {
       return;
@@ -77,12 +78,12 @@ $(document).ready(function() {
     this.getElementsByClassName("item_description")[0].classList.toggle('active');
   });
 
-  $('.simpleCart_shelfItem .item_description .item_select').click(function(e) {
-    item = this.parentElement.parentElement;
+  $('.simpleCart_shelfItem .item_select').click(function(e) {
+    item = this.parentElement;
     item_name = item.parentElement.getElementsByClassName("item_name")[0].innerHTML;
-    if (item_name == "Build-Your-Own Burger") {
+    if (item_name.indexOf("Build-Your-Own") > -1) {
       $("#virtualcafe-sections > a[target='menu-custom']").click();
-      $('.custom-type-select').val("burger").change();
+      $('.custom-type-select').val("burger").change(); // get this value (sand or wrapper), and also get type of burger, then add the two items in db for sandwich and wrapper, AND get burger price information
       e.stopPropagation();
       return;
     }
@@ -228,7 +229,7 @@ $(document).ready(function() {
 
   $('.custom-select').change(function (){
     select = $(this);
-    selection = select.val().split("-")[1];
+    selection = select.val().split(".")[1];
     if (customOrder.type == "Burger") {
       customOrder['meat'] = [selection]
     } else {

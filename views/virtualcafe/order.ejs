@@ -24,8 +24,26 @@
         <div class="sixteen wide column">
             <form class="ui warning form segment" id="virtualcafe-form">
               <div class="ui error message"></div>
-              <h1 class="ui dividing header">1. Name</h1>
-              <p>Feel free to edit this information if necessary, we'll save it for next time to make your order even faster!</p>
+
+              <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
+                <tr>
+                  <td style="width: 50px"><span style="font-size: 3em">1.</span></td>
+                  <td>
+                    <div class="ui inverted segment" style="background-color: #822421!important;">
+                      <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
+                        Info
+                        <div class="sub header">Feel free to edit this information if necessary, we'll save it for next time to make your order even faster!</div>
+                      </h2>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+
+							<!--<h1 class="ui dividing header">1. Info&nbsp;&nbsp;&nbsp;&nbsp;
+								<span style="font-size:0.55em">Feel free to edit this information if
+									necessary, we'll save it for next time to make your order even
+									faster!</span>
+							</h1>-->
 
               <div class="three fields">
                 <div class="field">
@@ -48,7 +66,21 @@
                 </div>
               </div>
 
-              <h1 class="ui dividing header">2. Date </h1>
+              <!--<h1 class="ui dividing header">2. Date </h1>-->
+    <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
+      <tr>
+        <td style="width: 50px"><span style="font-size: 3em">2</span></td>
+        <td>
+          <div class="ui inverted segment" style="background-color: #822421!important;">
+            <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
+              Date
+              <div class="sub header">If it's after 10:30AM, you'll only be able
+								to place an order for a future date!</div>
+            </h2>
+          </div>
+        </td>
+      </tr>
+    </table>
 
 
 
@@ -75,14 +107,33 @@
                     <label>Future Date</label>
                     <div class="ui left icon input">
                       <input type='text' id='virtual-datepicker' name='date' value =""/>
-                      <i class="calendar icon"></i>
+                      <i class="calendar icon" onclick="$('#virtual-datepicker').focus()"></i>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <h1 class="ui dividing header">3. Location</h1>
-              <p> Click on your location to select it.</p>
+              <!--<h1 class="ui dividing header">3. Location -
+              <span style="font-size:0.5em">Click on your location to select
+								it.</span></h1>-->
+
+<table class="spaced-table" style="width: 100%; margin-bottom: 30px">
+      <tr>
+        <td style="width: 50px"><span style="font-size: 3em">3</span></td>
+        <td>
+          <div class="ui inverted segment" style="background-color: #822421!important;">
+            <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
+              Location
+              <div class="sub header">Click your location to select it. You must
+							be able to pick up your order at one of these locations at the
+							designated time.</div>
+            </h2>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+
               <div class="field">
                     <table class="ui celled table">
                         <thead>
@@ -108,26 +159,44 @@
                     <input type="hidden" id="location-input" type="text" name="location" value="">
               </div>
 
-              <h1 class="ui dividing header">4. Choose your lunch items</h1>
+              <!--<h1 class="ui dividing header">4. Choose your lunch items - <span
+									style="font-size:0.5em">2 ways to order...</span></h1>-->
+    <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
+      <tr>
+        <td style="width: 50px"><span style="font-size: 3em">4</span></td>
+        <td>
+          <div class="ui inverted segment" style="background-color: #822421!important;">
+            <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
+              Choose your lunch items
+              <div class="sub header">Two convenient ways to order!</div>
+            </h2>
+          </div>
+        </td>
+      </tr>
+    </table>
 
-              <center><h2> 2 ways to order... </h2></center>
               <div class="ui segment">
               <h3 class="ui header virtual method" id="method-one">Method 1: Simply type in what you want
-                <span style="float:right"><i class="large plus icon" id="method-one-plus"></i></span>
+								<span style="float:right"><i class="large plus icon" id="method-one-plus"></i></span>
+								<br><span style="font-size:0.7em;color:#000;">(With this method
+									you will not see your total)</span>
               </h3>
               <div class="invisible" id="method-one-expand">
               <div class="ui stackable grid">
                 <div class="four wide column">
                 <br>
                 <br>
-                  <p> Be as specific as possible and don't forget drinks and a dessert!</p>
+                  <p> Be as specific as possible and don't forget drinks and a
+									dessert! When you've typed in everything you want, click
+									continue and then enter your credit card information.</p>
+							<center><a class="ui green button" href="#creditcard">Continue</a></center>
                 </div>
                 <div class="twelve wide column">
                   <div class="required field">
                   <label>Describe your order</label>
                   <textarea id="method-one-text" name="order_description" placeholder="For example: &quot;Turkey on white toast w/ lettuce, tomato & mayo, can of coke, and chocolate chip cookie.&quot;"></textarea>
                 </div>
-                </div>
+							</div>
               </div>
               </div>
               </div>
@@ -135,6 +204,8 @@
               <div class="ui segment">
               <h3 class="ui header virtual method" id="method-two">Method 2: Choose from the menu
                 <span style="float:right"><i class="large plus icon" id="method-two-plus"></i></span>
+								<br><span style="font-size:0.7em;color:#000;">(With this method
+									you will see an exact total)</span>
               </h3>
               <div class="invisible" id="method-two-expand">
               <div class="ui top attached tabular menu" id="virtualcafe-sections">
@@ -158,13 +229,17 @@
                     <div class="five wide column">
                       <div class="simpleCart_shelfItem ui segment">
                         <b class="item_name"><%= item.name %></b> (<span class="item_price"><%= item.price %></span>)
-                        <% if ('description' in item) { %><p>(click to see more)</p><% } %>
+                        <% if ('description' in item && item['description'] != '') { %>
+                          <p>(click to see description)</p>
+                        <% } else { %>
+                          <br>
+                        <% } %>
                         <div class="item_description">
                           <% if ('description' in item) { %>
                             <%= item.description %>
                           <% } %>
-                          <div class="item_select ui tiny blue button">Select</div>
                         </div>
+                        <div class="item_select ui tiny blue button">Select</div>
                       </div>
                     </div>
 
@@ -258,7 +333,7 @@
                   <select class="custom-select ui dropdown">
                     <option value=""></option>
                     <% for(var i=0; i< custom.burger.length; i++) { burger = custom.burger[i]; %>
-                      <option value="burger-<%=burger%>"><%=burger%></option>
+                      <option value="burger.<%=burger%>"><%=burger%></option>
                     <% } %>
                   </select>
                 </div>
@@ -314,11 +389,12 @@
 
                 <hr class="sandwich-field wrapper-field burger-field custom-field">
                 <div class="sandwich-field wrapper-field burger-field custom-field">
-                    <div class="ui medium blue button" id="custom-addtocart">Add to cart</div>
+                    <div class="ui medium blue button" id="custom-addtocart">Continue</div>
                 </div>
 
               </div>
 
+              <h1> Order Summary </h1>
               <hr>
               <div class="simpleCart_items"></div>
               <hr>
@@ -332,7 +408,7 @@
                 <td><span class="simpleCart_tax"></span></td>
               </tr>
               <tr>
-                <td><span class="ui large label">Delivery Fee:</span></td>
+                <td><span class="ui large label">Service Fee:</span></td>
                 <td><span class="simpleCart_shipping"></span></td>
               </tr>
               <hr>
@@ -345,20 +421,33 @@
               </div>
 
 
-               <h3 class="ui dividing header">5. Credit Card</h3>
+               <!--<h1 class="ui dividing header">5. Credit Card</h1>-->
 
+<table class="spaced-table" style="width: 100%; margin-bottom: 30px">
+      <tr>
+        <td style="width: 50px"><span style="font-size: 3em">5</span></td>
+        <td>
+          <div class="ui inverted segment" style="background-color: #822421!important;">
+            <h2 id="creditcard" class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
+              Credit Card
+              <div class="sub header">At this time, our virtual cafe only accepts credit card payment!</div>
+            </h2>
+          </div>
+        </td>
+      </tr>
+    </table>
 
-              <div class="ui stackable two column middle aligned grid" id="card-form">
-                <div class="column">
-                   <% if(session.User.savedPayment && session.User.savedPayment.length > 0) { %>
-                   <p>Enter a new credit card below, or select one you've used before:</p>
-                     <center><select class="card-select ui dropdown">
+   <% if(session.User.savedPayment && session.User.savedPayment.length > 0) { %>
+                  <center> <h4>Select a saved credit card or enter a new one:</h4>
+                     <select class="card-select ui dropdown">
                       <option value="">Saved Cards</option>
                       <% _.each(session.User.savedPayment, function(card){ %>
                         <option value="<%= [card.lastFour,card.name,card.expiry,card.cvc,session.User.savedPayment.indexOf(card)].join() %>">XXXX-XXXX-XXXX-<%= card.lastFour %> (<%= card.name %>)</option>
                       <% }) %>
                     </select></center>
                     <% } %>
+              <div class="ui stackable two column middle aligned grid" id="card-form">
+                <div class="column">
                     <br>
                     <div class="ui fluid segment">
                       <% if(flash && flash.err) { %>
@@ -370,10 +459,6 @@
                         </ul>
                         <% }) %>
                       </div>
-											<% } else { %>
-											<p>Please enter your credit card information. We'll
-											automatically save it for next time to make the ordering
-											process even faster!</p>
 											<% } %>
 
                       <div class="field">
@@ -407,12 +492,27 @@
             <div class="ui error message"></div>
             <input type="hidden" name="_csrf" value="<%= _csrf %>">
             <input type="hidden" name="_type" value="virtual" id="is-virtual">
+
+    <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
+      <tr>
+        <td style="width: 50px"><span style="font-size: 3em">6</span></td>
+        <td>
+          <div class="ui inverted segment" style="background-color: #822421!important;">
+            <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
+              You're ready to submit your order
+            </h2>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <center><a id="submit-button" href="javascript:;" class="ui huge blue submit button simpleCart_checkout">Submit My Order!</a></center>
+
             </form>
-            <center>
+           <!-- <center>
               <a id="submit-button" href="javascript:;" class="ui huge green submit button simpleCart_checkout">
                 Submit My Order
               </a>
-            </center>
+            </center>-->
         </div>
     </div>
 

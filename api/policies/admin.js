@@ -13,7 +13,6 @@ checkPermissions = function (user, target) {
 }
 
 module.exports = function(req, res, next) {
-
 	if(req.session.User && req.session.User.admin) {
 		if (req.route.path == '/admin') {
 			return next();
