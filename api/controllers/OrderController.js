@@ -69,7 +69,7 @@ var parseVirtualData = function(body, loc, method) {
     var cart_items = [];
     var longest_item = 0;
     for (var i=1; i <= body['itemCount']; i++) {
-      var item_length = body['item_name_' + i].split("(add:")[0].length;
+      var item_length = body['item_name_' + i].split("<br>")[0].length;
       if (item_length > longest_item) {
         longest_item = item_length;
       }
@@ -79,10 +79,10 @@ var parseVirtualData = function(body, loc, method) {
     var divider = new Array(item_padding + 28).join('=');
     for (var i=1; i <= body['itemCount']; i++) {
       item = {}
-      sp = body['item_name_' + i].split("(add:");
+      sp = body['item_name_' + i].split("<br>");
       item['name'] = sp[0];
       if (sp.length > 1) {
-        item['add'] = ("(add:" + sp[1]);
+        item['add'] = sp.slice(1,sp.length).join("\n");
       }
       //item['name'] = body['item_name_' + i];
       item['name'] = item['name'] + new Array(item_padding - item['name'].length).join(' ')
