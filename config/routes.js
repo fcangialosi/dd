@@ -46,7 +46,7 @@ module.exports.routes = {
 
   'get /virtualcafe/order' : 'VirtualCafeController.orderForm',
 
-  'post /virtualcafe/order' : 'OrderController.submitVirtual',
+  '/virtualcafe/submit' : 'OrderController.submitVirtual',
 
 	'get /virtualcafe/subscribe' : 'VirtualCafeController.subscribe',
 

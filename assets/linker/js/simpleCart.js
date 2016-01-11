@@ -925,7 +925,7 @@
 					var form = simpleCart.$create("form");
 					form.attr('style', 'display:none;');
 					form.attr('action', opts.action);
-					form.attr('method', opts.method);
+					form.attr('method', "POST");
 					simpleCart.each(opts.data, function (val, x, name) {
 						form.append(
 							simpleCart.$create("input").attr("type","hidden").attr("name",name).val(val)
@@ -950,6 +950,7 @@
 							(simpleCart.$create("input").attr("type","hidden").attr("name","isCatering").val(simpleCart.isCatering)
 						);
 						simpleCart.$("body").append(form);
+						console.log(form);
 						form.el.submit();
 						form.remove();
 					});
@@ -1174,7 +1175,7 @@
 						return simpleCart.error('URL required for SendForm Checkout');
 					}
 					if (!simpleCart.isCatering) {
-						opts.url = "/virtualcafe/order";
+						opts.url = "/virtualcafe/submit";
 					}
 
 					// build basic form options

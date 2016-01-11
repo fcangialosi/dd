@@ -36,6 +36,7 @@ var getDateTime = function() {
 
   var year = date.getFullYear();
 
+
   var month = date.getMonth() + 1;
   month = (month < 10 ? "0" : "") + month;
 
@@ -320,7 +321,7 @@ var updateUser = function(session, body) {
         console.log("Error updating user after submitting virtual order.");
         console.log(err);
       }
-      session.User = user; 
+      session.User = user;
     });
   }
 
