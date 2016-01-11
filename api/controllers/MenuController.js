@@ -210,14 +210,48 @@ module.exports = {
     },
 
     adminVirtual : function(req, res, next) {
-     Menu.find({"menu":"virtual"}).sort('index asc').exec(function (err, menu) {
+      Menu.find({"menu":"virtual"}).sort('index asc').exec(function (err, menu) {
         if (err) return next(err);
-        res.view('menu/list_menus',
+        res.view('menu/list_menus_virtual',
         {
           menus: menu,
           menu_type : 'virtual',
           menu_name : "David and Dad's Virtual Cafe",
           layout: 'admin/layout'
+        });
+      });
+    },
+
+    editCustom : function(req, res, next) {
+      var i = 0;
+      var updated_items = [];
+      while (true) {
+        if (('item-'+i) in req.body) {
+          updated_items.push({
+            'type' : req.body['item-'+i],
+            'price' : req.body['price-'+i]
+          });
+          i+=1;
+        } else {
+          break;
+        }
+      }
+      Menu.findOne(req.param('id'), function foundMenu (err,menu) {
+        if (err) return next(err);
+        if (!menu) return next('Menu doesn\'t exist.');
+        menu['items'] = updated_items;
+        menu['subhead'] = req.body.subhead;
+        Menu.update(req.param('id'), menu, function itemUpdated(err) {
+          if (err) {
+            req.session.flash = {
+              err: err
+            }
+            return res.redirect('/menu/edit/' + req.param('id'));
+          }
+          req.session.flash = {
+            success: "Updated successfully."
+          }
+          res.redirect('/menu/edit/' + req.param('id'));
         });
       });
     },
@@ -228,22 +262,32 @@ module.exports = {
         if (err) return next(err);
         if (!menu) return next('Menu doesn\'t exist.');
 
-        if(req.param('index')) {
-          item = menu['items'][req.param('index')];
-          res.view('menu/edit_item',
-          {
-            menu_id : menu.id,
-            menu_name : menu.name,
-            item_index : req.param('index'),
-            layout : 'admin/layout',
-            item : item
-          });
-        } else {
-          res.view('menu/menu_index',
+        if(menu.custom || menu.extras) { // this is a build-your-own menu
+          res.view('menu/menu_index_virtual',
           {
             menu : menu,
             layout : 'admin/layout'
-          });
+          }
+          );
+        } else {
+          if(req.param('index')) {
+            item = menu['items'][req.param('index')];
+            res.view('menu/edit_item',
+            {
+              menu_id : menu.id,
+              menu_name : menu.name,
+              virtual : (menu['menu']=="virtual"),
+              item_index : req.param('index'),
+              layout : 'admin/layout',
+              item : item
+            });
+          } else {
+            res.view('menu/menu_index',
+            {
+              menu : menu,
+              layout : 'admin/layout'
+            });
+          }
         }
       });
     },

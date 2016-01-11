@@ -1,3 +1,33 @@
+<% function create_subhead(type) { %>
+  <% if (type in subheads && subheads[type]) { %>
+  <p><%= subheads[type] %></p>
+  <% } else { %>
+  <% } %>
+<% } %>
+<% var dd_red = "#822421!important" %>
+
+<% function create_freebie_section(type) {%>
+  <div class="<%=type%>-side virtual-side">
+    <% type = 'freeside_' + type; %>
+  <div class="field"><label>Choose your free side:</label></div>
+  <% create_subhead(type+'_side') %>
+  <select class="side-select ui dropdown">
+    <option value=""></option>
+    <% var item_arr; %>
+    <% if (type == "freeside_salad") { %>
+      <% item_arr = custom.salad_dressing; %>
+    <% } else { %>
+      <% item_arr = extras[type].items; %>
+    <% } %>
+    <p> <%= item_arr %> </p>
+    <% for(var i=0; i< item_arr.length; i++) { item = item_arr[i]; %>
+      <option value="<%=item.type%>"><%=item.type%></option>
+    <% } %>
+  </select>
+</div>
+
+<% } %>
+
 <div style="height: 150px"></div>
 <div class="container">
 	<div class="ui red segment">
@@ -21,6 +51,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
           <% } %>
         <% } %>
       </h4>
+      <h4> If you have any questions or problems with the order form, call (410)-547-0550. </h4>
     </center>
 
     <div class="ui grid">
@@ -231,7 +262,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                   <% for(var j=0; j<section.items.length; j++) { item = section.items[j]; %>
                     <div class="five wide column">
                       <div class="simpleCart_shelfItem ui segment">
-                        <b class="item_name"><%= item.name %></b> (<span class="item_price"><%= item.price %></span>)
+                        <b class="item_name"><%= item.name %></b> (<span class="item_price"><%= item.price %></span>)<span class="item_side" style="visibility:hidden"><%= item.serves %></span>
                         <% if ('description' in item && item['description'] != '') { %>
                           <p>(click to see description)</p>
                         <% } else { %>
@@ -251,26 +282,40 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                 </div>
               <% } %>
               <div class="ui bottom attached segment menu-tab" id="menu-extras">
-                  <div class ="field"><label>Add a drink:</label></div>
+
+                  <p>This item comes with a free side dish. Please choose one from the menu below, or select none.</p>
+
+                  <% create_freebie_section('deli') %>
+                  <% create_freebie_section('grill') %>
+                  <% create_freebie_section('salad') %>
+                  <% create_freebie_section('platter') %>
+
+                  <hr>
+
+                  <div class="field"><label>Add a drink:</label></div>
 
                   <div class="simpleCart_shelfItem">
-                     <select class="drink-select ui dropdown">
-                      <option value="">Drinks</option>
-                      <% for(var i=0; i<drinks.length; i++) { drink = drinks[i]; %>
-                        <option value="<%=drink.name%>,<%=drink.price%>"><%=drink.name%> <span class="item_price">(<%=drink.price%>)</span></option>
+                    <div class="ui stackable grid">
+                      <% for(var i=0; i<extras.drinks.items.length; i++) { drink = extras.drinks.items[i]; %>
+                        <div class="four wide column">
+                          <div class="simpleCart_shelfItem ui checkbox">
+                            <input type="checkbox">
+                            <label><span class="item_name"><%=drink.type%></span> <span class="item_price">(<%=drink.price%>)</span></label>
+                          </div>
+                        </div>
                       <% } %>
-                     </select>
+                    </div>
                   </div>
 
                   <hr>
 
                   <div class ="field"><label>Add sides:</label></div>
                   <div class="ui stackable grid">
-                    <% for(var i=0; i<sides.length; i++) { side = sides[i]; %>
+                    <% for(var i=0; i<extras.sides.items.length; i++) { side = extras.sides.items[i]; %>
                       <div class="four wide column">
                         <div class="simpleCart_shelfItem ui checkbox">
                           <input type="checkbox">
-                          <label><span class="item_name"><%=side.name%></span> <span class="item_price">(<%=side.price%>)</span></label>
+                          <label><span class="item_name"><%=side.type%></span> <span class="item_price">(<%=side.price%>)</span></label>
                         </div>
                       </div>
                     <% } %>
@@ -280,39 +325,39 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 
                   <div class ="field"><label>Add dessert:</label></div>
                   <div class="ui stackable grid">
-                    <% for(var i=0; i<desserts.length; i++) { dessert = desserts[i]; %>
+                    <% for(var i=0; i<extras.desserts.items.length; i++) { dessert = extras.desserts.items[i]; %>
                       <div class="four wide column">
                         <div class="simpleCart_shelfItem ui checkbox">
                           <input type="checkbox" class="item_add">
-                          <label><span class="item_name"><%=dessert.name%></span> <span class="item_price">(<%=dessert.price%>)</span></label>
+                          <label><span class="item_name"><%=dessert.type%></span> <span class="item_price">(<%=dessert.price%>)</span></label>
                         </div>
                       </div>
                     <% } %>
                   </div>
 
                   <hr>
-
-                  <div class="field"><label>Special Requests:</label></div>
-                  <textarea placeholder="For example: No mushrooms" name="special_request" style="height:30%"></textarea>
+                  <center><h4 class="ui blue segment" style="width:50%"> Scroll back up to order additional items, or scroll down to view your order summary, enter your payment information, and complete your order.</h4></center>
               </div>
               <div class="ui bottom attached segment menu-tab" id="menu-custom">
-                <p> Create a custom sandwich or wrapper from the deli, or burger from the grill. </p>
+                <h4 style="color:<%=dd_red%>;"> Create a custom sandwich, wrapper, burger, or salad with exactly what you want.</h4>
 
                 <div class="field">
                   <label>Type:</label>
                   <select class="custom-type-select ui dropdown">
                     <option value=""></option>
-                    <option value="sandwich">Sandwich or Sub</option>
-                    <option value="wrapper">Wrapper</option>
+                    <option value="deli">Deli Sandwich</option>
+                    <option value="wrapper">Deli Wrapper</option>
+                    <option value="grill">Grill Sandwich</option>
                     <option value="burger">Burger</option>
+                    <option value="salad">Salad</option>
                   </select>
                 </div>
 
-                <hr class="sandwich-field wrapper-field burger-field custom-field">
+                <hr class="deli-field wrapper-field grill-field burger-field salad-field custom-field">
 
-
-                <div class="sandwich-field custom-field">
+                <div class="deli-field custom-field">
                   <label>Bread:</label>
+                  <% create_subhead('bread') %>
                   <select class="custom-select ui dropdown">
                     <option value=""></option>
                     <% for(var i=0; i< custom.bread.length; i++) { bread = custom.bread[i]; %>
@@ -323,6 +368,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 
                 <div class="wrapper-field custom-field">
                   <label>Wrapper:</label>
+                  <% create_subhead('wrapper') %>
                   <select class="custom-select ui dropdown">
                     <option value=""></option>
                     <% for(var i=0; i< custom.wrapper.length; i++) { wrapper = custom.wrapper[i]; %>
@@ -331,20 +377,26 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                   </select>
                 </div>
 
-                <div class="burger-field custom-field">
-                  <label>Burger Type:</label>
-                  <select class="custom-select ui dropdown">
-                    <option value=""></option>
-                    <% for(var i=0; i< custom.burger.length; i++) { burger = custom.burger[i]; %>
-                      <option value="burger.<%=burger%>"><%=burger%></option>
+                <div class="salad-field custom-field">
+                  <label>Greens:</label>
+                  <% create_subhead('salad_greens') %>
+                  <div class="ui stackable grid">
+                    <% for(var i=0; i<custom.salad_greens.length; i++) { green = custom.salad_greens[i]; %>
+                      <div class="three wide column">
+                        <div class="simpleCart_customItem ui checkbox">
+                          <input type="checkbox">
+                          <label><span class="item_name" type="green"><%=green.type%></span></label>
+                        </div>
+                      </div>
                     <% } %>
-                  </select>
+                  </div>
                 </div>
 
-                <hr class="sandwich-field wrapper-field custom-field">
+                <hr class="deli-field wrapper-field custom-field">
 
-                <div class="sandwich-field wrapper-field custom-field">
+                <div class="deli-field wrapper-field custom-field">
                   <label>Meat:</label>
+                  <% create_subhead('delimeat') %>
                   <div class="ui stackable grid">
                     <% for(var i=0; i<custom.delimeat.length; i++) { meat = custom.delimeat[i]; %>
                       <div class="three wide column">
@@ -357,10 +409,37 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                   </div>
                 </div>
 
-                <hr class="sandwich-field wrapper-field burger-field custom-field">
+                <div class="grill-field custom-field">
+                  <label>Protein:</label>
+                  <% create_subhead('grillmeat') %>
+                  <div class="ui stackable grid">
+                    <% for(var i=0; i<custom.grillmeat.length; i++) { meat = custom.grillmeat[i]; %>
+                      <div class="three wide column">
+                        <div class="simpleCart_customItem ui checkbox">
+                          <input type="checkbox">
+                          <label><span class="item_name" type="meat"><%=meat.type%></span> ($<span class="item_price"><%=meat.price%></span>)</label>
+                        </div>
+                      </div>
+                    <% } %>
+                  </div>
+                </div>
 
-                <div class="sandwich-field wrapper-field burger-field custom-field">
+                <div class="burger-field custom-field">
+                  <label>Meat:</label>
+                  <% create_subhead('burger') %>
+                  <select class="custom-select ui dropdown">
+                    <option value=""></option>
+                    <% for(var i=0; i< custom.burger.length; i++) { burger = custom.burger[i]; %>
+                      <option value="burger.<%=burger%>"><%=burger%></option>
+                    <% } %>
+                  </select>
+                </div>
+
+                <hr class="deli-field wrapper-field grill-field burger-field salad-field custom-field">
+
+                <div class="deli-field wrapper-field grill-field burger-field custom-field">
                   <label>Cheese:</label>
+                  <% create_subhead('cheese') %>
                   <div class="ui stackable grid">
                     <% for(var i=0; i<custom.cheese.length; i++) { cheese = custom.cheese[i]; %>
                       <div class="three wide column">
@@ -373,11 +452,26 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                   </div>
                 </div>
 
+                <div class="salad-field custom-field">
+                  <label>Free Topings:</label>
+                  <% create_subhead('salad_free') %>
+                  <div class="ui stackable grid">
+                    <% for(var i=0; i<custom.salad_free.length; i++) { topping = custom.salad_free[i]; %>
+                      <div class="three wide column">
+                        <div class="simpleCart_customItem ui checkbox">
+                          <input type="checkbox">
+                          <label><span class="item_name" type="free_topping"><%=topping.type%></span></label>
+                        </div>
+                      </div>
+                    <% } %>
+                  </div>
+                </div>
 
-                <hr class="sandwich-field wrapper-field burger-field custom-field">
+                <hr class="deli-field wrapper-field grill-field burger-field salad-field custom-field">
 
-                <div class="sandwich-field wrapper-field burger-field custom-field">
+                <div class="deli-field wrapper-field grill-field burger-field custom-field">
                   <label>Add-Ons:</label>
+                  <% create_subhead('addons') %>
                   <div class="ui stackable grid">
                     <% for(var i=0; i<custom.addons.length; i++) { addon = custom.addons[i]; %>
                       <div class="three wide column">
@@ -390,8 +484,46 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                   </div>
                 </div>
 
-                <hr class="sandwich-field wrapper-field burger-field custom-field">
-                <div class="sandwich-field wrapper-field burger-field custom-field">
+                <div class="salad-field custom-field">
+                  <label>Premium Toppings:</label>
+                  <% create_subhead('salad_premium') %>
+                  <div class="ui stackable grid">
+                    <% for(var i=0; i<custom.salad_premium.length; i++) { topping = custom.salad_premium[i]; %>
+                      <div class="three wide column">
+                        <div class="simpleCart_customItem ui checkbox">
+                          <input type="checkbox">
+                          <label><span class="item_name" type="premium_topping"><%=topping.type%></span> ($<span class="item_price"><%=topping.price%></span>)</label>
+                        </div>
+                      </div>
+                    <% } %>
+                  </div>
+                </div>
+
+                <hr class="salad-field custom-field">
+
+                <div class="salad-field custom-field">
+                  <label>Dressings (served on the side):</label>
+                  <% create_subhead('salad_dressing') %>
+                  <div class="ui stackable grid">
+                    <% for(var i=0; i<custom.salad_dressing.length; i++) { dressing = custom.salad_dressing[i]; %>
+                      <div class="three wide column">
+                        <div class="simpleCart_customItem ui checkbox">
+                          <input type="checkbox">
+                          <label><span class="item_name" type="dressing"><%=dressing.type%></span></label>
+                        </div>
+                      </div>
+                    <% } %>
+                  </div>
+                </div>
+
+                <hr class="deli-field wrapper-field grill-field burger-field salad-field custom-field">
+
+                <div class="field deli-field wrapper-field grill-field burger-field salad-field custom-field"><label>Special Requests:</label>
+                  <textarea placeholder="For example: Not too much mayo" name="special_request" style="height:30%" id="special_request"></textarea>
+                </div>
+
+                <hr class="deli-field wrapper-field grill-field burger-field salad-field custom-field">
+                <div class="deli-field wrapper-field grill-field burger-field salad-field custom-field">
                     <div class="ui medium blue button" id="custom-addtocart">Continue</div>
                 </div>
 

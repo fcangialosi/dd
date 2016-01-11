@@ -35,16 +35,14 @@ module.exports.policies = {
   },
 
   MenuController : {
-  	index : ['admin','flash'],
-  	create : ['admin','flash'],
-  	destroy : ['admin','flash'],
-  	update : ['admin','flash'],
   	'displayMainMenu' : true,
   	'displayCateringMenu' : true,
   	'displayExpressMenu' : true,
-            'displayMainSpecials' : true,
-            'displayExpressSpecials' : true,
-  	'*' : ['flash', 'isAuthenticated']
+    'displayMainSpecials' : true,
+    'displayExpressSpecials' : true,
+    'displayOrderingMenu' : ['flash','isAuthenticated'],
+    'printOrder' : ['flash','isAuthenticated'],
+  	'*' : ['flash', 'admin']
   },
 
   SpecialsController : {

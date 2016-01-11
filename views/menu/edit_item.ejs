@@ -2,32 +2,49 @@
 <div class="column">
 <center><h1 class="ui header" style="font-size: 2.5em"> Edit <%= item.name %> </h1><a href="/menu/edit/<%= menu_id %>" class="ui red labeled icon button"><i class="hand left icon"></i>Back to <%= menu_name %> (Without Saving)</a></center>
 
-
-<form action="/menu/update/<%= menu_id %>?index=<%= item_index %>" method="POST" class="ui large fluid form segment" id="edit-form">
+<form action="/menu/update/<%= menu_id %>?index=<%= item_index %>" method="POST" class="ui large fluid inverted form segment" id="edit-form">
 	<p>Edit only the fields you would like to change, everything else will remain the same.</p>
 	<div class="three fields">
 	  <div class="field">
 	    <label>Item Name</label>
 	    <input value="<%= item.name %>" name="name" type="text" class="form-control">
 	  </div>
+	  <% if (!virtual) { %>
 	  <div class="field">
 	    <label>Minimum (can leave blank) </label>
 	    <input value="<%= item.minimum %>" name="minimum" type="text" class="form-control">
 	  </div>
+	  <% } %>
+	  <% if (!virtual) { %>
 	  <div class="field">
 	    <label>Serves (can leave blank) </label>
 	    <input value="<%= item.serves %>" name="serves" type="text" class="form-control">
 	  </div>
+
+	  <% } else { %>
+	  <div class="field">
+	  	<label>Side Dish Group</label>
+		<select class="ui dropdown" name="serves" class="form-control" style="color:#424242" value="<%=item.serves %>">
+        <option value=""></option>
+        <option value="salad" <%if (item.serves=="salad"){%>selected<%}%>>Salad (Dressings)</option>
+        <option value="deli" <%if (item.serves=="deli"){%>selected<%}%>>Deli (Chips)</option>
+        <option value="grill" <%if (item.serves=="grill"){%>selected<%}%>>Grill (Fries)</option>
+        <option value="platter" <%if (item.serves=="platter"){%>selected<%}%>>Platter (Cole Slaw, etc.)</option>
+        </select>
+	  </div>
+	  <% } %>
 	</div>
-	<div class="two fields">
-	<div class="field">
+	<div class="<% if (virtual) { %>one<% } else { %>two<% } %> fields">
+	  <div class="field">
 	    <label>Price</label>
 	    <input value="<%= item.price %>" name="price" type="text" class="form-control">
 	  </div>
+	  <% if (!virtual) { %>
 	  <div class="field">
 	    <label>Pricing Unit</label>
 	    <input value="<% if (item.priceSuffix) { %><%= item.priceSuffix %><% } else { %>each<% } %>" name="priceSuffix" type="text" class="form-control">
 	  </div>
+	  <% } %>
 	</div>
 	<div class="field">
       <label>Item Description</label>

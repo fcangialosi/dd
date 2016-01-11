@@ -1,0 +1,63 @@
+<div class="container">
+
+<center><h1 class="ui header" style="font-size: 2.5em"> Manage <%= menu_name %> </h1><a href="/admin/menu" class="ui red labeled icon button"><i class="hand left icon"></i>Back to Edit Menus</a></center>
+
+	<br>
+
+	<% if (flash && flash.err) { %>
+		<div class="ui red message">
+			<%= flash.err %>
+		</div>
+	<% } %>
+	<% if (flash && flash.success) { %>
+		<div class="ui green message">
+			<%= flash.success %>
+		</div>
+	<% } %>
+
+	<br>
+	<% var sections = ["Main","Extras","Create-Your-Own"]; %>
+	<% for(i=0; i<sections.length; i++) { section_name=sections[i]; %>
+	<center><h1 class="ui dividing header"> <%= section_name %> Sections </h1> </center>
+
+	  <table class='ui inverted celled table segment'>
+	  		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Subheading</th>
+				<th>Edit</th>
+				<% if (section_name == "Main") {%><th>Delete</th><% } %>
+			</tr>
+			</thead>
+
+			<tbody>
+			<% _.each(menus, function(menu) { %>
+				<% if ((section_name == "Main" && !menu.custom && !menu.extras) || (section_name == "Extras" && menu.extras) || (section_name == "Create-Your-Own" && menu.custom)) { %>
+				<tr data-id="<%= menu.id %>" data-model="menu">
+					<td><%= menu.name %></td>
+					<td><% if (menu.subhead) { %><%= menu.subhead %><% } else { %> None <% } %></td>
+					<td style="width:1%;white-space:nowrap;"><a href="/menu/edit/<%= menu.id %>" class="btn btn-sm btn-warning">Edit</a></td>
+					<% if (section_name == "Main") {%>
+					<td style="width:1%;white-space:nowrap;"><form action="/menu/destroy/<%= menu.id %>" method="POST">
+						<input type="hidden" name="_method" value="delete"/>
+						<input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+					</form></td>
+					<% } %>
+				</tr>
+				<% } %>
+	  	<% }) %>
+	  	</tbody>
+		</table>
+		<% if (menus.length < 1) { %>
+		<center><h3>Looks like there aren't any menus here yet!</h3></center>
+		<div style="height:50px"></div>
+		<% } %>
+		<% if (section_name == "Main") {%>
+		<center>
+		  <a href="/menu/new?menu=<%= menu_type %>" class="btn btn-lg btn-success">Add New <%= menu_name %> Section</a>
+		</center>
+		<br><hr style="border-top: 4px solid #000;">
+		<% } %>
+	<% } %>
+</div>

@@ -1,0 +1,58 @@
+<div class="container">
+  <center><h1 class="ui header" style="font-size: 2.5em"> Edit <%= menu.name %> (<%= menu.menu.charAt(0).toUpperCase() + menu.menu.slice(1) %>)</h1><a href="/admin/<%= menu.menu %>" class="ui red labeled icon button"><i class="hand left icon"></i>Back to <%= menu.menu.charAt(0).toUpperCase() + menu.menu.slice(1) %> Menu</a></center>
+
+  <br>
+
+    <% if (flash && flash.err) { %>
+        <div class="ui red message">
+            <%= flash.err %>
+        </div>
+    <% } %>
+    <% if (flash && flash.success) { %>
+        <div class="ui green message">
+            <%= flash.success %>
+        </div>
+    <% } %>
+
+  <div class="ui red segment">Don't forget to save your changes at the bottom once you're done!</div>
+  <center>
+    <form action="/admin/virtual/edit/<%= menu.id %>" method="post">
+      <div class="ui inverted segment" style="width:50%">
+        <b style="float:left;">Section Text:</b><br>
+        <textarea class="ui small input segment" style='width:100%' name="subhead"><%= menu.subhead %></textarea>
+      </div>
+      <table class='ui inverted celled table segment' style="width:50%">
+          <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th></th>
+          </tr>
+
+            <% for (var i=0; i<menu.items.length; i++) { item = menu.items[i]; %>
+                <tr data-model="item">
+                    <td><input name="item-<%=i%>" value="<%= item.type %>" type="text" class="form-control"></td>
+                    <td><input name="price-<%=i%>" value="<%= item.price %>" type="text" class="form-control"></td>
+                    <td style="width:1%"><span onclick="deleteThisBYOInput(this)" class="btn btn-sm btn-danger">Delete</span></td>
+                </tr>
+            <% } %>
+        </table>
+        <center>
+            <input type="hidden" name="_csrf" value="<%= _csrf %>">
+            <span href="" class="ui large blue button" onclick="createNewBYOInput()">Add Item</span>
+            <input type="submit" value="Save Changes" class="ui large green button">
+        </center>
+      </form>
+    </center>
+
+    <% if (flash && flash.err) { %>
+        <div class="ui red message">
+            <%= flash.err %>
+        </div>
+    <% } %>
+    <% if (flash && flash.success) { %>
+        <div class="ui green message">
+            <%= flash.success %>
+        </div>
+    <% } %>
+<br>
+</div>

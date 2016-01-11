@@ -50,6 +50,8 @@ module.exports.routes = {
 
 	'get /virtualcafe/subscribe' : 'VirtualCafeController.subscribe',
 
+  'post /admin/virtual/edit/:id' : 'MenuController.editCustom',
+
   'post /feedback' : 'HomeController.feedback',
 
   '/news' : 'HomeController.news',

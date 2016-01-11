@@ -86,25 +86,25 @@ module.exports = {
     min = (min < 10 ? "0" : "") + min;
     hour = (hour < 10 ? "0" : "") + hour;
 
-    var drinks,desserts,sides,custom;
+    var custom = {}, subheads = {}, extras = {};
     // Get an array of all  in the Menu collection(e.g. table)
     Menu.find({"menu":"virtual"}).sort('index asc').exec(function (err, menu) {
       if (err) return next(err);
       for (var i=0; i < menu.length; i++) {
-        if (menu[i]['name'] === "Drinks") {
-          drinks = menu[i];
-          menu.splice(i,1);
-          i--;
-        } else if (menu[i]['name'] === "Desserts") {
-          desserts = menu[i];
-          menu.splice(i,1);
-          i--;
-        } else if (menu[i]['name'] === "Sides") {
-          sides = menu[i];
-          menu.splice(i,1);
-          i--;
-        } else if (menu[i]['name'] === "Custom") {
-          custom = menu[i]; // should include fields like breads, meats, etc.
+        var selected = false;
+        if (menu[i]['custom'] == true) {
+          custom[menu[i]['short']] = menu[i]['items'];
+          subheads[menu[i]['short']] = menu[i]['subhead'];
+          selected = true;
+        } else if (menu[i]['extras'] == true) {
+          extras[menu[i]['short']] = {
+            items : menu[i]['items'],
+            name : menu[i]['side']
+          };
+          subheads[menu[i]['short']] = menu[i]['subhead'];
+          selected = true;
+        }
+        if (selected) {
           menu.splice(i,1);
           i--;
         }
@@ -112,10 +112,9 @@ module.exports = {
       Locations.find({}, function foundLocations (err, all) {
         res.view('virtualcafe/order', {
           menu: menu,
-          drinks : drinks.items,
-          desserts : desserts.items,
-          sides : sides.items,
           custom : custom,
+          extras : extras,
+          subheads : subheads,
           locations: all,
           isWeekend : isWeekend,
           isBeforeDeadline : isBeforeDeadline,

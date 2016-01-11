@@ -38,6 +38,20 @@ ready = function() {
       });
     });
   });
+
+  createNewBYOInput = function() {
+    t = $('table')[0];
+    nextId = $('tr').length-1;
+    newRow = t.insertRow(-1);
+    newRow.insertCell(-1).innerHTML = "<input name='item-"+nextId+"' value='' type='text' class='form-control'>";
+    newRow.insertCell(-1).innerHTML = "<input name='price-"+nextId+"' value='' type='text' class='form-control'>";
+    newRow.insertCell(-1).innerHTML = "<span onclick='deleteThisBYOInput(this)'class='btn btn-sm btn-danger'>Delete</span>";
+  }
+
+  deleteThisBYOInput = function(button) {
+    x = button;
+    $(button).parent().parent().remove();
+  }
 };
 
 // attach ready event

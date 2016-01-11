@@ -1,6 +1,7 @@
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
+var base_salad_price = 4.50;
 
 $(document).ready(function() {
 
@@ -78,12 +79,36 @@ $(document).ready(function() {
     this.getElementsByClassName("item_description")[0].classList.toggle('active');
   });
 
+  displaySideMenu = function(item_side) {
+    if (item_side == ""){
+      item_side = "deli";
+    }
+    type_selector = '.'+item_side+'-side';
+    $(type_selector)[0].classList.add("active");
+    to_remove = $(".virtual-side").not(type_selector);
+    for(var i=0; i<to_remove.length; i++) {
+      to_remove[i].classList.remove("active");
+    }
+  };
+
+  itemJustSelected = null;
   $('.simpleCart_shelfItem .item_select').click(function(e) {
     item = this.parentElement;
     item_name = item.parentElement.getElementsByClassName("item_name")[0].innerHTML;
-    if (item_name.indexOf("Build-Your-Own") > -1) {
+    if (item_name.indexOf("Create-Your-Own") > -1) {
       $("#virtualcafe-sections > a[target='menu-custom']").click();
-      $('.custom-type-select').val("burger").change(); // get this value (sand or wrapper), and also get type of burger, then add the two items in db for sandwich and wrapper, AND get burger price information
+      var custom_type = "deli";
+      lower = item_name.toLowerCase();
+      if (lower.indexOf("wrapper") > -1) {
+        custom_type = "wrapper";
+      } else if (lower.indexOf("grill") > -1) {
+        custom_type = "grill";
+      } else if (lower.indexOf("burger") > -1) {
+        custom_type = "burger";
+      } else if (lower.indexOf("salad") > -1) {
+        custom_type = "salad";
+      }
+      $('.custom-type-select').val(custom_type).change();
       e.stopPropagation();
       return;
     }
@@ -92,10 +117,14 @@ $(document).ready(function() {
     extras = document.getElementById('menu-extras');
     extras.classList.add('active');
     lastActive = extras;
-    simpleCart.add({
+    itemJustSelected = simpleCart.add({
       name : item_name,
       price : item_price
     });
+
+    item_side = item.parentElement.getElementsByClassName("item_side")[0].innerHTML;
+    displaySideMenu(item_side);
+
     e.stopPropagation();
   });
 
@@ -136,6 +165,16 @@ $(document).ready(function() {
   customOrder = {
   };
 
+  newCustomOrder = function(type){
+    customOrder = {
+      'total_price' : 0,
+      'meat' : [],
+      'bread' : '',
+      'type' : type.capitalize(),
+      'cheese' : [],
+      'addons' : []
+    };
+  }
 
   $('.simpleCart_customItem.ui.checkbox').checkbox('setting','onChange',function (){
     item = this[0];
@@ -153,7 +192,11 @@ $(document).ready(function() {
       customOrder[item_type].splice(index, 1);
       customOrder["total_price"] -= parseFloat(item_price);
     } else { // was just checked, add
-      customOrder[item_type].push(item_name);
+      if (item_type in customOrder) {
+        customOrder[item_type].push(item_name);
+      } else {
+        customOrder[item_type] = [item_name];
+      }
       customOrder["total_price"] += parseFloat(item_price);
     }
   });
@@ -187,7 +230,22 @@ $(document).ready(function() {
   orderToString = function(order) {
     s = "";
     if (order.meat && order.meat.length) {
-      s += listToString(order.meat,true) + " " + order.type;
+      s += listToString(order.meat,true);
+      if (order.type != "Grill") {
+        s += " " + order.type;
+      }
+    } else if (order.type == "Salad") {
+      s += listToString(order.green,true) + " Salad";
+      if ('dressing' in order) {
+        s += " with " + listToString(order.dressing,true) + " dressing";
+      }
+      if ('free_topping' in order) {
+        s += "<br>* Free: " + listToString(order.free_topping);
+      }
+      if ('premium_topping' in order) {
+        s += "<br>* Premium: " + listToString(order.premium_topping);
+      }
+      customOrder.total_price += base_salad_price;
     }
     if (order.type == "Sandwich") {
       s += " on " + order.bread;
@@ -196,7 +254,7 @@ $(document).ready(function() {
       s += " with " + listToString(order.cheese,true);
     }
     if (order.addons && order.addons.length) {
-      s += " (add: " + listToString(order.addons,false) + ")";
+      s += "<br>* Add: " + listToString(order.addons,false);
     }
     return s;
   }
@@ -204,6 +262,7 @@ $(document).ready(function() {
   customTypeDropdown = $('.custom-type-select.ui.dropdown');
   customTypeDropdown.change(function() {
     type = customTypeDropdown.val();
+    displaySideMenu(type);
     type_selector = "."+type+"-field";
     if(type) {
       fields = $(type_selector);
@@ -217,14 +276,7 @@ $(document).ready(function() {
       $('.custom-field :checked').not(type_selector).removeAttr('checked');
       $('.custom-field>.ui.dropdown').not(type_selector).val('');
     }
-    customOrder = {
-      'total_price' : 0,
-      'meat' : [],
-      'bread' : '',
-      'type' : type.capitalize(),
-      'cheese' : [],
-      'addons' : []
-    };
+    newCustomOrder(type);
   });
 
   $('.custom-select').change(function (){
@@ -237,16 +289,44 @@ $(document).ready(function() {
     }
   });
 
+  $('.side-select').change(function (){
+    var select = $(this);
+    var selection = select.val();
+    var found = false;
+    var new_section = "* Side: " + selection;
+    var item_sections = itemJustSelected.get("name").split("<br>");
+    for (var i=0; i<item_sections.length; i++) {
+      if (item_sections[i].indexOf("* Side:") > -1) {
+        item_sections[i] = new_section;
+        found = true;
+      }
+    }
+    if (!found) {
+      item_sections.push(new_section);
+    }
+    var new_item_name = item_sections.join("<br>");
+    itemJustSelected.set("name",new_item_name);
+    simpleCart.update();
+  });
+
   $('#custom-addtocart').click(function (e){
     this.parentElement.parentElement.classList.remove('active');
     extras = document.getElementById('menu-extras');
     extras.classList.add('active');
     lastActive = extras;
-    simpleCart.add({
-      name : orderToString(customOrder),
+
+    orderName = orderToString(customOrder);
+    specialRequest = $('#special_request').val()
+    if (specialRequest != "") {
+      orderName += "<br>* Special Request: " + specialRequest;
+    }
+    itemJustSelected = simpleCart.add({
+      name : orderName,
       price : customOrder.total_price
     });
     e.stopPropagation();
+    newCustomOrder('');
+    document.getElementById("menu-extras").scrollIntoView();
   });
 
   lastDrinkSelected = null;
