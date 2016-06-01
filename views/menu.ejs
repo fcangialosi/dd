@@ -1,10 +1,45 @@
+<% if (menu_name === "David and Dad's Cafe") { %>
+<div class="overlay-container">
+
+<div class="overlay"></div>
+<div class="moving-modal">
+  <h2 style="text-align:center;">
+    David and Dad's Charles Street Café is temporarily closed.
+  </h2>
+  <h4 style="text-align:center;">
+   We are moving only two blocks away to a brand-new café at 115 N. Charles.
+  </h4>
+  <div class="ui two column stackable page grid">
+    <div class="column">
+      <p>
+      The new David and Dad's Café should be open this August. In the meantime, we will continue to serve you the best we can from our David and Dad's Express location in the T. Rowe Price Building, at the corner of Light and Pratt Streets.
+      </p>
+      <br>
+      <div style="text-align:center; border:2px solid #000">
+      David and Dad's Cafe Express<br>
+      410-385-6267<br>
+      Open Monday-Friday, 7am-3pm
+      </div>
+      <br>
+      <p>
+      We will continue to serve the same delivery area from our David and Dad's Cafe Express. Please order by 10:45am and we will deliver between 12:00 and 12:45.
+      </p>
+      <div style="color: #822421; font-size: 1.2em; text-align:center">David and Dad's Catering Service will continue to operate as usual!</div>
+    </div>
+    <div class="center aligned column">
+      <img src="/images/new_cafe.png" style="height:300px">
+    </div>
+  </div>
+</div>
+<% } %>
+
 <div style="height: 75px"></div>
 <div class="ui relaxed one column page grid">
   <div class="column" style="background-color: #fff !important; box-shadow: 1px 3px 10px 2px #505050;">
     <div style="height: 25px"></div>
     <h1 class="menu-title"> <%= menu_name %> Menu </h1>
     <div style="height: 25px"></div>
-    <% if (menu_name === "Catering") { %>
+    <% if (menu_name === "David and Dad's Catering") { %>
     <center style="padding-bottom: -25px"><a href="/catering/order/start/" class="ui small green labeled icon button"><i class="hand right icon"></i>Ready To Place an Order? Click Here!</a></center>
     <% } %>
     <% _.each(menu, function(section) { %>
@@ -22,3 +57,5 @@
   </div>
 </div>
 <div style="height: 150px"></div>
+
+</div>

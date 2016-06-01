@@ -858,3 +858,33 @@ q:after {
 .invisible {
   display:none;
 }
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.75);
+    z-index: 10;
+
+}
+
+.moving-modal {
+    width: 76%;
+    height: 70%;
+    border: 5px solid @ground;
+    position: fixed;
+    top: 12%;
+    margin-top: 80px;
+    left: 12%;
+    background-color: @chili;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 11; /* 1px higher than the overlay layer */
+    overflow-y: scroll;
+}
+
+.overlay-container {
+  overflow: hidden;
+}

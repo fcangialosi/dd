@@ -24,7 +24,11 @@
   <!--STYLES END-->
 </head>
 
+<% if (body.indexOf("overlay-container") != -1) { %>
+<body style="overflow:hidden">
+<% } else { %>
 <body>
+<% } %>
 
   <div id="header-section" style="position:relative">
     <header id="header">
