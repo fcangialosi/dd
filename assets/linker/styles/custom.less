@@ -11,8 +11,15 @@
 
 @font-face {
   font-family: 'mel';
-  src: url('../../fonts/melbourne/melbourne.otf');
+  src: url('../../fonts/melbourne/Melbourne_reg.otf');
   font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'mel';
+  src: url('../../fonts/melbourne/Melbourne_bold.otf');
+  font-weight: bold;
   font-style: normal;
 }
 
@@ -94,22 +101,22 @@ body {
 
 .section-header {
   font-family: 'bebas';
-  font-size: 3.0em;
-  border-bottom: 1px solid @blush;
+  font-size: 3.5em;
+  border-bottom: 2px solid @blush;
   padding-bottom: 10px;
   padding-top: 40px;
   text-align: center;
-  color: @ground;
+  color: @blush;
 }
 
 .section-desc {
-  font-family: 'simplifica', sans-serif;
-  font-size: 1.4em;
-  border-bottom: 1px solid @blush;
+  font-family: Montserrat, sans-serif;
+  font-size: 1.1em;
+  border-bottom: 2px solid @blush;
   padding-bottom: 20px;
   text-align: center;
-  padding-left: 150px;
-  padding-right: 150px;
+  padding-left: 25px;
+  padding-right: 25px;
   line-height: 120%;
   color: @ground;
 }
@@ -125,21 +132,24 @@ body {
 
 .menu-item .item-name {
   font-family: 'bebas', sans-serif;
-  font-size: 1.4em;
+  font-size: 1.9em;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
 .menu-item .item-price {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.8em;
+  font-size: 1.0em;
   float: right;
   text-align: right;
 }
 
 .menu-item .item-desc {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.95em;
+  font-family: 'mel', sans-serif;
+  font-weight: bold;
+  font-size: 1.3em;
+  padding-right: 20%;
+  white-space: pre-wrap;
 }
 
 .roomy-button {
@@ -156,9 +166,9 @@ body {
 .menu-title {
   text-align: center;
   font-family: 'bebas';
-  font-size: 4.5em;
+  font-size: 5.0em;
   margin-top: 30px;
-  text-shadow: 2px 2px 0 #fff,4px 4px 0 @blush;
+  /*text-shadow: 2px 2px 0 #fff,4px 4px 0 @blush;*/
 }
 
 .spaced-table td, .spaced-table th {
