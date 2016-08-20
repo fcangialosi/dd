@@ -31,10 +31,11 @@ Order
 {{item.name}}{{item.quantity}}{{item.price}}{{item.total}}
 {% endfor -%}
 {{ divider }}
-Subtotal:   {{ subtotal }}
-Tax:        {{ tax }}
-Gratuity:   {{ gratuity }}
-Total:      {{ total }}
+Subtotal:     {{ subtotal }}
+Tax:          {{ tax }}
+Gratuity:     {{ gratuity }}
+Delivery Fee: {{ delivery_fee }} 
+Total:        {{ total }}
 
 Additional Instructions: 
 {{order_contact.specialRequest}}

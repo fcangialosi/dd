@@ -16,10 +16,8 @@ Contact:   {{ location.contact_name }}, {{ location.contact_email }}
 {{item.name}}{{item.quantity}}{{item.price}}{{item.total}}{%if item.add%}
 {{item.add}}{%endif%}
 {% endfor -%}
-Special Requests: {{specialRequest}}
 {{ divider }}
 Subtotal:        {{ subtotal }}
 Tax:             {{ tax }}
 Delivery Fee:    {{ shipping }}
 Total:           {{ total }}
-

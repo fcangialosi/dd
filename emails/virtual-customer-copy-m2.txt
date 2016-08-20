@@ -22,10 +22,9 @@ Contact:   {{ location.contact_name }}, {{ location.contact_email }}
 {{ item_header }}Qty.   Each      Total  
 {{ divider }} 
 {% for item in items -%}
-{{item.name}}{{item.quantity}}{{item.price}}{{item.total}}{%if item.add%}
-{{item.add}}{%endif%}
+{{item.name}}{{item.quantity}}{{item.price}}{{item.total}}
+{%if item.add%}{{item.add}}{%endif%}
 {% endfor -%}
-Special Requests: {{specialRequest}}
 {{ divider }}
 Subtotal:        {{ subtotal }}
 Tax:             {{ tax }}
