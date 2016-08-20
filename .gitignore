@@ -58,3 +58,8 @@ nginx/
 invoices/*.html
 invoices/*.archive
 customer_copies/
+current_version
+views/layout.ejs
+views/home/home-layout.ejs
+views/admin/layout.ejs
+views/admin/empty-layout.ejs
