@@ -196,7 +196,7 @@ var sendEmailVirtual = function(customer_html, our_html, body, res) {
     fs.writeFileSync(customer_email_file, customer_html);
     fs.writeFileSync(our_email_file, our_html);
     var send_customer_email_cmd = "mailx -a 'From: David and Dads Catering <catering@davidanddads.com>' -s 'Your Virtual Cafe Order' '" + body.email + "' < " + customer_email_file;
-    var send_our_email_cmd = "mailx -a 'Reply-to: " + body.name + "<" + body.email + ">' -a 'From: Order Form <orders@davidanddads.com>' -s 'Virtual Cafe Request' 'frank@cs.umd.edu' < " + our_email_file;
+    var send_our_email_cmd = "mailx -a 'Reply-to: " + body.name + "<" + body.email + ">' -a 'From: Order Form <orders@davidanddads.com>' -s 'Virtual Cafe Request' 'catering@davidanddads.com' < " + our_email_file;
 
     exec(send_our_email_cmd, function(error, stdout, stderr) {
       if (error) {
