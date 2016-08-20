@@ -45,7 +45,7 @@
 				<th></th>
 		  </tr>
 
-			<% _.each(menu.items, function(item) { %>
+			<% _.each(menu.items, function(item) { if (item) { %>
 				<tr data-id="<%= item.id %>" data-model="item">
                     <td style="width: 5%;"><input id="item-index" value="<%= menu.items.indexOf(item) %>" name="<%= menu.items.indexOf(item) %>" type="text" class="form-control"></td>
 					<td><%= item.name %></td>
@@ -68,7 +68,8 @@
 						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 					</form></td>
 				</tr>
-			<% }) %>
+        
+			<% }}) %>
 		</table>
         <center>
             <div id="reorder-button" class="ui medium blue button">Save New Order</div>
