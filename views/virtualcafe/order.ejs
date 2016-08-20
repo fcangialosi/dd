@@ -251,7 +251,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                 <%}%>
               <% } %>
               <a class="item" target="menu-custom">
-                Create-Your-Own
+                Create-Your-Own Lunch
               </a>
               </div>
 
@@ -283,6 +283,12 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
               <% } %>
               <div class="ui bottom attached segment menu-tab" id="menu-extras">
 
+                  <center>
+                    <span class="ui red labeled icon button back_to_menu" style="float:right">
+                      <i class="hand left icon"></i>
+                      Back
+                    </span>
+                  </center>
                   <p>This item comes with a free side dish. Please choose one from the menu below, or select none.</p>
 
                   <% create_freebie_section('deli') %>
@@ -336,7 +342,16 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                   </div>
 
                   <hr>
-                  <center><h4 class="ui blue segment" style="width:50%"> Scroll back up to order additional items, or scroll down to view your order summary, enter your payment information, and complete your order.</h4></center>
+                  <center>
+                  <span class="ui red labeled icon button back_to_menu" style="float:right">
+                    <i class="hand left icon"></i>
+                    Back
+                  </span>
+                  <h4 class="ui blue segment" style="width:50%">
+                  Scroll back up to order additional items, or scroll down to view your order summary, enter your payment information, and complete your order.
+                  </h4>
+                  </center>
+
               </div>
               <div class="ui bottom attached segment menu-tab" id="menu-custom">
                 <h4 style="color:<%=dd_red%>;"> Create a custom sandwich, wrapper, burger, or salad with exactly what you want.</h4>
@@ -347,7 +362,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                     <option value=""></option>
                     <option value="deli">Deli Sandwich</option>
                     <option value="wrapper">Deli Wrapper</option>
-                    <option value="grill">Grill Sandwich</option>
+                    <option value="grill">From The Grill</option>
                     <option value="burger">Burger</option>
                     <option value="salad">Salad</option>
                   </select>
@@ -410,7 +425,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                 </div>
 
                 <div class="grill-field custom-field">
-                  <label>Protein:</label>
+                  <label>Entree:</label>
                   <% create_subhead('grillmeat') %>
                   <div class="ui stackable grid">
                     <% for(var i=0; i<custom.grillmeat.length; i++) { meat = custom.grillmeat[i]; %>
@@ -524,7 +539,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 
                 <hr class="deli-field wrapper-field grill-field burger-field salad-field custom-field">
                 <div class="deli-field wrapper-field grill-field burger-field salad-field custom-field">
-                    <div class="ui medium blue button" id="custom-addtocart">Continue</div>
+                    <div class="ui medium blue button" id="custom-addtocart">Continue to Choose Your Sides and Drink</div>
                 </div>
 
               </div>
@@ -640,7 +655,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
         </td>
       </tr>
     </table>
-    <center><a id="submit-button" href="javascript:;" class="ui huge blue submit button simpleCart_checkout">Submit My Order!</a></center>
+    <center><a id="submit-button" href="javascript:;" class="ui huge blue button simpleCart_checkout">Submit My Order!</a></center>
 
             </form>
            <!-- <center>
