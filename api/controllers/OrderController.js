@@ -391,6 +391,10 @@ module.exports = {
     res.view('catering/confirm/review');
   },
 
+  'maintenance' : function(req, res) {
+    res.view('catering/maintenance');
+  },
+
   'submit' : function(req,res) {
     var rawNumber = null;
 
