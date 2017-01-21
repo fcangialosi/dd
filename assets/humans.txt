@@ -1,28 +1,17 @@
 /* TEAM */
 
 Chef: Frank Cangialosi
-Site: https://www.github.com/sbfcangialosi
-Email: frank (at) cs (dot) umd (dot) edu | fcangialosi94 (at) gmail (dot) com
-Location: College Park, MD
-
-
-/* THANKS! :) */
-
-Connoisseur: Su-Young Nam
-For: Design advice, editing, testing
-
-Connoisseur: Eric Thomas
-For: Professional review and critique, security advice
-
+Site: https://github.com/rhythmc
+Email: frankc (at) csail (dot) mit (dot) edu | fcangialosi94 (at) gmail (dot) com
+Location: Cambridge, MA
 
 /* SITE */
 
-Last Updated: November 8, 2014
+Last Updated: December 5, 2016
 
 Language: English
 Powered By: Sails.js (www.sailsjs.org)
 Components: Node.js, Express, MongoDB, Triplesec, EJS, jQuery, Normalize, Card, Simple Cart, Waypoints
 Styles: Semantic UI, Font Awesome, Less
-IDE: Vim
 Hosting: Digital Ocean, nginx
-SSL Certificate: Comodo
+SSL Certificate: Let's Encrypt
