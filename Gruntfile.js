@@ -148,10 +148,24 @@ module.exports = function (grunt) {
   grunt.loadTasks(depsPath + '/grunt-contrib-cssmin/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-less/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-coffee/tasks');
+	grunt.loadNpmTasks('grunt-bless');
 
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
+		bless: {
+			css : {
+				options: {
+					banner : '/* blessed */',
+					failOnLimit : true,
+				
+				},
+				files: {
+          '.tmp/public/min/blessed_production_RqC8U3DR' : '.tmp/public/min/production_RqC8U3DR.css'
+				}
+			}
+		},
 
     copy: {
       dev: {
@@ -254,14 +268,14 @@ module.exports = function (grunt) {
     uglify: {
       dist: {
         src: ['.tmp/public/concat/production.js'],
-        dest: '.tmp/public/min/production_v3.js'
+        dest: '.tmp/public/min/production_RqC8U3DR.js'
       }
     },
 
     cssmin: {
       dist: {
         src: ['.tmp/public/concat/production.css'],
-        dest: '.tmp/public/min/production_v3.css'
+        dest: '.tmp/public/min/production_RqC8U3DR.css'
       }
     },
 
@@ -289,9 +303,9 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/**/*.html': ['.tmp/public/min/production_v3.js'],
-          'views/**/*.html': ['.tmp/public/min/production_v3.js'],
-          'views/**/*.ejs': ['.tmp/public/min/production_v3.js']
+          '.tmp/public/**/*.html': ['.tmp/public/min/production_RqC8U3DR.js'],
+          'views/**/*.html': ['.tmp/public/min/production_RqC8U3DR.js'],
+          'views/**/*.ejs': ['.tmp/public/min/production_RqC8U3DR.js']
         }
       },
 
@@ -319,9 +333,9 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/index.html': ['.tmp/public/min/production_v3.css'],
-          'views/**/*.html': ['.tmp/public/min/production_v3.css'],
-          'views/**/*.ejs': ['.tmp/public/min/production_v3.css']
+          '.tmp/public/index.html': ['.tmp/public/min/blessed_production_RqC8U3DR*css'],
+          'views/**/*.html': ['.tmp/public/min/blessed_production_RqC8U3DR*css'],
+          'views/**/*.ejs': ['.tmp/public/min/blessed_production_RqC8U3DR*css']
         }
       },
 
@@ -365,7 +379,7 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          'views/**/*.jade': ['.tmp/public/min/production_v3.js']
+          'views/**/*.jade': ['.tmp/public/min/production_RqC8U3DR.js']
         }
       },
 
@@ -389,7 +403,7 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          'views/**/*.jade': ['.tmp/public/min/production_v3.css']
+          'views/**/*.jade': ['.tmp/public/min/production_RqC8U3DR.css']
         }
       },
 
@@ -436,7 +450,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('compileAssets', [
     //'clean:dev',
-    'jst:dev',
+    //'jst:dev',
     'less:dev',
     'copy:dev',
     'coffee:dev'
@@ -473,12 +487,13 @@ module.exports = function (grunt) {
     'concat',
     'uglify',
     'cssmin',
+		'bless',
     'sails-linker:prodJs',
     'sails-linker:prodStyles',
     'sails-linker:devTpl',
     'sails-linker:prodJsJADE',
     'sails-linker:prodStylesJADE',
-    'sails-linker:devTplJADE'
+    'sails-linker:devTplJADE',
   ]);
 
   // When API files are changed:

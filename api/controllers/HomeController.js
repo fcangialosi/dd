@@ -86,6 +86,22 @@ module.exports = {
     });
   },
 
+  policy: function(req, res, next) {
+    Page.findOne({"page":"policy"}, function (err, page) {
+        if (err) return next(err);
+        if (!page) {
+            message = '';
+        } else {
+            message = page.message;
+        }
+
+        res.view('main/policy', {
+            content : message
+        });
+
+    });
+  },
+
   press: function(req, res, next) {
     Page.findOne({"page":"press"}, function (err, page) {
         if (err) return next(err);

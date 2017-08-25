@@ -1,6 +1,6 @@
 Thanks for your order! 
 
-This email confirms that we have recieved your virtual cafe order for {{ date }} at {{ location.building_name }}. If you are unsure of the dropoff location in your building, you can get in touch with your virtual cafe contact, {{ location.contact_name }} at {{ location.contact_email }}. 
+This email confirms that we have received your virtual cafe order for {{ date }} at {{ location.building_name }}. If you are unsure of the dropoff location in your building, you can get in touch with your virtual cafe contact, {{ location.contact_name }} at {{ location.contact_email }}. 
 
 A copy of your order is below. If there are any errors, please do not hesistate to call us at (410)-547-0550 or email us at  catering@davidanddads.com.
 

@@ -39,7 +39,7 @@ ready = function() {
     simpleCart.update();
   });
 
-  if ((window.location.pathname == "/catering/order/submit" || window.location.pathname == "/virtualcafe/order") && $('#success-signal').length) {
+  if ((window.location.pathname == "/catering/order/submit" || window.location.pathname == "/virtualcafe/submit") && $('#success-signal').length) {
     simpleCart.empty();
   }
 };

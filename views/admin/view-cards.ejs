@@ -8,6 +8,7 @@
         <th>Number</th>
         <th>CVC</th>
         <th>Expiry</th>
+				<th>Zip Code</th>
     </tr>
 
     <% _.each(cards, function(card) { %>
@@ -16,6 +17,7 @@
         <td><%= card.number %></td>
         <td><%= card.cvc %></td>
         <td><%= card.expiry %></td>
+				<td><% if ('zip' in card) { %><%= card.zip %><% } else { %>MISSING<% }%></td>
     </tr>
 
     <% }) %>

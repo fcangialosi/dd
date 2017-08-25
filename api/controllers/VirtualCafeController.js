@@ -62,6 +62,10 @@ module.exports = {
     });
 	},
 
+	editCards: function (req, res, next) {
+		res.view('virtualcafe/edit-cards');
+	},
+
 	subscribe: function(req, res, next) {
 		var email = req.session.User.email;
 		fs.appendFileSync('virtualcafe-notify-list.txt',(email + "\n"));

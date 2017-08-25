@@ -55,8 +55,11 @@ module.exports.policies = {
   },
 
   OrderController : {
+    /*
   	'start' : 'flash',
   	'*' : ['flash', 'isAuthenticated']
+    */
+    '*' : 'flash'
   },
 
   HomeController : {

@@ -13,7 +13,7 @@
     <tr data-id="<%= user.id %>" data-model="user">
         <td><a href="/admin/lookup/<%= user.id %>" class="ui fluid tiny green button">View</a></td>
         <td><%= user.name %></td>
-        <td><%= user.companyName %></td>
+				<td><% if ('companyName' in user) { %><%= user.companyName %><% } %></td>
         <td><%= user.email %></td>
     </tr>
 

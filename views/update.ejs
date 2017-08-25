@@ -1,0 +1,43 @@
+<% if (!('User' in req.session && req.session.User.admin)) { %> 
+<div class="overlay-container">
+
+<div class="overlay"></div>
+<div class="moving-modal" style="padding:15px">
+  <h2 style="text-align:center;">
+    <!--David and Dad's Charles Street Café is temporarily closed.-->
+    UPDATE: David and Dad's Charles Street Café <br> is set to reopen
+    Wednesday, November 16!
+  </h2>
+  <h4 style="text-align:center;">
+   We are moving only two blocks away to a brand-new café at 115 N. Charles.
+  </h4>
+  <div class="ui two column stackable page grid" style="min-width:100px">
+    <div class="column">
+      <p>
+      We are very sorry that there has been such a long delay. We appreciate all the good wishes we have received from our wonderful customers. We are working hard to make sure that the new David and Dad's Café will be worth the wait! We will let you know as soon as the opening date is final!
+      </p>
+      <p>
+      In the meantime, we will continue to serve you the best we can from our
+      David and Dad's Express location in the T. Rowe Price Building, at the
+      corner of Light and Pratt Streets. We will also continue to update this
+      webpage with any updates as soon as they are available, so please continue to
+      check back! 
+      </p>
+      <br>
+      <div style="text-align:center; border:2px solid #000">
+      David and Dad's Cafe Express<br>
+      410-385-6267<br>
+      Open Monday-Friday, 7am-3pm
+      </div>
+      <br>
+      <p>
+      We will continue to serve the same delivery area from our David and Dad's Cafe Express. Please order by 10:45am and we will deliver between 12:00 and 12:45.
+      </p>
+      <div style="color: #822421; font-size: 1.2em; text-align:center">David and Dad's Catering Service will continue to operate as usual!</div>
+    </div>
+    <div class="center aligned column">
+      <img src="/images/new_cafe.png" style="height:300px">
+    </div>
+  </div>
+</div>
+<% } %>

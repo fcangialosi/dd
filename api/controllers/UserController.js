@@ -196,7 +196,8 @@ module.exports = {
               number : ciphertext,
               name : req.body.name,
               expiry : req.body.expiry,
-              cvc : req.body.cvc
+              cvc : req.body.cvc,
+							zip : req.body.zip
             }
             req.session.User.savedPayment.push(newCard);
             req.session.card = newCard;

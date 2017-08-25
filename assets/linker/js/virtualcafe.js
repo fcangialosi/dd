@@ -19,7 +19,7 @@ $(document).ready(function() {
   // location selection table, choice = the element clicked
   locationSelected = function(choice) {
     choice.setAttribute('class','location-selected');
-    locationInput.val(choice.children[0].innerHTML);
+    locationInput.val(choice.children[0].children[0].innerHTML);
 
     //update location-based shipping fee
     fee = choice.children[3].innerHTML.replace(/(\$|\s)?/g, "");
@@ -40,6 +40,7 @@ $(document).ready(function() {
 
   datePicker = $('#virtual-datepicker').datetimepicker({
     pickTime: false,
+    useCurrent: false,
     daysOfWeekDisabled: [0, 6],
     up: "fa fa-arrow-up",
     down: "fa fa-arrow-down"
@@ -83,16 +84,23 @@ $(document).ready(function() {
     if (item_side == ""){
       item_side = "deli";
     }
-    type_selector = '.'+item_side+'-side';
+    type_selector = '.freeside_'+item_side+'-side';
     $(type_selector)[0].classList.add("active");
     to_remove = $(".virtual-side").not(type_selector);
     for(var i=0; i<to_remove.length; i++) {
       to_remove[i].classList.remove("active");
     }
   };
-
+  hideSections = function() { 
+    $('#virtualcafe-sections').attr('style','display:none;');
+  }
+  showSections = function() {
+    $('#virtualcafe-sections').attr('style','');
+  }
   itemJustSelected = null;
+  previousSection = null;
   $('.simpleCart_shelfItem .item_select').click(function(e) {
+		var item;
     item = this.parentElement;
     item_name = item.parentElement.getElementsByClassName("item_name")[0].innerHTML;
     if (item_name.indexOf("Create-Your-Own") > -1) {
@@ -113,7 +121,8 @@ $(document).ready(function() {
       return;
     }
     item_price = item.parentElement.getElementsByClassName("item_price")[0].innerHTML;
-    item.parentElement.parentElement.parentElement.classList.remove('active');
+    previousSection = item.parentElement.parentElement.parentElement;
+    previousSection.classList.remove('active');
     extras = document.getElementById('menu-extras');
     extras.classList.add('active');
     lastActive = extras;
@@ -125,10 +134,33 @@ $(document).ready(function() {
     item_side = item.parentElement.getElementsByClassName("item_side")[0].innerHTML;
     displaySideMenu(item_side);
 
+    hideSections();
+
     e.stopPropagation();
   });
 
+  goback = function() {
+    showSections();
+    previousSection.classList.add('active');
+    lastActive.classList.remove('active');
+    tmp = previousSection;
+    previousSection = lastActive;
+    lastActive = tmp;
+    $('.ui.checkbox :checked').removeAttr('checked');
+    $('select').val('');
+  }
+
+  $('.go-back').click(function(e) {
+    goback();
+  });
+
+  $('.order-more').click(function(e) {
+      goback();
+      $('#special_request').val('');
+  });
+
   $('.simpleCart_shelfItem.ui.checkbox').checkbox('setting','onChange',function() {
+		var item;
     item = this[0];
     item_name = item.parentElement.getElementsByClassName("item_name")[0].innerHTML;
     found = simpleCart.find({name : item_name});
@@ -177,6 +209,7 @@ $(document).ready(function() {
   }
 
   $('.simpleCart_customItem.ui.checkbox').checkbox('setting','onChange',function (){
+		var item;
     item = this[0];
     name_span = item.parentElement.getElementsByClassName("item_name")[0];
     item_name = name_span.innerHTML;
@@ -309,6 +342,25 @@ $(document).ready(function() {
     simpleCart.update();
   });
 
+  findAndReplaceSpecialRequest = function(oldName, specialRequest) {
+    addition = "";
+    if (specialRequest != "") {
+      addition = "<br>* Special Request: " + specialRequest;
+    }
+    return oldName.replace(/<br>\* Special Request:[^<]*/g, "") + addition;
+  }
+
+  $('#special_request').focusout(function (e){
+    specialRequest = $(this).val();
+    oldName = itemJustSelected.get('name');
+    newName = findAndReplaceSpecialRequest(oldName, specialRequest);
+    itemJustSelected.set('name',newName);
+    simpleCart.update();
+  });
+
+// TODO add a onfocusout handler for special request box, add a new line and
+// remove any other special requrset line 
+//
   $('#custom-addtocart').click(function (e){
     this.parentElement.parentElement.classList.remove('active');
     extras = document.getElementById('menu-extras');
@@ -316,7 +368,7 @@ $(document).ready(function() {
     lastActive = extras;
 
     orderName = orderToString(customOrder);
-    specialRequest = $('#special_request').val()
+    specialRequest = $('#custom-special_request').val()
     if (specialRequest != "") {
       orderName += "<br>* Special Request: " + specialRequest;
     }
@@ -348,13 +400,14 @@ $(document).ready(function() {
   cardSelectDropdown = $('.card-select.ui.dropdown');
   cardSelectDropdown.change(function() {
     sp = cardSelectDropdown.val().split(",");
-    lastFour = sp[0], name = sp[1], expiry = sp[2], cvc = sp[3], cardIndex = sp[4];
+    lastFour = sp[0], name = sp[1], expiry = sp[2], cvc = sp[3], zip = sp[4], cardIndex = sp[5];
       $('#card-number').val("XXXX-XXXX-XXXX-"+lastFour);
-      $('#card-name').val(name).trigger("keyup");
-      $('#card-expiry').val(expiry).trigger("keyup");
-      $('#card-cvc').val(cvc).trigger("keyup");
+      $('#card-name').val(name).trigger("keyup").trigger("click");
+      $('#card-expiry').val(expiry).trigger("keyup").trigger("click");
+      $('#card-cvc').val(cvc).trigger("keyup").trigger("click");
+			$('#card-zip').val(zip).trigger("keyup").trigger("click");
       $('#card-index').val(cardIndex);
-      $('#card-number').trigger("keyup"); // updates display
+      $('#card-number').trigger("keyup").trigger("click"); // updates display
       $('#card-form .form.segment').addClass("disabled");
       $('.card-wrapper').children().children()[0].classList.add("xxxx","identified"); // pretty formatting
   });

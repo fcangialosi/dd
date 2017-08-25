@@ -33,14 +33,7 @@
 			<tbody>
 			<% _.each(menus, function(menu) { %>
 				<tr data-id="<%= menu.id %>" data-model="menu">
-
-					<td>
-					<div class="ui tiny vertical buttons">
-					<a href="/menu/shift/<%= menu.id %>?index=<%= menus.indexOf(menu)%>&menu=<%= menu.menu %>&direction=up&max=<%= menus.length %>" class="small ui icon green button"><i class="up arrow icon"></i></a>
-					<a href="/menu/shift/<%= menu.id %>?index=<%= menus.indexOf(menu)%>&menu=<%= menu.menu %>&direction=down&max=<%= menus.length %>" class="small ui icon green button"><i class="down arrow icon"></i></a>
-					</div>
-					</td>
-					<td><%= menu.index %></td>
+          <td style="width: 5%;"><input id="item-index" value="<%= menu.index %>" name="<%= menu.index %>" type="text" class="form-control" style="padding-left:4px;padding-right:0px;"></td>
 					<td><%= menu.name %></td>
 					<td><% if (menu.breakfast) { %> Breakfast <% } else { %> Lunch <% } %></td>
 					<td><% if (menu.subhead) { %><%= menu.subhead %><% } else { %>None<% } %></td>
@@ -59,6 +52,7 @@
 		<div style="height:50px"></div>
 		<% } %>
 		<center>
+      <div id="reorder-section-button" class="ui medium blue button">Save New Order</div>
 		  <a href="/menu/new?menu=<%= menu_type %>" class="btn btn-lg btn-success">Add New <%= menu_name %> Section</a>
 		</center>
 </div>

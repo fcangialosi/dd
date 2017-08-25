@@ -50,6 +50,8 @@ module.exports.routes = {
 
 	'get /virtualcafe/subscribe' : 'VirtualCafeController.subscribe',
 
+	'get /virtualcafe/edit-cards' : 'VirtualCafeController.editCards',
+
   'post /admin/virtual/edit/:id' : 'MenuController.editCustom',
 
   'post /feedback' : 'HomeController.feedback',
@@ -57,6 +59,8 @@ module.exports.routes = {
   '/news' : 'HomeController.news',
 
   '/contact' : 'HomeController.contact',
+
+  '/policy' : 'HomeController.policy',
 
   '/jobs' : 'HomeController.jobs',
 
@@ -83,6 +87,10 @@ module.exports.routes = {
   '/express/pratt/specials' : 'SpecialsController.displayPrattSpecials',
 
   '/express/broadway/specials' : 'SpecialsController.displayBroadwaySpecials',
+
+  /*
+  '/catering/order/*' : 'OrderController.maintenance',
+  */
 
   '/catering/order/start' : 'OrderController.start',
 
@@ -114,7 +122,9 @@ module.exports.routes = {
 
   '/admin/menu' : 'MenuController.index',
 
-  '/menu/reorder' : 'MenuController.reorderMenu',
+  '/menu/reorderMenu' : 'MenuController.reorderMenu',
+
+  '/menu/reorderSections' : 'MenuController.reorderSections',
 
   '/admin/main' : 'MenuController.adminMain',
 
@@ -146,6 +156,8 @@ module.exports.routes = {
 
   'get /admin/messages/contact' : 'PageController.editContact',
 
+  'get /admin/messages/policy' : 'PageController.editPolicy',
+
   'post /admin/messages/home' : 'PageController.setHomeMessage',
 
   'post /admin/messages/jobs' : 'PageController.setJobs',
@@ -155,6 +167,8 @@ module.exports.routes = {
   'post /admin/messages/news' : 'PageController.setNews',
 
   'post /admin/messages/contact' : 'PageController.setContact',
+
+  'post /admin/messages/policy' : 'PageController.setPolicy',
 
   'get /admin/lookup' : 'AdminController.lookup',
 

@@ -21,6 +21,17 @@ var fs = require('fs');
 var triplesec = require('triplesec');
 
 var decrypt = function(index, user, key, res) {
+	if (typeof user.savedPayment[index].number !== 'string') {
+    if (index == user.savedPayment.length-1) {
+      res.view('admin/view-cards', {
+        user: user,
+        cards: user.savedPayment,
+        layout : 'admin/layout'
+      });
+    } else {
+      return decrypt(index+1, user, key, res);
+    }
+  }
   triplesec.decrypt({
     data : new triplesec.Buffer(user.savedPayment[index].number, "hex"),
     key : new triplesec.Buffer(key),
@@ -31,7 +42,7 @@ var decrypt = function(index, user, key, res) {
     } else {
       rawNumber = buff.toString();
     }
-    user.savedPayment[index].number = rawNumber;
+    user.savedPayment[index].number = rawNumber; 
     if (index == user.savedPayment.length-1) {
       res.view('admin/view-cards', {
         user: user,
@@ -39,7 +50,7 @@ var decrypt = function(index, user, key, res) {
         layout : 'admin/layout'
       });
     } else {
-      decrypt(index+1, user, key, res);
+      return decrypt(index+1, user, key, res);
     }
   });
 }
@@ -79,7 +90,7 @@ module.exports = {
   },
 
   lookup: function(req, res, next) {
-    User.find({ sort: 'companyName' }, function foundUsers (err, users) {
+    User.find({ sort: 'name' }, function foundUsers (err, users) {
       if (err) return next(err);
       res.view('admin/lookup', {
         users: users,

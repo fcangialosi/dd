@@ -21,7 +21,17 @@ var triplesec = require('triplesec');
 var fs = require('fs');
 var exec = require('child_process').exec;
 
-var getDateTime = function() {
+var AWS = require('aws-sdk');
+AWS.config.update({ region : 'us-east-1' });
+var ses = new AWS.SES();
+
+privKey = fs.readFileSync('./ssl/key.pem', 'utf8');
+
+
+
+var getDateTime = function(clean) {
+
+  clean = clean || false;
 
   var date = new Date();
 
@@ -36,14 +46,17 @@ var getDateTime = function() {
 
   var year = date.getFullYear();
 
-
   var month = date.getMonth() + 1;
   month = (month < 10 ? "0" : "") + month;
 
   var day  = date.getDate();
   day = (day < 10 ? "0" : "") + day;
 
-  return "[" + year + "/" + month + "/" + day + " " + hour + ":" + min + "]";
+  if (clean) {
+    return year + month + day + "-" + hour + min;
+  } else {
+    return "[" + year + "/" + month + "/" + day + " " + hour + ":" + min + "]";
+  }
 };
 
 var parseVirtualData = function(body, loc, method) {
@@ -57,7 +70,7 @@ var parseVirtualData = function(body, loc, method) {
     name : body.name,
     phone : body.phone,
     email : body.email,
-    card : body.number,
+    card : ("XXXX-XXXX-XXXX-" + body.number.substring(body.number.length - 4)),
     date : body.date,
     location : location
   }
@@ -102,7 +115,7 @@ var parseVirtualData = function(body, loc, method) {
     obj.subtotal = ("$" + subtotal_calc.toFixed(2)),
     obj.tax = ("$" + parseFloat(body.tax).toFixed(2)),
     obj.shipping = ("$" + parseFloat(body.shipping).toFixed(2)),
-    obj.total = ("$" + (subtotal_calc + parseFloat(body.tax)).toFixed(2))
+    obj.total = ("$" + (subtotal_calc + parseFloat(body.tax) + parseFloat(body.shipping)).toFixed(2))
   }
   return obj;
 }
@@ -188,121 +201,161 @@ var sendEmail = function(html, req, res) {
 }
 */
 
-var sendEmailVirtual = function(customer_html, our_html, body, res) {
-  var customer_email_file = "customer_copies/"+(body.email.split("@")[0]+".html");
-  var our_email_file = "invoices/"+(body.email.split("@")[0]+".html");
 
-  try {
-    fs.writeFileSync(customer_email_file, customer_html);
-    fs.writeFileSync(our_email_file, our_html);
-    var send_customer_email_cmd = "mailx -a 'From: David and Dads Catering <catering@davidanddads.com>' -s 'Your Virtual Cafe Order' '" + body.email + "' < " + customer_email_file;
-    var send_our_email_cmd = "mailx -a 'Reply-to: " + body.name + "<" + body.email + ">' -a 'From: Order Form <orders@davidanddads.com>' -s 'Virtual Cafe Request' 'catering@davidanddads.com' < " + our_email_file;
+var sendEmailVirtual = function(customer_txt, our_txt, req, res) {
+  var body = req.body;
+  var file_name = "virtual-invoices/" + (req.session.User.email.split("@")[0] + "-" + getDateTime(true)) + ".html";
+  fs.writeFileSync(file_name, customer_txt);
 
-    exec(send_our_email_cmd, function(error, stdout, stderr) {
-      if (error) {
-          console.log("Failed sending email from customer: " + body.email);
-          console.log(error);
-          res.view('virtualcafe/failure');
-      } else {
-        exec(send_customer_email_cmd, function(error, stdout, stderr) {
-          if (error) {
-            console.log("Failed sending email TO customer: " + body.email);
-            console.log(error);
-            res.view('virtualcafe/failure');
-          } else {
-            console.log("mailx commands returned successfully for email to " + body.email);
-
-            var log_entry = getDateTime() + " - " + body.name + ", " +
-                          body.email + ", " + body.location + ", " + body.date + "\n";
-
-            fs.appendFileSync('invoices/recent_virtual_orders.txt',log_entry);
-            // clear some stuff??
-            res.view('virtualcafe/success');
-          }
-        });
+  var customer_email_params = {
+    Destination: {
+      ToAddresses: [
+        req.session.User.email
+      ]
+    },
+    Message: {
+      Body: {
+        /*
+        Html: {
+          Data: txt
+        },
+        */
+        Text: {
+          Data: customer_txt
+        }
+      },
+      Subject: {
+        Data: 'Your Virtual Cafe Order'
       }
-    });
+    },
+    Source: 'orders@davidanddads.com',
+    ReplyToAddresses: [ 'catering@davidanddads.com' ]
+  };
+  var our_email_params = {
+    Destination: {
+      ToAddresses: [
+        'catering@davidanddads.com',
+      ]
+    },
+    Message: {
+      Body: {
+        /*
+        Html: {
+          Data: txt
+        },
+        */
+        Text: {
+          Data: our_txt
+        }
+      },
+      Subject: {
+        Data: ('Virtual Cafe Request from ' + req.session.User.name),
+      }
+    },
+    Source: 'orders@davidanddads.com',
+    ReplyToAddresses: [ req.session.User.email ]
+  };
 
-  } catch (e) {
-    console.log("Error sending email for virtual cafe order");
-    console.log(e);
-    console.log(body);
-    res.view('virtualcafe/failure');
-  }
+  ses.sendEmail(our_email_params, function(err, data) {
+    if (err) {
+      console.log(getDateTime() + " Failed to send virtual cafe email (to us) for " + req.session.User.email);
+      console.log(err, err.stack);
+      res.view('virtualcafe/failure');
+    } else {
+      ses.sendEmail(customer_email_params, function(customer_err, data) {
+        if (customer_err) {
+          console.log(getDateTime() + " Failed to send virtual cafe email (to customer) for " + req.session.User.email + " (but we successfully sent the email to us!");
+          console.log(customer_err, customer_err.stack);
+          res.view('virtualcafe/failure');
+        } else {
+          console.log(getDateTime() + " Successfully sent virtual cafe emails for "+ req.session.User.email);
+          var log_entry = getDateTime() + " - " + body.name + ", " +
+                        body.email + ", " + body.location + ", " + body.date + "\n";
+
+          fs.appendFileSync('virtual-invoices/recent_virtual_orders.txt',log_entry);
+          res.view('virtualcafe/success');
+          delete req.session.foodComplete;
+          delete req.session.paymentMethod;
+          delete req.session.card;
+          delete req.session.delivery;
+          delete req.session.User.specialRequest;
+        }
+      });
+    }
+  });
+
 }
 
-var sendEmailCatering = function(html, req, res) {
-  var email_file = "invoices/"+(req.session.User.email.split("@")[0]+".html")
 
-  fs.writeFile(email_file, html, function(err) {
+
+var sendEmailCatering = function(txt, req, res) {
+
+  var file_name = "invoices/" + (req.session.User.email.split("@")[0] + "-" + getDateTime(true)) + ".html"
+
+  fs.writeFile(file_name, txt, function(err) {
       if (err) {
           return console.log(err);
       }
   });
 
-  //var cmd = "mailx -a 'Content-Type:text/html' -a 'From: " + req.session.User.name + " <" + req.session.User.email + ">' -s 'Order Request' 'catering@davidanddads.com' < " + email_file
-  //var cmd = "mailx -a 'Reply-to: " + req.session.User.name + "<" + req.session.User.email + ">' -a 'From: Order Form <orders@davidanddads.com>' -s 'Order Request' 'catering@davidanddads.com' < " + email_file;
-  var cmd = "mailx -a 'Reply-to: " + req.session.User.name + "<" + req.session.User.email + ">' -a 'From: Order Form <orders@davidanddads.com>' -s 'Order Request' 'catering@davidanddads.com' < " + email_file;
-
-  exec(cmd, function(error, stdout, stderr) {
-        if (error) {
-            console.log("Failed sending email from customer: " + req.session.User.email);
-            console.log(error);
-            res.view('catering/confirm/failure');
-        } else {
-          console.log("mailx command returned successfully for email to " + req.session.User.email);
-          var log_entry = getDateTime() + " - " + req.session.User.name + ", " +
-                          req.session.User.email + ", " + req.session.User.companyName +
-                          ", DELIVER ON " + req.session.delivery.date + " @ " +
-                          req.session.delivery.time + "\n";
-
-          fs.appendFile('invoices/recent_orders.txt',log_entry,function(append_error) {
-            if (append_error) {
-              console.log("could not append order to log file:");
-              console.log(append_error);
-            } else {
-              delete req.session.foodComplete;
-              delete req.session.paymentMethod;
-              delete req.session.card;
-              delete req.session.delivery;
-              delete req.session.User.specialRequest;
-              res.view('catering/confirm/success');
-            }
-          });
+  var params = {
+    Destination: {
+      ToAddresses: [
+        'catering@davidanddads.com',
+      ]
+    },
+    Message: {
+      Body: {
+        /*
+        Html: {
+          Data: txt
+        },
+        */
+        Text: {
+          Data: txt
         }
-    });
-}
+      },
+      Subject: {
+        Data: ('Order Request from ' + req.session.User.name),
+      }
+    },
+    Source: 'orders@davidanddads.com',
+    ReplyToAddresses: [ req.session.User.email ]
+  };
 
-var createCard = function(user, name, number, expiry, cvc, cb) {
-  fs.readFile('./ssl/key.pem', 'utf8', function (err, privKey) {
-    if (!err) {
-      triplesec.encrypt({
-        data  : new triplesec.Buffer(number),
-        key : new triplesec.Buffer(privKey),
-        progress_hook : function (obj) {}
-      }, function(err, buff){
-        if (! err) {
-          var ciphertext = buff.toString('hex');
-          newCard = {
-            lastFour : number.substring(number.length - 4),
-            number : ciphertext,
-            name : name,
-            expiry : expiry,
-            cvc : cvc
-          }
-          cb(user, newCard);
+  ses.sendEmail(params, function(err, data) {
+    if (err) {
+      console.log(getDateTime() + " Failed to send catering email for " + req.session.User.email);
+      console.log(err, err.stack);
+      res.view('catering/confirm/failure');
+    } else {
+      console.log(getDateTime() + " Successfully sent catering email for "+ req.session.User.email);
+      var log_entry = getDateTime() + " - " + req.session.User.name + ", " +
+                      req.session.User.email + ", " + req.session.User.companyName +
+                      ", DELIVER ON " + req.session.delivery.date + " @ " +
+                      req.session.delivery.time + "\n";
+
+      fs.appendFile('invoices/recent_orders.txt',log_entry,function(append_error) {
+        if (append_error) {
+          console.log("could not append order to log file:");
+          console.log(append_error);
         } else {
-          cb(user, null);
+          delete req.session.foodComplete;
+          delete req.session.paymentMethod;
+          delete req.session.card;
+          delete req.session.delivery;
+          delete req.session.User.specialRequest;
+          res.view('catering/confirm/success');
         }
       });
-    } else {
-      cb(user, null);
     }
   });
 }
 
-var updateUser = function(session, body) {
-  user = session.User;
+
+var updateUser = function(req, saveCard) {
+  user = req.session.User;
+  body = req.body;
   if (!('phone' in user)) {
     user.phone = body.phone;
   }
@@ -310,30 +363,53 @@ var updateUser = function(session, body) {
   user.virtualEmail = body.email;
   user.virtualPhone = body.phone;
 
-  var after_decrypt = function(user, newCard) {
-    if (newCard) {
-      if ('savedPayment' in user) {
+  newCard = {
+    lastFour : body.number.substring(body.number.length - 4),
+    number : null,
+    name : body.card_name,
+    expiry : body.expiry,
+    cvc : body.cvc,
+		zip : body.zip,
+    cardVisisbleToUser : saveCard
+  }
+  if (newCard) {
+    if ('savedPayment' in user) {
+      var found = false;
+      for (var i=0; i<user.savedPayment.length; i++) {
+        if (newCard.lastFour === user.savedPayment[i].lastFour) {
+          found = true;
+        }
+      }
+      if (!found) {
         user.savedPayment.push(newCard);
-      } else {
-        user.savedPayment = [newCard];
       }
+    } else {
+      user.savedPayment = [newCard];
     }
-    User.update(user.id, user, function userUpdate (err) {
-      if (err) {
-        console.log("Error updating user after submitting virtual order.");
-        console.log(err);
-      }
-      session.User = user;
-    });
   }
 
   if (body.number.indexOf('X') < 0) {
-    createCard(user, body.card_name, body.number, body.expiry, body.cvc, after_decrypt);
-  } else {
-    after_decrypt(user, null);
+    triplesec.encrypt({
+      data  : new triplesec.Buffer(body.number),
+      key : new triplesec.Buffer(privKey),
+      progress_hook : function (obj) {}
+    }, function(err, buff){
+      if (! err) {
+        var ciphertext = buff.toString('hex');
+        user.savedPayment[user.savedPayment.length - 1].number = ciphertext;
+        User.update(user.id, user, function userUpdate (err) {
+          if (err) {
+            console.log("Error updating user after submitting virtual order.");
+            console.log(err);
+          }
+        });
+      } else {
+        console.log("Error encrypting card for " + body.card_name);
+      }
+    });
   }
 
-
+  return user;
 }
 
 module.exports = {
@@ -407,7 +483,8 @@ module.exports = {
   'submitVirtual' : function(req,res) {
     if (req.body.isCatering === "false") { // sanity check
 
-      updateUser(req.session, req.body);
+      updated_user = updateUser(req, (req.body.save_card != null && req.body.save_card === "on"));
+      req.session.User = updated_user;
 
       Locations.findOne({'name' : req.body.location}, function foundLocation (err, loc) {
         if ('order_description' in req.body && req.body['order_description'] !== "") {
@@ -423,7 +500,7 @@ module.exports = {
         obj = parseVirtualData(req.body, loc, method);
         customer_html = customer_template(obj);
         our_html = our_template(obj);
-        sendEmailVirtual(customer_html, our_html, req.body, res);
+        sendEmailVirtual(customer_html, our_html, req, res);
       });
     }
 

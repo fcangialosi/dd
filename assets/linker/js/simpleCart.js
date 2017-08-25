@@ -950,7 +950,6 @@
 							(simpleCart.$create("input").attr("type","hidden").attr("name","isCatering").val(simpleCart.isCatering)
 						);
 						simpleCart.$("body").append(form);
-						console.log(form);
 						form.el.submit();
 						form.remove();
 					});

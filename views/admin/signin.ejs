@@ -3,7 +3,7 @@
   <div class="column">
       <form action="/session/admin" method="POST" class="ui warning form inverted segment" id="admin-form">
         <h4><b>David and Dad's Admin</b></h4>
-        <% if(flash && flash.err.length && ('type' in flash.err[0]) && flash.err[0].type == 'signin') { %>
+        <% if(flash && flash.err && flash.err.length && ('type' in flash.err[0]) && flash.err[0].type == 'signin') { %>
         <div class="ui warning message">
           <% Object.keys(flash.err).forEach(function(error) { %>
           <div class="header"><%- JSON.stringify(flash.err[error]['name']) %></div>

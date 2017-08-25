@@ -205,6 +205,7 @@ module.exports = {
 			cardName : option.name,
 			cardExpiry : option.expiry,
 			cardCvc : option.cvc,
+			cardZip : option.zip,
 			index : parseInt(req.body.paymentIndex)
 		}
 

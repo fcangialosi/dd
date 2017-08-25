@@ -7,9 +7,19 @@
 <% var dd_red = "#822421!important" %>
 
 <% function create_freebie_section(type) {%>
+  <% type = 'freeside_' + type; %>
   <div class="<%=type%>-side virtual-side">
-    <% type = 'freeside_' + type; %>
-  <div class="field"><label>Choose your free side:</label></div>
+  <% if (type == "freeside_salad") { %>
+    <p>This salad comes with free dressing.</p>
+  <% } else { %>
+    <p>This selection comes with a free item. Please choose one
+    from the menu below, or leave it blank if you don't want it.</p>
+  <% } %>
+  <% if (type == "freeside_salad") { %>
+    <div class="field"><label>Choose your dressing:</label></div>
+  <% } else { %>
+    <div class="field"><label>Choose your free side:</label></div>
+  <% } %>
   <% create_subhead(type+'_side') %>
   <select class="side-select ui dropdown">
     <option value=""></option>
@@ -30,10 +40,12 @@
 
 <div style="height: 150px"></div>
 <div class="container">
-	<div class="ui red segment">
+<!--
+<div class="ui red segment">
 <p>NOTE: David and Dad's Virtual Cafe is still in beta testing. Submitting this
 form will NOT submit an order. If you would like to be notified when we're ready
 to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
+-->
     <h1 class="ui center aligned dividing header"> Virtual Cafe Order Form </h1>
 
     <center>
@@ -108,7 +120,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
           <div class="ui inverted segment" style="background-color: #822421!important;">
             <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
               Date
-              <div class="sub header">If it's after 10:30AM, you'll only be able
+              <div class="sub header">If it's after 10:30AM (or 10:00AM for KK locations), you'll only be able
 								to place an order for a future date!</div>
             </h2>
           </div>
@@ -181,7 +193,12 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                         <tbody>
                             <% _.each(locations, function(location) {%>
                             <tr onclick="locationSelected(this);">
-                              <td><%= location.name %></td>
+                              <td>
+																<span><%= location.name %></span>
+																<% if (location.name.indexOf("Kennedy") > -1) { %>
+																	<br><b style="color:#c0392b">Please place your order for this location by 10:00AM!</b>
+																<%}%>
+															</td>
                               <td><%= location.time %></td>
                               <td><%= location.contact.name %> <br><%=location.contact.email%></td>
                               <td><%= location.fee %> </td>
@@ -250,16 +267,17 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                   </a>
                 <%}%>
               <% } %>
+              <!--
               <a class="item" target="menu-custom">
                 Create-Your-Own Lunch
-              </a>
+              </a>-->
               </div>
 
               <% for(var i=0; i<menu.length; i++) { section = menu[i]; %>
                 <div class="ui bottom attached segment menu-tab" id="menu-<%=i%>">
                   <p> <%= section.subhead %> </p>
                   <div class="ui stackable grid">
-                  <% for(var j=0; j<section.items.length; j++) { item = section.items[j]; %>
+                  <% for(var j=0; j<section.items.length; j++) { item = section.items[j]; if (item) {%>
                     <div class="five wide column">
                       <div class="simpleCart_shelfItem ui segment">
                         <b class="item_name"><%= item.name %></b> (<span class="item_price"><%= item.price %></span>)<span class="item_side" style="visibility:hidden"><%= item.serves %></span>
@@ -277,19 +295,24 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                       </div>
                     </div>
 
-                  <% }%>
+                  <% }}%>
                   </div>
                 </div>
               <% } %>
               <div class="ui bottom attached segment menu-tab" id="menu-extras">
 
-                  <center>
-                    <span class="ui red labeled icon button back_to_menu" style="float:right">
-                      <i class="hand left icon"></i>
-                      Back
-                    </span>
-                  </center>
-                  <p>This item comes with a free side dish. Please choose one from the menu below, or select none.</p>
+                  <span class="ui red labeled icon button go-back" style="float:right">
+                    <i class="hand left icon"></i>
+                    Back
+                  </span>
+
+                  <div>
+                    <br>
+                    <label>Special Requests:</label>
+                    <textarea placeholder="For example: Not too much mayo" name="special_request" style="height:30%" id="special_request"></textarea>
+                  </div>
+
+                  <hr>
 
                   <% create_freebie_section('deli') %>
                   <% create_freebie_section('grill') %>
@@ -298,7 +321,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 
                   <hr>
 
-                  <div class="field"><label>Add a drink:</label></div>
+                  <div class="field"><label>Add a drink?</label></div>
 
                   <div class="simpleCart_shelfItem">
                     <div class="ui stackable grid">
@@ -315,7 +338,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 
                   <hr>
 
-                  <div class ="field"><label>Add sides:</label></div>
+                  <div class ="field"><label>Add sides?</label></div>
                   <div class="ui stackable grid">
                     <% for(var i=0; i<extras.sides.items.length; i++) { side = extras.sides.items[i]; %>
                       <div class="four wide column">
@@ -329,7 +352,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 
                   <hr>
 
-                  <div class ="field"><label>Add dessert:</label></div>
+                  <div class ="field"><label>Add dessert?</label></div>
                   <div class="ui stackable grid">
                     <% for(var i=0; i<extras.desserts.items.length; i++) { dessert = extras.desserts.items[i]; %>
                       <div class="four wide column">
@@ -341,14 +364,16 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                     <% } %>
                   </div>
 
+
                   <hr>
                   <center>
-                  <span class="ui red labeled icon button back_to_menu" style="float:right">
-                    <i class="hand left icon"></i>
-                    Back
+                  <span class="ui blue labeled icon button order-more"
+                  style="float:center">
+                    <i class="hand up icon"></i>
+                    Order more items
                   </span>
                   <h4 class="ui blue segment" style="width:50%">
-                  Scroll back up to order additional items, or scroll down to view your order summary, enter your payment information, and complete your order.
+                  Once you've added all of your food, scroll down to view your order summary, enter your payment information, and complete your order.
                   </h4>
                   </center>
 
@@ -362,8 +387,10 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                     <option value=""></option>
                     <option value="deli">Deli Sandwich</option>
                     <option value="wrapper">Deli Wrapper</option>
+                    <!--
                     <option value="grill">From The Grill</option>
                     <option value="burger">Burger</option>
+                    -->
                     <option value="salad">Salad</option>
                   </select>
                 </div>
@@ -534,7 +561,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                 <hr class="deli-field wrapper-field grill-field burger-field salad-field custom-field">
 
                 <div class="field deli-field wrapper-field grill-field burger-field salad-field custom-field"><label>Special Requests:</label>
-                  <textarea placeholder="For example: Not too much mayo" name="special_request" style="height:30%" id="special_request"></textarea>
+                  <textarea placeholder="For example: Not too much mayo" name="special_request" style="height:30%" id="custom-special_request"></textarea>
                 </div>
 
                 <hr class="deli-field wrapper-field grill-field burger-field salad-field custom-field">
@@ -587,15 +614,23 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
       </tr>
     </table>
 
+
+
+
    <% if(session.User.savedPayment && session.User.savedPayment.length > 0) { %>
-                  <center> <h4>Select a saved credit card or enter a new one:</h4>
+    <center> <h4>Select a saved credit card or enter a new one:</h4>
+    <p> Click <a href="/virtualcafe/edit-cards">here</a> if you would like to delete one of your saved cards.<br>If you make any changes, you will need to refresh this page to see them.</p>
+
+
                      <select class="card-select ui dropdown">
                       <option value="">Saved Cards</option>
                       <% _.each(session.User.savedPayment, function(card){ %>
-                        <option value="<%= [card.lastFour,card.name,card.expiry,card.cvc,session.User.savedPayment.indexOf(card)].join() %>">XXXX-XXXX-XXXX-<%= card.lastFour %> (<%= card.name %>)</option>
+                        <% if (!('car1dVisibleToUser' in card ) || card.cardVisibleToUser) { %> 
+                          <option value="<%= [card.lastFour,card.name,card.expiry,card.cvc,card.zip,session.User.savedPayment.indexOf(card)].join() %>">XXXX-XXXX-XXXX-<%= card.lastFour %> (<%= card.name %>)</option>
+                        <% } %>
                       <% }) %>
                     </select></center>
-                    <% } %>
+    <% } %>
               <div class="ui stackable two column middle aligned grid" id="card-form">
                 <div class="column">
                     <br>
@@ -628,7 +663,15 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                           <label>CVC Code</label>
                           <input placeholder="123" name="cvc" type="text" id="card-cvc">
                         </div>
-                      </div>
+											</div>
+											<div class="field">
+												<label>Billing ZIP Code</label>
+												<input placeholder="12345" name="zip" type="text" id="card-zip">
+											</div>
+											<div class="field">
+												<input type="checkbox" name="save_card" id="save-card" style="vertical-align: middle;margin-right: 5px;">
+												<label style="display:inline;vertical-align:middle;"> Save my card for future orders </label> 
+											</div>
                     </div>
                   </div>
                   <div class="column">

@@ -4,10 +4,21 @@ ready = function() {
     $('*#item-index').each(function(index, item) {
       new_order[item.name] = item.value;
     });
-    console.log(new_order);
     var csrf = $('input[name="_csrf"]')[0].value;
     var menu_id = document.URL.split("/")[document.URL.split("/").length-1];
-    $.post("/menu/reorder/", {_csrf : csrf, id: menu_id, order : new_order}).done(function(data) {
+    $.post("/menu/reorderMenu/", {_csrf : csrf, id: menu_id, order : JSON.stringify(new_order)}).done(function(data) {
+      window.location.reload();
+    });
+  });
+
+  $('#reorder-section-button').click(function() {
+    var new_order = {};
+    $('*#item-index').each(function(index, item) {
+      new_order[item.parentElement.parentElement.dataset.id] = item.value;
+    });
+    var csrf = $('input[name="_csrf"]')[0].value;
+    var menu_id = document.URL.split("/")[document.URL.split("/").length-1];
+    $.post("/menu/reorderSections/", {_csrf : csrf, menu : menu_id, order : JSON.stringify(new_order)}).done(function(data) {
       window.location.reload();
     });
   });

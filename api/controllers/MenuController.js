@@ -14,6 +14,17 @@
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+
+var values = function(obj) {
+  var vs = [];
+  for (key in obj) {
+    if(obj.hasOwnProperty(key)) {
+      vs.push(obj[key]);
+    }
+  }
+  return vs;
+}
+
 var duplicates = function(arr) {
   sorted = arr.slice().sort();
   for(i=0; i < sorted.length-1; i++) {
@@ -22,6 +33,19 @@ var duplicates = function(arr) {
     }
   }
   return false;
+}
+
+var recurse_helper = function(old_ids, new_index, i, cb) {
+  if (i < old_ids.length) {
+    Menu.findOne(old_ids[i], function(err, menu) {
+      menu.index = Number(new_index[i]);
+      Menu.update(old_ids[i], menu, function(err, update) {
+        recurse_helper(old_ids, new_index, i+1, cb);
+      });
+    });
+  } else {
+    cb();
+  }
 }
 
 module.exports = {
@@ -341,19 +365,24 @@ module.exports = {
     },
 
     reorderMenu : function(req, res, next) {
+      console.log("MENU");
       Menu.findOne(req.body.id, function foundMenu(err, menu) {
         if(err) return next(err);
         if(!menu) return next("Menu doesn't exist.");
 
-        new_order = req.body.order;
-        if (duplicates(new_order)) {
+        new_order = JSON.parse(req.body.order);
+        if (duplicates(values(new_order))) {
           req.session.flash = { err : 'You gave two items the same index! Make sure each one is unique.'}
-          return res.redirect('/menu/edit/' + req.body.id);
+          //return res.redirect('/menu/edit/' + req.body.id);
+          next();
         }
+
         var new_items = [];
-        new_order.forEach(function(new_index, old_index, arr) {
+        var new_index;
+        for (var old_index in new_order) {
+          new_index = new_order[old_index];
           new_items[new_index] = menu['items'][old_index];
-        });
+        }
         menu['items'] = new_items;
         Menu.update(req.param('id'), menu, function itemUpdated(err) {
           if (err) {
@@ -368,6 +397,29 @@ module.exports = {
           res.redirect('/menu/edit/' + req.body.id);
         });
       });
+    },
+
+    reorderSections : function(req, res, next) {
+      menu_name = req.param('menu');
+      new_order = JSON.parse(req.body.order);
+      if (duplicates(values(new_order))) {
+        req.session.flash = { err : 'You gave two items the same index! Make sure each one is unique.'}
+        return res.redirect('/admin/' + menu_name);
+      }
+
+      var old_ids = [],
+          new_index = [];
+
+      for (var key in new_order) {
+        old_ids.push(key);
+        new_index.push(new_order[key]);
+      }
+
+      recurse_helper(old_ids, new_index, 0, function() {
+        req.session.flash = { success : 'Order updated successfully!'}
+        res.redirect('/admin/' + menu_name);
+      });
+      
     },
 
     shift : function(req, res, next) {
@@ -418,7 +470,7 @@ module.exports = {
 
       Menu.findOne(req.param('id'), function foundMenu (err, menu) {
         var index = Number(req.param('index'));
-        if(index) { // delete individual item
+        if(index >= 0) { // delete individual item
           var name = menu['items'][index].name;
           var edited_menu = JSON.parse(JSON.stringify(menu));
           edited_menu['items'].splice(index, 1);

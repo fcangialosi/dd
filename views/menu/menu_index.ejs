@@ -47,7 +47,7 @@
 
 			<% _.each(menu.items, function(item) { if (item) { %>
 				<tr data-id="<%= item.id %>" data-model="item">
-                    <td style="width: 5%;"><input id="item-index" value="<%= menu.items.indexOf(item) %>" name="<%= menu.items.indexOf(item) %>" type="text" class="form-control"></td>
+                    <td style="width: 5%;"><input id="item-index" value="<%= menu.items.indexOf(item) %>" name="<%= menu.items.indexOf(item) %>" type="text" class="form-control" style="padding-left:4px;padding-right:0px;"></td>
 					<td><%= item.name %></td>
 					<td><%= item.price %></td>
 					<td><% if (item.priceSuffix) { %><%= item.priceSuffix %><% } else { %>each<% } %></td>

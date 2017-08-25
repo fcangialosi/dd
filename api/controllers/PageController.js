@@ -176,6 +176,59 @@ module.exports = {
       });
     },
 
+    editpolicy: function(req, res, next) {
+      Page.findOne({"page":"policy"}, function (err, page) {
+        if (err) return next(err);
+        if (!page) {
+            message = '';
+        } else {
+            message = page.message;
+        }
+
+        res.view('admin/edit-policy', {
+            layout: 'admin/layout',
+            content : message
+        });
+
+      });
+    },
+
+    setpolicy: function(req, res, next) {
+      Page.findOne({"page":"policy"}, function (err, page) {
+        if (err) return next(err);
+        if (!page) {
+            var new_page = {page:"policy",message:req.body.message};
+            Page.create(new_page, function pageCreated(err, page) {
+                if (err) {
+                    req.session.flash = {
+                        err : err
+                    };
+                    return res.redirect('/admin/messages/policy');
+                }
+                req.session.flash = {
+                    success : 'Policy page content saved successfully.'
+                };
+                return res.redirect('/admin/messages/policy');
+            });
+        } else {
+
+            page.message = req.body.message;
+            Page.update({"page":"policy"}, page, function pageUpdated(err) {
+                if (err) {
+                    req.session.flash = {
+                        err : err
+                    }
+                    return res.redirect('/admin/messages/policy');
+                }
+                 req.session.flash = {
+                    success : 'Policy page content saved successfully.'
+                }
+                return res.redirect('/admin/messages/policy');
+            });
+        }
+      });
+    },
+
     editPress: function(req, res, next) {
       Page.findOne({"page":"press"}, function (err, page) {
         if (err) return next(err);

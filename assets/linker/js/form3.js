@@ -295,7 +295,20 @@ $('#card-form')
           prompt : 'Your CVC code should not be longer than 4 numbers'
         }
       ]
-    }
+    },
+		zip : {
+			identifier : 'zip',
+			rules : [
+				{
+					type : 'empty',
+					prompt : 'Please enter the billing ZIP code for your card'
+				},
+				{
+					type : 'maxLength[5]',
+					prompt : 'Your billing ZIP code should not be longer than 5 numbers'
+				}
+			]
+		}
   })
 ;
 
@@ -387,6 +400,15 @@ $('#virtualcafe-form')
         {
           type : 'empty',
           prompt : 'Please enter the CVC code on the back of your credit card'
+        }
+      ]
+    },
+    zip : {
+      identifier : 'zip',
+      rules : [
+        {
+          type : 'empty',
+          prompt : 'Please enter the billing ZIP code for your credit card'
         }
       ]
     }
