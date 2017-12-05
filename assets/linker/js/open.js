@@ -18,7 +18,9 @@ if (day == 0) { // Sunday
 } else if (day == 6) { // Saturday
     if (hour < 8 || hour > 14) {
         set_closed(main);
-    }
+    } else if (hour == 13 && minute >= 30) {
+				set_closed(main);
+		}
     set_closed(pratt);
     set_closed(broadway);
 } else {
@@ -32,8 +34,10 @@ if (day == 0) { // Sunday
       set_closed(broadway);
     }
     if (hour > 15) {
-      set_closed(main);
       set_closed(pratt);
       set_closed(broadway);
     }
+		if (hour >= 20) {
+			set_closed(main);
+		}
 }
