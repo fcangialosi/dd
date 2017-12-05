@@ -5,7 +5,7 @@
   "description": "a Sails application",
   "dependencies": {
     "bcrypt": "^0.7.8",
-    "ejs": "0.8.4",
+    "ejs": "^2.5.7",
     "forever": "^0.11.1",
     "grunt": "0.4.1",
     "mandrill-api": "^1.0.40",
