@@ -55,11 +55,11 @@ module.exports.policies = {
   },
 
   OrderController : {
-    /*
   	'start' : 'flash',
   	'*' : ['flash', 'isAuthenticated']
+    /*
+    '*' : ['flash', 'isAuthenticated']
     */
-    '*' : 'flash'
   },
 
   HomeController : {

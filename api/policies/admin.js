@@ -17,7 +17,7 @@ module.exports = function(req, res, next) {
 		if (req.route.path == '/admin') {
 			return next();
 		}
-		if (checkPermissions(req.session.User, req.target)) {
+		if (checkPermissions(req.session.User, req.options)) {
 			return next();
 		} else {
 			var notAllowedError = {name : 'permissionsError', message : 'You do not have permission to view or edit ' + req.route.path};
@@ -35,3 +35,4 @@ module.exports = function(req, res, next) {
 		return;
 	}
 }
+

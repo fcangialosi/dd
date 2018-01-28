@@ -28,10 +28,24 @@ var decrypt = function(index, user, key, res) {
         cards: user.savedPayment,
         layout : 'admin/layout'
       });
+			return;
     } else {
       return decrypt(index+1, user, key, res);
     }
   }
+	if (!user.savedPayment[index].number || user.savedPayment[index].number == null) {
+    user.savedPayment[index].number = "empty"; 
+    if (index == user.savedPayment.length-1) {
+      res.view('admin/view-cards', {
+        user: user,
+        cards: user.savedPayment,
+        layout : 'admin/layout'
+      });
+			return;
+    } else {
+      return decrypt(index+1, user, key, res);
+    }
+	}
   triplesec.decrypt({
     data : new triplesec.Buffer(user.savedPayment[index].number, "hex"),
     key : new triplesec.Buffer(key),
@@ -49,6 +63,7 @@ var decrypt = function(index, user, key, res) {
         cards: user.savedPayment,
         layout : 'admin/layout'
       });
+			return;
     } else {
       return decrypt(index+1, user, key, res);
     }
