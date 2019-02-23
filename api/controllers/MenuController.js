@@ -94,6 +94,7 @@ module.exports = {
             res.view('print/index',
             {
                 menu: menu,
+                layout: 'print/print-layout',
                 menu_name: "David and Dad's Catering"
             });
         });
