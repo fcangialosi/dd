@@ -1,28 +1,25 @@
-
-<div style="height: 75px"></div>
-<div class="ui relaxed one column page grid">
-  <div class="column" style="background-color: #fff7da !important; box-shadow: 1px
-  3px 10px 2px #505050; width:80%; margin-left:10%;">
-    <div style="height: 25px"></div>
-    <h1 class="menu-title"> <%= menu_name %> Print Menu </h1>
-    <div style="height: 25px"></div>
-    <% if (menu_name === "David and Dad's Catering") { %>
-    <center style="padding-bottom: -25px"><a href="/catering/order/start/" class="ui small green labeled icon button"><i class="hand right icon"></i>Ready To Place an Order? Click Here!</a></center>
-    <% } %>
-    <% _.each(menu, function(section) { %>
-    <h2 class="section-header" id="<%=section.name%>"><%= section.name %></h2>
-    <h3 class="section-desc"> <%= section.subhead %> </h3>
-      <% _.each(section.items, function(item) { if (item) { %>
+<h1 class="menu-title"> <%= menu_name %> Print Menu </h1>
+<div style="height: 25px"></div>
+<% _.each(menu, function(section) { %>
+    <div class="section">
+        <h2 class="section-header" id="<%=section.name%>"><%= section.name %></h2>
+        <% _.each(section.items, function(item) { if (item) { %>
         <div class="menu-item">
-          <span class="item-name item_name"><%= item.name %></span><span class="spacer" style="display:none;"><br></span>
-          <span style="margin-left: 40px" class="item-price"><span style="font-size:1.4em" class="item_price"><%= item.price %></span><% if (section.menu === "catering") { %><span class="item-serves"><% if(item.minimum) { %><br>(<%=  item.minimum%>)<%} else if(item.serves) {%><br>(<%=item.serves%>)<%} else {%><%}%> </span><% } %></span>
-          <% if ('description' in item) { %><div class="item-desc"><%= item.description %></div><% } %>
+            <span class="item-name"><%= item.name %></span>
+            <span class="item-price"><%= item.price %>
+            <% if (section.menu === "catering") { %>
+                <span class="item-serves">
+                    <% if(item.minimum) { %>
+                    (<%=  item.minimum%>)
+                    <%} else if(item.serves) {%>
+                    (<%=item.serves%>)
+                    <%} else {%>
+                    <%}%>
+                </span>
+            <% } %>
+            </span>
+            <% if ('description' in item) { %><div class="item-desc"><%= item.description %></div><% } %>
         </div>
-      <% }})%>
-    <% }) %>
-    <div style="height: 25px"></div>
-  </div>
-</div>
-<div style="height: 150px"></div>
-
-</div>
+        <% }})%>
+    </div>
+<% }) %>
