@@ -1,25 +1,43 @@
-<h1 class="menu-title"> <%= menu_name %> Print Menu </h1>
-<div style="height: 25px"></div>
-<% _.each(menu, function(section) { %>
-    <div class="section">
-        <h2 class="section-header" id="<%=section.name%>"><%= section.name %></h2>
-        <% _.each(section.items, function(item) { if (item) { %>
-        <div class="menu-item">
-            <span class="item-name"><%= item.name %></span>
-            <span class="item-price"><%= item.price %>
-            <% if (section.menu === "catering") { %>
-                <span class="item-serves">
-                    <% if(item.minimum) { %>
-                    (<%=  item.minimum%>)
-                    <%} else if(item.serves) {%>
-                    (<%=item.serves%>)
-                    <%} else {%>
-                    <%}%>
+<div class="ui stackable four column grid">
+    <% var modmenu = [
+        [menu[2]],
+        [menu[3]],
+        [menu[4], menu[5]],
+        [menu[6]],
+        [menu[7],menu[9]],
+        [menu[8]],
+        [menu[10]],
+        [menu[11]],
+        [menu[13]],
+        [menu[11],menu[0],menu[1]],
+        [menu[14]],
+        [menu[15]]
+    ] %>
+<% _.each(modmenu, function(col) { %>
+    <div class="ui column section">
+        <% _.each(col, function(section) { if (section) { %>
+            <h2 class="section-header" id="<%=section.name%>"><%= section.name %></h2>
+            <% _.each(section.items, function(item) { if (item) { %>
+            <div class="menu-item">
+                <span class="item-name"><%= item.name %></span>
+                <span class="item-price"><%= item.price %></span>
+                <br>
+                <span class="item-serves"> 
+                <% if (section.menu === "catering") { %>
+                    <span class="item-serves">
+                        <% if(item.minimum) { %>
+                        (<%=  item.minimum%>)
+                        <%} else if(item.serves) {%>
+                        (<%=item.serves%>)
+                        <%} else {%>
+                        <%}%>
+                    </span>
+                <% } %>
                 </span>
-            <% } %>
-            </span>
-            <% if ('description' in item) { %><div class="item-desc"><%= item.description %></div><% } %>
-        </div>
+                <% if ('description' in item) { %><div class="item-desc"><%= item.description %></div><% } %>
+            </div>
+            <% }})%>
         <% }})%>
     </div>
 <% }) %>
+</div>
