@@ -85,7 +85,7 @@ module.exports = {
     var min = date.getMinutes();
 
     var isWeekend = day == 0 || day == 6;
-    var isBeforeDeadline = (hour < 10) || (hour == 10 && min <= 30);
+    var isBeforeDeadline = (hour < 11); // || (hour == 10 && min <= 30);
 
     min = (min < 10 ? "0" : "") + min;
     hour = (hour < 10 ? "0" : "") + hour;
@@ -113,19 +113,24 @@ module.exports = {
           i--;
         }
       }
-      Locations.find({}, function foundLocations (err, all) {
-        res.view('virtualcafe/order', {
-          menu: menu,
-          custom : custom,
-          extras : extras,
-          subheads : subheads,
-          locations: all,
-          isWeekend : isWeekend,
-          isBeforeDeadline : isBeforeDeadline,
-          time : (hour > 12 ? hour-12 : hour) + ":" + min + (hour < 12 ? "AM" : "PM"),
-          dayOfTheWeek : daysOfTheWeek[day],
-          date : months[date.getMonth()] + " " + date.getDate()
-        });
+			Specials.findOne({"subhead" : daysOfTheWeek[day],'cafe' : 0}).exec(function (err, specials) {
+				if (err) return next(err);
+				menu.push(specials);
+
+				Locations.find({}, function foundLocations (err, all) {
+					res.view('virtualcafe/order', {
+						menu: menu,
+						custom : custom,
+						extras : extras,
+						subheads : subheads,
+						locations: all,
+						isWeekend : isWeekend,
+						isBeforeDeadline : isBeforeDeadline,
+						time : (hour > 12 ? hour-12 : hour) + ":" + min + (hour < 12 ? "AM" : "PM"),
+						dayOfTheWeek : daysOfTheWeek[day],
+						date : months[date.getMonth()] + " " + date.getDate()
+					});
+				});
       });
     });
   }

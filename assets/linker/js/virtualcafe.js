@@ -5,6 +5,8 @@ var base_salad_price = 4.50;
 
 $(document).ready(function() {
 
+	$('#virtual-js-id').text('1.5');
+
 	if (simpleCart.total() && !simpleCart.isCatering) {
 		$('#submit-button').html("Submit My Order (<span class='simpleCart_grandTotal'></span>)")
 	}
@@ -13,16 +15,35 @@ $(document).ready(function() {
     simpleCart.isCatering = false;
   }
 
+	specials_section = $('a[target="menu-9"]')[0];
+
+	showDailySpecials = function() {
+		// Show today's specials
+		if (specials_section) { 
+			specials_section.setAttribute('style','');
+		}
+	}
+
+	hideDailySpecials = function() {
+		// Hide today's specials
+		if (specials_section) {
+			specials_section.setAttribute('style','display:none');
+		}
+	}
+
+	hideDailySpecials();
+
   locationInput = $('#location-input');
 
   // called by onclick listener of table elements in the
   // location selection table, choice = the element clicked
   locationSelected = function(choice) {
+		loc = choice
     choice.setAttribute('class','location-selected');
     locationInput.val(choice.children[0].children[0].innerHTML);
 
     //update location-based shipping fee
-    fee = choice.children[3].innerHTML.replace(/(\$|\s)?/g, "");
+    fee = choice.children[4].innerHTML.replace(/(\$|\s)?/g, "");
 
     simpleCart.shipping(function() {
       return fee;
@@ -36,6 +57,18 @@ $(document).ready(function() {
         curr.setAttribute('class','disabled');
       }
     }
+
+		toolate_box = $('#toolate-box');
+		order_time = choice.children[1].innerText;
+		if (moment().diff(moment(order_time, 'hh:mmA'), 'minutes') > 0) {
+			$('#today-button').addClass('disabled');
+			if (toolate_box.text().trim().length == 0 || toolate_box.text().indexOf("another") > 0) {
+				toolate_box.text("Sorry, we cannot accept orders past " + order_time + " for this location. Please select another location or a future date.");
+			}
+		} else {
+			$('#today-button').removeClass('disabled');
+			toolate_box.text('');
+		}	
   }
 
   datePicker = $('#virtual-datepicker').datetimepicker({
@@ -48,7 +81,8 @@ $(document).ready(function() {
 
 
   $('#today-button').click(function() {
-    if ($('#toolate').length) {
+    if ($('#toolate-box').text().trim().length) {
+			hideDailySpecials();
       return;
     }
     if (this.classList.contains('active')) {
@@ -60,9 +94,10 @@ $(document).ready(function() {
       datePicker.parent().parent()[0].setAttribute('class','disabled field');
     }
     this.classList.toggle('active');
+		showDailySpecials();
   });
 
-  lastActive = null;
+  lastActive = document.getElementById("menu-0");
   $('#virtualcafe-sections a').click(function(e) {
     e.preventDefault();
     target = this.getAttribute('target');
@@ -84,18 +119,23 @@ $(document).ready(function() {
     if (item_side == ""){
       item_side = "deli";
     }
-    type_selector = '.freeside_'+item_side+'-side';
-    $(type_selector)[0].classList.add("active");
+    var type_selector = '.freeside_'+item_side+'-side';
+		side_selector = $(type_selector)[0];
+		if(side_selector != null) {
+			side_selector.classList.add("active");
+		}
     to_remove = $(".virtual-side").not(type_selector);
     for(var i=0; i<to_remove.length; i++) {
       to_remove[i].classList.remove("active");
     }
   };
   hideSections = function() { 
-    $('#virtualcafe-sections').attr('style','display:none;');
+    //$('#virtualcafe-sections').attr('style','display:none;');
+		$('#virtualcafe-sections').attr('disabled', 'disabled');
   }
   showSections = function() {
-    $('#virtualcafe-sections').attr('style','');
+    //$('#virtualcafe-sections').attr('style','');
+		$('#virtualcafe-sections').attr('disabled', null);
   }
   itemJustSelected = null;
   previousSection = null;
@@ -103,6 +143,14 @@ $(document).ready(function() {
 		var item;
     item = this.parentElement;
     item_name = item.parentElement.getElementsByClassName("item_name")[0].innerHTML;
+    price_span = item.parentElement.getElementsByClassName("item_price");
+    item_price = 0;
+    if (price_span.length) {
+      item_price = price_span[0].innerHTML;
+			if (item_price[0] === "$") {
+				item_price = item_price.substring(1);
+			}
+    }
     if (item_name.indexOf("Create-Your-Own") > -1) {
       $("#virtualcafe-sections > a[target='menu-custom']").click();
       var custom_type = "deli";
@@ -119,8 +167,10 @@ $(document).ready(function() {
       $('.custom-type-select').val(custom_type).change();
       e.stopPropagation();
       return;
-    }
-    item_price = item.parentElement.getElementsByClassName("item_price")[0].innerHTML;
+    } else {
+			newCustomOrder(item_name);
+			customOrder["total_price"] = parseFloat(item_price);
+		}
     previousSection = item.parentElement.parentElement.parentElement;
     previousSection.classList.remove('active');
     extras = document.getElementById('menu-extras');
@@ -131,13 +181,59 @@ $(document).ready(function() {
       price : item_price
     });
 
+		// Fill in "Customize Your ... "
+		$('#customize-item-name').html(item_name);
+		item_customize = item.parentElement.getElementsByClassName("item_customizable")[0].innerHTML;
+		fields = $(".customize");
+		if (item_customize == "true") {
+			for (var i=0; i<fields.length; i++) {
+				fields[i].classList.add("active");
+			}
+		} else {
+			for (var i=0; i<fields.length; i++) {
+				fields[i].classList.remove("active");
+			}
+		}
+
+		// Display only the correct topping / bread sections for this type of item
     item_side = item.parentElement.getElementsByClassName("item_side")[0].innerHTML;
+    type_selector = "."+item_side+"-field";
+    if(type_selector) { //  && item_customize == "true") {
+      fields = $(type_selector);
+      for(var i=0; i<fields.length; i++) {
+        fields[i].classList.add("active");
+      }
+    }
+		if (item_customize == "true") {
+			to_remove = $(".custom-field").not(type_selector).not('.customize');
+		} else {
+			to_remove = $(".custom-field").not(type_selector);
+		}
+    for(var i=0; i<to_remove.length; i++) {
+      to_remove[i].classList.remove("active");
+      $('.custom-field :checked').not(type_selector).removeAttr('checked');
+      $('.custom-field>.ui.dropdown').not(type_selector).val('');
+    }
+		clearSelected();
+
+		// Display the customize menu
     displaySideMenu(item_side);
 
+		// Hide everything else
     hideSections();
 
     e.stopPropagation();
   });
+
+	clearSelected = function() {
+    $('.ui.checkbox :checked').removeAttr('checked');
+    $('select').val('');
+
+		// Clear any checkboxes from previous items
+		$('.simpleCart_customItem.ui.checkbox :checked').removeAttr('checked');
+
+		$('#special_request').val('');
+	}
 
   goback = function() {
     showSections();
@@ -146,17 +242,15 @@ $(document).ready(function() {
     tmp = previousSection;
     previousSection = lastActive;
     lastActive = tmp;
-    $('.ui.checkbox :checked').removeAttr('checked');
-    $('select').val('');
+		clearSelected();
   }
 
   $('.go-back').click(function(e) {
-    goback();
+			goback();
   });
 
   $('.order-more').click(function(e) {
       goback();
-      $('#special_request').val('');
   });
 
   $('.simpleCart_shelfItem.ui.checkbox').checkbox('setting','onChange',function() {
@@ -197,6 +291,9 @@ $(document).ready(function() {
   customOrder = {
   };
 
+	lastSelectedPrice = {
+	};
+
   newCustomOrder = function(type){
     customOrder = {
       'total_price' : 0,
@@ -204,9 +301,18 @@ $(document).ready(function() {
       'bread' : '',
       'type' : type.capitalize(),
       'cheese' : [],
-      'addons' : []
+      'addons' : [],
+			'name' : '',
+			'side' : ''
     };
+		lastSelectedPrice = {
+
+		};
   }
+
+	orderIsEmpty = function(order) {
+		return (Object.keys(order).length === 0 && order.constructor === Object);
+	}
 
   $('.simpleCart_customItem.ui.checkbox').checkbox('setting','onChange',function (){
 		var item;
@@ -217,8 +323,16 @@ $(document).ready(function() {
     item_price = 0;
     if (price_span.length) {
       item_price = price_span[0].innerHTML;
+			if (item_price[0] === "$") {
+				item_price = item_price.substring(1);
+			}
     }
     item_type = name_span.getAttribute('type');
+
+		if (orderIsEmpty(customOrder)) {
+			newCustomOrder(itemJustSelected.get("name"));
+			customOrder['total_price'] = parseFloat(itemJustSelected.price());
+		}
 
     if(!item.checked) { // was just unchecked, remove
       index = customOrder[item_type].indexOf(item_name);
@@ -232,7 +346,39 @@ $(document).ready(function() {
       }
       customOrder["total_price"] += parseFloat(item_price);
     }
+
+    itemJustSelected.set("name",orderToString(customOrder));
+		itemJustSelected.price(customOrder["total_price"]);
+
+    simpleCart.update();
   });
+
+	customizeDropdown = $('.custom-select.ui.dropdown');
+	customizeDropdown.change(function(e) {
+    e.stopPropagation();
+		val = $(this).val().split("-");
+		type = val[0];
+		chose = val.slice(1,val.length).join('-');
+		if (orderIsEmpty(customOrder)) {
+			newCustomOrder(itemJustSelected.get("name"));
+			customOrder['total_price'] = parseFloat(itemJustSelected.price());
+		}
+		customOrder[type] = chose;
+		chosePrice = customizeDropdown.children(':selected').text().split("(")[1];
+		if (type in lastSelectedPrice) {
+			customOrder['total_price'] -= lastSelectedPrice[type];
+		}
+		if (chosePrice) {
+			chosePrice = chosePrice.substring(0, chosePrice.length - 1);
+			customOrder['total_price'] += parseFloat(chosePrice);
+			lastSelectedPrice[type] = parseFloat(chosePrice);
+		}
+
+		itemJustSelected.set("name",orderToString(customOrder));
+		itemJustSelected.price(customOrder["total_price"]);
+		simpleCart.update();
+
+	});
 
   listToString = function(l, and) {
     if (l.length < 1) {
@@ -279,16 +425,26 @@ $(document).ready(function() {
         s += "<br>* Premium: " + listToString(order.premium_topping);
       }
       customOrder.total_price += base_salad_price;
-    }
-    if (order.type == "Sandwich") {
+    } else {
+			s = JSON.parse(JSON.stringify(order.type));
+		}
+    //if (order.type == "Sandwich") {
+		if (order.bread && order.bread.length) {
       s += " on " + order.bread;
     }
     if (order.cheese && order.cheese.length) {
       s += " with " + listToString(order.cheese,true);
     }
+		if (order.side && order.side.length) {
+			s += " with " + order.side;
+		}
     if (order.addons && order.addons.length) {
       s += "<br>* Add: " + listToString(order.addons,false);
     }
+		if (order.special_request && order.special_request.length) {
+			s += "<br>* Special Request: " + order.special_request;
+
+		}
     return s;
   }
 
@@ -312,15 +468,17 @@ $(document).ready(function() {
     newCustomOrder(type);
   });
 
+	/*
   $('.custom-select').change(function (){
     select = $(this);
     selection = select.val().split(".")[1];
     if (customOrder.type == "Burger") {
-      customOrder['meat'] = [selection]
+      customOrder['meat'] = [selection];
     } else {
       customOrder['bread'] = selection;
     }
   });
+	*/
 
   $('.side-select').change(function (){
     var select = $(this);
@@ -352,9 +510,11 @@ $(document).ready(function() {
 
   $('#special_request').focusout(function (e){
     specialRequest = $(this).val();
-    oldName = itemJustSelected.get('name');
-    newName = findAndReplaceSpecialRequest(oldName, specialRequest);
-    itemJustSelected.set('name',newName);
+    //oldName = itemJustSelected.get('name');
+    //newName = findAndReplaceSpecialRequest(oldName, specialRequest);
+    //itemJustSelected.set('name',newName);
+		customOrder['special_request'] = JSON.parse(JSON.stringify(specialRequest));
+    itemJustSelected.set("name",orderToString(customOrder));
     simpleCart.update();
   });
 
@@ -423,5 +583,72 @@ $(document).ready(function() {
     $('#method-two-plus').toggleClass('plus');
     $('#method-two-plus').toggleClass('minus');
   });
+
+	var nVer = navigator.appVersion;
+	var nAgt = navigator.userAgent;
+	var browserName  = navigator.appName;
+	var fullVersion  = ''+parseFloat(navigator.appVersion); 
+	var majorVersion = parseInt(navigator.appVersion,10);
+	var nameOffset,verOffset,ix;
+
+	// In Opera, the true version is after "Opera" or after "Version"
+	if ((verOffset=nAgt.indexOf("Opera"))!=-1) {
+	 browserName = "Opera";
+	 fullVersion = nAgt.substring(verOffset+6);
+	 if ((verOffset=nAgt.indexOf("Version"))!=-1) 
+		 fullVersion = nAgt.substring(verOffset+8);
+	}
+	// In MSIE, the true version is after "MSIE" in userAgent
+	else if ((verOffset=nAgt.indexOf("MSIE"))!=-1) {
+	 browserName = "Microsoft Internet Explorer";
+	 fullVersion = nAgt.substring(verOffset+5);
+	}
+	// In Chrome, the true version is after "Chrome" 
+	else if ((verOffset=nAgt.indexOf("Chrome"))!=-1) {
+	 browserName = "Chrome";
+	 fullVersion = nAgt.substring(verOffset+7);
+	}
+	// In Safari, the true version is after "Safari" or after "Version" 
+	else if ((verOffset=nAgt.indexOf("Safari"))!=-1) {
+	 browserName = "Safari";
+	 fullVersion = nAgt.substring(verOffset+7);
+	 if ((verOffset=nAgt.indexOf("Version"))!=-1) 
+		 fullVersion = nAgt.substring(verOffset+8);
+	}
+	// In Firefox, the true version is after "Firefox" 
+	else if ((verOffset=nAgt.indexOf("Firefox"))!=-1) {
+	 browserName = "Firefox";
+	 fullVersion = nAgt.substring(verOffset+8);
+	}
+	// In most other browsers, "name/version" is at the end of userAgent 
+	else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) < 
+						(verOffset=nAgt.lastIndexOf('/')) ) 
+	{
+	 browserName = nAgt.substring(nameOffset,verOffset);
+	 fullVersion = nAgt.substring(verOffset+1);
+	 if (browserName.toLowerCase()==browserName.toUpperCase()) {
+		browserName = navigator.appName;
+	 }
+	}
+	// trim the fullVersion string at semicolon/space if present
+	if ((ix=fullVersion.indexOf(";"))!=-1)
+		 fullVersion=fullVersion.substring(0,ix);
+	if ((ix=fullVersion.indexOf(" "))!=-1)
+		 fullVersion=fullVersion.substring(0,ix);
+
+	majorVersion = parseInt(''+fullVersion,10);
+	if (isNaN(majorVersion)) {
+	 fullVersion  = ''+parseFloat(navigator.appVersion); 
+	 majorVersion = parseInt(navigator.appVersion,10);
+	}
+	
+	bug_browser = document.getElementById('bug-browser-field');
+	if (bug_browser) {
+		bug_browser.value = browserName + ' ' + fullVersion;
+	}
+	bug_os = document.getElementById('bug-os-field');
+	if (bug_os) {
+		bug_os.value = navigator.userAgent.split("(")[1].split(")")[0];
+	}
 
 });

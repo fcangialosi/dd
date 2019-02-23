@@ -34,7 +34,7 @@
       <option value="<%=item.type%>"><%=item.type%></option>
     <% } %>
   </select>
-</div>
+	</div>
 
 <% } %>
 
@@ -57,9 +57,11 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
         Although we don't deliver on weekends, you may still place an order for any date this coming week!
         <% } else { %>
           <% if (isBeforeDeadline) { %>
-             If you would like your order to be delivered today, please be sure to submit this form by <b style="color:#e74c3c">10:30AM</b>!
+             If you would like your order to be delivered today, please be sure
+						 to submit this form by designated time below! 
           <% } else { %>
-            Unfortunately, it is too late to make an order for today (our cutoff is 10:30AM, but you can still place one for a future date!).
+            Unfortunately, it is too late to make an order for today (our cutoff
+						is 11:00AM, but you can still place one for a future date!).
           <% } %>
         <% } %>
       </h4>
@@ -71,9 +73,11 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
             <form class="ui warning form segment" id="virtualcafe-form">
               <div class="ui error message"></div>
 
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
               <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
                 <tr>
-                  <td style="width: 50px"><span style="font-size: 3em">1.</span></td>
+                  <td style="width: 50px"><span style="font-size: 3em">1</span></td>
                   <td>
                     <div class="ui inverted segment" style="background-color: #822421!important;">
                       <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
@@ -112,60 +116,17 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                 </div>
               </div>
 
-              <!--<h1 class="ui dividing header">2. Date </h1>-->
-    <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
-      <tr>
-        <td style="width: 50px"><span style="font-size: 3em">2</span></td>
-        <td>
-          <div class="ui inverted segment" style="background-color: #822421!important;">
-            <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
-              Date
-              <div class="sub header">If it's after 10:30AM (or 10:00AM for KK locations), you'll only be able
-								to place an order for a future date!</div>
-            </h2>
-          </div>
-        </td>
-      </tr>
-    </table>
 
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
 
-
-              <div class="ui stackable page grid">
-                <div class="three wide column">
-                </div>
-                <div class="three wide column">
-                    <br>
-                    <center>
-                        <div class="ui <%if(!isBeforeDeadline|isWeekend){%>disabled<%}%> big toggle button" id="today-button">Today</div>
-                        <%if(isWeekend){%>
-                    <p id="toolate">(Sorry, we don't deliver on weekends!)</p>
-                  <%} else if (!isBeforeDeadline) { %>
-                    <p id="toolate">(Sorry, we cannot accept orders past 10:30AM for today!)</p>
-                  <% } %>
-                    </center>
-                </div>
-                <div class="four wide column">
-                <br>
-                    <center><h1>OR</h1></center>
-                </div>
-                <div class="five wide column">
-                  <div class="field">
-                    <label>Future Date</label>
-                    <div class="ui left icon input">
-                      <input type='text' id='virtual-datepicker' name='date' value =""/>
-                      <i class="calendar icon" onclick="$('#virtual-datepicker').focus()"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!--<h1 class="ui dividing header">3. Location -
+              <!--<h1 class="ui dividing header">2. Location -
               <span style="font-size:0.5em">Click on your location to select
 								it.</span></h1>-->
 
 <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
       <tr>
-        <td style="width: 50px"><span style="font-size: 3em">3</span></td>
+        <td style="width: 50px"><span style="font-size: 3em">2</span></td>
         <td>
           <div class="ui inverted segment" style="background-color: #822421!important;">
             <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
@@ -185,7 +146,8 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                         <thead>
                             <tr>
                               <th >Location</th>
-                              <th >Time</th>
+															<th >Order By</th>
+                              <th >Delivery</th>
                               <th >Contact</th>
                               <th> Fee </th>
                             </tr>
@@ -195,10 +157,8 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                             <tr onclick="locationSelected(this);">
                               <td>
 																<span><%= location.name %></span>
-																<% if (location.name.indexOf("Kennedy") > -1) { %>
-																	<br><b style="color:#c0392b">Please place your order for this location by 10:00AM!</b>
-																<%}%>
 															</td>
+															<td> <b style="color:#c0392b"><%= location.order_time %></b></td>
                               <td><%= location.time %></td>
                               <td><%= location.contact.name %> <br><%=location.contact.email%></td>
                               <td><%= location.fee %> </td>
@@ -209,6 +169,61 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                     </table>
                     <input type="hidden" id="location-input" type="text" name="location" value="">
               </div>
+
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+
+              <!--<h1 class="ui dividing header">3. Date </h1>-->
+    <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
+      <tr>
+        <td style="width: 50px"><span style="font-size: 3em">3</span></td>
+        <td>
+          <div class="ui inverted segment" style="background-color: #822421!important;">
+            <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
+              Date
+              <div class="sub header">If it's after 11:00AM (or earlier for other locations), you'll only be able
+								to place an order for a future date!</div>
+            </h2>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+
+
+							<center><span id="toolate-box" style="font-weight:bold;font-size:1.2em">
+                  <%if(isWeekend){%>
+                    Sorry, we don't deliver on weekends!
+                  <%} else if (!isBeforeDeadline) { %>
+                    Sorry, we cannot accept orders past 11:00AM for today!
+                  <% } %>
+							</span></center>
+              <div class="ui stackable page grid">
+                <div class="three wide column">
+                </div>
+                <div class="three wide column">
+                    <br>
+                    <center>
+                        <div class="ui <%if(!isBeforeDeadline|isWeekend){%>disabled<%}%> big toggle button" id="today-button">Today</div>
+                    </center>
+                </div>
+                <div class="four wide column">
+                <br>
+                    <center><h1>OR</h1></center>
+                </div>
+                <div class="five wide column">
+                  <div class="field">
+                    <label>Future Date</label>
+                    <div class="ui left icon input">
+                      <input type='text' id='virtual-datepicker' name='date' value =""/>
+                      <i class="calendar icon" onclick="$('#virtual-datepicker').focus()"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
 
               <!--<h1 class="ui dividing header">4. Choose your lunch items - <span
 									style="font-size:0.5em">2 ways to order...</span></h1>-->
@@ -226,61 +241,29 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
       </tr>
     </table>
 
-              <div class="ui segment">
-              <h3 class="ui header virtual method" id="method-one">Method 1: Simply type in what you want
-								<span style="float:right"><i class="large plus icon" id="method-one-plus"></i></span>
-								<br><span style="font-size:0.7em;color:#000;">(With this method
-									you will not see your total)</span>
-              </h3>
-              <div class="invisible" id="method-one-expand">
-              <div class="ui stackable grid">
-                <div class="four wide column">
-                <br>
-                <br>
-                  <p> Be as specific as possible and don't forget drinks and a
-									dessert! When you've typed in everything you want, click
-									continue and then enter your credit card information.</p>
-							<center><a class="ui green button" href="#creditcard">Continue</a></center>
-                </div>
-                <div class="twelve wide column">
-                  <div class="required field">
-                  <label>Describe your order</label>
-                  <textarea id="method-one-text" name="order_description" placeholder="For example: &quot;Turkey on white toast w/ lettuce, tomato & mayo, can of coke, and chocolate chip cookie.&quot;"></textarea>
-                </div>
-							</div>
-              </div>
-              </div>
-              </div>
-
-              <div class="ui segment">
-              <h3 class="ui header virtual method" id="method-two">Method 2: Choose from the menu
-                <span style="float:right"><i class="large plus icon" id="method-two-plus"></i></span>
-								<br><span style="font-size:0.7em;color:#000;">(With this method
-									you will see an exact total)</span>
-              </h3>
-              <div class="invisible" id="method-two-expand">
-              <div class="ui top attached tabular menu" id="virtualcafe-sections">
+							<div class="ui grid">
+							<div class="three wide column">
+              <div class="ui vertical menu" id="virtualcafe-sections">
               <% for(var i=0; i<menu.length; i++) { section = menu[i]; %>
-                <% if(!section.breakfast) { %>
-                  <a class="item" target="menu-<%=i%>">
+                <% if(section && !section.breakfast) { %>
+                  <a class="item <%if(i==0){%>active<%}%>" target="menu-<%=i%>">
                     <%= section.name %>
                   </a>
                 <%}%>
               <% } %>
-              <!--
-              <a class="item" target="menu-custom">
-                Create-Your-Own Lunch
-              </a>-->
               </div>
+							</div>
 
-              <% for(var i=0; i<menu.length; i++) { section = menu[i]; %>
-                <div class="ui bottom attached segment menu-tab" id="menu-<%=i%>">
+							<div class="thirteen wide column">
+              <% for(var i=0; i<menu.length; i++) { section = menu[i]; if (section) {%>
+                <div class="ui bottom attached segment menu-tab <%if(i==0){%>active<%}%>" id="menu-<%=i%>">
                   <p> <%= section.subhead %> </p>
                   <div class="ui stackable grid">
-                  <% for(var j=0; j<section.items.length; j++) { item = section.items[j]; if (item) {%>
+                  <% for(var j=0; j<section.items.length; j++) { item =
+									section.items[j]; if (item && item.name !== "") {%>
                     <div class="five wide column">
                       <div class="simpleCart_shelfItem ui segment">
-                        <b class="item_name"><%= item.name %></b> (<span class="item_price"><%= item.price %></span>)<span class="item_side" style="visibility:hidden"><%= item.serves %></span>
+                        <b class="item_name"><%= item.name %></b> (<span class="item_price"><%= item.price %></span>)<span class="item_side" style="visibility:hidden"><%= item.serves %></span><span class="item_customizable" style="visibility:hidden"><%= item.customize %></span>
                         <% if ('description' in item && item['description'] != '') { %>
                           <p>(click to see description)</p>
                         <% } else { %>
@@ -298,7 +281,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                   <% }}%>
                   </div>
                 </div>
-              <% } %>
+              <% }} %>
               <div class="ui bottom attached segment menu-tab" id="menu-extras">
 
                   <span class="ui red labeled icon button go-back" style="float:right">
@@ -306,7 +289,75 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                     Back
                   </span>
 
+									<div style="font-size:1.75em;">
+										<span class="customize custom-field span-field">Customize Your&nbsp;</span><span style="border-bottom:2px dotted;" id="customize-item-name"></span>
+									</div>
+									<hr>
+
                   <div>
+
+										<div class="deli-field custom-field">
+											<label>Choose Bread:</label>
+											<% create_subhead('bread') %>
+											<select class="custom-select ui dropdown">
+												<option value=""></option>
+												<% for(var i=0; i< custom.bread.length; i++) { bread = custom.bread[i]; %>
+													<option value="bread-<%=bread.type%>"><%=bread.type%> (<%=bread.price%>)</option>
+												<% } %>
+											</select>
+											<!--
+											<div class="ui stackable grid">
+												<% for(var i=0; i<custom.bread.length; i++) { addon = custom.bread[i]; %>
+													<div class="three wide column">
+														<div class="simpleCart_customItem ui checkbox">
+															<input type="checkbox">
+															<label><span class="item_name" type="bread"><%=addon.type%></span> <% if (addon.price) { %>(<span class="item_price"><%=addon.price%></span>)<% } %></label>
+														</div>
+													</div>
+												<% } %>
+											</div>-->
+										</div>
+									
+										<div class="deli-field custom-field">
+											<label>Choose Cheese:</label>
+											<% create_subhead('cheese') %>
+											<div class="ui stackable grid">
+												<% for(var i=0; i<custom.cheese.length; i++) { addon = custom.cheese[i]; %>
+													<div class="three wide column">
+														<div class="simpleCart_customItem ui checkbox">
+															<input type="checkbox">
+															<label><span class="item_name" type="cheese"><%=addon.type%></span> <% if (addon.price) { %>(<span class="item_price"><%=addon.price%></span>)<% } %></label>
+														</div>
+													</div>
+												<% } %>
+											</div>
+										</div>
+
+										<div class="deli-field grill-field custom-field">
+											<label>Choose Toppings:</label>
+											<% create_subhead('addons') %>
+											<div class="ui stackable grid">
+												<% for(var i=0; i<custom.addons.length; i++) { addon = custom.addons[i]; %>
+													<div class="three wide column">
+														<div class="simpleCart_customItem ui checkbox">
+															<input type="checkbox">
+															<label><span class="item_name" type="addons"><%=addon.type%></span> <% if (addon.price) { %>(<span class="item_price"><%=addon.price%></span>)<% } %></label>
+														</div>
+													</div>
+												<% } %>
+											</div>
+										</div>
+
+										<div class="platter-field custom-field">
+											<label>Choose Free Side:</label>
+											<select class="custom-select ui dropdown">
+												<option value=""></option>
+												<% for(var i=0; i< extras.sides.items.length; i++) { side = extras.sides.items[i]; %>
+													<option value="side-<%=side.type%>"><%=side.type%></option>
+												<% } %>
+											</select>
+										</div>
+
                     <br>
                     <label>Special Requests:</label>
                     <textarea placeholder="For example: Not too much mayo" name="special_request" style="height:30%" id="special_request"></textarea>
@@ -315,11 +366,9 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                   <hr>
 
                   <% create_freebie_section('deli') %>
-                  <% create_freebie_section('grill') %>
+                  <!--<% create_freebie_section('grill') %>-->
                   <% create_freebie_section('salad') %>
                   <% create_freebie_section('platter') %>
-
-                  <hr>
 
                   <div class="field"><label>Add a drink?</label></div>
 
@@ -338,6 +387,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 
                   <hr>
 
+									<div class="deli-field grill-field salad-field custom-field">
                   <div class ="field"><label>Add sides?</label></div>
                   <div class="ui stackable grid">
                     <% for(var i=0; i<extras.sides.items.length; i++) { side = extras.sides.items[i]; %>
@@ -349,6 +399,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                       </div>
                     <% } %>
                   </div>
+									</div>
 
                   <hr>
 
@@ -378,6 +429,10 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                   </center>
 
               </div>
+
+
+
+							<!--
               <div class="ui bottom attached segment menu-tab" id="menu-custom">
                 <h4 style="color:<%=dd_red%>;"> Create a custom sandwich, wrapper, burger, or salad with exactly what you want.</h4>
 
@@ -387,10 +442,8 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                     <option value=""></option>
                     <option value="deli">Deli Sandwich</option>
                     <option value="wrapper">Deli Wrapper</option>
-                    <!--
                     <option value="grill">From The Grill</option>
                     <option value="burger">Burger</option>
-                    -->
                     <option value="salad">Salad</option>
                   </select>
                 </div>
@@ -569,8 +622,11 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                     <div class="ui medium blue button" id="custom-addtocart">Continue to Choose Your Sides and Drink</div>
                 </div>
 
+							</div>-->
+              </div>
               </div>
 
+							<div class="ui padded segment">
               <h1> Order Summary </h1>
               <hr>
               <div class="simpleCart_items"></div>
@@ -594,9 +650,10 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                 <td><span class="simpleCart_grandTotal"></span></td>
               </tr>
               </table>
-              </div>
-              </div>
+							</div>
 
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
 
                <!--<h1 class="ui dividing header">5. Credit Card</h1>-->
 
@@ -686,6 +743,9 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
             <input type="hidden" name="_csrf" value="<%= _csrf %>">
             <input type="hidden" name="_type" value="virtual" id="is-virtual">
 
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+
     <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
       <tr>
         <td style="width: 50px"><span style="font-size: 3em">6</span></td>
@@ -706,9 +766,60 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                 Submit My Order
               </a>
             </center>-->
+
+<div id="report" style="min-height:100px"></div>
+    <div class="ui form segment">
+      <h1 class="ui small header" style="color: #822421;"> Having trouble
+			with your order? </h1>
+        <% if (flash && flash.err) { %>
+        <div class="ui red message">
+          <%= flash.err %>
+        </div>
+      <% } %>
+      <% if (flash && flash.success) { %>
+        <div class="ui green message">
+          <%= flash.success %>
+        </div>
+      <% } %>
+      <form method="POST" action="/bug" class="ui small form segment">
+        <p style="border-left: 5px solid #822421; padding-left: 10px; font-size:
+				1em"> If you're
+				having trouble making an order please let us know what's wrong and we'll do our best
+				to fix it as soon as possible!<br> Please leave the Operating System
+				and Browser fields as-is unless you know for sure that they are wrong. </p>
+				<div class="two fields">
+					<div class="field">
+						<label>Operating System</label>
+						<input style="width:100%;" name="bug-os" id="bug-os-field" type="text" value="">
+					</div>
+					<div class="field">
+						<label>Browser</label>
+						<input style="width:100%;" name="bug-browser" id="bug-browser-field" type="text" value="">
+					</div>
+				</div>
+        <div class="field">
+          <label>Message</label>
+          <textarea style="height:3em;min-height:3em;max-height:3em;" name="description"></textarea>
+        </div>
+        <input type="submit" class="ui button" value="Send" style="background-color: #822421; color: #fff">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
         </div>
     </div>
 
 </div>
 
 <div style="height: 150px"></div>
+
+<script type="text/javascript">
+
+
+</script>

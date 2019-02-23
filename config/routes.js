@@ -56,6 +56,8 @@ module.exports.routes = {
 
   'post /feedback' : 'HomeController.feedback',
 
+	'post /bug' : 'HomeController.bug',
+
   '/news' : 'HomeController.news',
 
   '/contact' : 'HomeController.contact',
@@ -77,6 +79,8 @@ module.exports.routes = {
   },
 
   '/catering/menu' : 'MenuController.displayCateringMenu',
+
+  '/catering/menu/print' : 'MenuController.printCateringMenu',
 
   '/express' : 'SpecialsController.todaysSpecials',
 

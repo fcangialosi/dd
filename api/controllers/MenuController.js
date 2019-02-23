@@ -365,7 +365,6 @@ module.exports = {
     },
 
     reorderMenu : function(req, res, next) {
-      console.log("MENU");
       Menu.findOne(req.body.id, function foundMenu(err, menu) {
         if(err) return next(err);
         if(!menu) return next("Menu doesn't exist.");

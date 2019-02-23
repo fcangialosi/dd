@@ -58,6 +58,7 @@ body {
   color: @ground;
   text-rendering: optimizeLegibility;
   min-width: 320px;
+	margin: 0;
 }
 
 
@@ -282,13 +283,13 @@ body {
 
 #home-section1 {
   width: 100%;
-  background: url("../../images/baltimore.jpg") no-repeat fixed;
+  background: url("../../images/cafe.jpg") no-repeat fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-        src='../../images/baltimore.png',
+        src='../../images/cafe.png',
         sizingMethod='scale');
 
 }
@@ -296,13 +297,13 @@ body {
 #main-section1 {
   width: 100%;
   min-height: 550px;
-  background: url("../../images/bgs/potpie.jpg") no-repeat fixed;
+  background: url("../../images/waffle.jpg") no-repeat fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-        src='../../images/bgs/potpie.jpg',
+        src='../../images/waffle.jpg',
         sizingMethod='scale');
 
   border-bottom: 7px solid @ground;
@@ -311,13 +312,13 @@ body {
 #catering-section1 {
   width: 100%;
   min-height: 550px;
-  background: url("../../images/bgs/fruit_salad.jpg") no-repeat fixed;
+  background: url("../../images/pastries.jpg") no-repeat fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-        src='../../images/fruit_salad.jpg',
+        src='../../images/pastries.jpg',
         sizingMethod='scale');
 
   border-bottom: 7px solid @ground;
@@ -344,25 +345,25 @@ body {
 }
 
 #cafe-front-1 {
-  background: url("../../images/IMG_2129.JPG") bottom center no-repeat;
+  background: url("../../images/front2.jpg") bottom center no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-        src='../../images/IMG_2129.JPG',
+        src='../../images/front2.jpg',
         sizingMethod='scale');
 
-  border-right: 7px solid @blush;
+  /* border-right: 7px solid @blush; */
   border-left: 7px solid @ground;
 }
 
 #cafe-front-2 {
-  background: url("../../images/IMG_2216.JPG") bottom center no-repeat;
+  background: url("../../images/yogurt.jpg") bottom center no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-        src='../../images/IMG_2216.JPG',
+        src='../../images/yogurt.jpg',
         sizingMethod='scale');
 
   border-right: 7px solid @ground;
@@ -370,39 +371,39 @@ body {
 }
 
 #cafe-front-3 {
-  background: url("../../images/IMG_2214.JPG") top center no-repeat;
+  background: url("../../images/employee.jpg") top center no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-        src='i../../images/IMG_2214.JPG',
+        src='i../../images/employee.jpg',
         sizingMethod='scale');
 
   width: 34%;
   border-right: 7px solid @ground;
-  border-left: 7px solid @blush;
+  /*border-left: 7px solid @blush;*/
 }
 
 #catering-1 {
-  background: url("../../images/bgs/sandwiches.jpg") bottom center no-repeat;
+  background: url("../../images/brownies.jpg") bottom center no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-        src='../../images/bgs/sandwiches.jpg',
+        src='../../images/brownies.jpg',
         sizingMethod='scale');
 
-  border-right: 7px solid @blush;
+  /*border-right: 7px solid @blush;*/
   border-left: 7px solid @ground;
 }
 
 #catering-2 {
-  background: url("../../images/IMG_2124.JPG") bottom center no-repeat;
+  background: url("../../images/parm.jpg") bottom center no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-        src='../../images/bgs/IMG_2124.JPG',
+        src='../../images/parm.jpg',
         sizingMethod='scale');
 
   border-right: 7px solid @ground;
@@ -410,17 +411,17 @@ body {
 }
 
 #catering-3 {
-  background: url("../../images/bgs/veggies.jpg") top center no-repeat;
+  background: url("../../images/salad.jpg") top center no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-        src='../../images/bgs/veggies.jpg',
+        src='../../images/salad.jpg',
         sizingMethod='scale');
 
   width: 34%;
   border-right: 7px solid @ground;
-  border-left: 7px solid @blush;
+  /*border-left: 7px solid @blush;*/
 }
 
 
@@ -810,8 +811,13 @@ q:after {
   color:#FFFFFF!important;
 }
 
+.location-selected > td > b {
+	color:#FFFFFF!important;
+}
+
 .menu-tab {
   display:none;
+	margin:0;
 }
 .menu-tab.active {
   display:block;
@@ -845,6 +851,10 @@ q:after {
   display:block;
   margin: 0em 0em 1em;
   clear:both;
+}
+
+.active.custom-field.span-field {
+	display:inline!important;
 }
 
 .virtual-side {
@@ -897,4 +907,30 @@ q:after {
 
 .overlay-container {
   overflow: hidden;
+}
+
+#virtualcafe-sections .item {
+	font-size: 16px;
+	color: rgba(0,0,0,0.75);
+}
+
+#virtualcafe-sections .active.item {
+	font-size: 16px;
+	color: #822421;
+}
+
+#virtualcafe-sections {
+	width:11rem;
+}
+
+#virtualcafe-sections[disabled="disabled"] {
+	pointer-events: none;
+	background-color: rgba(0, 0, 0, .04);
+}
+
+#virtualcafe-sections .item[disabled="disabled"] {
+	color:#a1a1a1;
+}
+#virtualcafe-sections .active.item[disabled="disabled"] {
+	color: #b06361;
 }

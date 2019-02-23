@@ -162,7 +162,7 @@ module.exports = function (grunt) {
 				
 				},
 				files: {
-          '.tmp/public/min/blessed_production_RqC8U3DR' : '.tmp/public/min/production_RqC8U3DR.css'
+          '.tmp/public/min/blessed_production_rdkGzmk5' : '.tmp/public/min/production_rdkGzmk5.css'
 				}
 			}
 		},
@@ -268,14 +268,14 @@ module.exports = function (grunt) {
     uglify: {
       dist: {
         src: ['.tmp/public/concat/production.js'],
-        dest: '.tmp/public/min/production_RqC8U3DR.js'
+        dest: '.tmp/public/min/production_rdkGzmk5.js'
       }
     },
 
     cssmin: {
       dist: {
         src: ['.tmp/public/concat/production.css'],
-        dest: '.tmp/public/min/production_RqC8U3DR.css'
+        dest: '.tmp/public/min/production_rdkGzmk5.css'
       }
     },
 
@@ -303,9 +303,9 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/**/*.html': ['.tmp/public/min/production_RqC8U3DR.js'],
-          'views/**/*.html': ['.tmp/public/min/production_RqC8U3DR.js'],
-          'views/**/*.ejs': ['.tmp/public/min/production_RqC8U3DR.js']
+          '.tmp/public/**/*.html': ['.tmp/public/min/production_rdkGzmk5.js'],
+          'views/**/*.html': ['.tmp/public/min/production_rdkGzmk5.js'],
+          'views/**/*.ejs': ['.tmp/public/min/production_rdkGzmk5.js']
         }
       },
 
@@ -333,9 +333,9 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/index.html': ['.tmp/public/min/blessed_production_RqC8U3DR*css'],
-          'views/**/*.html': ['.tmp/public/min/blessed_production_RqC8U3DR*css'],
-          'views/**/*.ejs': ['.tmp/public/min/blessed_production_RqC8U3DR*css']
+          '.tmp/public/index.html': ['.tmp/public/min/blessed_production_rdkGzmk5*css'],
+          'views/**/*.html': ['.tmp/public/min/blessed_production_rdkGzmk5*css'],
+          'views/**/*.ejs': ['.tmp/public/min/blessed_production_rdkGzmk5*css']
         }
       },
 
@@ -379,7 +379,7 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          'views/**/*.jade': ['.tmp/public/min/production_RqC8U3DR.js']
+          'views/**/*.jade': ['.tmp/public/min/production_rdkGzmk5.js']
         }
       },
 
@@ -403,7 +403,7 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          'views/**/*.jade': ['.tmp/public/min/production_RqC8U3DR.css']
+          'views/**/*.jade': ['.tmp/public/min/production_rdkGzmk5.css']
         }
       },
 

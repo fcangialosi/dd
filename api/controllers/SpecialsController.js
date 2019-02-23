@@ -257,7 +257,18 @@ module.exports = {
         }
       );
     } else {
-      Specials.find().where({ or: [{'subhead': today},{'name' : 'Breakfast Specials'}]}).sort('cafe asc').sort('i asc').exec(function foundSpecials (err, menu) {
+      Specials.find().where(
+        { 
+            "$and": [
+                {'cafe' : 2},
+                { "$or": [
+                    {'subhead' : today},
+                    {'name' : 'Breakfast Specials'}
+                ]}
+            ] 
+        }
+      ).sort('cafe asc').sort('i asc').exec(function foundSpecials (err, menu) {
+        console.log(menu);
         res.view('express/index', {
           specials : menu
         });

@@ -54,7 +54,10 @@
             <% _.each(menu.items, function(item) { %>
                 <tr>
                     <td><%= menu.items.indexOf(item) %></td>
-                    <td><input value="<%= item.name %>" name="name" type="text" class="form-control bg-update-in"></td>
+                    <td><input value="<%= item.name %>" name="name" type="text" class="form-control bg-update-in">
+											<input type="hidden" class="form-control bg-update-in" name="customize" value="false" />
+											<input type="hidden" class="form-control bg-update-in" name="serves" value="grill" />
+										</td>
                     <td><input value="<%= item.price %>" name="price" type="text" class="form-control bg-update-in"></td>
                     <td><input value="<% if ('description' in item) { %><%= item.description %><% } else { %><% } %>" name="description" type="text" class="form-control bg-update-in"></td>
                     <td>

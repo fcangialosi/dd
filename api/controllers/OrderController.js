@@ -399,7 +399,7 @@ var updateUser = function(req, saveCard) {
         user.savedPayment[user.savedPayment.length - 1].number = ciphertext;
         User.update(user.id, user, function userUpdate (err) {
           if (err) {
-            console.log("Error updating user after submitting virtual order.");
+            console.log("Error updating user after submitting virtual order (new card).");
             console.log(err);
           }
         });
@@ -407,7 +407,14 @@ var updateUser = function(req, saveCard) {
         console.log("Error encrypting card for " + body.card_name);
       }
     });
-  }
+  } else {
+			User.update(user.id, user, function userUpdate (err) {
+				if (err) {
+					console.log("Error updating user after submitting virtual order (no new card).");
+					console.log(err);
+				}
+			});
+	}
 
   return user;
 }

@@ -130,6 +130,7 @@
   <h2 class="ui dividing header" id="<%=section.name%>"><%= section.name %></h2>
   <p> <%= section.subhead %> </p>
   <% _.each(section.items, function(item) {%>
+	<% if (item) { %>
   <div class="catering_item simpleCart_shelfItem ui segment">
 
     <b class="item_name"><%= item.name %></b>
@@ -143,6 +144,7 @@
 
     <p> <%= item.description %></p>
   </div>
+	<% } %>
   <% })%>
   <% }) %>
 </div>

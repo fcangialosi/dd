@@ -17,6 +17,9 @@
 
 var mandrill = require('mandrill-api/mandrill');
 var mandrill_client = new mandrill.Mandrill('A0FFxkmu5O8btl-vw4zlfA');
+var AWS = require('aws-sdk');
+AWS.config.update({ region : 'us-east-1' });
+var ses = new AWS.SES();
 
 module.exports = {
 
@@ -137,6 +140,55 @@ module.exports = {
   main: function(req, res, next) {
     res.view('main/index');
   },
+
+	bug: function(req, res, next) {
+		console.log("BUG REPORT!");
+		console.log(req.params.all());
+		console.log(req.session.User);
+		params = req.params.all();
+
+		var report = {
+			Destination: {
+				ToAddresses: [
+					'david@davidanddads.com',
+					'fcangialosi94@gmail.com'
+				]
+			},
+			Message: {
+				Body: {
+					Text: {
+						Data:  "Name: " + req.session.User.name + "\n"
+					       + "Email: " + req.session.User.email + "\n"
+								 + "OS: " + params['bug-os'] + "\n"
+								 + "Browser: " + params['bug-browser'] + "\n"
+								 + "Message: " + params['description']
+					}
+				},
+				Subject: {
+					Data: "Virtual Cafe Bug Report",
+				}
+			},
+			Source: 'orders@davidanddads.com',
+			ReplyToAddresses: [ req.session.User.email ]
+		};
+		console.log(report);
+
+		ses.sendEmail(report, function(err, data) {
+			if (err) {
+				console.log(err, err.stack);
+				req.session.flash = {
+						err : 'Something went wrong! ' + err
+				};
+			} else {
+				req.session.flash = {
+						success : 'Your bug report has been successfully submitted. Thanks for taking the time to let us know!'
+				};
+			}
+			res.redirect('virtualcafe/order#report');
+		});
+
+
+	},
 
   feedback: function(req, res, next) {
 
