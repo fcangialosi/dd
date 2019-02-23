@@ -88,6 +88,17 @@ module.exports = {
       });
     },
 
+    printCateringMenu: function (req, res, next) {
+        Menu.find({"menu":"catering"}).sort('index asc').exec(function (err, menu) {
+            if (err) return next(err);
+            res.view('print/index',
+            {
+                menu: menu,
+                menu_name: "David and Dad's Catering"
+            });
+        });
+    },
+
 	displayExpressMenu: function (req, res, next) {
 
       // Get an array of all  in the Menu collection(e.g. table)
