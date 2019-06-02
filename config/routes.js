@@ -44,7 +44,9 @@ module.exports.routes = {
 
 	'/virtualcafe' : 'VirtualCafeController.index',
 
-  'get /virtualcafe/order' : 'VirtualCafeController.orderForm',
+  'get /virtualcafe/order' : 'VirtualCafeController.orderFormPublic',
+
+  'get /virtualcafe/order/beta' : 'VirtualCafeController.orderFormBeta',
 
   '/virtualcafe/submit' : 'OrderController.submitVirtual',
 
@@ -176,7 +178,11 @@ module.exports.routes = {
 
   'get /admin/lookup' : 'AdminController.lookup',
 
-  'get /admin/lookup/:id' : 'AdminController.search'
+  'get /admin/lookup/:id' : 'AdminController.search',
+
+  'get /admin/transactions' : 'AdminController.listTransactions',
+
+  'post /admin/transactions/:action' : 'AdminController.editTransaction'
 
 
   /*

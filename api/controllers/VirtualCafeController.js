@@ -51,33 +51,8 @@ findCardType = function(cardNumber) {
   } return null;
 }
 
-module.exports = {
 
-	index: function (req, res, next) {
-    Locations.find({}, function foundLocations (err, all) {
-		  res.view('virtualcafe/index', {
-        locations: all,
-				message: null
-      });
-    });
-	},
-
-	editCards: function (req, res, next) {
-		res.view('virtualcafe/edit-cards');
-	},
-
-	subscribe: function(req, res, next) {
-		var email = req.session.User.email;
-		fs.appendFileSync('virtualcafe-notify-list.txt',(email + "\n"));
-    Locations.find({}, function foundLocations (err, all) {
-		  res.view('virtualcafe/index', {
-        locations: all,
-				message : 'Thanks for your interest in David and Dad\'s Virtual Cafe! You will receieve an e-mail at ' + email + ' as soon as we\'re ready to start delivering!'
-      });
-    });
-	},
-
-  orderForm: function(req, res, next) {
+orderForm = function(req, res, next, page) {
     //var date = new Date(1447684212*1000);
     var date = new Date();
     var day = date.getDay();
@@ -118,7 +93,7 @@ module.exports = {
 				menu.push(specials);
 
 				Locations.find({}, function foundLocations (err, all) {
-					res.view('virtualcafe/order', {
+					res.view(page, {
 						menu: menu,
 						custom : custom,
 						extras : extras,
@@ -134,5 +109,40 @@ module.exports = {
       });
     });
   }
+
+module.exports = {
+
+	index: function (req, res, next) {
+    Locations.find({}, function foundLocations (err, all) {
+		  res.view('virtualcafe/index', {
+        locations: all,
+				message: null
+      });
+    });
+	},
+
+	editCards: function (req, res, next) {
+		res.view('virtualcafe/edit-cards');
+	},
+
+	subscribe: function(req, res, next) {
+		var email = req.session.User.email;
+		fs.appendFileSync('virtualcafe-notify-list.txt',(email + "\n"));
+    Locations.find({}, function foundLocations (err, all) {
+		  res.view('virtualcafe/index', {
+        locations: all,
+				message : 'Thanks for your interest in David and Dad\'s Virtual Cafe! You will receieve an e-mail at ' + email + ' as soon as we\'re ready to start delivering!'
+      });
+    });
+	},
+
+    orderFormPublic: function(req, res, next) {
+        orderForm(req, res, next, 'virtualcafe/order')
+    },
+
+    orderFormBeta: function(req, res, next) {
+        orderForm(req, res, next, 'virtualcafe/order_beta')
+    },
+
 
 };

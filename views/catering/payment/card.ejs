@@ -141,7 +141,7 @@
       <div class="ui large fluid form segment" >
         <p class="warning-border"></p>
         <div class="ui medium divided list">
-          <% _.each(session.User.savedPayment, function(card){ %>
+            <% _.each(session.User.savedPayment, function(card){ if (! 'token' in card) {%>
           <% if (session.card && session.User.savedPayment.indexOf(card) == session.card.index) { %>
             <div class="active item payment-option" index="<%= session.User.savedPayment.indexOf(card) %>">
           <% } else { %>
@@ -160,7 +160,7 @@
               </form>
               <div class="right floated medium ui payment-change button" style="width:15%"><% if (session.card && session.User.savedPayment.indexOf(card) == session.card.index) { %><i class="ui medium icon check" style="margin-left:10px;"> </i><% } else {%> Select <% } %></div>
             </div>
-          <% }) %>
+            <% }}) %>
           <div class="item">
             <a data-toggle="modal" data-target="#myModal" class="medium ui green button">Add New Card</a>
           </div>

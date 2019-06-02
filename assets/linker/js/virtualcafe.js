@@ -5,7 +5,7 @@ var base_salad_price = 4.50;
 
 $(document).ready(function() {
 
-	$('#virtual-js-id').text('1.5');
+	$('#virtual-js-id').text('1.9');
 
 	if (simpleCart.total() && !simpleCart.isCatering) {
 		$('#submit-button').html("Submit My Order (<span class='simpleCart_grandTotal'></span>)")
@@ -13,6 +13,9 @@ $(document).ready(function() {
 
   if($('#is-virtual').length) {
     simpleCart.isCatering = false;
+    simpleCart.chargeCreditCard = true;
+  } else {
+      simpleCart.chargeCreditCard = false;
   }
 
 	specials_section = $('a[target="menu-9"]')[0];
@@ -143,6 +146,7 @@ $(document).ready(function() {
 		var item;
     item = this.parentElement;
     item_name = item.parentElement.getElementsByClassName("item_name")[0].innerHTML;
+    item_desc = item.parentElement.getElementsByClassName("item_description")[0].innerHTML;
     price_span = item.parentElement.getElementsByClassName("item_price");
     item_price = 0;
     if (price_span.length) {
@@ -183,6 +187,7 @@ $(document).ready(function() {
 
 		// Fill in "Customize Your ... "
 		$('#customize-item-name').html(item_name);
+		$('#customize-item-desc').html(item_desc);
 		item_customize = item.parentElement.getElementsByClassName("item_customizable")[0].innerHTML;
 		fields = $(".customize");
 		if (item_customize == "true") {
@@ -369,7 +374,7 @@ $(document).ready(function() {
 			customOrder['total_price'] -= lastSelectedPrice[type];
 		}
 		if (chosePrice) {
-			chosePrice = chosePrice.substring(0, chosePrice.length - 1);
+			chosePrice = chosePrice.substring(1, chosePrice.length - 1);
 			customOrder['total_price'] += parseFloat(chosePrice);
 			lastSelectedPrice[type] = parseFloat(chosePrice);
 		}
@@ -557,19 +562,29 @@ $(document).ready(function() {
     }
   });
 
-  cardSelectDropdown = $('.card-select.ui.dropdown');
-  cardSelectDropdown.change(function() {
-    sp = cardSelectDropdown.val().split(",");
-    lastFour = sp[0], name = sp[1], expiry = sp[2], cvc = sp[3], zip = sp[4], cardIndex = sp[5];
-      $('#card-number').val("XXXX-XXXX-XXXX-"+lastFour);
-      $('#card-name').val(name).trigger("keyup").trigger("click");
-      $('#card-expiry').val(expiry).trigger("keyup").trigger("click");
-      $('#card-cvc').val(cvc).trigger("keyup").trigger("click");
-			$('#card-zip').val(zip).trigger("keyup").trigger("click");
-      $('#card-index').val(cardIndex);
-      $('#card-number').trigger("keyup").trigger("click"); // updates display
-      $('#card-form .form.segment').addClass("disabled");
-      $('.card-wrapper').children().children()[0].classList.add("xxxx","identified"); // pretty formatting
+    cardSelectDropdown = $('.card-select.ui.dropdown');
+    cardSelectDropdown.change(function() {
+        // They want to enter a new card
+        if (cardSelectDropdown.val() === "") {
+            $('#card-form input').val('');
+            $('#card-form .column:first').removeClass("hidden");
+            $('#card-form').removeClass("one").addClass("two");
+        } else {
+            sp = cardSelectDropdown.val().split(",");
+            lastFour = sp[0], name = sp[1], expiry = sp[2], brand = sp[3], zip = sp[4], cardIndex = sp[5];
+            $('#card-number').val("••••-••••-••••-"+lastFour);
+            $('#card-name').val(name).trigger("keyup").trigger("click");
+            $('#card-expiry').val(expiry).trigger("keyup").trigger("click");
+            $('#card-cvc').val("000").trigger("keyup").trigger("click");
+            $('#card-zip').val(zip).trigger("keyup").trigger("click");
+            $('#card-index').val(cardIndex);
+            $('#card-number').trigger("keyup").trigger("click"); // updates display
+            $('#card-form .form.segment').addClass("disabled");
+            $('.card-wrapper').children().children().attr("class" ,"card identified " + brand.toLowerCase()); // pretty formatting
+            $('#card-form .column:first').addClass("hidden");
+            $('#card-form').removeClass("two").addClass("one");
+        }
+        
   });
 
   $('#method-one').click(function () {

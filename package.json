@@ -10,6 +10,7 @@
     "ejs": "^2.5.7",
     "express-react-views": "^0.10.5",
     "forever": "^0.11.1",
+    "globalpayments-api": "^1.1.2",
     "grunt": "0.4.1",
     "mandrill-api": "^1.0.40",
     "nodemailer": "^1.3.0",

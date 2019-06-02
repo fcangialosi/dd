@@ -1,5 +1,50 @@
 <div style="height:150px"></div>
-
-<div class="container"><center><h3>Uh oh, looks like there was a problem submitting your order. If you see this message more than once, please call the cafe at (410)-547-0550 or email us at catering@davidanddads.com. We apologize for the inconvenience, and we'll work to resolve the issue as quickly as possible!</h3></center></div>
+<% if (type === 'card') { %>
+    <div class="container">
+        <center>
+            <h1> Your order was not submitted </h1>
+            <h3> Unfortunately we were unable to authorize your credit card.
+                Please see below for more details. If you are unsure why you are receiving 
+                this message, please send the information below in an email to catering@davidanddads.com 
+                and we will try to resolve it as quickly as possible!
+            </h3>
+            <table style="font-weight: 'bold'; border: 2px solid black;">
+                <tr>
+                    <td> Error </td>
+                    <td> <%= err %> </td>
+                </tr>
+                <tr> 
+                    <td> Code </td>
+                    <td> <%= code %> </td>
+                </tr>
+                <tr> 
+                    <td> CVN </td>
+                    <td> <%= cvn %> </td>
+                </tr>
+                <tr> 
+                    <td> Reference Number &nbsp;&nbsp;&nbsp; </td>
+                    <td> <%= ref %> </td>
+                </tr>
+                <tr> 
+                    <td> Transaction ID &nbsp;&nbsp;&nbsp; </td>
+                    <td> <%= tid %> </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+<% } else { %>
+    <div class="container">
+        <center>
+        <h1> Your order was not submitted </h1>
+        <h3>
+            Uh oh, looks like there was a problem submitting your order!
+            Please go back, refresh the order page, and try submitting your order again.
+            If you see this message more than once,
+            please call the cafe at (410)-547-0550 or email us at catering@davidanddads.com.
+            We apologize for the inconvenience, and we'll work to resolve the issue as quickly as possible!
+        </h3>
+        </center>
+    </div>
+<% } %>
 
 <div style="height:350px"></div>

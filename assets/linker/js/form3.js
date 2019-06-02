@@ -312,8 +312,7 @@ $('#card-form')
   })
 ;
 
-$('#virtualcafe-form')
-  .form({
+virtualcafe_form_necessary_fields = {
     name: {
       identifier  : 'name',
       rules: [
@@ -345,7 +344,7 @@ $('#virtualcafe-form')
         },
         {
           type : 'length[9]',
-          prompt : 'Please enter a valid phone number (XXX-XXX-XXXX)'
+          prompt : 'Please enter a valid phone number without dashes (XXXXXXXXXX)'
         }
       ]
     },
@@ -372,10 +371,13 @@ $('#virtualcafe-form')
       rules : [
         {
           type : 'empty',
-          prompt : 'Please enter a credit card number'
+          prompt : 'Please enter a credit card number or choose a saved card'
         }
       ]
     },
+};
+
+virtualcafe_form_newcard_fields = {
     card_name : {
       identifier : 'card_name',
       rules : [
@@ -403,6 +405,7 @@ $('#virtualcafe-form')
         }
       ]
     },
+    /*
     zip : {
       identifier : 'zip',
       rules : [
@@ -412,5 +415,12 @@ $('#virtualcafe-form')
         }
       ]
     }
+    */
+};
+
+$('#virtualcafe-form')
+  .form({
+      ...virtualcafe_form_necessary_fields,
+      ...virtualcafe_form_newcard_fields,
   })
 ;

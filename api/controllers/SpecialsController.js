@@ -268,7 +268,7 @@ module.exports = {
             ] 
         }
       ).sort('cafe asc').sort('i asc').exec(function foundSpecials (err, menu) {
-        console.log(menu);
+        //console.log(menu);
         res.view('express/index', {
           specials : menu
         });

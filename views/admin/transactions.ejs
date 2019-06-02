@@ -1,0 +1,159 @@
+<div class="ui page" style="margin-left:5%; margin-right: 5%;">
+<div class="column">
+<center>
+    <h1 class="ui header" style="font-size: 2.5em"> Transactions </h1>
+    <a href="/admin" class="ui red labeled icon button">
+        <i class="hand left icon"></i>
+        Back to Main Page
+    </a>
+</center>
+<p>Note: transactions only shown from the past 3 days.</p>
+<table class='ui celled table segment'>
+    <tr>
+        <th>Transaction ID</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Auth Amt</th>
+        <th>Stl Amt</th>
+        <th>Type</th>
+        <th>Issuer Response</th>
+        <th>Gateway Response</th>
+        <th>Action</th>
+    </tr>
+
+    <% 
+        lastBatchId = '';
+        _.each(ts, function(t) {
+            if (t.serviceName === "BatchClose") {
+                lastBatchId = t.transactionId;
+            }
+        });
+    %>
+    <% 
+        totalSinceLastBatch = 0.0;
+        ordersSinceLastBatch = 0.0;
+        batchClosed = true;
+    
+    %>
+    <% _.each(ts, function(t) { %>
+        <%
+        if (t.transactionId === lastBatchId) {
+            batchClosed = false;
+        }
+        if (t.serviceName !== "ReportActivity" && t.serviceName !== "BatchClose") { 
+            var status = "";
+            if (
+                (t.issuerResponseCode === "00" && (t.gatewayResponseCode === "00" || t.gatewayResponseCode === "")) ||
+                (t.gatewayResponseCode === "00" && (t.issuerResponseCode === "00" || t.issuerResponseCode === ""))
+            ) {
+                status = "positive";
+            } else {
+                status = "negative";
+            }
+            var voidable = (t.serviceName === "CreditSale" &&
+                            status === "positive");
+            if (voidable && t.serviceName === "CreditSale") { totalSinceLastBatch += parseFloat(t.amount); ordersSinceLastBatch += 1; }
+            if (t.serviceName === "CreditVoid") { totalSinceLastBatch -= parseFloat(t.amount); ordersSinceLastBatch -= 1; }
+        %>
+
+            <tr class="<%= status %>" data-id="<%= t.transactionId %>" data-model="transaction">
+                <td><b><%= t.transactionId %></b></td>
+                <td><%= (new Date(t.transactionDate)).toLocaleString('en-US', {hour12: true}) %></td>
+                <td><b><%= t.amount %></b></td>
+                <td><%= t.authorizedAmount %></td>
+                <td><%= t.settlementAmount %></td>
+                <td><%= t.serviceName %></td>
+                <td>(<%= t.issuerResponseCode %>) <%= t.issuerResponseMessage %></td>
+                <td>(<%= t.gatewayResponseCode %>) <%= t.gatewayResponseMessage %></td>
+                <% if (batchClosed) { %>
+                    <td>
+                        <% if (voidable) { %>
+                        <form action="/admin/transactions/refund" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+                            <input type="hidden" name="tid" value="<%= t.transactionId %>">
+                            <input type="hidden" name="amt" value="<%= t.amount %>">
+                            <input type="submit" class="ui fluid tiny red button" value="Refund (<%= t.amount %>)"/>
+                        </form>
+                        <% } %>
+                    </td>
+                <% } else { %>
+                    <td>
+                        <% if (voidable) { %>
+                        <form action="/admin/transactions/void" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+                            <input type="hidden" name="tid" value="<%= t.transactionId %>">
+                            <input type="submit" class="ui fluid tiny red button" value="Void"/>
+                        </form>
+                        <br>
+                        <% } %>
+                    </td>
+                <% } %>
+            </tr>
+        <% } else if (t.serviceName === "BatchClose") { %>
+            <% if (ordersSinceLastBatch > 0) { %>
+            <tr style="outline: solid;">
+                <td><b>Batch Total</b></td>
+                <td><b><%= ordersSinceLastBatch %> orders</b></td>
+                <td><b><%= Math.round(totalSinceLastBatch * 100) / 100 %></b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <% } %>
+            <% 
+                totalSinceLastBatch = 0.0;
+                ordersSinceLastBatch = 0.0;
+            %>
+            <tr style="background-color: black!important; color: white!important; text-transform: uppercase;">
+                <td></td>
+                <td><%= (new Date(t.transactionDate)).toLocaleString('en-US', {hour12: true}) %></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Batch Close</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        <% } %>
+    <% }) %>
+            <% if (ordersSinceLastBatch > 0) { %>
+            <tr style="outline: solid;">
+                <td><b>Batch Total</b></td>
+                <td><b><%= ordersSinceLastBatch %> orders</b></td>
+                <td><b>$<%= totalSinceLastBatch.toFixed(2) %></b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <% } %>
+</table>
+<br><br>
+<div style="width: 50%; margin: auto;">
+        <form class="ui form segment" action="/admin/transactions/edit" method="POST">
+            <h2 class="ui header"> Edit a Transaction </h2>
+            <p>Copy and paste a transaction ID from above, and specify the corrected transaction amount. For example, if the original charge was for $20, but they should have been charged $21, then you would write $21 in the new amount box below.</p>
+            <p> <b>NOTE:</b> You can only edit transactions that are part of an open batch.</p>
+            <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+            <div class="two fields">
+            <div class="field">
+                <label>Transaction ID</label>
+                <input name="tid" placeholder="">
+            </div>
+            <div class="field">
+                <label>New Amount</label>
+                <input name="new_amt" placeholder="0.00">
+            </div>
+            </div>
+            <input type="submit" class="ui fluid red button" value="Edit">
+        </form>
+</div>
+</div>
+</div>
+<div style="min-height:200px"></div>

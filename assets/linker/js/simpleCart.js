@@ -933,27 +933,73 @@
 					});
 					if(!simpleCart.isCatering) {
 						simpleCart.each($('#virtualcafe-form').serializeArray(), function (obj, x, y) {
-							if (obj.name != "_csrf") {
+                            if (obj.name === "number") {
+								form.append(
+									simpleCart.$create("input").attr("type","hidden").attr("name",obj.name).val(
+                                        obj.value.substring(obj.value.length - 4)
+                                    )
+								);
+                            } else if (obj.name != "_csrf") {
 								form.append(
 									simpleCart.$create("input").attr("type","hidden").attr("name",obj.name).val(obj.value)
 								);
 							}
 						});
 					}
-					$.get("/csrfToken", function(data) {
-						if(data) {
-							form.append(
-								simpleCart.$create("input").attr("type","hidden").attr("name","_csrf").val(data._csrf)
-							);
-						}
-						form.append
-							(simpleCart.$create("input").attr("type","hidden").attr("name","isCatering").val(simpleCart.isCatering)
-						);
-						simpleCart.$("body").append(form);
-						form.el.submit();
-						form.remove();
-					});
 
+                    var getCsrfAndSend = function() {
+                        $.get("/csrfToken", function(data) {
+                            if(data) {
+                                form.append(
+                                    simpleCart.$create("input").attr("type","hidden").attr("name","_csrf").val(data._csrf)
+                                );
+                            }
+                            form.append
+                                (simpleCart.$create("input").attr("type","hidden").attr("name","isCatering").val(simpleCart.isCatering)
+                            );
+                            simpleCart.$("body").append(form);
+                            form.el.submit();
+                            form.remove();
+                        });
+                    };
+
+                    var cardSelectDropdown = $('.card-select.ui.dropdown');
+
+                    if (simpleCart.chargeCreditCard) {
+                        if (cardSelectDropdown.val() === "") {
+                            var expiry = $('input#card-expiry').val().split(' / ');
+                            var card_number = $('input#card-number').val();
+                            var card_brand = $.payment.cardType(card_number);
+                            var hps = new Heartland.HPS({
+                                publicKey: 'pkapi_prod_iD7Xvpjevhk9xdp1BF',
+                                cardNumber: card_number,
+                                cardCvv: $('input#card-cvc').val(),
+                                cardExpMonth: expiry[0],
+                                cardExpYear: expiry[1],
+                                success: function(resp) {
+                                    form.append(
+                                        simpleCart.$create("input").attr("type","hidden").attr("name","hps_token").val(resp.token_value)
+                                    );
+                                    form.append(
+                                        simpleCart.$create("input").attr("type", "hidden").attr("name", "brand").val(card_brand)
+                                    );
+                                    getCsrfAndSend();
+                                }, 
+                                error: function(resp) {
+                                    $('#virtualcafe-form').addClass("error");
+                                    $('#virtualcafe-form .ui.error.message').text(JSON.stringify(resp));
+                                }
+                            });
+                            hps.tokenize();
+                        } else {
+                            form.append(
+                                simpleCart.$create("input").attr("type", "hidden").attr("name", "_savedIndex").val()
+                            );
+                            getCsrfAndSend();
+                        }
+                    } else {
+                        getCsrfAndSend();
+                    }
 				}
 			});
 
@@ -977,7 +1023,7 @@
 						},
 						action = opts.sandbox ? "https://www.sandbox.paypal.com/cgi-bin/webscr" : "https://www.paypal.com/cgi-bin/webscr",
 						method = opts.method === "GET" ? "GET" : "POST";
-
+dfa
 
 					// check for return and success URLs in the options
 					if (opts.success) {

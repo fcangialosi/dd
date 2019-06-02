@@ -292,7 +292,6 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 									<div style="font-size:1.75em;">
 										<span class="customize custom-field span-field">Customize Your&nbsp;</span><span style="border-bottom:2px dotted;" id="customize-item-name"></span>
 									</div>
-                                    <div><p id="customize-item-desc"></p></div>
 									<hr>
 
                   <div>
@@ -334,9 +333,8 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 											</div>
 										</div>
 
-										<div class="deli-field grill-field salad-field custom-field">
-											<label class="deli-field grill-field custom-field">Choose Toppings:</label>
-											<label class="salad-field custom-field">Extra Toppings:</label>
+										<div class="deli-field grill-field custom-field">
+											<label>Choose Toppings:</label>
 											<% create_subhead('addons') %>
 											<div class="ui stackable grid">
 												<% for(var i=0; i<custom.addons.length; i++) { addon = custom.addons[i]; %>
@@ -362,7 +360,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 
                     <br>
                     <label>Special Requests:</label>
-                    <textarea placeholder="For example: Not too much mayo. Please do not use this space to add toppings or items! Select your toppings in the section above and your sides in the sections below." name="special_request" style="height:30%" id="special_request"></textarea>
+                    <textarea placeholder="For example: Not too much mayo" name="special_request" style="height:30%" id="special_request"></textarea>
                   </div>
 
                   <hr>
@@ -675,20 +673,20 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 
 
 
+   <% if(session.User.savedPayment && session.User.savedPayment.length > 0) { %>
     <center> <h4>Select a saved credit card or enter a new one:</h4>
     <p> Click <a href="/virtualcafe/edit-cards">here</a> if you would like to delete one of your saved cards.<br>If you make any changes, you will need to refresh this page to see them.</p>
 
 
                      <select class="card-select ui dropdown">
-                      <option value="">New Card</option>
-   <% if(session.User.savedPayment && session.User.savedPayment.length > 0) { %>
+                      <option value="">Saved Cards</option>
                       <% _.each(session.User.savedPayment, function(card){ %>
-                        <% if ('token' in card) { %> 
-                          <option value="<%= [card.lastFour,card.name,card.expiry,card.brand,card.zip,session.User.savedPayment.indexOf(card)].join() %>"><%= card.brand %> ending in <%= card.lastFour %> (<%= card.name %>)</option>
+                        <% if (!('car1dVisibleToUser' in card ) || card.cardVisibleToUser) { %> 
+                          <option value="<%= [card.lastFour,card.name,card.expiry,card.cvc,card.zip,session.User.savedPayment.indexOf(card)].join() %>">XXXX-XXXX-XXXX-<%= card.lastFour %> (<%= card.name %>)</option>
                         <% } %>
                       <% }) %>
-    <% } %>
                     </select></center>
+    <% } %>
 
               <div class="ui stackable two column middle aligned grid" id="card-form">
                 <div class="column">
@@ -723,24 +721,16 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                           <input placeholder="123" name="cvc" type="text" id="card-cvc">
                         </div>
 											</div>
-                                            <!--
-											<div class="field">
-												<label>Billing Address</label>
-												<input placeholder="115 N. Charles Street" name="address" type="text" id="card-address">
-											</div>-->
 											<div class="field">
 												<label>Billing ZIP Code</label>
 												<input placeholder="12345" name="zip" type="text" id="card-zip">
 											</div>
                                             <!--
 											<div class="field">
-												<label>Test Total</label>
-												<input placeholder="0.00" name="fake_total" type="text" id="fake_total">
-											</div>-->
-											<div class="field">
 												<input type="checkbox" name="save_card" id="save-card" style="vertical-align: middle;margin-right: 5px;">
 												<label style="display:inline;vertical-align:middle;"> Save my card for future orders </label> 
 											</div>
+                                            -->
                     </div>
                   </div>
                   <div class="column">
@@ -754,7 +744,6 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
             <div class="ui error message"></div>
             <input type="hidden" name="_csrf" value="<%= _csrf %>">
             <input type="hidden" name="_type" value="virtual" id="is-virtual">
-            <input type="hidden" name="_savedIndex" value="" id="card-index">
 
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
@@ -815,6 +804,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
           <textarea style="height:3em;min-height:3em;max-height:3em;" name="description"></textarea>
         </div>
         <input type="submit" class="ui button" value="Send" style="background-color: #822421; color: #fff">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
       </form>
     </div>
   </div>

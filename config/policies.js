@@ -37,6 +37,7 @@ module.exports.policies = {
   MenuController : {
   	'displayMainMenu' : true,
   	'displayCateringMenu' : true,
+    'printCateringMenu' : true,
   	'displayExpressMenu' : true,
     'displayMainSpecials' : true,
     'displayExpressSpecials' : true,

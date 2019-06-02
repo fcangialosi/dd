@@ -20,6 +20,14 @@ var contact_message = '';
 var fs = require('fs');
 var triplesec = require('triplesec');
 
+var gp = require('globalpayments-api');
+var config = new gp.ServicesConfig();
+config.secretApiKey = "skapi_prod_MX4IAwCjbCoA4Q6S6alFIuETLHJfJFbxJbN6GtRW-Q";
+config.developerId = "002914";
+config.versionNumber = "3270";
+config.serviceUrl = "https://api2.heartlandportico.com";
+gp.ServicesContainer.configure(config);
+
 var decrypt = function(index, user, key, res) {
 	if (typeof user.savedPayment[index].number !== 'string') {
     if (index == user.savedPayment.length-1) {
@@ -138,6 +146,79 @@ module.exports = {
       });
 
     });
-  }
+  },
 
+  listTransactions: function(req, res, next) {
+      var catcher = function(err) {
+          console.log("catching...");
+          res.view('virtualcafe/test', {
+              resp: JSON.stringify(err),
+              layout : 'admin/layout',
+          });
+      };
+      const start = new Date(Date.now());
+      start.setDate(start.getDate() - 3);
+      const end = new Date(Date.now());
+      gp.ReportingService.activity()
+          .withStartDate(start)
+          .withEndDate(end)
+          .execute()
+          .then(function(t) {
+              res.view('admin/transactions', {
+                  ts: t,
+                  layout : 'admin/layout'
+              });
+          })
+          .catch(catcher);
+  },
+
+  editTransaction: function(req, res, next) {
+      var action = req.param('action');
+      var handler = function(resp) {
+          console.log("handling...");
+          res.view('virtualcafe/test', {
+              resp: JSON.stringify(resp),
+              layout : 'admin/layout',
+          });
+      };
+      var catcher = function(err) {
+          console.log("catching...");
+          res.view('virtualcafe/test', {
+              resp: JSON.stringify(err),
+              layout : 'admin/layout',
+          });
+      };
+      if (action === "void") {
+          var tid = req.body.tid;
+          gp.Transaction.fromId(tid)
+              .void()
+              .execute()
+              .then(handler)
+              .catch(catcher);
+      } else if (action === "refund") {
+          var tid = req.body.tid;
+          var amt = req.body.amt;
+          console.log("refund", tid, amt);
+          gp.Transaction.fromId(tid)
+              .refund(amt)
+              .withCurrency("USD")
+              .execute()
+              .then(handler)
+              .catch(catcher);
+        console.log("refund sent");
+      } else if (action === "edit") {
+          var tid = req.body.tid;
+          var new_amt = req.body.new_amt;
+          console.log("edit", tid, new_amt);
+          gp.Transaction.fromId(tid)
+              .edit()
+              .withAmount(new_amt)
+              .execute()
+              .then(handler)
+              .catch(catcher);
+          console.log("edit sent");
+      } else {
+          catcher({"err" : "Unknown transaction action " + action});
+      }
+  }
 };

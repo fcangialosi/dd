@@ -46,7 +46,8 @@
 form will NOT submit an order. If you would like to be notified when we're ready
 to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 -->
-    <h1 class="ui center aligned dividing header"> Virtual Cafe Order Form </h1>
+    <h1 class="ui center aligned dividing header"> Virtual Cafe Order Form (BETA) </h1>
+    <b> NOTE: This form is just for testing purposes and will not submit a real order. </b>
 
     <center>
       <h3>
@@ -292,7 +293,6 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 									<div style="font-size:1.75em;">
 										<span class="customize custom-field span-field">Customize Your&nbsp;</span><span style="border-bottom:2px dotted;" id="customize-item-name"></span>
 									</div>
-                                    <div><p id="customize-item-desc"></p></div>
 									<hr>
 
                   <div>
@@ -334,9 +334,8 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 											</div>
 										</div>
 
-										<div class="deli-field grill-field salad-field custom-field">
-											<label class="deli-field grill-field custom-field">Choose Toppings:</label>
-											<label class="salad-field custom-field">Extra Toppings:</label>
+										<div class="deli-field grill-field custom-field">
+											<label>Choose Toppings:</label>
 											<% create_subhead('addons') %>
 											<div class="ui stackable grid">
 												<% for(var i=0; i<custom.addons.length; i++) { addon = custom.addons[i]; %>
@@ -362,7 +361,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 
                     <br>
                     <label>Special Requests:</label>
-                    <textarea placeholder="For example: Not too much mayo. Please do not use this space to add toppings or items! Select your toppings in the section above and your sides in the sections below." name="special_request" style="height:30%" id="special_request"></textarea>
+                    <textarea placeholder="For example: Not too much mayo" name="special_request" style="height:30%" id="special_request"></textarea>
                   </div>
 
                   <hr>
@@ -754,6 +753,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
             <div class="ui error message"></div>
             <input type="hidden" name="_csrf" value="<%= _csrf %>">
             <input type="hidden" name="_type" value="virtual" id="is-virtual">
+            <input type="hidden" name="_beta" value="beta" id="is-beta">
             <input type="hidden" name="_savedIndex" value="" id="card-index">
 
 <!----------------------------------------------------------------------------->

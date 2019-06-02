@@ -37,7 +37,7 @@ if (day == 0) { // Sunday
       set_closed(pratt);
       set_closed(broadway);
     }
-		if (hour >= 20) {
-			set_closed(main);
-		}
+    if (hour >= 20) {
+        set_closed(main);
+    }
 }
