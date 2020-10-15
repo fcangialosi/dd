@@ -7,7 +7,7 @@
         Back to Main Page
     </a>
 </center>
-<p>Note: transactions only shown from the past 3 days.</p>
+<p>Note: transactions only shown from the past 30 days.</p>
 <table class='ui celled table segment'>
     <tr>
         <th>Transaction ID</th>
@@ -31,6 +31,7 @@
     %>
     <% 
         totalSinceLastBatch = 0.0;
+        stlSinceLastBatch = 0.0;
         ordersSinceLastBatch = 0.0;
         batchClosed = true;
     
@@ -52,8 +53,15 @@
             }
             var voidable = (t.serviceName === "CreditSale" &&
                             status === "positive");
-            if (voidable && t.serviceName === "CreditSale") { totalSinceLastBatch += parseFloat(t.amount); ordersSinceLastBatch += 1; }
-            if (t.serviceName === "CreditVoid") { totalSinceLastBatch -= parseFloat(t.amount); ordersSinceLastBatch -= 1; }
+            if (voidable && t.serviceName === "CreditSale") { 
+                totalSinceLastBatch += parseFloat(t.amount); 
+                stlSinceLastBatch += parseFloat(t.settlementAmount);
+                ordersSinceLastBatch += 1; 
+            }
+            if (t.serviceName === "CreditVoid") { 
+                totalSinceLastBatch -= parseFloat(t.amount);
+                ordersSinceLastBatch -= 1;
+            }
         %>
 
             <tr class="<%= status %>" data-id="<%= t.transactionId %>" data-model="transaction">
@@ -94,9 +102,9 @@
             <tr style="outline: solid;">
                 <td><b>Batch Total</b></td>
                 <td><b><%= ordersSinceLastBatch %> orders</b></td>
-                <td><b><%= Math.round(totalSinceLastBatch * 100) / 100 %></b></td>
+                <td><b>$<%= totalSinceLastBatch.toFixed(2) %></b></td>
                 <td></td>
-                <td></td>
+                <td><b>$<%= stlSinceLastBatch.toFixed(2) %></b></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -105,6 +113,7 @@
             <% } %>
             <% 
                 totalSinceLastBatch = 0.0;
+                stlSinceLastBatch = 0.0;
                 ordersSinceLastBatch = 0.0;
             %>
             <tr style="background-color: black!important; color: white!important; text-transform: uppercase;">
@@ -126,7 +135,7 @@
                 <td><b><%= ordersSinceLastBatch %> orders</b></td>
                 <td><b>$<%= totalSinceLastBatch.toFixed(2) %></b></td>
                 <td></td>
-                <td></td>
+                <td><b>$<%= stlSinceLastBatch.toFixed(2) %></b></td>
                 <td></td>
                 <td></td>
                 <td></td>

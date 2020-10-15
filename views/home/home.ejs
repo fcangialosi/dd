@@ -19,7 +19,7 @@
           <a href="/express" class="navbar-item"><span class="removable">Caf&eacute;</span>&nbsp;Express</a>
         </div>
         <div class="column">
-          <a href="/virtualcafe" class="navbar-item">Virtual Caf&eacute;</a>
+          <a href="/virtualcafe" class="navbar-item">Virtual Cafe / Order Online</a>
         </div>
       </div>
     </header>
@@ -42,7 +42,7 @@
   <% if (message) {%>
     <div class="three wide column"></div>
     <div class="ten wide column">
-     <div class="ui large floating message" style="border: solid #822421; color: #822421; background: rgba(255,255,255,0.7); margin-top: -25px">
+     <div class="ui large floating message" style="border: solid #822421; color: #822421; background: rgba(255,255,255,0.9); margin-top: -25px">
         <center><%- message %></center>
       </div>
     </div>
@@ -65,10 +65,12 @@
       <div class="row">
         <div class="twelve wide column">
           <h1 class="footer-header ui dividing header"> Our Locations </h1>
+          <h4 style="color: #c0392b"> Please note: our hours at the main cafe are *temporarily* reduced and Cafe Express is *temporarily* closed due to the COVID-19 emergency. We will return to our normal schedule as soon as possible.
+          </h4>
         </div>
         <div class="four wide column">
           <h1 class="footer-header ui dividing header"> Our Company </h1>
-        </div>
+          </div>
       </div>
       <div class="row">
         <div class="four wide column">
@@ -78,13 +80,15 @@
             <div class="item"><span class="footer-item"> 115 N. Charles St.</span></div>
             <div class="item"><span class="footer-item"> Baltimore, MD 21201</span></div>
             <div class="item"><span class="footer-item"> (410)-547-0550</span></div>
-            <div class="item"><span class="footer-item"> 6:30am - 8:00pm M - F</span></div>
+            <div class="item"><span class="footer-item"> 6:30am - 3:00pm M - F</span>
+            <!--</div>
             <div class="item"><span class="footer-item"> 8:00am - 1:00pm S</span>
+            -->
               <div class="green-dot" id="main-dot"></div>
             </div>
           </div>
         </div>
-        <div class="four wide column">
+        <div class="four wide disabled column", style="opacity:0.3">
           <h2 class="footer-header ui header" style="font-family: 'Montserrat'; font-weight: normal; font-size: 1.2em; color: #F5D894;">Cafe Express</h2>
           <div class="ui inverted list" style="line-height: 1em; color: #F5D894;">
             <div class="item"><span class="footer-item"> T. Rowe Price Bldg. </span></div>
@@ -93,7 +97,7 @@
             <div class="item"><span class="footer-item"> Baltimore, MD 21201</span></div>
             <div class="item"><span class="footer-item"> (410)-385-6267</span></div>
             <div class="item"><span class="footer-item"> 7:00am - 2:30pm M - F </span>
-              <div class="green-dot" id="pratt-dot"></div>
+              <div class="red-dot" id="pratt-dot-hidden"></div>
             </div>
           </div>
         </div>

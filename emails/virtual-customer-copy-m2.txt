@@ -1,23 +1,36 @@
 Thanks for your order! 
 
+{% if location.takeout %}
+This email confirms that we have received your takeout order. We will start preparing your order as soon as possible. Most orders will be ready in 20 minutes or less.
+{% else %}
 This email confirms that we have received your virtual cafe order for {{ date }} at {{ location.building_name }}. If you are unsure of the dropoff location in your building, you can get in touch with your virtual cafe contact, {{ location.contact_name }} at {{ location.contact_email }}. 
+{% endif %}
 
-A copy of your order is below. If there are any errors, please do not hesistate to call us at (410)-547-0550 or email us at  catering@davidanddads.com.
+A copy of your order is below. If there are any errors, please do not hesitate to call us at (410)-547-0550 or email us at  catering@davidanddads.com.
 
 
 
 
+{% if location.takeout %}
+David and Dad's Takeout
+=======================
+{% else %}
 David and Dad's Virtual Cafe
 ============================
+{% endif %}
 
 Name:      {{ name }}
 Phone:     {{ phone }}
 Email:     {{ email }}
 Card:      {{ card | safe }} 
 
+{% if location.takeout %}
+Location: Main Cafe (115 N. Charles St.)
+{% else %}
 Date:      {{ date }} @ {{ location.time }} 
 Location:  {{ location.building_name }}
 Contact:   {{ location.contact_name }}, {{ location.contact_email }}
+{% endif %}
 
 {{ item_header }}Qty.   Each      Total  
 {{ divider }} 

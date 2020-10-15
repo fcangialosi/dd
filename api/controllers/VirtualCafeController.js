@@ -92,7 +92,7 @@ orderForm = function(req, res, next, page) {
 				if (err) return next(err);
 				menu.push(specials);
 
-				Locations.find({}, function foundLocations (err, all) {
+				Locations.find({}).sort('_id ASC').exec(function foundLocations (err, all) {
 					res.view(page, {
 						menu: menu,
 						custom : custom,
@@ -113,7 +113,7 @@ orderForm = function(req, res, next, page) {
 module.exports = {
 
 	index: function (req, res, next) {
-    Locations.find({}, function foundLocations (err, all) {
+    Locations.find({}).sort('_id ASC').exec(function foundLocations (err, all) {
 		  res.view('virtualcafe/index', {
         locations: all,
 				message: null
@@ -124,6 +124,10 @@ module.exports = {
 	editCards: function (req, res, next) {
 		res.view('virtualcafe/edit-cards');
 	},
+
+    editDeliveryLocations: function(req, res, next) {
+        res.view('virtualcafe/edit-delivery');
+    },
 
 	subscribe: function(req, res, next) {
 		var email = req.session.User.email;

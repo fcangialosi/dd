@@ -5,11 +5,11 @@ var base_salad_price = 4.50;
 
 $(document).ready(function() {
 
-	$('#virtual-js-id').text('1.9');
-
-	if (simpleCart.total() && !simpleCart.isCatering) {
-		$('#submit-button').html("Submit My Order (<span class='simpleCart_grandTotal'></span>)")
-	}
+  $('#virtual-js-id').text('3.2');
+  
+  if (simpleCart.total() && !simpleCart.isCatering) {
+      $('#submit-button').html("Submit My Order (<span class='simpleCart_grandTotal'></span>)")
+  }
 
   if($('#is-virtual').length) {
     simpleCart.isCatering = false;
@@ -18,41 +18,68 @@ $(document).ready(function() {
       simpleCart.chargeCreditCard = false;
   }
 
-	specials_section = $('a[target="menu-9"]')[0];
+  specials_section = $('a[target="menu-9"]')[0];
+  
+  showDailySpecials = function() {
+      // Show today's specials
+      if (specials_section) { 
+          specials_section.setAttribute('style','');
+      }
+  }
+  
+  hideDailySpecials = function() {
+      // Hide today's specials
+      if (specials_section) {
+          specials_section.setAttribute('style','display:none');
+      }
+  }
+  
+  hideDailySpecials();
 
-	showDailySpecials = function() {
-		// Show today's specials
-		if (specials_section) { 
-			specials_section.setAttribute('style','');
-		}
-	}
-
-	hideDailySpecials = function() {
-		// Hide today's specials
-		if (specials_section) {
-			specials_section.setAttribute('style','display:none');
-		}
-	}
-
-	hideDailySpecials();
+  datePicker = $('#virtual-datepicker').datetimepicker({
+    pickTime: false,
+    useCurrent: false,
+    daysOfWeekDisabled: [0, 6],
+    disabledDates : [
+        new Date(2019, 11-1, 28),
+        new Date(2019, 11-1, 29)
+    ],
+    up: "fa fa-arrow-up",
+    down: "fa fa-arrow-down"
+  });
 
   locationInput = $('#location-input');
+  updateLocation = function(locationStr, deadline, fee) {
+    locationInput.val(locationStr);
 
-  // called by onclick listener of table elements in the
-  // location selection table, choice = the element clicked
-  locationSelected = function(choice) {
-		loc = choice
-    choice.setAttribute('class','location-selected');
-    locationInput.val(choice.children[0].children[0].innerHTML);
-
-    //update location-based shipping fee
-    fee = choice.children[4].innerHTML.replace(/(\$|\s)?/g, "");
+    toolate_box = $('#toolate-box');
+    if (moment().diff(moment(deadline, 'hh:mmA'), 'minutes') > 0) {
+        $('#today-button').removeClass('active');
+        $('#today-button').addClass('disabled');
+        if (toolate_box.text().trim().length == 0 || toolate_box.text().indexOf("another") > 0) {
+            toolate_box.text("Sorry, we cannot accept orders past " + deadline + " for this location. Please select another location or a future date.");
+        }
+        datePicker.parent().parent()[0].setAttribute('class','field');
+        datePicker.val('');
+    } else {
+        $('#today-button').removeClass('disabled');
+        toolate_box.text('');
+    }	
 
     simpleCart.shipping(function() {
       return fee;
     });
     simpleCart.update();
+  }
 
+
+  // called by onclick listener of table elements in the
+  // location selection table, choice = the element clicked
+  locationSelected = function(choice) {
+    // highlight the one they clicked on 
+    choice.setAttribute('class','location-selected');
+    
+    // disable all of the ones they didn't click on
     allChoices = choice.parentElement.children;
     for (var i=0; i < allChoices.length; i++){
       curr = allChoices[i];
@@ -61,32 +88,69 @@ $(document).ready(function() {
       }
     }
 
-		toolate_box = $('#toolate-box');
-		order_time = choice.children[1].innerText;
-		if (moment().diff(moment(order_time, 'hh:mmA'), 'minutes') > 0) {
-			$('#today-button').addClass('disabled');
-			if (toolate_box.text().trim().length == 0 || toolate_box.text().indexOf("another") > 0) {
-				toolate_box.text("Sorry, we cannot accept orders past " + order_time + " for this location. Please select another location or a future date.");
-			}
-		} else {
-			$('#today-button').removeClass('disabled');
-			toolate_box.text('');
-		}	
+    // update the rest of the form based on this choice, make sure today is disabled if necessary
+    locationName = choice.children[0].children[0].innerHTML;
+	locationDeadline = choice.children[1].innerText;
+    locationFee = choice.children[4].innerHTML.replace(/(\$|\s)?/g, "");
+    updateLocation(locationName, locationDeadline, locationFee);
+
   }
 
-  datePicker = $('#virtual-datepicker').datetimepicker({
-    pickTime: false,
-    useCurrent: false,
-    daysOfWeekDisabled: [0, 6],
-    up: "fa fa-arrow-up",
-    down: "fa fa-arrow-down"
+  deliverySelectDropdown = $('.delivery-select.ui.dropdown');
+  deliverySelectDropdown.change(function() {
+      locationInput.val(deliverySelectDropdown.val());
   });
 
+  selectDeliveryButton = $('#select-delivery-button');
+  deliveryDetails = $('#menu-delivery');
+  selectPickupButton = $('#select-pickup-button');
+  pickupDetails = $('#menu-pickup');
+  selectVirtualButton = $('#select-virtual-button');
+  virtualDetails = $('#menu-virtual');
+
+  selectDeliveryButton.click(function() {
+    selectDeliveryButton[0].classList.add('active');
+    deliveryDetails[0].classList.add('active');
+    selectPickupButton[0].classList.remove('active');
+    pickupDetails[0].classList.remove('active');
+    selectVirtualButton[0].classList.remove('active');
+    virtualDetails[0].classList.remove('active');
+    $('#menu-virtual .location-selected').removeClass("location-selected");
+    $('#menu-virtual .disabled').removeClass("disabled");
+    updateLocation(deliverySelectDropdown.val(), "2:00PM", "1.50")
+  });
+  selectPickupButton.click(function() {
+    selectPickupButton[0].classList.add('active');
+    pickupDetails[0].classList.add('active');
+    selectDeliveryButton[0].classList.remove('active');
+    deliveryDetails[0].classList.remove('active');
+    selectVirtualButton[0].classList.remove('active');
+    virtualDetails[0].classList.remove('active');
+    $('#menu-virtual .location-selected').removeClass("location-selected");
+    $('#menu-virtual .disabled').removeClass("disabled");
+    updateLocation("takeout", "2:30PM", "0.00");
+  });
+  selectVirtualButton.click(function() {
+    selectVirtualButton[0].classList.add('active');
+    virtualDetails[0].classList.add('active');
+    selectPickupButton[0].classList.remove('active');
+    pickupDetails[0].classList.remove('active');
+    selectDeliveryButton[0].classList.remove('active');
+    deliveryDetails[0].classList.remove('active');
+    locationInput.val("");
+    simpleCart.shipping(clearShippingFn);
+    simpleCart.update();
+    $('#menu-virtual .location-selected').removeClass("location-selected");
+    $('#menu-virtual .disabled').removeClass("disabled");
+  });
 
   $('#today-button').click(function() {
     if ($('#toolate-box').text().trim().length) {
-			hideDailySpecials();
-      return;
+        hideDailySpecials();
+        return;
+    }
+    if (this.classList.contains('disabled')) {
+        return;
     }
     if (this.classList.contains('active')) {
       datePicker.parent().parent()[0].setAttribute('class','field');
@@ -97,7 +161,7 @@ $(document).ready(function() {
       datePicker.parent().parent()[0].setAttribute('class','disabled field');
     }
     this.classList.toggle('active');
-		showDailySpecials();
+    showDailySpecials();
   });
 
   lastActive = document.getElementById("menu-0");

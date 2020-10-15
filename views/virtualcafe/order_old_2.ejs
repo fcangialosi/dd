@@ -38,8 +38,6 @@
 
 <% } %>
 
-
-
 <div style="height: 150px"></div>
 <div class="container">
 <!--
@@ -57,12 +55,10 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
       </h3>
     -->
       <h4>
-        Virtual cafe orders must be submitted by the "Order By" time in red below. 
-        <br>
-        Standard takeout and delivery orders can be submitted at any time.
+        You may order any time for orders to be picked up at 115 N. Charles. All other virtual cafe orders must be in by 11:00am Mon-Fri.
         <!--
         <% if (isWeekend) { %>
-        Although we don't deliver on weekends, you may still schedule an order for any date this coming week!
+        Although we don't deliver on weekends, you may still place an order for any date this coming week!
         <% } else { %>
           <% if (isBeforeDeadline) { %>
              If you would like your order to be delivered today, please be sure
@@ -129,11 +125,9 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
 
-
               <!--<h1 class="ui dividing header">2. Location -
               <span style="font-size:0.5em">Click on your location to select
-								it.</span></h1>
-                                -->
+								it.</span></h1>-->
 
 <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
       <tr>
@@ -142,63 +136,16 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
           <div class="ui inverted segment" style="background-color: #822421!important;">
             <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
               Location
-              <div class="sub header">We now offer delivery in addition to takeout from the cafe and our standard virtual cafe locations!
-              </div>
+              <div class="sub header">Click your location to select it. You must
+							be able to pick up your order at one of these locations at the
+							designated time.</div>
             </h2>
           </div>
         </td>
       </tr>
     </table>
 
-<div class="ui center aligned stackable page grid">
-  <div class="four wide column">
-    <div id="select-virtual-button" class="fluid ui big toggle button">Virtual Cafe</div>
-  </div>
-  <div class="four wide column">
-    <div id="select-pickup-button" class="fluid ui big toggle button">Takeout</div>
-  </div>
-  <div class="four wide column">
-    <div id="select-delivery-button" class="fluid ui big toggle button">Delivery</div>
-  </div>
-</div>
 
-<div class="ui bottom attached segment menu-tab" id="menu-delivery">
-<div class="ui message">
-<p>We now offer individual deliveries to nearby areas not served by our virtual cafe. If you are ordering from a business location, please double check our "Virtual Cafe" locations and make sure that your workplace is not already listed there.</p>
-<!--work in a building with a virtual cafe partnership, please select "Virtual Cafe" for your location instead.</p>-->
-</div>
-<div class="ui message">
-<p>There is a flat fee of <b>$1.50</b> for all deliveries. If this is your first time ordering delivery with us, please add your address first. Otherwise, you can select a previously-saved location from the list below. </p>
-</div>
-    <div class="field">
-        <center>
-        <% if (!('savedVirtualDelivery' in session.User) || session.User.savedVirtualDelivery.length < 1) { %>
-            <br>
-            <p> It looks like you don't have any saved destinations! Click the orange button below to add one. </p>
-        <% } else { %>
-            <select class="delivery-select ui dropdown" style="font-size:0.7em;">
-                <% _.each(session.User.savedVirtualDelivery, function(dest, destIndex, l) { %> 
-                    <option value="delivery-<%= destIndex %>"><%= dest.address%>,&nbsp;<%= dest.city %>&nbsp;<%= dest.zip %> -- <%= dest.special %></option>
-                <% }) %>
-            </select>
-        <% } %>
-        <br>
-        <br>
-        <a href="/virtualcafe/delivery-locations" class="medium ui orange button">Add/Remove Addresses</a>
-        </center>
-    </div>
-</div>
-
-<div class="ui bottom attached segment menu-tab" id="menu-pickup">
-<div class="ui message">
-<p>You can pickup your order from our main cafe location 115 N. Charles any time before 3pm. There are no extra service charges. </p>
-</div>
-</div>
-
-<div class="ui bottom attached segment menu-tab" id="menu-virtual">
-<div class="ui message">
-<p> Click your location to select it. You must be able to pick up your order at one of these locations <b>at the designated time</b>!</p>
-</div>
               <div class="field">
                     <table class="ui celled table">
                         <thead>
@@ -231,7 +178,6 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                     </table>
                     <input type="hidden" id="location-input" type="text" name="location" value="">
               </div>
-</div>
 
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
@@ -252,6 +198,8 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
         </td>
       </tr>
     </table>
+
+
 
 							<center><span id="toolate-box" style="font-weight:bold;font-size:1.2em">
                   <%if(isWeekend){%>

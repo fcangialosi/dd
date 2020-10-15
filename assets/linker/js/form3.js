@@ -242,6 +242,7 @@ $('#select-payment-form')
     }
   })
 ;
+
 $('#card-form')
   .form({
     number: {
@@ -377,6 +378,58 @@ virtualcafe_form_necessary_fields = {
     },
 };
 
+var validZips = ['21201', '21202'];
+$.fn.form.settings.rules.zipInRange = function(value) {
+  return value == '' || validZips.includes(value);
+}
+
+$('#new-virtual-delivery-form')
+  .form({
+    deliveryAddress: {
+      identifier : 'address',
+      rules: [
+        {
+          type   : 'empty',
+          prompt : 'Please enter a delivery address'
+        }
+      ]
+    },
+    deliveryCity: {
+      identifier : 'city',
+      rules: [
+        {
+          type : 'empty',
+          prompt : 'Please enter the city name'
+        }
+      ]
+    },
+    deliveryZip: {
+      identifier : 'zip',
+      rules : [
+          {
+            type : 'empty',
+            prompt : 'Please enter a zip code'
+          }
+          //{
+          //  type : 'zipInRange',
+          //  prompt : 'Sorry, we don\'t deliver to your zip code at the moment! Please see the list of locations we deliver above.'
+          //}
+      ]
+    },
+  });
+
+$.fn.form.settings.rules.cardExpiry = function(value) {
+    if (value.includes("/")) {
+        var exp = value.split("/");
+        if (exp.length == 2) {
+            if (exp[0].trim().length == 2 && exp[1].trim().length == 4) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
 virtualcafe_form_newcard_fields = {
     card_name : {
       identifier : 'card_name',
@@ -393,6 +446,10 @@ virtualcafe_form_newcard_fields = {
         {
           type : 'empty',
           prompt : 'Please enter the expiration date on your credit card'
+        },
+        {
+          type : 'cardExpiry',
+          prompt : 'Invalid card expiration date. Please use 2 digits for the month and 4 digits for the year: MM / YYYY.'
         }
       ]
     },
@@ -418,9 +475,13 @@ virtualcafe_form_newcard_fields = {
     */
 };
 
-$('#virtualcafe-form')
-  .form({
-      ...virtualcafe_form_necessary_fields,
-      ...virtualcafe_form_newcard_fields,
-  })
-;
+function merge_objs(obj1,obj2){
+    var obj3 = {};
+    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+    return obj3;
+}
+
+$('#virtualcafe-form').form(
+    merge_objs(virtualcafe_form_necessary_fields, virtualcafe_form_newcard_fields)
+);

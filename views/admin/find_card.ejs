@@ -1,0 +1,111 @@
+<div class="ui page" style="margin-left:5%; margin-right: 5%;">
+<div class="column">
+<center>
+    <h1 class="ui header" style="font-size: 2.5em"> Lookup Card </h1>
+    <a href="/admin" class="ui red labeled icon button">
+        <i class="hand left icon"></i>
+        Back to Main Page
+    </a>
+</center>
+
+<div style="min-height:50px"></div>
+<div style="width: 50%; margin: auto;">
+        <form id="lookup_form" class="ui form segment">
+            <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+            <div class="two fields">
+            <div class="field">
+                <label>Name</label>
+                <input name="name" placeholder="John Doe">
+            </div>
+            <div class="field">
+                <label>Last Four</label>
+                <input name="last_four" placeholder="1486">
+            </div>
+            </div>
+            <input type="submit" class="ui green button" value="Find">
+            <br><hr>
+            <p id="error_msg" style="font-weight: bold; color: #cd5657;"></p>
+            <table id="results_table" style="display:none;" class="ui celled table segment">
+                <tr>
+                    <td>Name on Card</td>
+                    <td id="card-name"></td>
+                </tr>
+                <tr>
+                    <td>Number</td>
+                    <td id="card-number"></td>
+                </tr>
+                <tr>
+                    <td>CVC</td>
+                    <td id="card-cvc"></td>
+                </tr>
+                <tr>
+                    <td>Expiry</td>
+                    <td id="card-expiry"></td>
+                </tr>
+                <tr>
+                    <td>Zip</td>
+                    <td id="card-zip"></td>
+                </tr>
+            </table>
+            
+        </form>
+</div>
+</div>
+</div>
+<br><br>
+<center>
+    <a href="/admin/lookup/table" class = "ui blue small button">
+        Old Lookup Table
+    </a>
+</center>
+<div style="min-height:200px"></div>
+<script>
+results = document.getElementById("results_table");
+errormsg = document.getElementById("error_msg");
+fields = ['name', 'number', 'cvc', 'expiry', 'zip'];
+lookup_form = document.getElementById('lookup_form');
+var displayError = function(msg) {
+    error_msg.innerHTML = msg;
+    error_msg.style.display = "";
+    results.style.display = "none";
+}
+
+var lookupCard = function(e) {
+    lookup_form.classList.add("loading");
+    var data = new FormData(lookup_form);
+    var req = new XMLHttpRequest();
+    req.onload = function(e) {
+        lookup_form.classList.remove("loading");
+        if (e.target.status == 200) {
+            var resp = JSON.parse(e.target.response);
+            console.log(resp);
+            if ('card' in resp) {
+                resp = resp['card'];
+                for (i in fields) {
+                    key = fields[i];
+                    var val = 'MISSING';
+                    if (key in resp) {
+                        val = resp[key];
+                    }
+                    console.log(key);
+                    document.getElementById('card-'+key).innerHTML = val;
+                }
+                results.style.display = "";
+                error_msg.style.display = "none";
+            } else {
+                var msg = 'Server error.';
+                if ('msg' in resp) {
+                    msg = resp['msg'];
+                }
+                displayError(msg);
+            }
+        } else {
+            displayError(e.target.responseText);
+        }
+    };
+    req.open('POST', '/admin/lookup');
+    req.send(data);
+    e.preventDefault();
+}
+lookup_form.addEventListener('submit', lookupCard);
+</script>

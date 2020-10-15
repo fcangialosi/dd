@@ -1,6 +1,6 @@
 <div class="ui page grid">
 <div class="column">
-<center><h1 class="ui header" style="font-size: 2.5em"> Lookup </h1><a href="/admin" class="ui red labeled icon button"><i class="hand left icon"></i>Back to Main Page</a></center>
+<center><h1 class="ui header" style="font-size: 2.5em"> Full Lookup Table </h1><a href="/admin" class="ui red labeled icon button"><i class="hand left icon"></i>Back to Main Page</a></center>
 <table class='ui inverted celled table segment'>
     <tr>
         <th>View</th>
@@ -11,7 +11,7 @@
 
     <% _.each(users, function(user) { %>
     <tr data-id="<%= user.id %>" data-model="user">
-        <td><a href="/admin/lookup/<%= user.id %>" class="ui fluid tiny green button">View</a></td>
+        <td><a href="/admin/lookup/table/<%= user.id %>" class="ui fluid tiny green button">View</a></td>
         <td><%= user.name %></td>
 				<td><% if ('companyName' in user) { %><%= user.companyName %><% } %></td>
         <td><%= user.email %></td>

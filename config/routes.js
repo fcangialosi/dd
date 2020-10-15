@@ -54,6 +54,8 @@ module.exports.routes = {
 
 	'get /virtualcafe/edit-cards' : 'VirtualCafeController.editCards',
 
+    'get /virtualcafe/delivery-locations' : 'VirtualCafeController.editDeliveryLocations',
+
   'post /admin/virtual/edit/:id' : 'MenuController.editCustom',
 
   'post /feedback' : 'HomeController.feedback',
@@ -176,9 +178,13 @@ module.exports.routes = {
 
   'post /admin/messages/policy' : 'PageController.setPolicy',
 
-  'get /admin/lookup' : 'AdminController.lookup',
+  'get /admin/lookup' : 'AdminController.lookupForm',
 
-  'get /admin/lookup/:id' : 'AdminController.search',
+  'post /admin/lookup' : 'AdminController.lookupSearch',
+
+  'get /admin/lookup/table' : 'AdminController.lookupTable',
+
+  'get /admin/lookup/table/:id' : 'AdminController.allCards',
 
   'get /admin/transactions' : 'AdminController.listTransactions',
 

@@ -1,0 +1,106 @@
+<!-- Modal Start -->
+<div class="modal fade" id="virtualDeliveryAdd" tabindex="-1" role="dialog" aria-labelledby="virtualDeliveryLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Add New Delivery Address</h4>
+      </div>
+      <div class="ui message"> 
+          <p> Please note: at the moment, we only deliver to addresses close to our main cafe. If your address is not available and you'd like to see us deliver to your area, please let us know by calling the cafe or sending us an email!
+          </p>
+      </div>
+      <div class="modal-body">
+        <div class="ui one column grid">
+          <div class="column">
+            <form action="/user/addVirtualDelivery" method="POST" class="ui small fluid form segment" id="new-virtual-delivery-form">
+              <div class="ui error message"></div>
+              <div class="three fields">
+                <div class="field">
+                  <label>Delivery Address</label>
+                  <input placeholder="115 N. Charles St." name="address" type="text">
+                </div>
+                <div class="field">
+                  <label>City</label>
+                  <input placeholder="Baltimore" name="city" type="text">
+                </div>
+                <div class="field">
+                  <label>Zip Code</label>
+                  <input placeholder="21202" name="zip" type="text">
+                </div>
+              </div>
+              <div class="field">
+                <label>Special Instructions</label>
+                <textarea placeholder="Anything else that will help us deliver your order smoothly and in a timely fashion!" name="instructions"></textarea>
+              </div>
+              <input type="submit" class="ui blue submit button" value="Save This Location">
+              <input type="hidden" name="_csrf" value="<%= _csrf %>">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="ui button" data-dismiss="modal">Close Without Saving</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal End -->
+
+
+<div class="container" style="margin-top:80px">
+  <% if (flash && flash.err) { %>
+    <div class="ui red message">
+      <%= flash.err %>
+    </div>
+  <% } %>
+  <% if (flash && flash.success) { %>
+    <div class="ui green message">
+      <%= flash.success %>
+    </div>
+  <% } %>
+
+  <h1 class="ui center aligned dividing header">Edit Delivery Locations</h1>
+
+  <center>
+  <a href="/virtualcafe/order" class="ui blue labeled icon button go-back">
+    <i class="hand left icon"></i>
+    Back To Order
+  </a>
+  </center>
+
+  <div class="stackable ui center aligned grid">
+    <div class="ten wide column">
+      <div class="ui one column relaxed grid">
+    <div class="column">
+      <div class="ui large fluid form segment" >
+        <p class="warning-border"></p>
+        <div class="ui medium divided list">
+          <% _.each(session.User.savedVirtualDelivery, function(dest, destIndex, l){ %>
+            <div class="item" index="<%= destIndex %>">
+              <div class="left floated content">
+                <div class="header"><%= dest.address %>, <%=dest.city %> <%= dest.zip %>
+                </div>
+                <div class="description"><%= dest.special %>
+                </div>
+              </div>
+              <form action="/user/removeVirtualDelivery/<%= destIndex %>" method="POST">
+                <input type="hidden" name="_method" value="delete"/>
+                <input type="submit" class="right floated medium ui red button" value="Delete"/>
+                <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+              </form>
+            </div>
+          <% }) %>
+        <div class="item">
+            <a data-toggle="modal" data-target="#virtualDeliveryAdd" class="medium ui green button">Add New Delivery Address</a>
+        </div>
+        </div> <!-- medium list -->
+      </div> <!-- form segment -->
+
+    </div> <!-- column -->
+      </div> <!-- one column -->
+    </div> <!-- ten wide -->
+  </div> <!-- stackable -->
+</div> <!-- container -->
+
+<div style="min-height:100px;"></div>

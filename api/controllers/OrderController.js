@@ -67,20 +67,14 @@ var getDateTime = function(clean) {
   }
 };
 
-var parseVirtualData = function(body, loc, method) {
-  location = {
-    building_name : loc.name,
-    contact_name : loc.contact.name,
-    contact_email : loc.contact.email,
-    time : loc.time
-  };
+var parseVirtualData = function(body, parsedLoc, method) {
   obj = {
     name : body.name,
     phone : body.phone,
     email : body.email,
     card : (body.number.substring(body.number.length - 4)),
     date : body.date,
-    location : location
+    location : parsedLoc
   }
 
   if (method == 1) {
@@ -101,7 +95,7 @@ var parseVirtualData = function(body, loc, method) {
     for (var i=1; i <= body['itemCount']; i++) {
       item = {}
       sp = body['item_name_' + i].split("<br>");
-      item['name'] = sp[0];
+      item['name'] = sp[0].replace(/&amp;/g, "&");
       if (sp.length > 1) {
         item['add'] = sp.slice(1,sp.length).join("\n");
       }
@@ -144,7 +138,7 @@ var generateCateringHTML = function(session, cart, rawNumber) {
   var divider = new Array(item_padding + 28).join('=');
   for (var i=1; i <= cart['itemCount']; i++) {
     item = {}
-    item['name'] = cart['item_name_' + i];
+    item['name'] = cart['item_name_' + i].replace(/&amp;/g, "&");
     item['name'] = item['name'] + new Array(item_padding - item['name'].length).join(' ')
     item['price'] = "$" + parseFloat(cart['item_price_' + i]).toFixed(2);
     item['price'] = item['price'] + new Array(11 - item['price'].length).join(' ')
@@ -210,10 +204,17 @@ var sendEmail = function(html, req, res) {
 */
 
 
-var sendEmailVirtual = function(customer_txt, our_txt, req, res) {
+var sendEmailVirtual = function(customer_txt, our_txt, req, res, is_test) {
   var body = req.body;
   var file_name = "virtual-invoices/" + (req.session.User.email.split("@")[0] + "-" + getDateTime(true)) + ".html";
   fs.writeFileSync(file_name, customer_txt);
+
+  var pre = '';
+  if (is_test) {
+      pre = '***** TEST ORDER ***** '
+  }
+
+  console.log(req.session.User.email);
 
   var customer_email_params = {
     Destination: {
@@ -233,7 +234,7 @@ var sendEmailVirtual = function(customer_txt, our_txt, req, res) {
         }
       },
       Subject: {
-        Data: 'Your Virtual Cafe Order'
+        Data: (pre + 'Your Virtual Cafe Order')
       }
     },
     Source: 'orders@davidanddads.com',
@@ -257,7 +258,7 @@ var sendEmailVirtual = function(customer_txt, our_txt, req, res) {
         }
       },
       Subject: {
-        Data: ('Virtual Cafe Request from ' + req.session.User.name),
+        Data: (pre + 'Virtual Cafe Request from ' + req.session.User.name),
       }
     },
     Source: 'orders@davidanddads.com',
@@ -411,6 +412,7 @@ var updateUser = function(req, token, shouldSaveCard) {
         console.log(err);
       }
     });
+    return user;
 
 }
 
@@ -480,6 +482,137 @@ var updateUser = function(req, saveCard) {
   return user;
 }
 */
+
+var submitVirtualOrder = function(req, res, parsedLoc, delivery) {
+    var catcher = function(err) {
+        console.log(err);
+        res.view('virtualcafe/failure', {
+            type: 'unknown',
+        });
+    };
+
+    if (delivery) {
+        customer_template = swig.compileFile('./emails/delivery-customer-copy.txt');
+        our_template = swig.compileFile('./emails/delivery-invoice.txt');
+        method = 2;
+    } else {
+        if ('order_description' in req.body && req.body['order_description'] !== "") {
+          customer_template = swig.compileFile('./emails/virtual-customer-copy-m1.txt')
+          our_template = swig.compileFile('./emails/virtual-invoice-m1.txt');
+          method = 1;
+        } else {
+          customer_template = swig.compileFile('./emails/virtual-customer-copy-m2.txt');
+          our_template = swig.compileFile('./emails/virtual-invoice-m2.txt');
+          method = 2;
+        }
+
+    }
+
+    obj = parseVirtualData(req.body, parsedLoc, method);
+    customer_html = customer_template(obj);
+    our_html = our_template(obj);
+
+    obj_total = obj.total.split("$")[1];
+    charge_amt = parseFloat(obj_total);
+
+    if ('hps_token' in req.body) {
+        var card = new gp.CreditCardData();
+        card.token = req.body.hps_token;
+        var addr = new gp.Address();
+        addr.postalCode = req.body.zip;
+        if(req.body.zip === '00000') {
+            console.log("TEST REQUEST");
+            console.log(req);
+            sendEmailVirtual(customer_html, our_html, req, res, true);
+            return;
+        }
+        if ('address' in req.body) {
+            addr.streetAddress1 = req.body.address;
+        }
+        var shouldSaveCard = ('save_card' in req.body && req.body.save_card === "on");
+        var charge_resp = card.charge(charge_amt.toString())
+            .withCurrency("USD")
+            .withAddress(addr)
+            .withRequestMultiUseToken(shouldSaveCard)
+            .execute();
+        charge_resp.then(function(resp) {
+            chargeSuccess = (resp.responseCode === '00');
+            updateUser(req, resp.token, shouldSaveCard && chargeSuccess);
+            if (chargeSuccess) {
+                console.log("Success!");
+                sendEmailVirtual(customer_html, our_html, req, res, false);
+            } else {
+                console.log(resp.responseMessage);
+                res.view('virtualcafe/failure', {
+                    type : 'card',
+                    err  : resp.responseMessage,
+                    code : resp.responseCode,
+                    cvn  : resp.cvnResponseCode,
+                    ref  : resp.referenceNumber,
+                    tid  : resp.transactionReference.transactionId
+                });
+            }
+        })
+        .catch(catcher);
+    } else if ('_savedIndex' in req.body) {
+        var saved_index = parseInt(req.body._savedIndex);
+        var saved_card = req.session.User.savedPayment[saved_index];
+        if (req.body.card_name != saved_card.name) {
+            console.log("UH OH: card name doesn't match!");
+        }
+        if (req.body.zip != saved_card.zip) {
+            console.log("UH OH: zip doesn't match!");
+        }
+        if(req.body.zip === '00000' || saved_card.zip === '00000') {
+            sendEmailVirtual(customer_html, our_html, req, res, true);
+            return;
+        }
+        if (req.body.expiry != saved_card.expiry) {
+            console.log("UH OH: expiry doesn't match!");
+        }
+        if (req.body.number.slice(-4) != saved_card.lastFour) {
+            console.log("UH OH: number doesn't match!");
+        }
+        var card = new gp.CreditCardData();
+        card.token = saved_card.token;
+        var addr = new gp.Address();
+        addr.postalCode = saved_card.zip;
+        if ('address' in req.body) {
+            addr.streetAddress1 = req.body.address;
+        }
+        
+        var charge_resp = card.charge(charge_amt.toString())
+            .withCurrency("USD")
+            .withAddress(addr)
+            .execute();
+        charge_resp.then(function(resp) {
+            updated = updateUser(req, 0, false);
+            req.session.User = updated;
+            if (resp.responseCode === '00') {
+                console.log("Success!")
+                sendEmailVirtual(customer_html, our_html, req, res, false);
+            } else {
+                console.log(resp.responseMessage);
+                res.view('virtualcafe/failure', {
+                    type : 'card',
+                    err  : resp.responseMessage,
+                    code : resp.responseCode,
+                    cvn  : resp.cvnResponseCode,
+                    ref  : resp.referenceNumber,
+                    tid  : resp.transactionReference.transactionId
+                });
+            }
+        })
+        .catch(catcher);
+    } else {
+        console.log("No new or saved card, cannot complete order");
+        res.view('virtualcafe/failure', {
+            type : 'unknown'
+        });
+    }
+
+
+}
 
 module.exports = {
 
@@ -560,125 +693,41 @@ module.exports = {
     try {
         if (req.body.isCatering === "false") { // sanity check
 
-          //updated_user = updateUser(req, (req.body.save_card != null && req.body.save_card === "on"));
-          //req.session.User = updated_user;
+          updated_user = updateUser(req, (req.body.save_card != null && req.body.save_card === "on"));
+          req.session.User = updated_user;
 
-          Locations.findOne({'name' : req.body.location}, function foundLocation (err, loc) {
-            if ('order_description' in req.body && req.body['order_description'] !== "") {
-              customer_template = swig.compileFile('./emails/virtual-customer-copy-m1.txt')
-              our_template = swig.compileFile('./emails/virtual-invoice-m1.txt');
-              method = 1;
-            } else {
-              customer_template = swig.compileFile('./emails/virtual-customer-copy-m2.txt');
-              our_template = swig.compileFile('./emails/virtual-invoice-m2.txt');
-              method = 2;
-            }
-
-            obj = parseVirtualData(req.body, loc, method);
-            customer_html = customer_template(obj);
-            our_html = our_template(obj);
-
-            obj_total = obj.total.split("$")[1];
-            charge_amt = parseFloat(obj_total);
-            /*
-            if (charge_amt === 0 && 'fake_total' in req.body) {
-                charge_amt = parseFloat(req.body.fake_total);
-            }
-            */
-
-            if ('hps_token' in req.body) {
-                var card = new gp.CreditCardData();
-                card.token = req.body.hps_token;
-                var addr = new gp.Address();
-                addr.postalCode = req.body.zip;
-                if ('address' in req.body) {
-                    addr.streetAddress1 = req.body.address;
-                }
-                var shouldSaveCard = ('save_card' in req.body && req.body.save_card === "on");
-                var charge_resp = card.charge(charge_amt.toString())
-                    .withCurrency("USD")
-                    .withAddress(addr)
-                    .withRequestMultiUseToken(shouldSaveCard)
-                    .execute();
-                charge_resp.then(function(resp) {
-                    chargeSuccess = (resp.responseCode === '00');
-                    updateUser(req, resp.token, shouldSaveCard && chargeSuccess);
-                    if (chargeSuccess) {
-                        console.log("Success!");
-                        sendEmailVirtual(customer_html, our_html, req, res);
-                    } else {
-                        console.log(resp.responseMessage);
-                        res.view('virtualcafe/failure', {
-                            type : 'card',
-                            err  : resp.responseMessage,
-                            code : resp.responseCode,
-                            cvn  : resp.cvnResponseCode,
-                            ref  : resp.referenceNumber,
-                            tid  : resp.transactionReference.transactionId
-                        });
-                    }
-                })
-                .catch(catcher);
-            } else if ('_savedIndex' in req.body) {
-                var saved_index = parseInt(req.body._savedIndex);
-                var saved_card = req.session.User.savedPayment[saved_index];
-                if (req.body.card_name != saved_card.name) {
-                    console.log("UH OH: card name doesn't match!");
-                }
-                if (req.body.zip != saved_card.zip) {
-                    console.log("UH OH: zip doesn't match!");
-                }
-                if (req.body.expiry != saved_card.expiry) {
-                    console.log("UH OH: expiry doesn't match!");
-                }
-                if (req.body.number.slice(-4) != saved_card.lastFour) {
-                    console.log("UH OH: number doesn't match!");
-                }
-                var card = new gp.CreditCardData();
-                card.token = saved_card.token;
-                var addr = new gp.Address();
-                addr.postalCode = saved_card.zip;
-                if ('address' in req.body) {
-                    addr.streetAddress1 = req.body.address;
-                }
-                
-                var charge_resp = card.charge(charge_amt.toString())
-                    .withCurrency("USD")
-                    .withAddress(addr)
-                    .execute();
-                charge_resp.then(function(resp) {
-                    updateUser(req, 0, false);
-                    if (resp.responseCode === '00') {
-                        console.log("Success!")
-                        sendEmailVirtual(customer_html, our_html, req, res);
-                    } else {
-                        console.log(resp.responseMessage);
-                        res.view('virtualcafe/failure', {
-                            type : 'card',
-                            err  : resp.responseMessage,
-                            code : resp.responseCode,
-                            cvn  : resp.cvnResponseCode,
-                            ref  : resp.referenceNumber,
-                            tid  : resp.transactionReference.transactionId
-                        });
-                    }
-                })
-                .catch(catcher);
-            } else {
-                console.log("No new or saved card, cannot complete order");
-                res.view('virtualcafe/failure', {
-                    type : 'unknown'
-                });
-                //console.log("Not charging card!");
-                //updateUser(req, 0, true);
-                //sendEmailVirtual(customer_html, our_html, req, res);
-            }
-
-          });
+          if (req.body.location.indexOf('delivery') == 0) {
+              destIdx = parseInt(req.body.location.split("-")[1]);
+              dest = req.session.User.savedVirtualDelivery[destIdx];
+              submitVirtualOrder(req, res, dest, true);
+          } else if (req.body.location.indexOf('takeout') == 0) { 
+              parsedLoc = {
+                  takeout : true
+              };
+              submitVirtualOrder(req, res, parsedLoc, false);
+          } else {
+              Locations.findOne({'name' : req.body.location}, function foundLocation (err, loc) {
+                  if(err) {
+                      catcher(err);
+                  } else {
+                      parsedLoc = {
+                        building_name : loc.name,
+                        contact_name : loc.contact.name,
+                        contact_email : loc.contact.email,
+                        time : loc.time,
+                        takeout : false,
+                      };
+                      submitVirtualOrder(req, res, parsedLoc, false);
+                  }
+              });
+          }
+        } else {
+            catcher("submitVirtual got isCatering == true!");
         }
     } catch (err) {
         console.log("ERROR failed to submit order");
         console.log(err);
+        console.log(req.body)
         res.view('virtualcafe/failure', {
             type : 'unknown'
         });

@@ -29,6 +29,7 @@ config.serviceUrl = "https://api2.heartlandportico.com";
 gp.ServicesContainer.configure(config);
 
 var decrypt = function(index, user, key, res) {
+    console.log("trying to decript!", index, user);
 	if (typeof user.savedPayment[index].number !== 'string') {
     if (index == user.savedPayment.length-1) {
       res.view('admin/view-cards', {
@@ -78,6 +79,72 @@ var decrypt = function(index, user, key, res) {
   });
 }
 
+privKey = fs.readFileSync('./ssl/key.pem', 'utf8');
+tskey = new triplesec.Buffer(privKey);
+
+require('es6-promise');
+
+var _dec = function(i, card) {
+    //console.log("new promise", i);
+    return new Promise(function(resolve,reject) {
+        //console.log("running promise", i);
+        triplesec.decrypt({
+            data : new triplesec.Buffer(card.number, "hex"),
+            key : tskey,
+            progress_hook : function(obj) {}
+        }, function(err, buff) {
+           // console.log("resolving promise", i);
+            card.number = err ? err : buff.toString();
+            resolve(card);
+        });
+    });
+}
+
+var lookupCard = function(user, lastFour) {
+    for (var i=0; i<=user.savedPayment.length-1; i++) {
+        if (user.savedPayment[i].lastFour == lastFour && "number" in user.savedPayment[i]) {
+            return _dec(i, user.savedPayment[i]);
+        }
+    }
+    return new Promise(function(resolve, reject) {
+        reject('Could not find card ending in ' + lastFour + ' for ' + user.name);
+    });
+}
+
+var decryptAll = function(user, res) {
+    //console.log("better decrypt");//, user);
+    var ps = [];
+    var seen = {};
+    for (var i=0; i<=user.savedPayment.length-1; i++) {
+        var four = user.savedPayment[i].lastFour;
+        if (four in seen) {
+            //console.log("duplicate", four);
+        } else {
+            seen[four] = true;
+            ps.push(_dec(i, user.savedPayment[i]))
+        }
+    }
+    //console.log("waiting for promises");
+    Promise.all(ps).then(function(values) {
+        //console.log("then all", values);
+        /*
+        for (var i=0; i<values.length-1; i++) {
+            var val = values[i];
+            console.log("then promise", val.index);
+            //user.savedPayment[val.index].number = val.number;
+        }
+        */
+        res.view('admin/view-cards', {
+          user: user,
+          cards: values,
+          layout : 'admin/layout'
+        });
+    }, function(reason) {
+        console.log("all promise rejected because: ", reason);
+    });
+    //console.log("exiting function");
+}
+
 module.exports = {
 
   index: function (req, res, next) {
@@ -112,7 +179,7 @@ module.exports = {
     res.view('admin/new-admin', {layout : 'admin/layout'});
   },
 
-  lookup: function(req, res, next) {
+  lookupTable: function(req, res, next) {
     User.find({ sort: 'name' }, function foundUsers (err, users) {
       if (err) return next(err);
       res.view('admin/lookup', {
@@ -122,13 +189,37 @@ module.exports = {
     });
   },
 
-  search: function(req, res, next) {
+  lookupForm: function(req, res, next) {
+      res.view('admin/find_card', {
+          layout : 'admin/layout'
+      });
+  },
+
+  lookupSearch : function(req, res, next) {
+      User.findOne({name : req.body.name}, function foundUser (err, user) {
+          if (err) return next(err);
+          if (!user) return next('Name not found.');
+
+          if (user.savedPayment.length <= 0) {
+              res.send({'msg' : 'User found, but has no saved cards.'});
+          } else {
+              lookupCard(user, req.body.last_four).then(function(card) {
+                  res.send({'card' : card});
+              }, function(err) {
+                  res.send({'msg' : err});
+              })
+          }
+      });
+  },
+
+  allCards: function(req, res, next) {
     // Find the user from the id passed in via params
     User.findOne(req.param('id'), function foundUser (err, user) {
 
       if (err) return next(err);
       if (!user) return next('User doesn\'t exist.');
 
+      /*
       fs.readFile('./ssl/key.pem', 'utf8', function (err, privKey) {
         if (err) {
           console.log(err);
@@ -144,6 +235,17 @@ module.exports = {
         }
 
       });
+      */
+
+      if (user.savedPayment.length <= 0) {
+        res.view('admin/view-cards', {
+             user: user,
+             cards: [],
+             layout : 'admin/layout'
+         });
+      } else {
+        decryptAll(user, res);
+      }
 
     });
   },
@@ -157,7 +259,7 @@ module.exports = {
           });
       };
       const start = new Date(Date.now());
-      start.setDate(start.getDate() - 3);
+      start.setDate(start.getDate() - 30);
       const end = new Date(Date.now());
       gp.ReportingService.activity()
           .withStartDate(start)

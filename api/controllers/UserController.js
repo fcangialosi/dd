@@ -17,6 +17,51 @@
 
 var triplesec = require('triplesec');
 var fs = require('fs');
+var request = require('request');
+
+// view region: https://display-kml.appspot.com/
+var deliveryRegion = [
+    [-76.615105, 39.291195],
+    [-76.622733, 39.281530],
+    [-76.623699, 39.293620],
+    [-76.622583, 39.310556],
+    [-76.619965, 39.317529],
+    [-76.607949, 39.318193],
+    [-76.591469, 39.312084],
+    [-76.589238, 39.295746],
+    [-76.593590, 39.284224],
+    [-76.601640, 39.283788],
+    [-76.612197, 39.286778],
+    [-76.612369, 39.280865],
+    [-76.599494, 39.272494],
+    [-76.600181, 39.271165],
+    [-76.603958, 39.269238],
+    [-76.615133, 39.270537],
+    [-76.624900, 39.276812],
+    [-76.622497, 39.281662],
+    [-76.615105, 39.291195]
+];
+
+var geocodingUrl = 'https://maps.googleapis.com/maps/api/geocode/json?key=MYKEY&address=';
+
+var destIsInRegion = function(point, vs) {
+    // ray-casting algorithm based on
+    // https://wrf.ecse.rpi.edu/Research/Short_Notes/pnpoly.html/pnpoly.html
+    
+    var x = point[0], y = point[1];
+    
+    var inside = false;
+    for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+        var xi = vs[i][0], yi = vs[i][1];
+        var xj = vs[j][0], yj = vs[j][1];
+        
+        var intersect = ((yi > y) != (yj > y))
+            && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+    }
+    
+    return inside;
+};
 
 module.exports = {
 
@@ -141,6 +186,61 @@ module.exports = {
     });
   },
 
+  addVirtualDelivery : function(req, res, next) {
+      new_delivery = {
+          address : req.body.address,
+          city : req.body.city,
+          zip : req.body.zip,
+          special: req.body.instructions
+      };
+
+      var queryAddr = req.body.address + ", " + req.body.city + " " + req.body.zip;
+      var urlSafeAddr = queryAddr.replace(/ /g, '+');
+
+      request(geocodingUrl + urlSafeAddr, function(err, resp, body) {
+          if (err) {
+              req.session.flash = {
+                  err: err,
+              };
+              res.redirect('/virtualcafe/delivery-locations');
+          } else if (resp && resp.statusCode == 200) {
+              var bodyJson = JSON.parse(body);
+              var loc = bodyJson.results[0].geometry.location;
+              var dest = [loc.lng, loc.lat];
+              if (destIsInRegion(dest, deliveryRegion)) {
+                  if('savedVirtualDelivery' in req.session.User) {
+                      req.session.User.savedVirtualDelivery.push(new_delivery);
+                  } else {
+                      req.session.User.savedVirtualDelivery = [new_delivery];
+                  }
+                  User.update(req.session.User.id, req.session.User, function userUpdated(err,user) {
+                      if(err) {
+                          req.session.flash = {
+                              err: err
+                          };
+                      } else {
+                          req.session.flash = {
+                              success : 'Your address has been added successfully.'
+                          }
+                      }
+                      res.redirect('/virtualcafe/delivery-locations');
+                  });
+              } else {
+                  req.session.flash = {
+                      err: 'Sorry, we don\'t deliver to your address yet!',
+                  };
+                  res.redirect('/virtualcafe/delivery-locations');
+              }
+          } else {
+              req.session.flash = {
+                  err: 'No response recieved from geocoding api',
+              };
+              res.redirect('/virtualcafe/delivery-locations');
+          }
+      });
+
+  },
+
   addDelivery : function(req, res, next) {
     new_delivery = {
         contactName : req.body.name,
@@ -177,6 +277,18 @@ module.exports = {
         return res.redirect('/catering/order/delivery');
       }
       res.redirect('/catering/order/delivery');
+    });
+  },
+
+  removeVirtualDelivery : function(req, res, next) {
+
+    req.session.User.savedVirtualDelivery.splice(req.param('id'), 1);
+
+    User.update(req.session.User.id, req.session.User, function userUpdated (err, user) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/virtualcafe/delivery-locations');
     });
   },
 

@@ -108,6 +108,10 @@ ready = function() {
   $(function () {
     $('#delivery-datepicker').datetimepicker({
       pickTime: false,
+      disabledDates : [
+            new Date(2019, 11-1, 28),
+            new Date(2019, 11-1, 29)
+      ],
       up: "fa fa-arrow-up",
       down: "fa fa-arrow-down"
     });

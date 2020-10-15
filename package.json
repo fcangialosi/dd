@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "dependencies": {
     "aws-sdk": "^2.163.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "bcrypt": "^1.0",
     "connect-redis": "^3.3.2",
     "ejs": "^2.5.7",

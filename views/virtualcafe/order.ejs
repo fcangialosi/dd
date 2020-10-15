@@ -38,32 +38,35 @@
 
 <% } %>
 
+
+
 <div style="height: 150px"></div>
 <div class="container">
-<!--
-<div class="ui red segment">
-<p>NOTE: David and Dad's Virtual Cafe is still in beta testing. Submitting this
-form will NOT submit an order. If you would like to be notified when we're ready
-to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
--->
-    <h1 class="ui center aligned dividing header"> Virtual Cafe Order Form </h1>
+    <h1 class="ui center aligned dividing header"> Online Order Form </h1>
 
     <center>
+    <!-- 
       <h3>
         It is currently <span style="color:<%if(isBeforeDeadline&!isWeekend){%>#2ecc71<%}else{%>#e74c3c<%}%>"><%= time %></span> on  <span style="color:<%if(isWeekend){%>#e74c3c<%}else{%>#2ecc71<%}%>"><%= dayOfTheWeek %></span>, <%= date %>.
       </h3>
+    -->
       <h4>
+        Virtual cafe orders must be submitted by the "Order By" time in red below. 
+        <br>
+        Standard takeout and delivery orders can be submitted at any time.
+        <!--
         <% if (isWeekend) { %>
-        Although we don't deliver on weekends, you may still place an order for any date this coming week!
+        Although we don't deliver on weekends, you may still schedule an order for any date this coming week!
         <% } else { %>
           <% if (isBeforeDeadline) { %>
              If you would like your order to be delivered today, please be sure
-						 to submit this form by designated time below! 
+						 to submit this form by the designated time below! 
           <% } else { %>
             Unfortunately, it is too late to make an order for today (our cutoff
 						is 11:00AM, but you can still place one for a future date!).
           <% } %>
         <% } %>
+        -->
       </h4>
       <h4> If you have any questions or problems with the order form, call (410)-547-0550. </h4>
     </center>
@@ -120,9 +123,11 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
 
+
               <!--<h1 class="ui dividing header">2. Location -
               <span style="font-size:0.5em">Click on your location to select
-								it.</span></h1>-->
+								it.</span></h1>
+                                -->
 
 <table class="spaced-table" style="width: 100%; margin-bottom: 30px">
       <tr>
@@ -131,16 +136,63 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
           <div class="ui inverted segment" style="background-color: #822421!important;">
             <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
               Location
-              <div class="sub header">Click your location to select it. You must
-							be able to pick up your order at one of these locations at the
-							designated time.</div>
+              <div class="sub header">We now offer delivery in addition to takeout from the cafe and our standard virtual cafe locations!
+              </div>
             </h2>
           </div>
         </td>
       </tr>
     </table>
 
+<div class="ui center aligned stackable page grid">
+  <div class="four wide column">
+    <div id="select-virtual-button" class="fluid ui big toggle button">Virtual Cafe</div>
+  </div>
+  <div class="four wide column">
+    <div id="select-pickup-button" class="fluid ui big toggle button">Takeout</div>
+  </div>
+  <div class="four wide column">
+    <div id="select-delivery-button" class="fluid ui big toggle button">Delivery</div>
+  </div>
+</div>
 
+<div class="ui bottom attached segment menu-tab" id="menu-delivery">
+<div class="ui message">
+<p>We now offer individual deliveries to nearby areas not served by our virtual cafe. If you are ordering from a business location, please double check our "Virtual Cafe" locations and make sure that your workplace is not already listed there.</p>
+<!--work in a building with a virtual cafe partnership, please select "Virtual Cafe" for your location instead.</p>-->
+</div>
+<div class="ui message">
+<p>There is a flat fee of <b>$1.50</b> for all deliveries. If this is your first time ordering delivery with us, please add your address first. Otherwise, you can select a previously-saved location from the list below. </p>
+</div>
+    <div class="field">
+        <center>
+        <% if (!('savedVirtualDelivery' in session.User) || session.User.savedVirtualDelivery.length < 1) { %>
+            <br>
+            <p> It looks like you don't have any saved destinations! Click the orange button below to add one. </p>
+        <% } else { %>
+            <select class="delivery-select ui dropdown" style="font-size:0.7em;">
+                <% _.each(session.User.savedVirtualDelivery, function(dest, destIndex, l) { %> 
+                    <option value="delivery-<%= destIndex %>"><%= dest.address%>,&nbsp;<%= dest.city %>&nbsp;<%= dest.zip %> -- <%= dest.special %></option>
+                <% }) %>
+            </select>
+        <% } %>
+        <br>
+        <br>
+        <a href="/virtualcafe/delivery-locations" class="medium ui orange button">Add/Remove Addresses</a>
+        </center>
+    </div>
+</div>
+
+<div class="ui bottom attached segment menu-tab" id="menu-pickup">
+<div class="ui message">
+<p>You can pickup your order from our main cafe location 115 N. Charles any time before 3pm. There are no extra service charges. </p>
+</div>
+</div>
+
+<div class="ui bottom attached segment menu-tab" id="menu-virtual">
+<div class="ui message">
+<p> Click your location to select it. You must be able to pick up your order at one of these locations <b>at the designated time</b>!</p>
+</div>
               <div class="field">
                     <table class="ui celled table">
                         <thead>
@@ -156,9 +208,13 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                             <% _.each(locations, function(location) {%>
                             <tr onclick="locationSelected(this);">
                               <td>
-																<span><%= location.name %></span>
-															</td>
-															<td> <b style="color:#c0392b"><%= location.order_time %></b></td>
+                                    <span><%- location.name %></span>
+                                    <% if ('info' in location) {%> 
+                                    <br/><span><%- location.info %></span>
+                                    <% } %>
+                             </td>
+                             <% if (location.time == "(Pickup in store only)") { time_color = "color:#2ecc71" } else { time_color = 'color:#c0392b'}  %>
+                              <td> <b style=<%= time_color %>><%= location.order_time %></b></td>
                               <td><%= location.time %></td>
                               <td><%= location.contact.name %> <br><%=location.contact.email%></td>
                               <td><%= location.fee %> </td>
@@ -169,6 +225,7 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
                     </table>
                     <input type="hidden" id="location-input" type="text" name="location" value="">
               </div>
+</div>
 
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
@@ -181,21 +238,20 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
           <div class="ui inverted segment" style="background-color: #822421!important;">
             <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
               Date
-              <div class="sub header">If it's after 11:00AM (or earlier for other locations), you'll only be able
-								to place an order for a future date!</div>
+              <div class="sub header">If it's after the "Order By" time today, you'll only be able
+								to place a Virtual Cafe order for a future date! 
+                                </div>
             </h2>
           </div>
         </td>
       </tr>
     </table>
 
-
-
 							<center><span id="toolate-box" style="font-weight:bold;font-size:1.2em">
                   <%if(isWeekend){%>
                     Sorry, we don't deliver on weekends!
                   <%} else if (!isBeforeDeadline) { %>
-                    Sorry, we cannot accept orders past 11:00AM for today!
+                    <!--Sorry, we cannot accept orders past 11:00AM for today!-->
                   <% } %>
 							</span></center>
               <div class="ui stackable page grid">
@@ -234,7 +290,6 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
           <div class="ui inverted segment" style="background-color: #822421!important;">
             <h2 class="ui inverted header"  style="font-family: 'Montserrat'; border-right: 2px solid #fff">
               Choose your lunch items
-              <div class="sub header">Two convenient ways to order!</div>
             </h2>
           </div>
         </td>
@@ -334,12 +389,26 @@ to launch, please click <a href="/virtualcafe/subscribe">here</a>.</p></div>
 											</div>
 										</div>
 
-										<div class="deli-field grill-field salad-field custom-field">
+										<div class="deli-field grill-field custom-field">
 											<label class="deli-field grill-field custom-field">Choose Toppings:</label>
-											<label class="salad-field custom-field">Extra Toppings:</label>
 											<% create_subhead('addons') %>
 											<div class="ui stackable grid">
 												<% for(var i=0; i<custom.addons.length; i++) { addon = custom.addons[i]; %>
+													<div class="three wide column">
+														<div class="simpleCart_customItem ui checkbox">
+															<input type="checkbox">
+															<label><span class="item_name" type="addons"><%=addon.type%></span> <% if (addon.price) { %>(<span class="item_price"><%=addon.price%></span>)<% } %></label>
+														</div>
+													</div>
+												<% } %>
+											</div>
+										</div>
+
+										<div class="salad-field custom-field">
+											<label class="salad-field custom-field">Extra Toppings:</label>
+											<% create_subhead('salad_addons') %>
+											<div class="ui stackable grid">
+												<% for(var i=0; i<custom.salad_addons.length; i++) { addon = custom.salad_addons[i]; %>
 													<div class="three wide column">
 														<div class="simpleCart_customItem ui checkbox">
 															<input type="checkbox">
