@@ -371,8 +371,8 @@ var sendEmailCatering = function(txt, req, res) {
 }
 
 var updateUser = function(req, token, shouldSaveCard) {
-    user = req.session.User;
-    body = req.body;
+    var user = req.session.User;
+    var body = req.body;
 
     if (!('phone' in user)) {
       user.phone = body.phone;
@@ -382,7 +382,7 @@ var updateUser = function(req, token, shouldSaveCard) {
     user.virtualPhone = body.phone;
 
     if (shouldSaveCard) {
-        newCard = {
+        var newCard = {
             lastFour : body.number.substring(body.number.length - 4),
             name : body.card_name,
             zip : body.zip,
@@ -491,6 +491,7 @@ var submitVirtualOrder = function(req, res, parsedLoc, delivery) {
         });
     };
 
+    var customer_template, our_template, method;
     if (delivery) {
         customer_template = swig.compileFile('./emails/delivery-customer-copy.txt');
         our_template = swig.compileFile('./emails/delivery-invoice.txt');
@@ -508,12 +509,12 @@ var submitVirtualOrder = function(req, res, parsedLoc, delivery) {
 
     }
 
-    obj = parseVirtualData(req.body, parsedLoc, method);
-    customer_html = customer_template(obj);
-    our_html = our_template(obj);
+    var obj = parseVirtualData(req.body, parsedLoc, method);
+    var customer_html = customer_template(obj);
+    var our_html = our_template(obj);
 
-    obj_total = obj.total.split("$")[1];
-    charge_amt = parseFloat(obj_total);
+    var obj_total = obj.total.split("$")[1];
+    var charge_amt = parseFloat(obj_total);
 
     if ('hps_token' in req.body) {
         var card = new gp.CreditCardData();
@@ -536,7 +537,7 @@ var submitVirtualOrder = function(req, res, parsedLoc, delivery) {
             .withRequestMultiUseToken(shouldSaveCard)
             .execute();
         charge_resp.then(function(resp) {
-            chargeSuccess = (resp.responseCode === '00');
+            var chargeSuccess = (resp.responseCode === '00');
             updateUser(req, resp.token, shouldSaveCard && chargeSuccess);
             if (chargeSuccess) {
                 console.log("Success!");
@@ -586,7 +587,7 @@ var submitVirtualOrder = function(req, res, parsedLoc, delivery) {
             .withAddress(addr)
             .execute();
         charge_resp.then(function(resp) {
-            updated = updateUser(req, 0, false);
+            var updated = updateUser(req, 0, false);
             req.session.User = updated;
             if (resp.responseCode === '00') {
                 console.log("Success!")
@@ -693,15 +694,15 @@ module.exports = {
     try {
         if (req.body.isCatering === "false") { // sanity check
 
-          updated_user = updateUser(req, (req.body.save_card != null && req.body.save_card === "on"));
+          var updated_user = updateUser(req, (req.body.save_card != null && req.body.save_card === "on"));
           req.session.User = updated_user;
 
           if (req.body.location.indexOf('delivery') == 0) {
-              destIdx = parseInt(req.body.location.split("-")[1]);
-              dest = req.session.User.savedVirtualDelivery[destIdx];
+              var destIdx = parseInt(req.body.location.split("-")[1]);
+              var dest = req.session.User.savedVirtualDelivery[destIdx];
               submitVirtualOrder(req, res, dest, true);
           } else if (req.body.location.indexOf('takeout') == 0) { 
-              parsedLoc = {
+              var parsedLoc = {
                   takeout : true
               };
               submitVirtualOrder(req, res, parsedLoc, false);
@@ -710,7 +711,7 @@ module.exports = {
                   if(err) {
                       catcher(err);
                   } else {
-                      parsedLoc = {
+                      var parsedLoc = {
                         building_name : loc.name,
                         contact_name : loc.contact.name,
                         contact_email : loc.contact.email,
