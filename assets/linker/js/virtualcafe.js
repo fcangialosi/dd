@@ -231,6 +231,8 @@ $(document).ready(function() {
         custom_type = "burger";
       } else if (lower.indexOf("salad") > -1) {
         custom_type = "salad";
+      } else if (lower.indexOf("wing") > -1) {
+        custom_type = "wings";
       }
       $('.custom-type-select').val(custom_type).change();
       e.stopPropagation();
@@ -285,6 +287,7 @@ $(document).ready(function() {
     }
 		clearSelected();
 
+    
 		// Display the customize menu
     displaySideMenu(item_side);
 
@@ -557,6 +560,26 @@ $(document).ready(function() {
     var item_sections = itemJustSelected.get("name").split("<br>");
     for (var i=0; i<item_sections.length; i++) {
       if (item_sections[i].indexOf("* Side:") > -1) {
+        item_sections[i] = new_section;
+        found = true;
+      }
+    }
+    if (!found) {
+      item_sections.push(new_section);
+    }
+    var new_item_name = item_sections.join("<br>");
+    itemJustSelected.set("name",new_item_name);
+    simpleCart.update();
+  });
+
+  $('.sauce-select').change(function () {
+    var select = $(this);
+    var selection = select.val();
+    var found = false;
+    var new_section = "* Sauce: " + selection;
+    var item_sections = itemJustSelected.get("name").split("<br>");
+    for (var i=0; i<item_sections.length; i++) {
+      if (item_sections[i].indexOf("* Sauce:") > -1) {
         item_sections[i] = new_section;
         found = true;
       }
