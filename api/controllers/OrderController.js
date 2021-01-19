@@ -258,7 +258,7 @@ var sendEmailVirtual = function(customer_txt, our_txt, req, res, is_test) {
         }
       },
       Subject: {
-        Data: (pre + 'Virtual Cafe Request from ' + req.session.User.name),
+        Data: (pre + 'Virtual Cafe Request from ' + req.body.name),
       }
     },
     Source: 'orders@davidanddads.com',
@@ -510,8 +510,6 @@ var submitVirtualOrder = function(req, res, parsedLoc, delivery) {
     }
 
     var obj = parseVirtualData(req.body, parsedLoc, method);
-    var customer_html = customer_template(obj);
-    var our_html = our_template(obj);
 
     var obj_total = obj.total.split("$")[1];
     var charge_amt = parseFloat(obj_total);
@@ -524,6 +522,9 @@ var submitVirtualOrder = function(req, res, parsedLoc, delivery) {
         if(req.body.zip === '00000') {
             console.log("TEST REQUEST");
             console.log(req);
+            obj.tid = "TEST"; 
+            var customer_html = customer_template(obj);
+            var our_html = our_template(obj);
             sendEmailVirtual(customer_html, our_html, req, res, true);
             return;
         }
@@ -541,6 +542,9 @@ var submitVirtualOrder = function(req, res, parsedLoc, delivery) {
             updateUser(req, resp.token, shouldSaveCard && chargeSuccess);
             if (chargeSuccess) {
                 console.log("Success!");
+                obj.tid = resp.transactionReference.transactionId;
+                var customer_html = customer_template(obj);
+                var our_html = our_template(obj);
                 sendEmailVirtual(customer_html, our_html, req, res, false);
             } else {
                 console.log(resp.responseMessage);
@@ -565,6 +569,11 @@ var submitVirtualOrder = function(req, res, parsedLoc, delivery) {
             console.log("UH OH: zip doesn't match!");
         }
         if(req.body.zip === '00000' || saved_card.zip === '00000') {
+            console.log("TEST REQUEST");
+            console.log(req);
+            obj.tid = "TEST"; 
+            var customer_html = customer_template(obj);
+            var our_html = our_template(obj);
             sendEmailVirtual(customer_html, our_html, req, res, true);
             return;
         }
@@ -591,6 +600,9 @@ var submitVirtualOrder = function(req, res, parsedLoc, delivery) {
             req.session.User = updated;
             if (resp.responseCode === '00') {
                 console.log("Success!")
+                obj.tid = resp.transactionReference.transactionId;
+                var customer_html = customer_template(obj);
+                var our_html = our_template(obj);
                 sendEmailVirtual(customer_html, our_html, req, res, false);
             } else {
                 console.log(resp.responseMessage);
