@@ -18,7 +18,7 @@ $(document).ready(function() {
       simpleCart.chargeCreditCard = false;
   }
 
-  specials_section = $('a[target="menu-9"]')[0];
+  specials_section = $('a[target="menu-10"]')[0];
   
   showDailySpecials = function() {
       // Show today's specials
@@ -34,7 +34,7 @@ $(document).ready(function() {
       }
   }
   
-  hideDailySpecials();
+  //hideDailySpecials();
 
   datePicker = $('#virtual-datepicker').datetimepicker({
     pickTime: false,
