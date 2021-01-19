@@ -13,6 +13,10 @@
         </div>
       <% } %>
 
+      <div class="ui info message">
+          NOTE: For virtual cafe items, make sure to fill in the "Side Type". You can check the side type of the other menu items in this menu for reference.
+      </div>
+
       <form action="/menu/create_item/<%= menu_id %>" method="POST" class="ui large inverted form segment" id="create-item-form">
         <p>The placeholders are simply examples to make it clear what is expected in each input!</p>
         <div class="three fields">
@@ -25,7 +29,7 @@
             <input  placeholder="Minimum 8" name="minimum" type="text" class="form-control">
           </div>
           <div class="field">
-            <label>Serves (can leave blank) </label>
+            <label>Serves (main) OR Side Type (virtual) </label>
             <input  placeholder="Serves 10 to 15" name="serves" type="text" class="form-control">
           </div>
         </div>

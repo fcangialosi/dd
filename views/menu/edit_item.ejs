@@ -23,6 +23,7 @@
 
 	  <% } else { %>
 	  <div class="field">
+          <!--
 	  	<label>Side Dish Group</label>
 		<select class="ui dropdown" name="serves" class="form-control" style="color:#424242" value="<%=item.serves %>">
         <option value=""></option>
@@ -31,6 +32,9 @@
         <option value="grill" <%if (item.serves=="grill"){%>selected<%}%>>Grill (Fries)</option>
         <option value="platter" <%if (item.serves=="platter"){%>selected<%}%>>Platter (Cole Slaw, etc.)</option>
         </select>
+          -->
+          <label>Side Dish Group</label>
+          <input value="<%= item.serves %>" name="serves" type="text" class="form-control">
 	  </div>
 	  <% } %>
 	</div>
