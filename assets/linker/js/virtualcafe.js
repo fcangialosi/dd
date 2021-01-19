@@ -5,7 +5,7 @@ var base_salad_price = 4.50;
 
 $(document).ready(function() {
 
-  $('#virtual-js-id').text('3.2');
+  $('#virtual-js-id').text('3.6');
   
   if (simpleCart.total() && !simpleCart.isCatering) {
       $('#submit-button').html("Submit My Order (<span class='simpleCart_grandTotal'></span>)")
@@ -41,8 +41,7 @@ $(document).ready(function() {
     useCurrent: false,
     daysOfWeekDisabled: [0, 6],
     disabledDates : [
-        new Date(2019, 11-1, 28),
-        new Date(2019, 11-1, 29)
+        new Date(2021, 1-1, 18)
     ],
     up: "fa fa-arrow-up",
     down: "fa fa-arrow-down"
