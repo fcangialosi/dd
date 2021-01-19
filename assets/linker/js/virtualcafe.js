@@ -184,8 +184,15 @@ $(document).ready(function() {
 
   displaySideMenu = function(item_side) {
     if (item_side == ""){
-      item_side = "deli";
+      item_side = "none";
     }
+    add_stuff = document.getElementById('extras-add-all');
+    if (item_side == "none") {
+        add_stuff.setAttribute('style', 'display:none');
+    } else {
+        add_stuff.setAttribute('style', '');
+    }
+    
     var type_selector = '.freeside_'+item_side+'-side';
 		side_selector = $(type_selector)[0];
 		if(side_selector != null) {
