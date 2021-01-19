@@ -11,21 +11,31 @@
   <div class="<%=type%>-side virtual-side">
   <% if (type == "freeside_salad") { %>
     <p>This salad comes with free dressing.</p>
+  <% } else if (type == "freeside_wings") { %>
+
   <% } else { %>
     <p>This selection comes with a free item. Please choose one
     from the menu below, or leave it blank if you don't want it.</p>
   <% } %>
   <% if (type == "freeside_salad") { %>
     <div class="field"><label>Choose your dressing:</label></div>
+  <% } else if (type == "freeside_wings") { %>
+    <div class="field"><label>Choose your wings flavor:</label></div>
   <% } else { %>
     <div class="field"><label>Choose your free side:</label></div>
   <% } %>
   <% create_subhead(type+'_side') %>
-  <select class="side-select ui dropdown">
+  <% if (type == "freeside_wings") { %>
+      <select class="sauce-select ui dropdown">
+  <% } else { %>
+      <select class="side-select ui dropdown">
+  <% } %>
     <option value=""></option>
     <% var item_arr; %>
     <% if (type == "freeside_salad") { %>
       <% item_arr = custom.salad_dressing; %>
+    <% } else if (type == "freeside_wings") { %>
+      <% item_arr = custom.wing_sauce; %>
     <% } else { %>
       <% item_arr = extras[type].items; %>
     <% } %>
@@ -34,6 +44,14 @@
       <option value="<%=item.type%>"><%=item.type%></option>
     <% } %>
   </select>
+  <% if (type == "freeside_wings") { %>
+    <br><br><div class="field"><label>Choose your dressing:</label></div>
+    <select class="side-select ui dropdown">
+    <% for (var i=0; i < custom.wing_dressing.length; i++) { item = custom.wing_dressing[i]; %>
+      <option value="<%=item.type%>"><%=item.type%></option>
+    <% } %>
+    </select>
+  <% } %>
 	</div>
 
 <% } %>
@@ -146,10 +164,10 @@
 
 <div class="ui center aligned stackable page grid">
   <div class="four wide column">
-    <div id="select-virtual-button" class="fluid ui big toggle button">Virtual Cafe</div>
+    <div id="select-virtual-button" class="fluid ui big toggle button">Choose Virtual Cafe Location</div>
   </div>
   <div class="four wide column">
-    <div id="select-pickup-button" class="fluid ui big toggle button">Takeout</div>
+    <div id="select-pickup-button" class="fluid ui big toggle button">Pick Up @ 115 N. Charles</div>
   </div>
   <div class="four wide column">
     <div id="select-delivery-button" class="fluid ui big toggle button">Delivery</div>
@@ -158,11 +176,10 @@
 
 <div class="ui bottom attached segment menu-tab" id="menu-delivery">
 <div class="ui message">
-<p>We now offer individual deliveries to nearby areas not served by our virtual cafe. If you are ordering from a business location, please double check our "Virtual Cafe" locations and make sure that your workplace is not already listed there.</p>
-<!--work in a building with a virtual cafe partnership, please select "Virtual Cafe" for your location instead.</p>-->
+<p>If you are ordering from a business location, <b>please double check our "Virtual Cafe" locations</b> and make sure that your workplace is not already listed there.</p>
 </div>
 <div class="ui message">
-<p>There is a flat fee of <b>$1.50</b> for all deliveries. If this is your first time ordering delivery with us, please add your address first. Otherwise, you can select a previously-saved location from the list below. </p>
+<p>There is a flat fee of <b>$1.50</b> for all deliveries. If this is your first time ordering delivery, please add your address first. We'll save it for future orders.</p>
 </div>
     <div class="field">
         <center>
@@ -389,8 +406,8 @@
 											</div>
 										</div>
 
-										<div class="deli-field grill-field custom-field">
-											<label class="deli-field grill-field custom-field">Choose Toppings:</label>
+										<div class="deli-field custom-field">
+											<label class="deli-field custom-field">Choose Toppings:</label>
 											<% create_subhead('addons') %>
 											<div class="ui stackable grid">
 												<% for(var i=0; i<custom.addons.length; i++) { addon = custom.addons[i]; %>
@@ -403,6 +420,23 @@
 												<% } %>
 											</div>
 										</div>
+
+										<div class="grill-field custom-field">
+											<label class="grill-field custom-field">Choose <u>Additional</u> Toppings:</label>
+                                            <p>Make a selection here only if you want to add to the preset toppings listed above. If you need to remove a topping, please mention it in special requests.</p>
+											<div class="ui stackable grid">
+												<% for(var i=0; i<custom.addons.length; i++) { addon = custom.addons[i]; %>
+													<div class="three wide column">
+														<div class="simpleCart_customItem ui checkbox">
+															<input type="checkbox">
+															<label><span class="item_name" type="addons"><%=addon.type%></span> <% if (addon.price) { %>(<span class="item_price"><%=addon.price%></span>)<% } %></label>
+														</div>
+													</div>
+												<% } %>
+											</div>
+										</div>
+
+
 
 										<div class="salad-field custom-field">
 											<label class="salad-field custom-field">Extra Toppings:</label>
@@ -440,6 +474,10 @@
                   <!--<% create_freebie_section('grill') %>-->
                   <% create_freebie_section('salad') %>
                   <% create_freebie_section('platter') %>
+                  <% create_freebie_section('wings') %>
+
+                  <!-- this div encompasses all addons so that we can disable them for none type -->
+                  <div id="extras-add-all">
 
                   <div class="field"><label>Add a drink?</label></div>
 
@@ -458,7 +496,6 @@
 
                   <hr>
 
-									<div class="deli-field grill-field salad-field custom-field">
                   <div class ="field"><label>Add sides?</label></div>
                   <div class="ui stackable grid">
                     <% for(var i=0; i<extras.sides.items.length; i++) { side = extras.sides.items[i]; %>
@@ -470,7 +507,6 @@
                       </div>
                     <% } %>
                   </div>
-									</div>
 
                   <hr>
 
@@ -486,8 +522,10 @@
                     <% } %>
                   </div>
 
-
                   <hr>
+                  </div>
+
+
                   <center>
                   <span class="ui blue labeled icon button order-more"
                   style="float:center">
