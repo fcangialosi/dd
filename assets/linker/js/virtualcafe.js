@@ -191,8 +191,10 @@ $(document).ready(function() {
     } else {
         add_stuff.setAttribute('style', '');
     }
+
     
-    var type_selector = '.freeside_'+item_side+'-side';
+    // added split to handle deli_special
+    var type_selector = '.freeside_'+item_side.split("_")[0]+'-side';
 		side_selector = $(type_selector)[0];
 		if(side_selector != null) {
 			side_selector.classList.add("active");
