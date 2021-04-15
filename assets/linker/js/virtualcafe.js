@@ -435,7 +435,7 @@ $(document).ready(function() {
 
 	customizeDropdown = $('.custom-select.ui.dropdown');
 	customizeDropdown.change(function(e) {
-    e.stopPropagation();
+        e.stopPropagation();
 		val = $(this).val().split("-");
 		type = val[0];
 		chose = val.slice(1,val.length).join('-');
@@ -506,25 +506,29 @@ $(document).ready(function() {
       }
       customOrder.total_price += base_salad_price;
     } else {
-			s = JSON.parse(JSON.stringify(order.type));
-		}
-    //if (order.type == "Sandwich") {
-		if (order.bread && order.bread.length) {
-      s += " on " + order.bread;
+        s = JSON.parse(JSON.stringify(order.type));
+    }
+    if (order.bread && order.bread.length) {
+        s += " on " + order.bread;
+    }
+    if (order.sauce && order.sauce.length) {
+        s += "<br>* Sauce: " + order.sauce;
     }
     if (order.cheese && order.cheese.length) {
-      s += " with " + listToString(order.cheese,true);
+        s += " with " + listToString(order.cheese,true);
     }
-		if (order.side && order.side.length) {
-			s += " with " + order.side;
-		}
+    if (order.sauce && order.sauce.length) {
+        s += "<br>* Sauce: " + order.sauce;
+    }
+    if (order.side && order.side.length) {
+        s += "<br>* Side: " + order.side;
+    }
     if (order.addons && order.addons.length) {
       s += "<br>* Add: " + listToString(order.addons,false);
     }
-		if (order.special_request && order.special_request.length) {
-			s += "<br>* Special Request: " + order.special_request;
-
-		}
+    if (order.special_request && order.special_request.length) {
+        s += "<br>* Special Request: " + order.special_request;
+    }
     return s;
   }
 
@@ -563,6 +567,8 @@ $(document).ready(function() {
   $('.side-select').change(function (){
     var select = $(this);
     var selection = select.val();
+    customOrder['side'] = selection;
+    /*
     var found = false;
     var new_section = "* Side: " + selection;
     var item_sections = itemJustSelected.get("name").split("<br>");
@@ -577,12 +583,16 @@ $(document).ready(function() {
     }
     var new_item_name = item_sections.join("<br>");
     itemJustSelected.set("name",new_item_name);
+    */
+    itemJustSelected.set("name",orderToString(customOrder));
     simpleCart.update();
   });
 
   $('.sauce-select').change(function () {
     var select = $(this);
     var selection = select.val();
+    customOrder['sauce'] = selection;
+    /*
     var found = false;
     var new_section = "* Sauce: " + selection;
     var item_sections = itemJustSelected.get("name").split("<br>");
@@ -597,6 +607,8 @@ $(document).ready(function() {
     }
     var new_item_name = item_sections.join("<br>");
     itemJustSelected.set("name",new_item_name);
+    */
+    itemJustSelected.set("name",orderToString(customOrder));
     simpleCart.update();
   });
 
