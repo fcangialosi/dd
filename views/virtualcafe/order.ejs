@@ -162,15 +162,18 @@
       </tr>
     </table>
 
+<!--<center><b>We are closed today due to the weather. We hope to see you tomorrow!</b></center>-->
+<!--<div id="select-virtual-button" style="pointer-events:none;" class="fluid ui disabled big toggle button">Choose Virtual Cafe Location</div>-->
+
 <div class="ui center aligned stackable page grid">
   <div class="four wide column">
     <div id="select-virtual-button" class="fluid ui big toggle button">Choose Virtual Cafe Location</div>
   </div>
   <div class="four wide column">
-    <div id="select-pickup-button" class="fluid ui big toggle button">Pick Up @ 115 N. Charles</div>
+    <div id="select-pickup-button"  class="fluid ui big toggle button">Pick Up @ 115 N. Charles</div>
   </div>
   <div class="four wide column">
-    <div id="select-delivery-button" class="fluid ui big toggle button">Delivery</div>
+    <div id="select-delivery-button"  class="fluid ui big toggle button">Delivery</div>
   </div>
 </div>
 
@@ -217,7 +220,7 @@
                               <th >Location</th>
 															<th >Order By</th>
                               <th >Delivery</th>
-                              <th >Contact</th>
+                              <th >On-Site Contact</th>
                               <th> Fee </th>
                             </tr>
                         </thead>
@@ -453,6 +456,7 @@
 											</div>
 										</div>
 
+                                        <!--
 										<div class="platter-field custom-field">
 											<label>Choose Free Side:</label>
 											<select class="custom-select ui dropdown">
@@ -462,13 +466,10 @@
 												<% } %>
 											</select>
 										</div>
+                                        -->
 
                     <br>
-                    <label>Special Requests:</label>
-                    <textarea placeholder="For example: Not too much mayo. Please do not use this space to add toppings or items! Select your toppings in the section above and your sides in the sections below." name="special_request" style="height:30%" id="special_request"></textarea>
                   </div>
-
-                  <hr>
 
                   <% create_freebie_section('deli') %>
                   <!--<% create_freebie_section('grill') %>-->
@@ -478,6 +479,13 @@
 
                   <!-- this div encompasses all addons so that we can disable them for none type -->
                   <div id="extras-add-all">
+
+                  <hr>
+                    <label>Special Requests:</label>
+                    <textarea placeholder="For example: Not too much mayo. Please do not use this space to add toppings or items! Select your toppings in the section above and your sides in the sections below." name="special_request" style="height:30%" id="special_request"></textarea>
+                  <br>
+                  <hr>
+
 
                   <div class="field"><label>Add a drink?</label></div>
 
