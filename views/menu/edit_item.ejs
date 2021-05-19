@@ -23,18 +23,22 @@
 
 	  <% } else { %>
 	  <div class="field">
-          <!--
 	  	<label>Side Dish Group</label>
-		<select class="ui dropdown" name="serves" class="form-control" style="color:#424242" value="<%=item.serves %>">
+		<select class="ui dropdown" name="serves" class="form-control" style="color:#424242; padding: 0em;" value="<%=item.serves %>">
         <option value=""></option>
-        <option value="salad" <%if (item.serves=="salad"){%>selected<%}%>>Salad (Dressings)</option>
-        <option value="deli" <%if (item.serves=="deli"){%>selected<%}%>>Deli (Chips)</option>
-        <option value="grill" <%if (item.serves=="grill"){%>selected<%}%>>Grill (Fries)</option>
-        <option value="platter" <%if (item.serves=="platter"){%>selected<%}%>>Platter (Cole Slaw, etc.)</option>
+        <option value="none" <%if (item.serves=="empty"){%>selected<%}%>>Side (empty, no SR)</option>
+        <option value="sronly" <%if (item.serves=="empty"){%>selected<%}%>>Basic, SR only</option>
+        <option value="deli" <%if (item.serves=="deli"){%>selected<%}%>>Deli (choose bread and toppings, +chips)</option>
+        <option value="deli_special" <%if (item.serves=="deli_special"){%>selected<%}%>>Deli Special (+chips)</option>
+        <option value="salad" <%if (item.serves=="salad"){%>selected<%}%>>Salad (+dressings)</option>
+        <option value="wings" <%if (item.serves=="wings"){%>selected<%}%>>Wings (+sauces)</option>
+        <option value="grill" <%if (item.serves=="grill"){%>selected<%}%>>Grill (addtl toppings, +fries)</option>
+        <option value="platter" <%if (item.serves=="platter"){%>selected<%}%>>Platter (+coleslaw)</option>
         </select>
-          -->
+          <!--
           <label>Side Dish Group</label>
           <input value="<%= item.serves %>" name="serves" type="text" class="form-control">
+          -->
 	  </div>
 	  <% } %>
 	</div>
