@@ -46,6 +46,7 @@
                     <th>Name</th>
                     <th>Price</th>
                     <th>Description</th>
+                    <th>Side</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
@@ -60,6 +61,7 @@
 										</td>
                     <td><input value="<%= item.price %>" name="price" type="text" class="form-control bg-update-in"></td>
                     <td><input value="<% if ('description' in item) { %><%= item.description %><% } else { %><% } %>" name="description" type="text" class="form-control bg-update-in"></td>
+                    <td><input value="<% if ('serves' in item) {%><%= item.serves %><% } %>" name="serves" type="text" class="form-control bg-update-in"></td> 
                     <td>
                         <input type="hidden" name="_csrf" value="<%= _csrf %>" class="bg-update-in"/>
                         <div type="submit" class="ui small green button" action="/specials/update/<%= menu.id %>?index=<%= menu.items.indexOf(item)%>&cafe=<%= cafe %>" method="POST" id="bg-update-btn">Save</div>
